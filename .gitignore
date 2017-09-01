@@ -1,0 +1,8 @@
+*.pyc
+*.pyo
+*.user
+*.Db
+*.project
+*.qm
+token.py
+.vscode
