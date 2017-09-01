@@ -31,9 +31,64 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import "pages"
+import io.thp.pyotherside 1.3
+import org.nemomobile.notifications 1.0
 
 ApplicationWindow
 {
+    id:appwindow
+    property string appname: "旗鱼俱乐部"
+    property bool loading: false
+    Notification{
+        id:notification
+        appName: appname
+    }
+
+    BusyIndicator {
+        id: busyIndicator
+        anchors.centerIn: parent
+        running: loading
+        size: BusyIndicatorSize.Large
+    }
+
+    RemorsePopup {
+        id: remorse
+    }
+
+    Timer{
+        id:processingtimer;
+        interval: 60000;
+        onTriggered: signalCenter.loadFailed(qsTr("请求超时"));
+    }
+
+    Connections{
+        target: signalCenter;
+        onLoadStarted:{
+            appwindow.loading=true;
+            processingtimer.restart();
+        }
+        onLoadFinished:{
+            appwindow.loading=false;
+            processingtimer.stop();
+        }
+        onLoadFailed:{
+            appwindow.loading=false;
+            processingtimer.stop();
+            signalCenter.showMessage(errorstring);
+        }
+    }
+
+    Signalcenter{
+        id: signalCenter;
+    }
+
+    function showMsg(message) {
+        notification.previewBody = appname;
+        notification.previewSummary = message;
+        notification.close();
+        notification.publish();
+    }
+
     initialPage: Component { FirstPage { } }
     cover: Qt.resolvedUrl("cover/CoverPage.qml")
     allowedOrientations: defaultAllowedOrientations
