@@ -31,6 +31,7 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import "pages"
+import "components"
 import io.thp.pyotherside 1.3
 import org.nemomobile.notifications 1.0
 
@@ -89,8 +90,172 @@ ApplicationWindow
         notification.publish();
     }
 
-    initialPage: Component { FirstPage { } }
+    PanelView {
+        id: panelView
+
+        property Page currentPage: pageStack.currentPage
+
+        width: currentPage.width
+        panelWidth: Screen.width *0.6
+        panelHeight: pageStack.currentPage.height
+        height: currentPage && currentPage.contentHeight || pageStack.currentPage.height
+        visible:  (!!currentPage && !!currentPage.withPanelView) || !panelView.closed
+        anchors.centerIn: parent
+        //anchors.verticalCenterOffset:  -(panelHeight - height) / 2
+
+        anchors.horizontalCenterOffset:  0
+
+        Connections {
+            target: pageStack
+            onCurrentPageChanged: panelView.hidePanel()
+        }
+
+        leftPanel: NavigationPanel {
+            id: leftPanel
+            busy: false
+            onClicked: {
+                panelView.hidePanel();
+            }
+
+            Component.onCompleted: {
+                panelView.hidePanel();
+            }
+        }
+    }
+
+    //主页列表显示
+    Component {
+        id: indexPageComponent
+        FirstPage {
+            id: indexPage
+            property bool _dataInitialized: false
+            property bool withPanelView: true
+            Binding {
+                target: indexPage.contentItem
+                property: "parent"
+                value: indexPage.status === PageStatus.Active
+                       ? (panelView .closed ? panelView : indexPage) //修正listview焦点
+                       : indexPage
+            }
+
+            onStatusChanged: {
+                if (indexPage.status === PageStatus.Active) {
+                    if (!_dataInitialized) {
+                        _dataInitialized = true;
+                    }
+                }
+            }
+        }
+    }
+
+    initialPage: Component {
+        Page{
+            id:splashPage
+            Component.onCompleted: {
+                splash.visible = true;
+                timerDisplay.running = true;
+            }
+
+            SilicaFlickable {
+                id: splash
+                visible: false
+                anchors.fill:parent
+                Item{
+                    anchors.fill: parent
+                    width: parent.width
+                    height: parent.height
+                    Label{
+                        id:welcomFont
+                        text:qsTr("Welcome to")
+                        font.pixelSize: Theme.fontSizeExtraLarge
+                        anchors{
+                            left:parent.left
+                            leftMargin:Theme.paddingLarge
+                            bottom:storeName.top
+                            //bottomMargin: Theme.paddingSmall
+                        }
+                    }
+                    Label{
+                        id:storeName
+                        text:qsTr("SailfishClub")
+                        font.pixelSize: Theme.fontSizeExtraLarge
+                        color: Theme.highlightColor
+                        anchors{
+                            left:parent.left
+                            leftMargin:Theme.paddingLarge
+                            bottom:vendor.top
+                            bottomMargin: Theme.paddingLarge * 2
+                        }
+                    }
+
+                    Label{
+                        id:vendor
+                        text:"BirdZhang"
+                        font.pixelSize: Theme.fontSizeMedium
+                        //color: Theme.highlightColor
+                        opacity:0.5
+                        anchors{
+                            left:parent.left
+                            leftMargin:Theme.paddingLarge
+                            bottom:parent.bottom
+                            bottomMargin: Theme.paddingLarge
+                        }
+                    }
+
+                    BusyIndicator{
+                        anchors{
+                            right:parent.right
+                            rightMargin: Theme.paddingLarge
+                            bottom:parent.bottom
+                            bottomMargin: Theme.paddingLarge
+                        }
+                        running: true
+                        size: BusyIndicatorSize.Small
+                    }
+
+                }
+
+
+                NumberAnimation on opacity {duration: 500}
+
+
+            }
+            Timer {
+                id: timerDisplay
+                running: false;
+                repeat: false;
+                triggeredOnStart: false
+                interval: 2 * 1000
+                onTriggered: {
+                    splash.visible = false;
+                    loading = false;
+                    toIndexPage();
+                }
+            }
+        }
+    }
     cover: Qt.resolvedUrl("cover/CoverPage.qml")
     allowedOrientations: defaultAllowedOrientations
+
+
+    function toIndexPage() {
+        popAttachedPages();
+        pageStack.replace(indexPageComponent)
+
+    }
+
+
+    function popAttachedPages() {
+        // find the first page
+        var firstPage = pageStack.previousPage();
+        if (!firstPage) {
+            return;
+        }
+        while (pageStack.previousPage(firstPage)) {
+            firstPage = pageStack.previousPage(firstPage);
+        }
+        // pop to first page
+        pageStack.pop(firstPage);
+    }
 }
 
