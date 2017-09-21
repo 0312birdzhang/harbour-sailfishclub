@@ -20,6 +20,8 @@ OTHER_FILES += qml/harbour-sailfishclub.qml \
     qml/cover/CoverPage.qml \
     qml/pages/FirstPage.qml \
     qml/pages/SecondPage.qml \
+    qml/pages/Signalcenter.qml \
+    qml/pages/NavigationPanel.qml \
     qml/py/main.py \
     rpm/harbour-sailfishclub.changes.in \
     rpm/harbour-sailfishclub.spec \
@@ -39,5 +41,4 @@ CONFIG += sailfishapp_i18n
 # modify the localized app name in the the .desktop file.
 TRANSLATIONS += translations/harbour-sailfishclub-de.ts
 
-DISTFILES += \
-    qml/pages/Signalcenter.qml
+

@@ -75,13 +75,13 @@ Panel {
                     left: parent.left
                     leftMargin: Theme.paddingLarge
                 }
-                text: qsTr("medical")
+                text: qsTr("categories")
                 color: Theme.secondaryColor
                 spacing: Theme.paddingMedium
-                icon: "../gfx/medical.png"
+                icon: "image://theme/icon-m-menu"
                 iconSize: Theme.itemSizeExtraSmall *2/3
                 onClicked: {
-                    reloadIndex("medical");
+                    reloadIndex("categories");
                 }
             }
         }
@@ -97,7 +97,7 @@ Panel {
                 text: qsTr("Settings")
                 color: Theme.secondaryColor
                 spacing: Theme.paddingMedium
-                icon: "../gfx/seeting.png"
+                icon: "image://theme/icon-m-developer-mode"
                 iconSize: Theme.itemSizeExtraSmall *2/3
                 onClicked: {
                    pageStack.push(Qt.resolvedUrl("SettingPage.qml"));
