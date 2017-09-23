@@ -35,6 +35,45 @@
     </message>
 </context>
 <context>
+    <name>LoginComponent</name>
+    <message>
+        <source>Login</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter Email</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>UserName</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter Password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show Password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Don&apos;t have accounts?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Login fail</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please try again.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>NavigationPanel</name>
     <message>
         <source>Settings</source>
@@ -42,6 +81,41 @@
     </message>
     <message>
         <source>categories</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RegisterComponent</name>
+    <message>
+        <source>Create Account</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Email address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>User Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Confirm Password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Register</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Register fail</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please try again.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

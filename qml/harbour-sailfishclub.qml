@@ -32,6 +32,7 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 import "pages"
 import "components"
+import "js/main.js" as JS
 import io.thp.pyotherside 1.3
 import org.nemomobile.notifications 1.0
 
@@ -148,6 +149,7 @@ ApplicationWindow
         }
     }
 
+
     initialPage: Component {
         Page{
             id:splashPage
@@ -229,7 +231,14 @@ ApplicationWindow
                 onTriggered: {
                     splash.visible = false;
                     loading = false;
-                    toIndexPage();
+//                    toIndexPage();
+                    var UserData = JS.getUserData();
+                    if(UserData){
+                        //login validate
+                        toLoginPage();
+                    }else{
+                        toLoginPage();
+                    }
                 }
             }
         }
@@ -244,6 +253,10 @@ ApplicationWindow
 
     }
 
+    function toLoginPage(){
+        popAttachedPages();
+        pageStack.replace(Qt.resolvedUrl("pages/LoginDialog.qml"));
+    }
 
     function popAttachedPages() {
         // find the first page
@@ -256,6 +269,11 @@ ApplicationWindow
         }
         // pop to first page
         pageStack.pop(firstPage);
+    }
+
+
+    Component.onCompleted: {
+        JS.initialize();
     }
 }
 

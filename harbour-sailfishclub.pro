@@ -22,11 +22,17 @@ OTHER_FILES += qml/harbour-sailfishclub.qml \
     qml/pages/SecondPage.qml \
     qml/pages/Signalcenter.qml \
     qml/pages/NavigationPanel.qml \
+    qml/js/main.js \
+    qml/pages/LoginDialog.qml \
+    qml/components/HorizontalIconTextButton.qml \
+    qml/components/ImagePage.qml \
+    qml/components/LabelText.qml \
+    qml/components/Panel.qml \
+    qml/components/PanelView.qml \
     qml/py/main.py \
     rpm/harbour-sailfishclub.changes.in \
     rpm/harbour-sailfishclub.spec \
     rpm/harbour-sailfishclub.yaml \
-    translations/*.ts \
     harbour-sailfishclub.desktop
 
 SAILFISHAPP_ICONS = 86x86 108x108 128x128 256x256
@@ -40,5 +46,13 @@ CONFIG += sailfishapp_i18n
 # following TRANSLATIONS line. And also do not forget to
 # modify the localized app name in the the .desktop file.
 TRANSLATIONS += translations/harbour-sailfishclub-de.ts
+
+DISTFILES += \
+    qml/pages/RegisterPage.qml \
+    qml/components/LoginComponent.qml \
+    qml/components/RegisterComponent.qml
+
+
+
 
 
