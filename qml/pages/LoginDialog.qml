@@ -1,66 +1,51 @@
 import QtQuick 2.0
+import QtWebKit 3.0
+import QtWebKit.experimental 1.0
 import Sailfish.Silica 1.0
-import "../components"
+import "../js/ApiMain.js" as JS
 
-Dialog {
-    id: dialog
-
-    readonly property bool loginSucced: _loginSucceed
-    property string token: ""
-    readonly property alias _token: dialog.token
-    property bool _loginSucceed: false
-    property bool _canAccept: false
-    property bool _showLoginView: true
-
-    onAccepted: toWelcomePage();
-    //只有当登陆成功的时候才能accept
-    canAccept: _canAccept
-    BusyIndicator {
-        id: busyIndicator
-        parent: dialog
-        anchors.centerIn: parent
-        size: BusyIndicatorSize.Large
-        running: !_showLoginView
-        opacity: busyIndicator.running ? 1 : 0
-    }
-
-    onTokenChanged: {
-        _showLoginView = false;
-        api.checkToken(_token); //signal onTokenExpired
-    }
-
-//    Connections {
-//        target: api
-//        onTokenExpired: {
-//            if (!tokenExpired) {
-//                console.log("==== !tokenExpired")
-//                api.accessToken = Settings.getAccess_token();
-//                api.uid = Settings.getUid();
-//                timer.start();
-//            } else {
-//                _showLoginView = true;
-//            }
-//        }
-//    }
-
-    Timer {
-        id: timer
-        interval: 300
-        onTriggered: {
-            _canAccept = true;
-            _loginSucceed = true;
-            dialog.accept();
-        }
-    }
-
-    LoginComponent {
-        id:loginView
+Page{
+    id:user_center_main
+    property string webviewurl
+    WebView{
+        id: webLogin
+        opacity: 1
+        visible: true
+        url:webviewurl
+        //url:"https://dev.qiyuos.cn/api/oauth2/authorize?client_id=flzJNMJPKVeanZx8&state=1&response_type=code"
         anchors.fill: parent
-        opacity: _showLoginView ? 1 : 0
-        onLoginSucceed: {
-            _canAccept = true;
-            _loginSucceed = true;
-            dialog.accept();
+        experimental.userAgent:"Qt; Mozilla/5.0 (Windows NT 6.2; Win64; x64) AppleWebKit/537.36  (KHTML, like Gecko) Chrome/32.0.1667.0 Safari/537.36"
+
+        Behavior on opacity {
+            NumberAnimation{duration: 300}
         }
+
+        onLoadingChanged:{
+            Qt.inputMethod.hide()
+            var weburl=url.toString();
+            if(weburl.indexOf(JS.api_redirect) != -1 && weburl.indexOf("code=") != -1 ){
+                var parames = JS.parse_url(weburl);
+                var code=parames["code"]
+                JS.reqToken(code);
+            }
+         }
+    }
+    BusyIndicator {
+        anchors.centerIn: parent
+        running: webLogin.loading
+        size: BusyIndicatorSize.Large
+    }
+
+    Connections{
+        target: signalCenter
+        onLoginSuccessed:{
+            signalCenter.showMessage(qsTr("Login success!"));
+            toIndexPage()
+        }
+        onLoginFailed:{
+            signalCenter.showMessage(errorstring)
+            //toLoginPage()
+        }
+
     }
 }

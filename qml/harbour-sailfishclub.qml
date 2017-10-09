@@ -233,9 +233,9 @@ ApplicationWindow
                     loading = false;
 //                    toIndexPage();
                     var UserData = JS.getUserData();
-                    if(UserData){
+                    if(UserData.user){
                         //login validate
-                        toLoginPage();
+                        toIndexPage();
                     }else{
                         toLoginPage();
                     }
