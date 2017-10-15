@@ -1,6 +1,6 @@
 import QtQuick 2.0
 import QtWebKit 3.0
-import QtWebKit.experimental 1.0
+//import QtWebKit.experimental 1.0
 import Sailfish.Silica 1.0
 import "../js/ApiMain.js" as JS
 
@@ -12,9 +12,9 @@ Page{
         opacity: 1
         visible: true
         url:webviewurl
-        //url:"https://dev.qiyuos.cn/api/oauth2/authorize?client_id=flzJNMJPKVeanZx8&state=1&response_type=code"
+//        url:"https://sailfishos.club"
         anchors.fill: parent
-        experimental.userAgent:"Qt; Mozilla/5.0 (Windows NT 6.2; Win64; x64) AppleWebKit/537.36  (KHTML, like Gecko) Chrome/32.0.1667.0 Safari/537.36"
+//        experimental.userAgent:"Qt; Mozilla/5.0 (Windows NT 6.2; Win64; x64) AppleWebKit/537.36  (KHTML, like Gecko) Chrome/32.0.1667.0 Safari/537.36"
 
         Behavior on opacity {
             NumberAnimation{duration: 300}

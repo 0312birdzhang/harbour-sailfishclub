@@ -1,6 +1,6 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-
+import QtGraphicalEffects 1.0
 
 import "../components"
 
@@ -57,14 +57,35 @@ Panel {
                 height: width
                 anchors.centerIn: cover
                 asynchronous: true
+                smooth: true
                 source: "../gfx/icefrog.jpg"
+                sourceSize: Qt.size(userAvatar.width/4, userAvatar.width/4)
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
                         userAvatarClicked();
                     }
                 }
+
             }
+            Rectangle{
+                id: rectsrc
+                color: "#fffffffff"
+                width: userAvatar.width/4
+                height: userAvatar.width/4
+                radius: userAvatar.width/8
+                visible: false
+                smooth: true
+            }
+
+            OpacityMask{
+                source: profile
+                maskSource: rectsrc
+                width: userAvatar.width/4
+                height: userAvatar.width/4
+                anchors.centerIn: parent
+            }
+
         }
         Item {
             visible: false

@@ -30,6 +30,7 @@ OTHER_FILES += qml/harbour-sailfishclub.qml \
     qml/components/Panel.qml \
     qml/components/PanelView.qml \
     qml/py/main.py \
+    qml/py/sfctoken.py \
     rpm/harbour-sailfishclub.changes.in \
     rpm/harbour-sailfishclub.spec \
     rpm/harbour-sailfishclub.yaml \
@@ -50,7 +51,9 @@ TRANSLATIONS += translations/harbour-sailfishclub-de.ts
 DISTFILES += \
     qml/pages/RegisterPage.qml \
     qml/components/LoginComponent.qml \
-    qml/components/RegisterComponent.qml
+    qml/components/RegisterComponent.qml \
+    qml/js/ApiCore.js \
+    qml/js/ApiMain.js
 
 
 

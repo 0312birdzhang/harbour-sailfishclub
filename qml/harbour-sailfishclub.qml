@@ -33,6 +33,7 @@ import Sailfish.Silica 1.0
 import "pages"
 import "components"
 import "js/main.js" as JS
+import "js/ApiMain.js" as Main
 import io.thp.pyotherside 1.3
 import org.nemomobile.notifications 1.0
 
@@ -236,8 +237,10 @@ ApplicationWindow
                     if(UserData.user){
                         //login validate
                         toIndexPage();
+//                        toLoginPage();
                     }else{
-                        toLoginPage();
+//                        toLoginPage();
+                        toIndexPage();
                     }
                 }
             }
@@ -255,7 +258,7 @@ ApplicationWindow
 
     function toLoginPage(){
         popAttachedPages();
-        pageStack.replace(Qt.resolvedUrl("pages/LoginDialog.qml"));
+        pageStack.replace(Qt.resolvedUrl("pages/LoginDialog.qml"),{webviewurl:Main.webviewUrl});
     }
 
     function popAttachedPages() {
@@ -274,6 +277,7 @@ ApplicationWindow
 
     Component.onCompleted: {
         JS.initialize();
+        Main.signalcenter = signalCenter;
     }
 }
 

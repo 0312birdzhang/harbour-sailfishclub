@@ -6,3 +6,4 @@
 *.qm
 token.py
 .vscode
+qml/py/sfctoken.py
