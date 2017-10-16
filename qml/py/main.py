@@ -36,6 +36,12 @@ def listcategory():
     for category in categories:
         print(category["cid"], category["name"])
 
+def getTopic(id):
+    status_code, topic = client.topics.get(id)
+    if not status_code or status_code != 200:
+        return False
+    return topic
+
 #pyotherside.send('loadStarted')
 #pyotherside.send('loadFinished')
 #pyotherside.send('loadFailed',str(e))

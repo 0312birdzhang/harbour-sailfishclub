@@ -34,6 +34,7 @@ import "pages"
 import "components"
 import "js/main.js" as JS
 import "js/ApiMain.js" as Main
+import "js/fontawesome.js" as FontAwesome
 import io.thp.pyotherside 1.3
 import org.nemomobile.notifications 1.0
 
@@ -62,6 +63,10 @@ ApplicationWindow
         id:processingtimer;
         interval: 60000;
         onTriggered: signalCenter.loadFailed(qsTr("请求超时"));
+    }
+
+    FontLoader {
+        source: "js/fontawesome-webfont.ttf"
     }
 
     Connections{
