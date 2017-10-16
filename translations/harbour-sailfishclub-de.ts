@@ -81,13 +81,6 @@
     </message>
 </context>
 <context>
-    <name>LoginDialog</name>
-    <message>
-        <source>Login success!</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>NavigationPanel</name>
     <message>
         <source>Settings</source>

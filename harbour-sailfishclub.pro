@@ -53,7 +53,8 @@ DISTFILES += \
     qml/components/LoginComponent.qml \
     qml/components/RegisterComponent.qml \
     qml/js/ApiCore.js \
-    qml/js/ApiMain.js
+    qml/js/ApiMain.js \
+    qml/pages/TopicPage.qml
 
 
 

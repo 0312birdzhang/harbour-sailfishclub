@@ -12,7 +12,7 @@ Dialog {
     property bool _canAccept: false
     property bool _showLoginView: true
 
-    onAccepted: toWelcomePage();
+    onAccepted: toIndexPage();
     //只有当登陆成功的时候才能accept
     canAccept: _canAccept
     BusyIndicator {
@@ -26,7 +26,7 @@ Dialog {
 
     onTokenChanged: {
         _showLoginView = false;
-        api.checkToken(_token); //signal onTokenExpired
+        //api.checkToken(_token); //signal onTokenExpired
     }
 
 //    Connections {

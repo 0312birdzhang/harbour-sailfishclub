@@ -158,7 +158,15 @@ Page {
                     //alignment:Qt.AlignHCenter
                     color: Theme.highlightColor
                 }
-            onClicked: console.log("Clicked " + index)
+            onClicked: {
+                pageStack.push(Qt.resolvedUrl("TopicPage.qml"),{
+                                "tid":tid,
+                                "title":title,
+                                "slug":slug,
+                                "user":user
+
+                               });
+            }
         }
         VerticalScrollDecorator {}
     }
