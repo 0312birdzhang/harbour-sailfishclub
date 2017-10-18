@@ -1,15 +1,34 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import "../js/main.js" as Script
-
+import io.thp.pyotherside 1.3
 Item {
     id:loginComponent
 
     signal loginSucceed()
     signal loginFailed(string fail)
+
+    Python{
+        id:py
+        Component.onCompleted: {
+            addImportPath(Qt.resolvedUrl('../../py')); // adds import path to the directory of the Python script
+                py.importModule('main', function () { // imports the Python module
+           });
+        }
+        function login(username,password){
+             call('main.login',[username,password],function(result){
+                    if(result){
+
+                    }else{
+                        loginFailed("登录失败！");
+                    }
+             })
+        }
+    }
+
+
     SilicaFlickable {
         anchors.fill: parent
-
         BusyIndicator {
             id:busyIndicator
             parent: loginComponent
@@ -53,7 +72,7 @@ Item {
                         height:implicitHeight
                         inputMethodHints:Qt.ImhNoAutoUppercase | Qt.ImhUrlCharactersOnly
                         font.pixelSize: Theme.fontSizeMedium
-                        placeholderText: qsTr("Enter Email")
+                        placeholderText: qsTr("Enter UserName/Email")
                         label: qsTr("UserName")
                         EnterKey.enabled: text || inputMethodComposing
                         EnterKey.iconSource: "image://theme/icon-m-enter-next"

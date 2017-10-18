@@ -22,6 +22,8 @@ OTHER_FILES += qml/harbour-sailfishclub.qml \
     qml/pages/SecondPage.qml \
     qml/pages/Signalcenter.qml \
     qml/pages/NavigationPanel.qml \
+    qml/pages/objects/UserInfo.qml \
+    qml/pages/objects/TopicInfo.qml \
     qml/js/main.js \
     qml/pages/LoginDialog.qml \
     qml/components/HorizontalIconTextButton.qml \
@@ -31,6 +33,7 @@ OTHER_FILES += qml/harbour-sailfishclub.qml \
     qml/components/PanelView.qml \
     qml/py/main.py \
     qml/py/sfctoken.py \
+    qml/py/secret.py \
     rpm/harbour-sailfishclub.changes.in \
     rpm/harbour-sailfishclub.spec \
     rpm/harbour-sailfishclub.yaml \

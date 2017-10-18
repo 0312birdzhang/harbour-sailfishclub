@@ -29,11 +29,13 @@ PkgConfigBR:
 # Build dependencies without a pkgconfig setup can be listed here
 # PkgBR:
 #   - package-needed-to-build
-
+PkgBR:
+- ssu-devel
 # Runtime dependencies which are not automatically detected
 Requires:
   - sailfishsilica-qt5 >= 0.10.9 
   - pyotherside-qml-plugin-python3-qt5 >= 1.3.0
+  - libsailfishapp-launcher
   - python3-pynodebb
 # All installed files
 Files:

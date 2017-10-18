@@ -1,12 +1,4 @@
 .pragma library
-var api_url="https://dev.qiyuos.cn/api/oauth2/token";
-var api_id = "flzJNMJPKVeanZx8";
-var api_securet = "bw686PqILiNbxDZThIR1Etls2cBrwgJK";
-var api_redirect = "http://example.com";
-
-//-------------------认证接口-------------------------------//
-//OpenAPI 授权登录页面
-var oauth2_authorize ="https://dev.qiyuos.cn/api/oauth2/authorize";
 
 
 function substr(string,length){

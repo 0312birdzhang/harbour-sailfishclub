@@ -21,6 +21,15 @@ Panel {
         toIndexPage();
     }
 
+    onUserAvatarClicked: {
+        //to loginpage or userinfo page
+        if(appwindow.logined){
+//            toUserInfoPage();
+        }else{
+            toLoginPage();
+        }
+    }
+
     Column {
         id: column
         spacing: Theme.paddingMedium
@@ -58,7 +67,7 @@ Panel {
                 anchors.centerIn: cover
                 asynchronous: true
                 smooth: true
-                source: "../gfx/icefrog.jpg"
+                source: logined?userinfo.avatar:"image://theme/harbour-sailfishclub"
                 sourceSize: Qt.size(userAvatar.width/4, userAvatar.width/4)
                 MouseArea {
                     anchors.fill: parent

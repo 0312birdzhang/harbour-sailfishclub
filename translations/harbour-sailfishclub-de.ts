@@ -13,13 +13,6 @@
     </message>
 </context>
 <context>
-    <name>CoverPage</name>
-    <message>
-        <source>My Cover</source>
-        <translation>Mein Cover</translation>
-    </message>
-</context>
-<context>
     <name>FirstPage</name>
     <message>
         <source>Recent Page</source>

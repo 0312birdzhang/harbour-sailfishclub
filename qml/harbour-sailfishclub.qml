@@ -31,6 +31,7 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import "pages"
+import "pages/objects"
 import "components"
 import "js/main.js" as JS
 import "js/ApiMain.js" as Main
@@ -43,6 +44,9 @@ ApplicationWindow
     id:appwindow
     property string appname: "旗鱼俱乐部"
     property bool loading: false
+    property bool logined: false
+    property alias  userinfo: userinfo
+
     Notification{
         id:notification
         appName: appname
@@ -88,6 +92,10 @@ ApplicationWindow
 
     Signalcenter{
         id: signalCenter;
+    }
+
+    UserInfo{
+        id:userinfo
     }
 
     function showMsg(message) {
