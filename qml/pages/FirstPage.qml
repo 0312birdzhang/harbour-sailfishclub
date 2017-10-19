@@ -72,7 +72,7 @@ Page {
 
                 Label{
                     id:latestPost
-                    text: latestpost?(qsTr("latest post") + " " + latestuser +":"+ latestpost):""
+                    text: latestpost?(qsTr("last post by") + " " + latestuser +":"+ latestpost):""
                     textFormat: Text.StyledText
                     font.pixelSize: Theme.fontSizeExtraSmall
                     wrapMode: Text.WordWrap

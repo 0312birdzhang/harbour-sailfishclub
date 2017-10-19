@@ -8,7 +8,7 @@ function initialize() {
     var db = getDatabase();
     db.transaction(
                 function(tx) {
-                    tx.executeSql('CREATE TABLE IF NOT EXISTS LoginData(user text,pass text);');
+                    tx.executeSql('CREATE TABLE IF NOT EXISTS LoginData(user text PRIMARY KEY,pass text);');
                 });
 
 }

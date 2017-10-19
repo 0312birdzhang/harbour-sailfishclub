@@ -3,6 +3,7 @@ from pynodebb import Client
 from sfctoken import access_token
 import token
 import pyotherside
+import logging
 
 
 client = Client('https://sailfishos.club', access_token)
@@ -15,6 +16,8 @@ def login(user, password):
     """{'lastonlineISO': '2017-10-19T01:16:54.375Z', 'birthday': '', 'email': '0312birdzhang@gmail.com', 'postcount': '99', 'icon:bgColor': '#1b5e20', 'uid': '2', 'signature': '———扬帆起航🚢', 'lastonline': '1508375814375', 'followerCount': '2', 'groupTitle': 'administrators', 'fullname': '', 'lastposttime': '1508242534975', 'username': 'BirdZhang', 'topiccount': '35', 'cover:position': '50.13333511352539% 63.46666717529297%', 'icon:text': 'B', 'picture': '/assets/uploads/profile/2-profileavatar.jpeg', 'joindate': '1492905871911', 'passwordExpiry': '0', 'email:confirmed': 1, 'userslug': 'birdzhang', 'aboutme': '没错，我就是站长😂', 'location': '', 'profileviews': '299', 'reputation': '1', 'website': 'http://birdzhang.xyz', 'githubid': '1762041', 'joindateISO': '2017-04-23T00:04:31.911Z', 'uploadedpicture': '/assets/uploads/profile/2-profileavatar.jpeg', 'status': 'offline', 'banned': '0'}
     """
     status_code, userInfo = client.users.login(user, password)
+    logging.debug(status_code)
+    logging.debug(userInfo)
     if not status_code:
         return False
     return userInfo

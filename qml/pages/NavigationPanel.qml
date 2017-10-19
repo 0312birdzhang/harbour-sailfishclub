@@ -23,7 +23,7 @@ Panel {
 
     onUserAvatarClicked: {
         //to loginpage or userinfo page
-        if(appwindow.logined){
+        if(userinfo.logined){
 //            toUserInfoPage();
         }else{
             toLoginPage();
@@ -67,7 +67,7 @@ Panel {
                 anchors.centerIn: cover
                 asynchronous: true
                 smooth: true
-                source: logined?userinfo.avatar:"image://theme/harbour-sailfishclub"
+                source: userinfo.logined?(siteUrl+userinfo.avatar):"image://theme/harbour-sailfishclub"
                 sourceSize: Qt.size(userAvatar.width/4, userAvatar.width/4)
                 MouseArea {
                     anchors.fill: parent
@@ -93,6 +93,17 @@ Panel {
                 width: userAvatar.width/4
                 height: userAvatar.width/4
                 anchors.centerIn: parent
+            }
+            Label{
+                id:userName
+                text:userinfo.logined?userinfo.username:qsTr("Guest")
+                font.family: Theme.fontSizeSmall
+                color: Theme.primaryColor
+                anchors{
+                    top: profile.bottom
+                    topMargin: Theme.paddingSmall
+                    horizontalCenter: parent.horizontalCenter
+                }
             }
 
         }

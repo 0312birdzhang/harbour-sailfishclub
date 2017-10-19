@@ -19,7 +19,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>latest post</source>
+        <source>last post by</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -38,10 +38,6 @@
     <name>LoginComponent</name>
     <message>
         <source>Login</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enter Email</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -72,6 +68,10 @@
         <source>Please try again.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Enter UserName/Email</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NavigationPanel</name>
@@ -81,6 +81,10 @@
     </message>
     <message>
         <source>categories</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Guest</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

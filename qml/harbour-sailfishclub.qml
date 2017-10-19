@@ -45,6 +45,7 @@ ApplicationWindow
     property string appname: "旗鱼俱乐部"
     property bool loading: false
     property bool logined: false
+    property string siteUrl: "https://sailfishos.club"
     property alias  userinfo: userinfo
 
     Notification{
@@ -110,27 +111,55 @@ ApplicationWindow
         id:py
         Component.onCompleted: {
             addImportPath(Qt.resolvedUrl('./py')); // adds import path to the directory of the Python script
-                py.importModule('main', function () { // imports the Python module
+                py.importModule('main', function () {
+           });
+                py.importModule('secret', function () {
            });
         }
         function login(username,password){
              call('main.login',[username,password],function(result){
-                    if(result && result != "Forbidden"){
+                    console.log("result:"+result)
+                    if(result && result != "Forbidden" && result != "False"){
                         userinfo.uid = result.uid;
                         userinfo.username = result.username;
                         userinfo.email = result.email;
                         userinfo.website = result.website;
                         userinfo.avatar = result.picture;
                         userinfo.groupTitle = result.groupTitle;
+                        userinfo.signature = result.signature;
+                        userinfo.topiccount = result.topiccount;
+                        userinfo.postcount = result.postcount;
+                        userinfo.aboutme = result.aboutme;
+                        userinfo.logined = true;
                         signalCenter.loginSucceed();
+
                     }else{
                         signalCenter.loginFailed("登录失败！");
                     }
              })
         }
+
+        function saveData(username,password){
+            if(!userinfo.logined){
+                return;
+            }
+
+            //保持加密后的密码
+            var pass_encrypted = encryPass(password);
+            if(pass_encrypted){
+                JS.setUserData(username,pass_encrypted);
+            }
+        }
+
         function getRecent(){
-            return sync('main.getrecent',[]);
+            return call_sync('main.getrecent',[]);
         }            
+        function encryPass(password){
+            return call_sync('secret.encrypt',[password]);
+        }
+        function decryPass(password){
+            return call_sync('secret.decrypt',[password]);
+        }
     }
 
     PanelView {
@@ -275,8 +304,12 @@ ApplicationWindow
                     loading = false;
 //                    toIndexPage();
                     var UserData = JS.getUserData();
-                    if(UserData.user){
+                    if(UserData.user && UserData.pass){
                         //login validate
+                        var derpass = py.decryPass(UserData.pass);
+                        console.log("user:"+UserData.user+",pass:"+derpass);
+                        if(derpass)py.login(UserData.user,derpass);
+
                         toIndexPage();
 //                        toLoginPage();
                     }else{
