@@ -19,6 +19,17 @@ def login(user, password):
         return False
     return userInfo
 
+def create(user,password,email):
+    status_code, userInfo = client.users.create(user,**{
+        "password":password,
+        "email":email
+    })
+    if not status_code or status_code != 200:
+        return False
+    else:
+        uid = userInfo.get("uid")
+        return uid
+    return True
 
 def post(title, content, uid, cid):
     status_code, response = client.topics.create(uid, cid, title, content)

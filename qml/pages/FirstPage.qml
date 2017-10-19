@@ -42,41 +42,6 @@ Page {
         id:listModel
     }
 
-    Python{
-        id:py
-        Component.onCompleted: {
-            addImportPath(Qt.resolvedUrl('../py')); // adds import path to the directory of the Python script
-                py.importModule('main', function () { // imports the Python module
-           });
-        }
-
-        function getRecent(){
-            call('main.getrecent',[],function(result){
-                for(var i = 0;i<result.length;i++){
-                    if(result[i].deleted)continue;
-//                    console.log(result[i].title);
-                    listModel.append({
-                                "title":result[i].title,
-                                 "user":result[i].user.username,
-                                 "viewcount":result[i].viewcount,
-                                 "postcount":result[i].postcount,
-                                 "latestpost":result[i].teaser?result[i].teaser.content:"",
-                                 "latestuser":result[i].teaser?result[i].teaser.user.username:"",
-                                 "tid":result[i].tid,
-                                 "timestamp":result[i].timestampISO,
-                                 "slug":result[i].slug,
-                                 "mainPid":result[i].mainPid,
-                                 "category":result[i].category.name,
-                                 "category_icon":result[i].category.icon
-
-                             });
-                }
-                listView.model = listModel;
-//                console.log(result);
-            })
-        }
-    }
-
     SilicaListView {
         id: listView
         anchors.fill: parent
@@ -172,7 +137,26 @@ Page {
     }
 
     Component.onCompleted: {
-        py.getRecent();
+        var result = py.getRecent();
+        for(var i = 0;i<result.length;i++){
+            if(result[i].deleted)continue;
+            listModel.append({
+                        "title":result[i].title,
+                            "user":result[i].user.username,
+                            "viewcount":result[i].viewcount,
+                            "postcount":result[i].postcount,
+                            "latestpost":result[i].teaser?result[i].teaser.content:"",
+                            "latestuser":result[i].teaser?result[i].teaser.user.username:"",
+                            "tid":result[i].tid,
+                            "timestamp":result[i].timestampISO,
+                            "slug":result[i].slug,
+                            "mainPid":result[i].mainPid,
+                            "category":result[i].category.name,
+                            "category_icon":result[i].category.icon
+
+                        });
+        }
+        listView.model = listModel;
     }
 }
 

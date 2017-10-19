@@ -76,7 +76,7 @@ Item {
                             errorLabel.visible = false;
                             busyIndicator.running = true;
                             // Script.app = window
-                            loginpy.login(userName.text,password.text);
+                            py.login(userName.text,password.text);
                         }
                     }
                 }
@@ -96,7 +96,7 @@ Item {
                 onClicked: {
                     errorLabel.visible = false;
                     busyIndicator.running = true;
-                    loginpy.login(userName.text,password.text);
+                    py.login(userName.text,password.text);
 //                    Script.app = window
 //                    Script.logIn(userName.text,password.text)
 

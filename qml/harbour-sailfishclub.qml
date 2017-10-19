@@ -105,6 +105,34 @@ ApplicationWindow
         notification.publish();
     }
 
+
+    Python{
+        id:py
+        Component.onCompleted: {
+            addImportPath(Qt.resolvedUrl('./py')); // adds import path to the directory of the Python script
+                py.importModule('main', function () { // imports the Python module
+           });
+        }
+        function login(username,password){
+             call('main.login',[username,password],function(result){
+                    if(result && result != "Forbidden"){
+                        userinfo.uid = result.uid;
+                        userinfo.username = result.username;
+                        userinfo.email = result.email;
+                        userinfo.website = result.website;
+                        userinfo.avatar = result.picture;
+                        userinfo.groupTitle = result.groupTitle;
+                        signalCenter.loginSucceed();
+                    }else{
+                        signalCenter.loginFailed("登录失败！");
+                    }
+             })
+        }
+        function getRecent(){
+            return sync('main.getrecent',[]);
+        }            
+    }
+
     PanelView {
         id: panelView
 

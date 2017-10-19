@@ -12,29 +12,7 @@ Dialog {
     property bool _canAccept: false
     property bool _showLoginView: true
 
-    Python{
-        id:loginpy
-        Component.onCompleted: {
-            addImportPath(Qt.resolvedUrl('../../py')); // adds import path to the directory of the Python script
-                py.importModule('main', function () { // imports the Python module
-           });
-        }
-        function login(username,password){
-             call('main.login',[username,password],function(result){
-                    if(result && result != "Forbidden"){
-                        userinfo.uid = result.uid;
-                        userinfo.username = result.username;
-                        userinfo.email = result.email;
-                        userinfo.website = result.website;
-                        userinfo.avatar = result.picture;
-                        userinfo.groupTitle = result.groupTitle;
-                        loginSucceed();
-                    }else{
-                        loginFailed("登录失败！");
-                    }
-             })
-        }
-    }
+    
 
     onAccepted: toIndexPage();
     //只有当登陆成功的时候才能accept
