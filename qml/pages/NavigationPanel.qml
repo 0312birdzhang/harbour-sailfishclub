@@ -3,7 +3,7 @@ import Sailfish.Silica 1.0
 import QtGraphicalEffects 1.0
 
 import "../components"
-
+import "../js/fontawesome.js" as FontAwesome
 
 Panel {
     id: panel
@@ -65,7 +65,7 @@ Panel {
                 width: userAvatar.width/4
                 height: width
                 anchors.centerIn: cover
-                asynchronous: true
+                // asynchronous: true
                 smooth: true
                 source: userinfo.logined?(siteUrl+userinfo.avatar):"image://theme/harbour-sailfishclub"
                 sourceSize: Qt.size(userAvatar.width/4, userAvatar.width/4)
@@ -108,7 +108,6 @@ Panel {
 
         }
         Item {
-            visible: false
             width: column.width
             height: Theme.itemSizeExtraSmall
             HorizontalIconTextButton {
@@ -119,10 +118,49 @@ Panel {
                 text: qsTr("categories")
                 color: Theme.secondaryColor
                 spacing: Theme.paddingMedium
-                icon: "image://theme/icon-m-menu"
+                icon: FontAwesome.fa_list
                 iconSize: Theme.itemSizeExtraSmall *2/3
                 onClicked: {
-                    reloadIndex("categories");
+                    // reloadIndex("categories");
+                }
+            }
+        }
+
+
+        Item {
+            width: column.width
+            height: Theme.itemSizeExtraSmall
+            HorizontalIconTextButton {
+                anchors {
+                    left: parent.left
+                    leftMargin: Theme.paddingLarge
+                }
+                text: qsTr("tags")
+                color: Theme.secondaryColor
+                spacing: Theme.paddingMedium
+                icon: FontAwesome.fa_tags
+                iconSize: Theme.itemSizeExtraSmall *2/3
+                onClicked: {
+                    // reloadIndex("categories");
+                }
+            }
+        }
+
+        Item {
+            width: column.width
+            height: Theme.itemSizeExtraSmall
+            HorizontalIconTextButton {
+                anchors {
+                    left: parent.left
+                    leftMargin: Theme.paddingLarge
+                }
+                text: qsTr("popular")
+                color: Theme.secondaryColor
+                spacing: Theme.paddingMedium
+                icon: FontAwesome.fa_fire
+                iconSize: Theme.itemSizeExtraSmall *2/3
+                onClicked: {
+                    // reloadIndex("categories");
                 }
             }
         }

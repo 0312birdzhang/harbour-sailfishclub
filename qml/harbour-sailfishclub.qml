@@ -117,6 +117,7 @@ ApplicationWindow
            });
         }
         function login(username,password){
+            console.log(username+" ---- "+password)
              call('main.login',[username,password],function(result){
                     console.log("result:"+result)
                     if(result && result != "Forbidden" && result != "False"){
@@ -151,6 +152,7 @@ ApplicationWindow
             }
         }
 
+        // 获取最新帖子
         function getRecent(){
             return call_sync('main.getrecent',[]);
         }            
@@ -159,6 +161,11 @@ ApplicationWindow
         }
         function decryPass(password){
             return call_sync('secret.decrypt',[password]);
+        }
+
+        // 获取贴子内容
+        function getTopic(tid,slug){
+            return call_sync('main.getTopic',[tid,slug]);
         }
     }
 

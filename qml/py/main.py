@@ -18,7 +18,7 @@ def login(user, password):
     status_code, userInfo = client.users.login(user, password)
     logging.debug(status_code)
     logging.debug(userInfo)
-    if not status_code:
+    if not status_code or status_code != 200:
         return False
     return userInfo
 
@@ -52,8 +52,8 @@ def listcategory():
     for category in categories:
         print(category["cid"], category["name"])
 
-def getTopic(id):
-    status_code, topic = client.topics.get(id)
+def getTopic(tid,slug):
+    status_code, topic = client.topics.get(tid,slug=slug)
     if not status_code or status_code != 200:
         return False
     return topic
