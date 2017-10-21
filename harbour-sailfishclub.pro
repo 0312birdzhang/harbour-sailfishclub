@@ -57,7 +57,8 @@ DISTFILES += \
     qml/components/RegisterComponent.qml \
     qml/js/ApiCore.js \
     qml/js/ApiMain.js \
-    qml/pages/TopicPage.qml
+    qml/pages/TopicPage.qml \
+    qml/components/HorizontalFontAwesomeTextButton.qml
 
 
 

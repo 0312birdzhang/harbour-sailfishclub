@@ -31,7 +31,34 @@ Page{
             _titleItem.font.pixelSize: Theme.fontSizeSmall
             description: user;
         }
+        spacing: Theme.paddingSmall
         delegate: BackgroundItem {
+            height: contentLabel.height
+            width: parent.width
+            Label{
+                id:contentLabel
+                text:content
+                textFormat: Text.RichText
+                font.pixelSize: Theme.fontSizeExtraSmall
+                wrapMode: Text.WordWrap
+                linkColor:Theme.primaryColor
+                font.letterSpacing: 2;
+                anchors{
+//                    top:fromMsg.bottom
+                    left:parent.left
+                    right:parent.right
+                    topMargin: Theme.paddingLarge
+                    leftMargin: Theme.paddingMedium
+                    rightMargin: Theme.paddingSmall
+                    bottomMargin: Theme.paddingLarge
+                }
+            }
+
+            Separator {
+                visible:(index > 0?true:false)
+                width:parent.width;
+                color: Theme.highlightColor
+            }
 
         }
 
@@ -49,6 +76,24 @@ Page{
                 next_active = pagination.next.action;
                 prev_page = pagination.prev.qs;
                 prev_active = pagination.prev.action;
+            }
+            for(var i = 0;i<posts.length; i ++){
+
+                //过滤掉删除的
+                if(posts[i].deleted){
+                    continue;
+                }
+
+                topicModel.append({
+                                     "timestamp":posts[i].timestamp,
+                                      "content":posts[i].content,
+                                      "uid":posts[i].uid,
+                                      "user":posts[i].user.username,
+//                                      "user_group_icon":posts[i].user.selectedGroup.icon,
+//                                      "user_group_name":posts[i].user.selectedGroup.name,
+
+                                  });
+                topicView.model = topicModel;
             }
         }
     }

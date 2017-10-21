@@ -110,16 +110,17 @@ Panel {
         Item {
             width: column.width
             height: Theme.itemSizeExtraSmall
-            HorizontalIconTextButton {
+            HorizontalFontAwesomeTextButton {
                 anchors {
                     left: parent.left
                     leftMargin: Theme.paddingLarge
                 }
-                text: qsTr("categories")
+                icon:FontAwesome.Icon.fa_list
+                text:  qsTr("categories")
                 color: Theme.secondaryColor
                 spacing: Theme.paddingMedium
-                icon: FontAwesome.fa_list
-                iconSize: Theme.itemSizeExtraSmall *2/3
+//                icon: FontAwesome.Icon.fa_list
+//                iconSize: Theme.itemSizeExtraSmall *2/3
                 onClicked: {
                     // reloadIndex("categories");
                 }
@@ -130,16 +131,17 @@ Panel {
         Item {
             width: column.width
             height: Theme.itemSizeExtraSmall
-            HorizontalIconTextButton {
+            HorizontalFontAwesomeTextButton {
                 anchors {
                     left: parent.left
                     leftMargin: Theme.paddingLarge
                 }
+                icon:FontAwesome.Icon.fa_tags
                 text: qsTr("tags")
                 color: Theme.secondaryColor
                 spacing: Theme.paddingMedium
-                icon: FontAwesome.fa_tags
-                iconSize: Theme.itemSizeExtraSmall *2/3
+//                icon: FontAwesome.Icon.fa_tags
+//                iconSize: Theme.itemSizeExtraSmall *2/3
                 onClicked: {
                     // reloadIndex("categories");
                 }
@@ -149,16 +151,17 @@ Panel {
         Item {
             width: column.width
             height: Theme.itemSizeExtraSmall
-            HorizontalIconTextButton {
+            HorizontalFontAwesomeTextButton {
                 anchors {
                     left: parent.left
                     leftMargin: Theme.paddingLarge
                 }
-                text: qsTr("popular")
+                icon:FontAwesome.Icon.fa_fire
+                text:  qsTr("popular")
                 color: Theme.secondaryColor
                 spacing: Theme.paddingMedium
-                icon: FontAwesome.fa_fire
-                iconSize: Theme.itemSizeExtraSmall *2/3
+//                icon: FontAwesome.Icon.fa_fire
+//                iconSize: Theme.itemSizeExtraSmall *2/3
                 onClicked: {
                     // reloadIndex("categories");
                 }
@@ -168,16 +171,15 @@ Panel {
         Item {
             width: column.width
             height: Theme.itemSizeExtraSmall
-            HorizontalIconTextButton {
+            HorizontalFontAwesomeTextButton {
                 anchors {
                     left: parent.left
                     leftMargin: Theme.paddingLarge
                 }
-                text: qsTr("Settings")
+                icon: FontAwesome.Icon.fa_cogs
+                text:  qsTr("Settings")
                 color: Theme.secondaryColor
                 spacing: Theme.paddingMedium
-                icon: "image://theme/icon-m-developer-mode"
-                iconSize: Theme.itemSizeExtraSmall *2/3
                 onClicked: {
                    pageStack.push(Qt.resolvedUrl("SettingPage.qml"));
                 }

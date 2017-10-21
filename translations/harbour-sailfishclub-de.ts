@@ -87,6 +87,14 @@
         <source>Guest</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>tags</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>popular</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RegisterComponent</name>

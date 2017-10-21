@@ -133,7 +133,7 @@ ApplicationWindow
                         userinfo.aboutme = result.aboutme;
                         userinfo.logined = true;
                         signalCenter.loginSucceed();
-
+                        saveData(username,password);
                     }else{
                         signalCenter.loginFailed("登录失败！");
                     }
@@ -142,6 +142,7 @@ ApplicationWindow
 
         function saveData(username,password){
             if(!userinfo.logined){
+                console.log("not logined")
                 return;
             }
 
