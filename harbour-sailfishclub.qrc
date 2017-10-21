@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>py/main.py</file>
+        <file>py/sfctoken.py</file>
+        <file>py/secret.py</file>
+    </qresource>
+</RCC>

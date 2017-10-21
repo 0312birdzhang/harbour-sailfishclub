@@ -31,9 +31,13 @@ OTHER_FILES += qml/harbour-sailfishclub.qml \
     qml/components/LabelText.qml \
     qml/components/Panel.qml \
     qml/components/PanelView.qml \
-    qml/py/main.py \
-    qml/py/sfctoken.py \
-    qml/py/secret.py \
+    qml/pages/RegisterPage.qml \
+    qml/components/LoginComponent.qml \
+    qml/components/RegisterComponent.qml \
+    qml/js/ApiCore.js \
+    qml/js/ApiMain.js \
+    qml/pages/TopicPage.qml \
+    qml/components/HorizontalFontAwesomeTextButton.qml \
     rpm/harbour-sailfishclub.changes.in \
     rpm/harbour-sailfishclub.spec \
     rpm/harbour-sailfishclub.yaml \
@@ -51,14 +55,10 @@ CONFIG += sailfishapp_i18n
 # modify the localized app name in the the .desktop file.
 TRANSLATIONS += translations/harbour-sailfishclub-de.ts
 
-DISTFILES += \
-    qml/pages/RegisterPage.qml \
-    qml/components/LoginComponent.qml \
-    qml/components/RegisterComponent.qml \
-    qml/js/ApiCore.js \
-    qml/js/ApiMain.js \
-    qml/pages/TopicPage.qml \
-    qml/components/HorizontalFontAwesomeTextButton.qml
+
+
+RESOURCES += \
+    harbour-sailfishclub.qrc
 
 
 

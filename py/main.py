@@ -1,10 +1,8 @@
 from __future__ import print_function
 from pynodebb import Client
-from sfctoken import access_token
-import token
 import pyotherside
+from sfctoken import access_token
 import logging
-
 
 client = Client('https://sailfishos.club', access_token)
 client.configure(**{

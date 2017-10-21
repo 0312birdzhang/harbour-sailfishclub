@@ -110,11 +110,11 @@ ApplicationWindow
     Python{
         id:py
         Component.onCompleted: {
-            addImportPath(Qt.resolvedUrl('./py')); // adds import path to the directory of the Python script
-                py.importModule('main', function () {
-           });
-                py.importModule('secret', function () {
-           });
+            addImportPath('qrc:/py/')
+            py.importModule('main', function () {
+            });
+            py.importModule('secret', function () {
+            });
         }
         function login(username,password){
             console.log(username+" ---- "+password)
@@ -156,10 +156,12 @@ ApplicationWindow
         // 获取最新帖子
         function getRecent(){
             return call_sync('main.getrecent',[]);
-        }            
+        }
+        //加密密码
         function encryPass(password){
             return call_sync('secret.encrypt',[password]);
         }
+        //解密密码
         function decryPass(password){
             return call_sync('secret.decrypt',[password]);
         }

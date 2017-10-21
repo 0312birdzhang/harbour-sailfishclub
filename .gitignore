@@ -4,6 +4,5 @@
 *.Db
 *.project
 *.qm
-token.py
 .vscode
-qml/py/sfctoken.py
+py/sfctoken.py
