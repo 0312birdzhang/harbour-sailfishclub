@@ -36,7 +36,7 @@ import "../js/ApiCore.js" as JS
 Page {
     id: page
     property alias contentItem:listView
-    allowedOrientations: Orientation.All
+//    allowedOrientations: Orientation.All
 
     ListModel{
         id:listModel

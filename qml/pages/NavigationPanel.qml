@@ -60,15 +60,14 @@ Panel {
                 asynchronous: true
                 source: "../gfx/background.png"
             }
-            Image {
+            MaskImage {
                 id: profile
                 width: userAvatar.width/4
                 height: width
                 anchors.centerIn: cover
                 // asynchronous: true
                 smooth: true
-                source: userinfo.logined?(siteUrl+userinfo.avatar):"image://theme/harbour-sailfishclub"
-                sourceSize: Qt.size(userAvatar.width/4, userAvatar.width/4)
+                msource: userinfo.logined?(siteUrl+userinfo.avatar):"image://theme/harbour-sailfishclub"
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
@@ -77,23 +76,7 @@ Panel {
                 }
 
             }
-            Rectangle{
-                id: rectsrc
-                color: "#fffffffff"
-                width: userAvatar.width/4
-                height: userAvatar.width/4
-                radius: userAvatar.width/8
-                visible: false
-                smooth: true
-            }
 
-            OpacityMask{
-                source: profile
-                maskSource: rectsrc
-                width: userAvatar.width/4
-                height: userAvatar.width/4
-                anchors.centerIn: parent
-            }
             Label{
                 id:userName
                 text:userinfo.logined?userinfo.username:qsTr("Guest")

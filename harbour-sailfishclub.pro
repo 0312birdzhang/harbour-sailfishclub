@@ -60,6 +60,10 @@ TRANSLATIONS += translations/harbour-sailfishclub-de.ts
 RESOURCES += \
     harbour-sailfishclub.qrc
 
+DISTFILES += \
+    qml/components/TopicHeader.qml \
+    qml/components/MaskImage.qml
+
 
 
 

@@ -1,6 +1,8 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import io.thp.pyotherside 1.3
+import "../components"
+import "../js/ApiCore.js" as JS
 
 Page{
     id:topicPage
@@ -33,8 +35,20 @@ Page{
         }
         spacing: Theme.paddingSmall
         delegate: BackgroundItem {
-            height: contentLabel.height
+            height: topicHeader.height +contentLabel.height + Theme.paddingMedium * 2
             width: parent.width
+
+            TopicHeader{
+                id: topicHeader
+                avatar: avatar?(siteUrl+avatar):"image://theme/harbour-sailfishclub" //TODO
+                username: username
+                groupTitle:user_group_name
+                floor: floor+"#"
+                posttime:JS.humanedate(timestamp)
+                width: parent.width
+                height: Theme.itemSizeLarge
+            }
+
             Label{
                 id:contentLabel
                 text:content
@@ -44,7 +58,7 @@ Page{
                 linkColor:Theme.primaryColor
                 font.letterSpacing: 2;
                 anchors{
-//                    top:fromMsg.bottom
+                    top:topicHeader.bottom
                     left:parent.left
                     right:parent.right
                     topMargin: Theme.paddingLarge
@@ -88,9 +102,11 @@ Page{
                                      "timestamp":posts[i].timestamp,
                                       "content":posts[i].content,
                                       "uid":posts[i].uid,
-                                      "user":posts[i].user.username,
-//                                      "user_group_icon":posts[i].user.selectedGroup.icon,
-//                                      "user_group_name":posts[i].user.selectedGroup.name,
+                                      "username":posts[i].user.username,
+                                      "avatar":posts[i].user.picture,
+                                      "floor":posts[i].index,
+                                      "user_group_icon":posts[i].user.selectedGroup?posts[i].user.selectedGroup.icon:"",
+                                      "user_group_name":posts[i].user.selectedGroup?posts[i].user.selectedGroup.name:"",
 
                                   });
                 topicView.model = topicModel;
