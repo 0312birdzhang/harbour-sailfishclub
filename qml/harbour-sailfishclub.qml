@@ -117,7 +117,7 @@ ApplicationWindow
             });
         }
         function login(username,password){
-            console.log(username+" ---- "+password)
+//            console.log(username+" ---- "+password)
              call('main.login',[username,password],function(result){
                     console.log("result:"+result)
                     if(result && result != "Forbidden" && result != "False"){
