@@ -77,7 +77,7 @@ Page {
                     font.pixelSize: Theme.fontSizeExtraSmall
                     wrapMode: Text.WordWrap
                     linkColor:Theme.primaryColor
-                    maximumLineCount: 5
+                    maximumLineCount: 3
                     anchors {
                         top: titleid.bottom
                         left: parent.left
@@ -126,9 +126,11 @@ Page {
             onClicked: {
                 pageStack.push(Qt.resolvedUrl("TopicPage.qml"),{
                                 "tid":tid,
-                                "title":title,
+                                "topic_title":title,
                                 "slug":slug,
-                                "user":user
+                                "user":user,
+                                 "category":category,
+                                 "category_icon":category_icon
 
                                });
             }

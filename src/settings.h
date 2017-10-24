@@ -9,9 +9,9 @@ class SettingsObject: public QObject {
 private:
     QSettings* settings;
 public:
-    explicit SettingsObject(QObject* parent = 0);
+    explicit SettingsObject();
     Q_INVOKABLE void set_username(const QString &username);
-    Q_INVOKABLE bool get_username();
+    Q_INVOKABLE QString get_username();
     Q_INVOKABLE void set_password(const QString &password);
     Q_INVOKABLE QString get_password();
 };

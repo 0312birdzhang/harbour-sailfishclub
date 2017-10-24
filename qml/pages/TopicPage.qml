@@ -3,14 +3,16 @@ import Sailfish.Silica 1.0
 import io.thp.pyotherside 1.3
 import "../components"
 import "../js/ApiCore.js" as JS
-
+import "../js/fontawesome.js" as FONT
 Page{
     id:topicPage
 
     property int tid;
-    property string title;
+    property string topic_title;
     property string slug;
     property string user;
+    property string category_icon;
+    property string category;
 
     property int current_page:1;
     property int pageCount:1;
@@ -29,29 +31,29 @@ Page{
         id:topicView
         anchors.fill: parent
         header: PageHeader {
-            title: title;
+            title: topic_title;
             _titleItem.font.pixelSize: Theme.fontSizeSmall
-            description: user;
+            description: /*FONT.Icon[category_icon.replace("/-/g","_")]  + */ category;
         }
         spacing: Theme.paddingSmall
         delegate: BackgroundItem {
-            height: topicHeader.height +contentLabel.height + Theme.paddingMedium * 2
-            width: parent.width
+            height: topicHeader.height +contentLabel.height + Theme.paddingMedium * 3
+            width: topicView.width
 
             TopicHeader{
                 id: topicHeader
-                avatar: avatar?(siteUrl+avatar):"image://theme/harbour-sailfishclub" //TODO
-                username: username
-                groupTitle:user_group_name
-                floor: floor+"#"
-                posttime:JS.humanedate(timestamp)
+                avatar: picture?(siteUrl+picture):"image://theme/harbour-sailfishclub" //TODO
+                user: username
+                groupTitle:"["+user_group_name+"]"
+                index: floor+"#"
+                time:JS.humanedate(timestamp)
                 width: parent.width
-                height: Theme.itemSizeMedium
+                height: parent.width/8
             }
 
             Label{
                 id:contentLabel
-                text:content
+                text:formathtml(content)
                 textFormat: Text.RichText
                 font.pixelSize: Theme.fontSizeExtraSmall
                 wrapMode: Text.WordWrap
@@ -87,9 +89,9 @@ Page{
             pageCount = pagination.pageCount;
             if(pageCount > 1){
                 next_page = pagination.next.qs;
-                next_active = pagination.next.action;
+                next_active = pagination.next.active;
                 prev_page = pagination.prev.qs;
-                prev_active = pagination.prev.action;
+                prev_active = pagination.prev.active;
             }
             for(var i = 0;i<posts.length; i ++){
 
@@ -103,7 +105,7 @@ Page{
                                       "content":posts[i].content,
                                       "uid":posts[i].uid,
                                       "username":posts[i].user.username,
-                                      "avatar":posts[i].user.picture,
+                                      "picture":posts[i].user.picture,
                                       "floor":posts[i].index,
                                       "user_group_icon":posts[i].user.selectedGroup?posts[i].user.selectedGroup.icon:"",
                                       "user_group_name":posts[i].user.selectedGroup?posts[i].user.selectedGroup.name:"",

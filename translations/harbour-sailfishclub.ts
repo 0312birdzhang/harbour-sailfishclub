@@ -95,6 +95,10 @@
         <source>popular</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>recent</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RegisterComponent</name>

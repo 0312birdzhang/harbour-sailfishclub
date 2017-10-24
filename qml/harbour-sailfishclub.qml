@@ -38,6 +38,7 @@ import "js/ApiMain.js" as Main
 import "js/fontawesome.js" as FontAwesome
 import io.thp.pyotherside 1.3
 import org.nemomobile.notifications 1.0
+import harbour.sailfishclub.settings 1.0
 
 ApplicationWindow
 {
@@ -62,6 +63,10 @@ ApplicationWindow
 
     RemorsePopup {
         id: remorse
+    }
+
+    SettingsObject {
+        id: settings
     }
 
     Timer{
@@ -117,7 +122,9 @@ ApplicationWindow
             });
         }
         function login(username,password){
-//            console.log(username+" ---- "+password)
+            if(!username||!password || username == "undefined" || password == "undefined"){
+                return;
+            }
              call('main.login',[username,password],function(result){
                     console.log("result:"+result)
                     if(result && result != "Forbidden" && result != "False"){
@@ -149,7 +156,9 @@ ApplicationWindow
             //保持加密后的密码
             var pass_encrypted = encryPass(password);
             if(pass_encrypted){
-                JS.setUserData(username,pass_encrypted);
+//                JS.setUserData(username,pass_encrypted);
+                settings.set_username(username);
+                settings.set_password(pass_encrypted);
             }
         }
 
@@ -313,19 +322,17 @@ ApplicationWindow
                     splash.visible = false;
                     loading = false;
 //                    toIndexPage();
-                    var UserData = JS.getUserData();
-                    if(UserData.user && UserData.pass){
+//                    var UserData = JS.getUserData();
+                    var username = settings.get_username();
+                    var password = settings.get_password();
+                    if(username && password){
                         //login validate
-                        var derpass = py.decryPass(UserData.pass);
-                        console.log("user:"+UserData.user+",pass:"+derpass);
+                        var derpass = py.decryPass(password);
+                        console.log("user:"+username+",pass:"+derpass);
                         if(derpass)py.login(UserData.user,derpass);
-
-                        toIndexPage();
-//                        toLoginPage();
-                    }else{
-//                        toLoginPage();
-                        toIndexPage();
                     }
+                    toIndexPage();
+
                 }
             }
         }
@@ -375,7 +382,7 @@ ApplicationWindow
 
 
     Component.onCompleted: {
-        JS.initialize();
+//        JS.initialize();
         Main.signalcenter = signalCenter;
     }
 }

@@ -30,6 +30,12 @@ Panel {
         }
     }
 
+    Connections{
+        target: signalCenter;
+        onLoginSucceed:{
+            console.log("logined!!!")
+        }
+    }
     Column {
         id: column
         spacing: Theme.paddingMedium
@@ -143,8 +149,24 @@ Panel {
                 text:  qsTr("popular")
                 color: Theme.secondaryColor
                 spacing: Theme.paddingMedium
-//                icon: FontAwesome.Icon.fa_fire
-//                iconSize: Theme.itemSizeExtraSmall *2/3
+                onClicked: {
+                    // reloadIndex("categories");
+                }
+            }
+        }
+
+        Item {
+            width: column.width
+            height: Theme.itemSizeExtraSmall
+            HorizontalFontAwesomeTextButton {
+                anchors {
+                    left: parent.left
+                    leftMargin: Theme.paddingLarge
+                }
+                icon:FontAwesome.Icon.fa_clock_o
+                text:  qsTr("recent")
+                color: Theme.secondaryColor
+                spacing: Theme.paddingMedium
                 onClicked: {
                     // reloadIndex("categories");
                 }

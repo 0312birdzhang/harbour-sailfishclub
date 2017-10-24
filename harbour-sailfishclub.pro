@@ -14,7 +14,8 @@ TARGET = harbour-sailfishclub
 
 CONFIG += sailfishapp
 
-SOURCES += src/harbour-sailfishclub.cpp
+SOURCES += src/harbour-sailfishclub.cpp \
+            src/settings.cpp \
 
 OTHER_FILES += qml/harbour-sailfishclub.qml \
     qml/cover/CoverPage.qml \
@@ -34,6 +35,8 @@ OTHER_FILES += qml/harbour-sailfishclub.qml \
     qml/pages/RegisterPage.qml \
     qml/components/LoginComponent.qml \
     qml/components/RegisterComponent.qml \
+    qml/components/TopicHeader.qml \
+    qml/components/MaskImage.qml \
     qml/js/ApiCore.js \
     qml/js/ApiMain.js \
     qml/pages/TopicPage.qml \
@@ -60,9 +63,11 @@ TRANSLATIONS += translations/harbour-sailfishclub-de.ts
 RESOURCES += \
     harbour-sailfishclub.qrc
 
-DISTFILES += \
-    qml/components/TopicHeader.qml \
-    qml/components/MaskImage.qml
+
+
+
+HEADERS += \
+    src/settings.h
 
 
 

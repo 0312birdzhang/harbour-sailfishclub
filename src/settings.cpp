@@ -2,17 +2,17 @@
 #include "settings.h"
 
 
-SettingsObject::SettingsObject(QObject* parent) {
+SettingsObject::SettingsObject() {
     settings = new QSettings("harbour-sailfishclub","harbour-sailfishclub");
 }
 
 
 
-void SettingsObject::set_username(const bool &username) {
+void SettingsObject::set_username(const QString &username) {
     settings->setValue(QString("logindata/username"),username);
 }
 
-bool SettingsObject::get_username() {
+QString SettingsObject::get_username() {
     return settings->value(QString("logindata/username"),QString("C")).toString();
 }
 
