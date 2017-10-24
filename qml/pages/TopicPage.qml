@@ -46,7 +46,7 @@ Page{
                 floor: floor+"#"
                 posttime:JS.humanedate(timestamp)
                 width: parent.width
-                height: Theme.itemSizeLarge
+                height: Theme.itemSizeMedium
             }
 
             Label{
@@ -107,6 +107,8 @@ Page{
                                       "floor":posts[i].index,
                                       "user_group_icon":posts[i].user.selectedGroup?posts[i].user.selectedGroup.icon:"",
                                       "user_group_name":posts[i].user.selectedGroup?posts[i].user.selectedGroup.name:"",
+                                      "user_text":posts[i].user["icon:text"],
+                                      "user_color":posts[i].user["icon:bgColor"]
 
                                   });
                 topicView.model = topicModel;

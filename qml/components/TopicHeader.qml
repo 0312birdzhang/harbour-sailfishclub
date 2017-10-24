@@ -10,6 +10,10 @@ Item{
     width: parent.width
     height:parent.height
 
+    Loader{
+
+    }
+    
     MaskImage{
         id:avatar
         width: parent.height
