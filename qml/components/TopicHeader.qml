@@ -2,44 +2,28 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 
 Item{
-    property alias avatar: avatar.msource
+    property alias avatar: avatar.avatar
     property alias user: username.text
     property alias groupTitle: groupTitle.text
     property alias time: postTime.text
     property alias index: floor.text
-    property alias color: fontAvatar.color
-    property alias text: fontAvatar.text
+    property alias color: avatar.color
+    property alias text: avatar.text
     width: parent.width
     height: parent.height
 
-    
-    MaskImage{
+    Avatar{
         id:avatar
         width: parent.height;
         height: parent.height;
-        visible: avatar != ""
-        anchors{
-            top:parent.top
-            topMargin: Theme.paddingSmall
-            left:parent.left
-        }
     }
 
-    FontAvatar{
-        id:fontAvatar
-        visible:!avatar.visible
-        anchors{
-            top:parent.top
-            topMargin: Theme.paddingSmall
-            left:parent.left
-        }
-    }
 
     Label{
         id:username
         font.pixelSize: Theme.fontSizeSmall
         anchors{
-            left:avatar.visible?avatar.right:fontAvatar.right
+            left:avatar.right
             leftMargin: Theme.paddingSmall
             top:parent.top
         }

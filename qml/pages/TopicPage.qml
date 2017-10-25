@@ -37,14 +37,14 @@ Page{
         }
         spacing: Theme.paddingSmall
         delegate: BackgroundItem {
-            height: topicHeader.height +contentLabel.height + Theme.paddingMedium * 3
+            height: topicHeader.height +contentLabel.height + Theme.paddingMedium * 4
             width: topicView.width
 
             TopicHeader{
                 id: topicHeader
                 avatar: picture?(siteUrl+picture):""
                 user: username
-                groupTitle:"["+user_group_name+"]"
+                groupTitle:"" != user_group_name?"":("["+user_group_name+"]")
                 index: floor+"#"
                 text: user_text
                 color: user_color
@@ -68,7 +68,7 @@ Page{
                     topMargin: Theme.paddingLarge
                     leftMargin: Theme.paddingMedium
                     rightMargin: Theme.paddingSmall
-                    bottomMargin: Theme.paddingLarge
+//                    bottomMargin: Theme.paddingLarge
                 }
             }
 
@@ -103,14 +103,14 @@ Page{
                 }
 
                 topicModel.append({
-                                     "timestamp":posts[i].timestamp,
+                                     "timestamp":posts[i].timestampISO,
                                       "content":posts[i].content,
                                       "uid":posts[i].uid,
                                       "username":posts[i].user.username,
                                       "picture":posts[i].user.picture,
                                       "floor":posts[i].index,
                                       "user_group_icon":posts[i].user.selectedGroup?posts[i].user.selectedGroup.icon:"",
-                                      "user_group_name":posts[i].user.selectedGroup?posts[i].user.selectedGroup.name:"",
+                                      "user_group_name":posts[i].user.selectedGroup?posts[i].user.selectedGroup.userTitle:"",
                                       "user_text":posts[i].user["icon:text"],
                                       "user_color":posts[i].user["icon:bgColor"]
 

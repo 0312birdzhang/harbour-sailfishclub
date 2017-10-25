@@ -125,26 +125,26 @@ ApplicationWindow
             if(!username||!password || username == "undefined" || password == "undefined"){
                 return;
             }
-             call('main.login',[username,password],function(result){
-                    console.log("result:"+result)
-                    if(result && result != "Forbidden" && result != "False"){
-                        userinfo.uid = result.uid;
-                        userinfo.username = result.username;
-                        userinfo.email = result.email;
-                        userinfo.website = result.website;
-                        userinfo.avatar = result.picture;
-                        userinfo.groupTitle = result.groupTitle;
-                        userinfo.signature = result.signature;
-                        userinfo.topiccount = result.topiccount;
-                        userinfo.postcount = result.postcount;
-                        userinfo.aboutme = result.aboutme;
-                        userinfo.logined = true;
-                        signalCenter.loginSucceed();
-                        saveData(username,password);
-                    }else{
-                        signalCenter.loginFailed("登录失败！");
-                    }
-             })
+            call('main.login',[username,password],function(result){
+                console.log("result:"+result)
+                if(result && result != "Forbidden" && result != "False"){
+                    userinfo.uid = result.uid;
+                    userinfo.username = result.username;
+                    userinfo.email = result.email;
+                    userinfo.website = result.website;
+                    userinfo.avatar = result.picture;
+                    userinfo.groupTitle = result.groupTitle;
+                    userinfo.signature = result.signature;
+                    userinfo.topiccount = result.topiccount;
+                    userinfo.postcount = result.postcount;
+                    userinfo.aboutme = result.aboutme;
+                    userinfo.logined = true;
+                    signalCenter.loginSucceed();
+                    saveData(username,password);
+                }else{
+                    signalCenter.loginFailed("登录失败！");
+                }
+            })
         }
 
         function saveData(username,password){
@@ -156,7 +156,7 @@ ApplicationWindow
             //保持加密后的密码
             var pass_encrypted = encryPass(password);
             if(pass_encrypted){
-//                JS.setUserData(username,pass_encrypted);
+                //                JS.setUserData(username,pass_encrypted);
                 settings.set_username(username);
                 settings.set_password(pass_encrypted);
             }
@@ -166,6 +166,10 @@ ApplicationWindow
         function getRecent(){
             return call_sync('main.getrecent',[]);
         }
+        function getPopular(){
+            return call_sync('main.getpopular',[]);
+        }
+
         //加密密码
         function encryPass(password){
             return call_sync('secret.encrypt',[password]);
@@ -282,7 +286,7 @@ ApplicationWindow
 
                     Label{
                         id:vendor
-                        text:"BirdZhang"
+                        text:"by BirdZhang"
                         font.pixelSize: Theme.fontSizeMedium
                         //color: Theme.highlightColor
                         opacity:0.5
@@ -321,15 +325,15 @@ ApplicationWindow
                 onTriggered: {
                     splash.visible = false;
                     loading = false;
-//                    toIndexPage();
-//                    var UserData = JS.getUserData();
+                    //                    toIndexPage();
+                    //                    var UserData = JS.getUserData();
                     var username = settings.get_username();
                     var password = settings.get_password();
                     if(username && password){
                         //login validate
                         var derpass = py.decryPass(password);
                         console.log("user:"+username+",pass:"+derpass);
-                        if(derpass)py.login(UserData.user,derpass);
+                        if(derpass)py.login(username,derpass);
                     }
                     toIndexPage();
 
@@ -366,23 +370,22 @@ ApplicationWindow
     }
 
     function formathtml(html){
-       html=html.replace(/<a href=/g,"<a style='color:"+Theme.highlightColor+"' target='_blank' href=");
-       html=html.replace(/<a class=/g,"<a style='color:"+Theme.highlightColor+"' target='_blank' class=");
-       html=html.replace(/<p>/g,"<p style='text-indent:24px'>");
-       html=html.replace(/<img\ssrc=\"\/assets\//g, "<img src=\"http://sailfishsos.club/assets/");
-       html=html.replace(/<p style='text-indent:24px'><img/g,"<p><img");
-       html=html.replace(/<p style='text-indent:24px'><a [^<>]*href=\"([^<>"]*)\".*?><img/g,"<p><a href='$1'><img");
-//       html=html.replace(/<img src=\"([^<>"]*)\".*?>/g,"<a href='$1.showimg'><img src=\"$1\" width="+(Screen.width-Theme.paddingMedium*2)+"/></a>");//$&</a>");
-//       html=html.replace(/<img src/g,"<img src='default.jpg' x-src");
-//        html=html.replace(/<p><img /g,"<p style='text-indent:-10px'><img width="+Screen.width+" ");
-//        html=html.replace(/<img /g,"<img style='max-width:"+Screen.width+";margin-left:-10px;' ");
-
+        html=html.replace(/<a href=/g,"<a style='color:"+Theme.highlightColor+"' target='_blank' href=");
+        html=html.replace(/<a class=/g,"<a style='color:"+Theme.highlightColor+"' target='_blank' class=");
+        html=html.replace(/<p>/g,"<p style='text-indent:24px'>");
+        html=html.replace(/<img\ssrc=\"\/assets\//g, "<img src=\"https://sailfishos.club/assets/");
+        html=html.replace(/<p style='text-indent:24px'><img/g,"<p><img");
+        html=html.replace(/<p style='text-indent:24px'><a [^<>]*href=\"([^<>"]*)\".*?><img/g,"<p><a href='$1'><img");
+//        html=html.replace("&#x2F;","/");
+        html=html.replace(/<img src=\"([^<>"]*)\".*?>/g,"<img src=\"$1\" width="+(Screen.width-Theme.paddingMedium*2)+"/>");
+//        console.log("    ");
+//        console.log(html);
         return html;
     }
 
 
     Component.onCompleted: {
-//        JS.initialize();
+        //        JS.initialize();
         Main.signalcenter = signalCenter;
     }
 }

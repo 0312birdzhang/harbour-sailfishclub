@@ -36,6 +36,8 @@ OTHER_FILES += qml/harbour-sailfishclub.qml \
     qml/components/LoginComponent.qml \
     qml/components/RegisterComponent.qml \
     qml/components/TopicHeader.qml \
+    qml/components/FontAvatar.qml \
+    qml/components/Avatar.qml \
     qml/components/MaskImage.qml \
     qml/js/ApiCore.js \
     qml/js/ApiMain.js \

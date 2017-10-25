@@ -36,7 +36,7 @@ import "../js/ApiCore.js" as JS
 Page {
     id: page
     property alias contentItem:listView
-//    allowedOrientations: Orientation.All
+    property string router: "recent"
 
     ListModel{
         id:listModel
@@ -49,88 +49,88 @@ Page {
             title: qsTr("Recent Page")
         }
         delegate: BackgroundItem {
-                id:showlist
-                height:titleid.height+latestPost.height+timeid.height+Theme.paddingMedium*4
-                width: parent.width
-                Label{
-                    id:titleid
-                    text:title
-                    font.pixelSize: Theme.fontSizeSmall
-                    truncationMode: TruncationMode.Fade
-                    wrapMode: Text.WordWrap
-                    color: Theme.highlightColor
-                    font.bold:true;
-                    anchors {
-                        top:parent.top;
-                        left: parent.left
-                        right: parent.right
-                        topMargin: Theme.paddingMedium
-                        leftMargin: Theme.paddingMedium
-                        rightMargin: Theme.paddingMedium
-                    }
+            id:showlist
+            height:titleid.height+latestPost.height+timeid.height+Theme.paddingMedium*4
+            width: parent.width
+            Label{
+                id:titleid
+                text:title
+                font.pixelSize: Theme.fontSizeSmall
+                truncationMode: TruncationMode.Fade
+                wrapMode: Text.WordWrap
+                color: Theme.highlightColor
+                font.bold:true;
+                anchors {
+                    top:parent.top;
+                    left: parent.left
+                    right: parent.right
+                    topMargin: Theme.paddingMedium
+                    leftMargin: Theme.paddingMedium
+                    rightMargin: Theme.paddingMedium
                 }
+            }
 
-                Label{
-                    id:latestPost
-                    text: latestpost?(qsTr("last post by") + " " + latestuser +":"+ latestpost):""
-                    textFormat: Text.StyledText
-                    font.pixelSize: Theme.fontSizeExtraSmall
-                    wrapMode: Text.WordWrap
-                    linkColor:Theme.primaryColor
-                    maximumLineCount: 3
-                    anchors {
-                        top: titleid.bottom
-                        left: parent.left
-                        right: parent.right
-                        topMargin: Theme.paddingMedium
-                        leftMargin: Theme.paddingMedium
-                        rightMargin: Theme.paddingMedium
-                    }
+            Label{
+                id:latestPost
+                text: latestpost?(qsTr("last post by") + " " + latestuser +":"+ latestpost):""
+                textFormat: Text.StyledText
+                font.pixelSize: Theme.fontSizeExtraSmall
+                wrapMode: Text.WordWrap
+                linkColor:Theme.primaryColor
+                maximumLineCount: 3
+                anchors {
+                    top: titleid.bottom
+                    left: parent.left
+                    right: parent.right
+                    topMargin: Theme.paddingMedium
+                    leftMargin: Theme.paddingMedium
+                    rightMargin: Theme.paddingMedium
                 }
-                Label{
-                    id:timeid
-                    text:"发布时间 : "+ JS.humanedate(timestamp)
-                    //opacity: 0.7
-                    font.pixelSize: Theme.fontSizeTiny
-                    //font.italic: true
-                    color: Theme.secondaryColor
-                    //horizontalAlignment: Text.AlignRight
-                    anchors {
-                        top:latestPost.bottom
-                        left: parent.left
-                        topMargin: Theme.paddingMedium
-                        leftMargin: Theme.paddingMedium
-                    }
+            }
+            Label{
+                id:timeid
+                text:"发布时间 : "+ JS.humanedate(timestamp)
+                //opacity: 0.7
+                font.pixelSize: Theme.fontSizeTiny
+                //font.italic: true
+                color: Theme.secondaryColor
+                //horizontalAlignment: Text.AlignRight
+                anchors {
+                    top:latestPost.bottom
+                    left: parent.left
+                    topMargin: Theme.paddingMedium
+                    leftMargin: Theme.paddingMedium
                 }
-                Label{
-                    id:viewinfo
-                    text:"评论 : "+postcount+" / 浏览 : "+viewcount
-                    //opacity: 0.7
-                    font.pixelSize: Theme.fontSizeTiny
-                    //font.italic: true
-                    color: Theme.secondaryColor
-                    //horizontalAlignment: Text.AlignRight
-                    anchors {
-                        top:latestPost.bottom
-                        right: parent.right
-                        topMargin: Theme.paddingMedium
-                        rightMargin: Theme.paddingMedium
-                    }
+            }
+            Label{
+                id:viewinfo
+                text:"评论 : "+postcount+" / 浏览 : "+viewcount
+                //opacity: 0.7
+                font.pixelSize: Theme.fontSizeTiny
+                //font.italic: true
+                color: Theme.secondaryColor
+                //horizontalAlignment: Text.AlignRight
+                anchors {
+                    top:latestPost.bottom
+                    right: parent.right
+                    topMargin: Theme.paddingMedium
+                    rightMargin: Theme.paddingMedium
                 }
-                Separator {
-                    visible:(index > 0?true:false)
-                    width:parent.width;
-                    //alignment:Qt.AlignHCenter
-                    color: Theme.highlightColor
-                }
+            }
+            Separator {
+                visible:(index > 0?true:false)
+                width:parent.width;
+                //alignment:Qt.AlignHCenter
+                color: Theme.highlightColor
+            }
             onClicked: {
                 pageStack.push(Qt.resolvedUrl("TopicPage.qml"),{
-                                "tid":tid,
-                                "topic_title":title,
-                                "slug":slug,
-                                "user":user,
-                                 "category":category,
-                                 "category_icon":category_icon
+                                   "tid":tid,
+                                   "topic_title":title,
+                                   "slug":slug,
+                                   "user":user,
+                                   "category":category,
+                                   "category_icon":category_icon
 
                                });
             }
@@ -139,24 +139,35 @@ Page {
     }
 
     Component.onCompleted: {
-        var result = py.getRecent();
+        var result = "";
+        switch(router){
+        case "recent":
+            result = py.getRecent();
+            break;
+        case "popular":
+            result = py.getPopular();
+            break;
+        default:
+            result = py.getRecent();
+        }
+
         for(var i = 0;i<result.length;i++){
             if(result[i].deleted)continue;
             listModel.append({
-                        "title":result[i].title,
-                            "user":result[i].user.username,
-                            "viewcount":result[i].viewcount,
-                            "postcount":result[i].postcount,
-                            "latestpost":result[i].teaser?result[i].teaser.content:"",
-                            "latestuser":result[i].teaser?result[i].teaser.user.username:"",
-                            "tid":result[i].tid,
-                            "timestamp":result[i].timestampISO,
-                            "slug":result[i].slug,
-                            "mainPid":result[i].mainPid,
-                            "category":result[i].category.name,
-                            "category_icon":result[i].category.icon
+                                 "title":result[i].title,
+                                 "user":result[i].user.username,
+                                 "viewcount":result[i].viewcount,
+                                 "postcount":result[i].postcount,
+                                 "latestpost":result[i].teaser?result[i].teaser.content:"",
+                                                                "latestuser":result[i].teaser?result[i].teaser.user.username:"",
+                                                                                               "tid":result[i].tid,
+                                                                                               "timestamp":result[i].timestampISO,
+                                                                                               "slug":result[i].slug,
+                                                                                               "mainPid":result[i].mainPid,
+                                                                                               "category":result[i].category.name,
+                                                                                               "category_icon":result[i].category.icon
 
-                        });
+                             });
         }
         listView.model = listModel;
     }

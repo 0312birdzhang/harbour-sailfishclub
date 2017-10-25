@@ -17,7 +17,7 @@ Panel {
 
     }
 
-    function reloadIndex(classname){
+    function reloadIndex(router){
         toIndexPage();
     }
 
@@ -150,7 +150,7 @@ Panel {
                 color: Theme.secondaryColor
                 spacing: Theme.paddingMedium
                 onClicked: {
-                    // reloadIndex("categories");
+                     reloadIndex("popular");
                 }
             }
         }
@@ -168,7 +168,7 @@ Panel {
                 color: Theme.secondaryColor
                 spacing: Theme.paddingMedium
                 onClicked: {
-                    // reloadIndex("categories");
+                     reloadIndex("recent");
                 }
             }
         }

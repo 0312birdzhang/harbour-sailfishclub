@@ -44,6 +44,11 @@ def getrecent():
         return False
     return topics
 
+def getpopular():
+    status_code, topics = client.topics.get_popular()
+    if not status_code or status_code != 200:
+        return False
+    return topics
 
 def listcategory():
     status_code, categories = client.categories.list()
