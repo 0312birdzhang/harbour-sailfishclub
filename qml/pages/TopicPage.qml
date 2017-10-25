@@ -44,7 +44,7 @@ Page{
                 id: topicHeader
                 avatar: picture?(siteUrl+picture):""
                 user: username
-                groupTitle:"" != user_group_name?"":("["+user_group_name+"]")
+                groupTitle:"" == user_group_name?"":("["+user_group_name+"]")
                 index: floor+"#"
                 text: user_text
                 color: user_color
