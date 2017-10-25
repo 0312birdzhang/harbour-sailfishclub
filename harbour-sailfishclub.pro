@@ -30,6 +30,7 @@ OTHER_FILES += qml/harbour-sailfishclub.qml \
     qml/components/HorizontalIconTextButton.qml \
     qml/components/ImagePage.qml \
     qml/components/LabelText.qml \
+    qml/components/TextCollapsible.qml \
     qml/components/Panel.qml \
     qml/components/PanelView.qml \
     qml/pages/RegisterPage.qml \

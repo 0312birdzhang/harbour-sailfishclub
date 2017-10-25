@@ -10,7 +10,7 @@ Text {
     property bool __collapsed: false
 
     onLinkActivated: {
-        Qt.openUrlExternally(link);
+//        Qt.openUrlExternally(link);
     }
     color: Theme.primaryColor
     function updateHeight() {
