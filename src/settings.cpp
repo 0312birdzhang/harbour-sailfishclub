@@ -13,7 +13,7 @@ void SettingsObject::set_username(const QString &username) {
 }
 
 QString SettingsObject::get_username() {
-    return settings->value(QString("logindata/username"),QString("C")).toString();
+    return settings->value(QString("logindata/username"),QString("")).toString();
 }
 
 void SettingsObject::set_password(const QString &password) {
@@ -21,5 +21,5 @@ void SettingsObject::set_password(const QString &password) {
 }
 
 QString SettingsObject::get_password() {
-    return settings->value(QString("logindata/password"),QString("C")).toString();
+    return settings->value(QString("logindata/password"),QString("")).toString();
 }

@@ -42,10 +42,12 @@ Page{
 
             TopicHeader{
                 id: topicHeader
-                avatar: picture?(siteUrl+picture):"image://theme/harbour-sailfishclub" //TODO
+                avatar: picture?(siteUrl+picture):""
                 user: username
                 groupTitle:"["+user_group_name+"]"
                 index: floor+"#"
+                text: user_text
+                color: user_color
                 time:JS.humanedate(timestamp)
                 width: parent.width
                 height: parent.width/8
