@@ -48,6 +48,7 @@ def getpopular():
     status_code, topics = client.topics.get_popular()
     if not status_code or status_code != 200:
         return False
+    logging.debug(str(topics))
     return topics
 
 def listcategory():

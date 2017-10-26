@@ -8,14 +8,16 @@ Item {
     property alias text: fn.text
     Rectangle {
         id:rect
+        antialiasing: true
         width: parent.width
         height: width
         radius: width*0.5
-
     }
+
     Label {
         id:fn
         anchors.centerIn: rect
         font.pixelSize: parent.width
     }
+
 }

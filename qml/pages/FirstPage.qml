@@ -45,7 +45,8 @@ Page {
         id: listView
         anchors.fill: parent
         header: PageHeader {
-            title: qsTr("Recent Page")
+            title: appwindow.current_router == "recent"?qsTr("Recent Page"):
+                   appwindow.current_router == "popular"?qsTr("Popular"):""
         }
         delegate: BackgroundItem {
             id:showlist
@@ -135,9 +136,21 @@ Page {
             }
         }
         VerticalScrollDecorator {}
+
+        ViewPlaceholder {
+            enabled: listView.count == 0 && !PageStatus.Active
+            text: qsTr("Load Failed,Click to retry")
+            MouseArea{
+                anchors.fill: parent
+                onClicked: {
+                    load();
+                }
+            }
+        }
     }
 
-    Component.onCompleted: {
+
+    function load(){
         var result = "";
         switch(current_router){
         case "recent":
@@ -149,7 +162,7 @@ Page {
         default:
             result = py.getRecent();
         }
-
+        listModel.clear();
         for(var i = 0;i<result.length;i++){
             if(result[i].deleted)continue;
             listModel.append({
@@ -158,17 +171,21 @@ Page {
                                  "viewcount":result[i].viewcount,
                                  "postcount":result[i].postcount,
                                  "latestpost":result[i].teaser?result[i].teaser.content:"",
-                                                                "latestuser":result[i].teaser?result[i].teaser.user.username:"",
-                                                                                               "tid":result[i].tid,
-                                                                                               "timestamp":result[i].timestampISO,
-                                                                                               "slug":result[i].slug,
-                                                                                               "mainPid":result[i].mainPid,
-                                                                                               "category":result[i].category.name,
-                                                                                               "category_icon":result[i].category.icon
+                                 "latestuser":result[i].teaser?result[i].teaser.user.username:"",
+                                 "tid":result[i].tid,
+                                 "timestamp":result[i].timestampISO,
+                                 "slug":result[i].slug,
+                                 "mainPid":result[i].mainPid,
+                                 "category":result[i].category.name,
+                                 "category_icon":result[i].category.icon
 
                              });
         }
         listView.model = listModel;
+    }
+
+    Component.onCompleted: {
+        load();
     }
 }
 

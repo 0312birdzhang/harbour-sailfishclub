@@ -72,6 +72,9 @@ RESOURCES += \
 HEADERS += \
     src/settings.h
 
+DISTFILES += \
+    qml/pages/SettingPage.qml
+
 
 
 

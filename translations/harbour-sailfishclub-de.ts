@@ -22,6 +22,14 @@
         <source>last post by</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Popular</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load Failed,Click to retry</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ImagePage</name>

@@ -101,6 +101,9 @@ Page{
                 if(posts[i].deleted){
                     continue;
                 }
+                console.log(posts[i].user["icon:text"]);
+                console.log(posts[i].user["icon:bgColor"]);
+                console.log("debug")
 
                 topicModel.append({
                                      "timestamp":posts[i].timestampISO,
