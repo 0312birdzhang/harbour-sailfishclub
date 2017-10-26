@@ -10,7 +10,9 @@
 
 - [x] 首页列表展示
 
-- [ ] 话题
+- [x] 话题
+
+- [ ] 板块
 
 - [ ] 回复
 
@@ -30,3 +32,8 @@
 * [nodebb-plugin-write-api](https://github.com/NodeBB/nodebb-plugin-write-api)
 
 * [nodebb-plugin-ns-login](https://github.com/NicolasSiver/nodebb-plugin-ns-login)
+
+
+## Bug
+
+* 有一定几率出现自动登录不成功的bug

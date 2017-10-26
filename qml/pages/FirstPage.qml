@@ -36,7 +36,6 @@ import "../js/ApiCore.js" as JS
 Page {
     id: page
     property alias contentItem:listView
-    property string router: "recent"
 
     ListModel{
         id:listModel
@@ -140,7 +139,7 @@ Page {
 
     Component.onCompleted: {
         var result = "";
-        switch(router){
+        switch(current_router){
         case "recent":
             result = py.getRecent();
             break;

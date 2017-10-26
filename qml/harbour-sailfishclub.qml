@@ -46,6 +46,7 @@ ApplicationWindow
     property string appname: "旗鱼俱乐部"
     property bool loading: false
     property bool logined: false
+    property string current_router: "recent"
     property string siteUrl: "https://sailfishos.club"
     property alias  userinfo: userinfo
 
@@ -138,6 +139,8 @@ ApplicationWindow
                     userinfo.topiccount = result.topiccount;
                     userinfo.postcount = result.postcount;
                     userinfo.aboutme = result.aboutme;
+                    userinfo.icon_text = result["icon:text"];
+                    userinfo.icon_color = result["icon:bgColor"];
                     userinfo.logined = true;
                     signalCenter.loginSucceed();
                     saveData(username,password);
@@ -346,6 +349,12 @@ ApplicationWindow
 
 
     function toIndexPage() {
+        popAttachedPages();
+        pageStack.replace(indexPageComponent)
+
+    }
+
+    function toPopularPage() {
         popAttachedPages();
         pageStack.replace(indexPageComponent)
 

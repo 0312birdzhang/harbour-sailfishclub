@@ -13,12 +13,17 @@ Panel {
     signal clicked
     signal userAvatarClicked
 
-    function initUserAvatar() {
+    function goRouter(router){
+        if(current_router == router){
+            return;
+        }else{
+            current_router = router;
+            if(router == "recent" || router == "popular"){
+                toIndexPage();
+            }else{
 
-    }
-
-    function reloadIndex(router){
-        toIndexPage();
+            }
+        }
     }
 
     onUserAvatarClicked: {
@@ -66,23 +71,22 @@ Panel {
                 asynchronous: true
                 source: "../gfx/background.png"
             }
-            MaskImage {
-                id: profile
+
+            Avatar{
+                id:profile
                 width: userAvatar.width/4
                 height: width
                 anchors.centerIn: cover
-                // asynchronous: true
-                smooth: true
-                msource: userinfo.logined?(siteUrl+userinfo.avatar):"image://theme/harbour-sailfishclub"
+                avatar: "" != userinfo.avatar?(siteUrl+userinfo.avatar):""
+                color:  userinfo.user_color
+                text:   userinfo.user_text
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
                         userAvatarClicked();
                     }
                 }
-
             }
-
             Label{
                 id:userName
                 text:userinfo.logined?userinfo.username:qsTr("Guest")
@@ -108,10 +112,8 @@ Panel {
                 text:  qsTr("categories")
                 color: Theme.secondaryColor
                 spacing: Theme.paddingMedium
-//                icon: FontAwesome.Icon.fa_list
-//                iconSize: Theme.itemSizeExtraSmall *2/3
                 onClicked: {
-                    // reloadIndex("categories");
+                    goRouter("categories");
                 }
             }
         }
@@ -129,10 +131,8 @@ Panel {
                 text: qsTr("tags")
                 color: Theme.secondaryColor
                 spacing: Theme.paddingMedium
-//                icon: FontAwesome.Icon.fa_tags
-//                iconSize: Theme.itemSizeExtraSmall *2/3
                 onClicked: {
-                    // reloadIndex("categories");
+                    goRouter("tags");
                 }
             }
         }
@@ -150,7 +150,7 @@ Panel {
                 color: Theme.secondaryColor
                 spacing: Theme.paddingMedium
                 onClicked: {
-                     reloadIndex("popular");
+                     goRouter("popular");
                 }
             }
         }
@@ -168,7 +168,7 @@ Panel {
                 color: Theme.secondaryColor
                 spacing: Theme.paddingMedium
                 onClicked: {
-                     reloadIndex("recent");
+                     goRouter("recent");
                 }
             }
         }
