@@ -53,8 +53,9 @@ def getpopular():
 
 def listcategory():
     status_code, categories = client.categories.list()
-    for category in categories:
-        print(category["cid"], category["name"])
+    if not status_code or status_code != 200:
+        return False
+    return categories
 
 def getTopic(tid,slug):
     status_code, topic = client.topics.get(tid,slug=slug)
