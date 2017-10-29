@@ -17,7 +17,7 @@ Item {
     Label {
         id:fn
         anchors.centerIn: rect
-        font.pixelSize: parent.width
+        font.pixelSize: parent.width * 0.75
     }
 
 }

@@ -10,7 +10,7 @@ Item {
         id:avatar
         width: parent.height;
         height: parent.height;
-        visible: avatar != ""
+        visible: msource != ""
         anchors{
             top:parent.top
             topMargin: Theme.paddingSmall
@@ -22,7 +22,7 @@ Item {
         id:fontAvatar
         width: parent.height;
         height: parent.height;
-        visible:!avatar.visible
+        visible:avatar.msource == ""
         anchors{
             top:parent.top
             topMargin: Theme.paddingSmall

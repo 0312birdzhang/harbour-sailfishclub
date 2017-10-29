@@ -46,6 +46,7 @@ def getrecent():
 
 def getpopular():
     status_code, topics = client.topics.get_popular()
+    logging.debug(str(status_code))
     if not status_code or status_code != 200:
         return False
     logging.debug(str(topics))

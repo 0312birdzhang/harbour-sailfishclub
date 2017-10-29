@@ -30,6 +30,10 @@
         <source>Load Failed,Click to retry</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source> post time:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ImagePage</name>
@@ -152,6 +156,21 @@
     <message>
         <source>Item</source>
         <translation>Element</translation>
+    </message>
+</context>
+<context>
+    <name>TopicPage</name>
+    <message>
+        <source>Empty,Click to retry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Prev Page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Next Page</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

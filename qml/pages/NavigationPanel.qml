@@ -78,8 +78,8 @@ Panel {
                 height: width
                 anchors.centerIn: cover
                 avatar: "" != userinfo.avatar?(siteUrl+userinfo.avatar):""
-                color:  userinfo.icon_color
-                text:   userinfo.icon_text
+                color:  userinfo.user_color
+                text:   userinfo.user_text
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {

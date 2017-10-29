@@ -32,10 +32,17 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 import io.thp.pyotherside 1.3
 import "../js/ApiCore.js" as JS
-
+import "../js/fontawesome.js" as FONT
 Page {
     id: page
     property alias contentItem:listView
+
+//    property int current_page:1;
+//    property int pageCount:1;
+//    property string next_page;
+//    property bool next_active:false;
+//    property string prev_page;
+//    property bool prev_active:false;
 
     ListModel{
         id:listModel
@@ -70,6 +77,7 @@ Page {
                 }
             }
 
+
             Label{
                 id:latestPost
                 text: latestpost?(qsTr("last post by") + " " + latestuser +":"+ latestpost):""
@@ -89,7 +97,7 @@ Page {
             }
             Label{
                 id:timeid
-                text:"发布时间 : "+ JS.humanedate(timestamp)
+                text:FONT.Icon[category_icon.replace(/-/g,"_")]  + category + qsTr(" post time:")+ JS.humanedate(timestamp)
                 //opacity: 0.7
                 font.pixelSize: Theme.fontSizeTiny
                 //font.italic: true
@@ -151,6 +159,8 @@ Page {
 
 
     function load(){
+        console.log("current router:"+current_router);
+
         var result = "";
         switch(current_router){
         case "recent":
@@ -162,6 +172,7 @@ Page {
         default:
             result = py.getRecent();
         }
+        console.log("result:"+JSON.stringify(result))
         listModel.clear();
         for(var i = 0;i<result.length;i++){
             if(result[i].deleted)continue;

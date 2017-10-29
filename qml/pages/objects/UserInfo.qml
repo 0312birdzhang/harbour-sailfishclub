@@ -15,7 +15,7 @@ QtObject{
     property string avatar;
     property string username;
     property string status;
-    property string icon_text;
-    property string icon_color;
+    property string user_text;
+    property string user_color;
     property int followerCount;
 }

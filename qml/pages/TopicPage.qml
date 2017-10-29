@@ -33,7 +33,7 @@ Page{
         header: PageHeader {
             title: topic_title;
             _titleItem.font.pixelSize: Theme.fontSizeSmall
-            description: /*FONT.Icon[category_icon.replace("/-/g","_")]  + */ category;
+            description: FONT.Icon[category_icon.replace(/-/g,"_")]  + category;
         }
         spacing: Theme.paddingSmall
         delegate: BackgroundItem {
@@ -80,10 +80,55 @@ Page{
 
         }
 
+        footer: Component{
+
+            Item {
+                id: loadMoreID
+                anchors {
+                    left: parent.left;
+                    right: parent.right;
+                }
+                height: Theme.itemSizeMedium
+                Row {
+                    id:footItem
+                    spacing: Theme.paddingLarge
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    Button {
+                        text: qsTr("Prev Page")
+                        visible: prev_active
+                        onClicked: {
+                            current_page--;
+                            load();
+                        }
+                    }
+                    Button{
+                        text:qsTr("Next Page")
+                        visible: next_active
+                        onClicked: {
+                            current_page++;
+                            load();
+                        }
+                    }
+                }
+            }
+
+        }
+        ViewPlaceholder {
+            enabled: topicView.count == 0 && !PageStatus.Active
+            text: qsTr("Empty,Click to retry")
+            MouseArea{
+                anchors.fill: parent
+                onClicked: {
+                    load();
+                }
+            }
+        }
+
     }
 
-    Component.onCompleted: {
-        var topicData = py.getTopic(tid,slug);
+    function load(){
+        console.log(slug+"?page="+current_page)
+        var topicData = py.getTopic(tid,slug+"?page="+current_page);
         if (topicData && topicData != "Forbidden"){
             var posts = topicData.posts;
             var pagination = topicData.pagination;
@@ -95,16 +140,12 @@ Page{
                 prev_page = pagination.prev.qs;
                 prev_active = pagination.prev.active;
             }
+            topicModel.clear();
             for(var i = 0;i<posts.length; i ++){
-
                 //过滤掉删除的
                 if(posts[i].deleted){
                     continue;
                 }
-                console.log(posts[i].user["icon:text"]);
-                console.log(posts[i].user["icon:bgColor"]);
-                console.log("debug")
-
                 topicModel.append({
                                      "timestamp":posts[i].timestampISO,
                                       "content":posts[i].content,
@@ -120,6 +161,14 @@ Page{
                                   });
                 topicView.model = topicModel;
             }
+            topicView.scrollToTop();
+        }else{
+            console.log("load failed!!!");
+            console.log(topicData)
         }
+    }
+
+    Component.onCompleted: {
+        load();
     }
 }

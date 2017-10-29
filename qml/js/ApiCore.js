@@ -1,12 +1,5 @@
 .pragma library
 
-
-function substr(string,length){
-         string.toString();
-         string.substr(0,length);
-         return string;
-        }
-
 function humanedate(datestr){
     var _dateline = new Date(datestr).getTime();
     var thatday=new Date(parseInt(_dateline));
