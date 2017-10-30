@@ -38,6 +38,12 @@ def post(title, content, uid, cid):
         return False
     return True
 
+def replay(tid,uid,content):
+    status_code, response = client.posts.create(uid,tid,content)
+    if not status_code or status_code != 200:
+        return False
+    return True
+
 def getrecent():
     status_code, topics = client.topics.get_recent()
     if not status_code or status_code != 200:
