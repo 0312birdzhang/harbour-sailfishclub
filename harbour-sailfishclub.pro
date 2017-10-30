@@ -73,7 +73,9 @@ HEADERS += \
     src/settings.h
 
 DISTFILES += \
-    qml/pages/SettingPage.qml
+    qml/pages/SettingPage.qml \
+    qml/components/TabButton.qml \
+    qml/components/TopicToolBar.qml
 
 
 

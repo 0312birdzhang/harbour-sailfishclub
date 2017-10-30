@@ -127,7 +127,7 @@ ApplicationWindow
                 return;
             }
             call('main.login',[username,password],function(result){
-                console.log("result:"+result)
+//                console.log("result:"+result)
                 if(result && result != "Forbidden" && result != "False"){
                     userinfo.uid = result.uid;
                     userinfo.username = result.username;

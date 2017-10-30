@@ -172,6 +172,57 @@
         <source>Next Page</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Author only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reverse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Jump to page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open browser</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New post</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>refresh</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>TopicToolBar</name>
+    <message>
+        <source>Author only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reverse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Jump to page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open browser</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New post</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>refresh</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>harbour-sailfishclub</name>
