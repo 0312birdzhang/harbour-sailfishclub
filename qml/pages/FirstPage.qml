@@ -172,7 +172,7 @@ Page {
         default:
             result = py.getRecent();
         }
-        console.log("result:"+JSON.stringify(result))
+//        console.log("result:"+JSON.stringify(result))
         listModel.clear();
         for(var i = 0;i<result.length;i++){
             if(result[i].deleted)continue;

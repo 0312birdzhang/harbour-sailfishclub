@@ -2,6 +2,49 @@
 <!DOCTYPE TS>
 <TS version="2.1">
 <context>
+    <name></name>
+    <message id="orn-reply-to">
+        <source></source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="orn-comment-edit-label">
+        <source>Edit your comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="orn-tag-strong">
+        <source>B</source>
+        <extracomment>Tag strong</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="orn-tag-emphasize">
+        <source>I</source>
+        <extracomment>Tag emphasize</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="orn-tag-underscore">
+        <source>U</source>
+        <extracomment>Tag underscore</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="orn-comment-body">
+        <source>Your comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="orn-comment-update">
+        <source>Update</source>
+        <extracomment>Update a comment</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="orn-reply">
+        <source></source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="orn-comment-send">
+        <source>Send</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ApiMain</name>
     <message>
         <source>connect error,code:</source>
@@ -193,7 +236,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>refresh</source>
+        <source>Refresh</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

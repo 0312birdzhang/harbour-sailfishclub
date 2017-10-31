@@ -218,7 +218,7 @@ Page{
                     icon.source: "image://theme/icon-m-computer"
                     text:qsTr("Open browser");
                     onClicked: {
-                        signalCenter.openBrowser("http://tieba.baidu.com/p/"+currentTab.threadId);
+                        Qt.openUrlExternally(siteUrl+"/topic/"+tid);
                         toolbar.hideExbar();
                     }
                 }
@@ -242,17 +242,18 @@ Page{
                     width: (topicPage.width-Theme.iconSizeMedium-Theme.paddingMedium*2)/2
                     text:qsTr("New post");
                     onClicked: {
-                        var prop = { isReply: true, caller: currentTab }
-                        pageStack.push(Qt.resolvedUrl("../Post/PostPage.qml"), prop);
+                        pageStack.push(Qt.resolvedUrl("PostPage.qml"), {
+                                           "tid":tid
+                                       });
                         toolbar.hideExbar();
                     }
                 }
                 TabButton{
                     icon.source: "image://theme/icon-m-refresh"
                     width: (topicPage.width-Theme.iconSizeMedium-Theme.paddingMedium*2)/2
-                    text:qsTr("refresh");
+                    text:qsTr("Refresh");
                     onClicked: {
-                        currentTab.getlist();
+                        load();
                         toolbar.hideExbar();
                     }
                 }

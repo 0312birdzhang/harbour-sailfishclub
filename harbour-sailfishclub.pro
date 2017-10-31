@@ -41,6 +41,11 @@ OTHER_FILES += qml/harbour-sailfishclub.qml \
     qml/components/Avatar.qml \
     qml/components/MaskImage.qml \
     qml/components/CommentField.qml \
+    qml/pages/SettingPage.qml \
+    qml/components/TabButton.qml \
+    qml/components/TopicToolBar.qml \
+    qml/pages/CategoriesPage.qml \
+    qml/components/ActivityTopicBanner.qml \
     qml/js/ApiCore.js \
     qml/js/ApiMain.js \
     qml/pages/TopicPage.qml \
@@ -74,9 +79,9 @@ HEADERS += \
     src/settings.h
 
 DISTFILES += \
-    qml/pages/SettingPage.qml \
-    qml/components/TabButton.qml \
-    qml/components/TopicToolBar.qml
+    qml/pages/PostPage.qml
+
+
 
 
 
