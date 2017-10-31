@@ -169,10 +169,15 @@ ApplicationWindow
         function getRecent(){
             return call_sync('main.getrecent',[]);
         }
+        //获取热门贴子
         function getPopular(){
             return call_sync('main.getpopular',[]);
         }
 
+        // 获取分类
+        function getCategories(){
+            return call_sync('main.listcategory',[]);
+        }
         //加密密码
         function encryPass(password){
             return call_sync('secret.encrypt',[password]);

@@ -40,6 +40,7 @@ OTHER_FILES += qml/harbour-sailfishclub.qml \
     qml/components/FontAvatar.qml \
     qml/components/Avatar.qml \
     qml/components/MaskImage.qml \
+    qml/components/CommentField.qml \
     qml/js/ApiCore.js \
     qml/js/ApiMain.js \
     qml/pages/TopicPage.qml \
