@@ -398,8 +398,47 @@ ApplicationWindow
     }
 
 
+
+    function openLink(link) {
+        if (link === _processingLink) {
+            return
+        }
+        // Check if link looks like an OpenRepos application link
+        if (/http[s]:\/\/sailfishos\.club\/topic\/[1-9]*/.exec(link)) {
+            _processingLink = link
+            var req = new XMLHttpRequest()
+            // Prepare a http request to get headers
+            req.open("GET", link, true)
+            req.onreadystatechange = function() {
+                if (req.readyState == 4) {
+                    if (req.status == 200) {
+                        // Check if headers contain an id link
+                        var match = /<\/node\/(\d*)>.*/.exec(req.getResponseHeader("link"))
+                        if (match) {
+                            // Load the application page
+                            pageStack.push(Qt.resolvedUrl("pages/TopicPage.qml"), {
+                                               tid: match[1],
+                                               returnToUser: false
+                                           })
+                            _processingLink = ""
+                            return
+                        }
+                    }
+                    _processingLink = ""
+                    Qt.openUrlExternally(link)
+                }
+            }
+            req.send(null)
+        // Open other links externally
+        } 
+        // @someone
+        else if(true){
+
+        }else {
+            Qt.openUrlExternally(link)
+        }
+    }
     Component.onCompleted: {
-        //        JS.initialize();
         Main.signalcenter = signalCenter;
     }
 }
