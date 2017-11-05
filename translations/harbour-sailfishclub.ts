@@ -156,6 +156,25 @@
     </message>
 </context>
 <context>
+    <name>PostPage</name>
+    <message>
+        <source>Replay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>markdown is supported</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Comments</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ReplayError</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>RegisterComponent</name>
     <message>
         <source>Create Account</source>

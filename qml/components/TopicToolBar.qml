@@ -3,7 +3,7 @@ import Sailfish.Silica 1.0
 
 Item{
     id:toolbar
-    property variant page
+    property Page page
     clip: true;
     function hideExbar(){
         toolbar.showExbar=false;

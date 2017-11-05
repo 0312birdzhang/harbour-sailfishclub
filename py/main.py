@@ -36,13 +36,13 @@ def post(title, content, uid, cid):
     status_code, response = client.topics.create(uid, cid, title, content)
     if not status_code or status_code != 200:
         return False
-    return True
+    return response
 
 def replay(tid,uid,content):
     status_code, response = client.posts.create(uid,tid,content)
     if not status_code or status_code != 200:
         return False
-    return True
+    return response
 
 def getrecent():
     status_code, topics = client.topics.get_recent()
@@ -69,7 +69,3 @@ def getTopic(tid,slug):
     if not status_code or status_code != 200:
         return False
     return topic
-
-#pyotherside.send('loadStarted')
-#pyotherside.send('loadFinished')
-#pyotherside.send('loadFailed',str(e))

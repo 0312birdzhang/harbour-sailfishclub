@@ -4,7 +4,7 @@ import "../../js/main.js" as Script
 
 Item{
     property alias model:banner.model
-    
+//    property Page name: value
     anchors{
         left:parent.left
         right:parent.right

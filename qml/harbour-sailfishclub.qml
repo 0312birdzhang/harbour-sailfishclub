@@ -52,8 +52,25 @@ ApplicationWindow
 
     Notification{
         id:notification
-        appName: appname
+        function show(message, icn) {
+            replacesId = 0
+            previewSummary = ""
+            previewBody = message
+            icon = icn ? icn : ""
+            publish()
+        }
+
+        function showPopup(title, message, icn) {
+            replacesId = 0
+            previewSummary = title
+            previewBody = message
+            icon = icn
+            publish()
+        }
+
+        expireTimeout: 3000
     }
+
 
     BusyIndicator {
         id: busyIndicator
@@ -105,12 +122,6 @@ ApplicationWindow
         id:userinfo
     }
 
-    function showMsg(message) {
-        notification.previewBody = appname;
-        notification.previewSummary = message;
-        notification.close();
-        notification.publish();
-    }
 
 
     Python{
@@ -135,6 +146,7 @@ ApplicationWindow
                     userinfo.website = result.website;
                     userinfo.avatar = result.picture;
                     userinfo.groupTitle = result.groupTitle;
+                    userinfo.groupIcon = result.groupIcon?result.groupIcon:"";
                     userinfo.signature = result.signature;
                     userinfo.topiccount = result.topiccount;
                     userinfo.postcount = result.postcount;
@@ -190,6 +202,10 @@ ApplicationWindow
         // 获取贴子内容
         function getTopic(tid,slug){
             return call_sync('main.getTopic',[tid,slug]);
+        }
+
+        function replayTopic(tid,uid,content){
+            return call_sync('main.replay',[tid,uid,content]);
         }
     }
 

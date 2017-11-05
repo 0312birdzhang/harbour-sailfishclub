@@ -36,7 +36,7 @@ Page{
             description: FONT.Icon[category_icon.replace(/-/g,"_")]  + category;
         }
         spacing: Theme.paddingSmall
-        delegate: BackgroundItem {
+        delegate: ListItem {
             height: topicHeader.height +contentLabel.height + Theme.paddingMedium * 4
             width: topicView.width
 
@@ -76,6 +76,24 @@ Page{
                 visible:(index > 0?true:false)
                 width:parent.width;
                 color: Theme.highlightColor
+            }
+
+            Component {
+                id: contextMenu
+                ContextMenu {
+                    MenuItem {
+                        text: qsTr("Replay")
+                        onClicked:{
+                            pageStack.push(Qt.resolvedUrl("PostPage.qml"), {
+                                               "tid":tid,
+                                               "cid":cid,
+                                               "parentpage":topicPage,
+                                               "replaysTmpModel":topicModel
+                                           });
+                            toolbar.hideExbar();
+                        }
+                    }
+                }
             }
 
         }
@@ -243,7 +261,9 @@ Page{
                     text:qsTr("New post");
                     onClicked: {
                         pageStack.push(Qt.resolvedUrl("PostPage.qml"), {
-                                           "tid":tid
+                                           "tid":tid,
+                                           "parentpage":topicPage,
+                                           "replaysTmpModel":topicModel
                                        });
                         toolbar.hideExbar();
                     }
@@ -309,7 +329,7 @@ Page{
                     continue;
                 }
                 topicModel.append({
-                                     "timestamp":posts[i].timestampISO,
+                                      "timestamp":posts[i].timestampISO,
                                       "content":posts[i].content,
                                       "uid":posts[i].uid,
                                       "username":posts[i].user.username,

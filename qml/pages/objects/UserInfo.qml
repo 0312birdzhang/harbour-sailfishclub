@@ -12,6 +12,7 @@ QtObject{
     property string website;
     property string signature;
     property string groupTitle;
+    property string groupIcon;
     property string avatar;
     property string username;
     property string status;
