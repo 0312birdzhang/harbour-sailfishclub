@@ -3,7 +3,7 @@ import Sailfish.Silica 1.0
 
 Dialog  {
     id:dialog
-    property int cid;
+    property string replayTo:"";
     property int tid;
     property ListModel replaysTmpModel
     property Page parentpage;
@@ -12,32 +12,29 @@ Dialog  {
     acceptDestinationAction: PageStackAction.Pop
     acceptDestinationProperties:replaysTmpModel
     onAccepted: {
-        //评论楼中楼
-        if(cid){
 
+        //replay
+//      console.log("replay:"+tid+",uid:"+userinfo.uid+",comments:"+subcomments.text)
+        var ret = py.replayTopic(tid,userinfo.uid,subcomments.text);
+//        console.log(JSON.stringify(ret));
+        if(!ret || ret == "false"){
+            notification.showPopup(qsTr("ReplayError"),JSON.stringify(ret));
+            return;
         }else{
-            //replay
-            console.log("replay:"+tid+",uid:"+userinfo.uid+",comments:"+subcomments.text)
-            var ret = py.replayTopic(tid,userinfo.uid,subcomments.text);
-            console.log(JSON.stringify(ret));
-            if(!ret || ret == "false"){
-                notification.showPopup(qsTr("ReplayError"),JSON.stringify(ret));
-                return;
-            }else{
-                replaysTmpModel.append({
-                                     "timestamp":ret.timestampISO,
-                                     "content":subcomments.text,
-                                     "uid":userinfo.uid,
-                                     "username":userinfo.username,
-                                     "picture":userinfo.avatar,
-                                     "floor":ret.index,
-                                     "user_group_icon":userinfo.groupIcon,
-                                     "user_group_name":userinfo.groupTitle,
-                                     "user_text":userinfo.user_text,
-                                     "user_color":userinfo.user_color
-                                   })
-            }
+            replaysTmpModel.append({
+                                 "timestamp":ret.timestampISO,
+                                 "content":subcomments.text,
+                                 "uid":userinfo.uid,
+                                 "username":userinfo.username,
+                                 "picture":userinfo.avatar,
+                                 "floor":ret.index,
+                                 "user_group_icon":userinfo.groupIcon,
+                                 "user_group_name":userinfo.groupTitle,
+                                 "user_text":userinfo.user_text,
+                                 "user_color":userinfo.user_color
+                               })
         }
+
     }
 
     Flickable {
@@ -78,10 +75,10 @@ Dialog  {
                     //validator: RegExpValidator { regExp: /.{1,128}/ }
                     width:window.width - Theme.paddingLarge*4
                     height: Math.max(dialog.width/3, implicitHeight)
+                    text: "@"+replayTo+" "
                     font.pixelSize: Theme.fontSizeMedium
                     wrapMode: Text.WordWrap
                     placeholderText: qsTr("markdown is supported")
-//                    EnterKey.onClicked : dialog.accept()
                     label: qsTr("Comments")
                 }
             }

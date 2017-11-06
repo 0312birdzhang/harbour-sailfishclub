@@ -37,7 +37,7 @@ Page{
         }
         spacing: Theme.paddingSmall
         delegate: ListItem {
-            height: topicHeader.height +contentLabel.height + Theme.paddingMedium * 4
+            contentHeight: topicHeader.height +contentLabel.height + Theme.paddingMedium * 4
             width: topicView.width
 
             TopicHeader{
@@ -77,7 +77,7 @@ Page{
                 width:parent.width;
                 color: Theme.highlightColor
             }
-
+            menu: contextMenu
             Component {
                 id: contextMenu
                 ContextMenu {
@@ -86,7 +86,7 @@ Page{
                         onClicked:{
                             pageStack.push(Qt.resolvedUrl("PostPage.qml"), {
                                                "tid":tid,
-                                               "cid":cid,
+                                               "replayTo":username,
                                                "parentpage":topicPage,
                                                "replaysTmpModel":topicModel
                                            });
@@ -189,49 +189,49 @@ Page{
             Column{
                 width: topicPage.width;
                 height: parent.height;
-                TabButton{//Author only-只看楼主
-                    icon.source:"image://theme/icon-m-people"
-                    text:qsTr("Author only");
-                    onClicked: {
-                        currentTab.isReverse = false;
-                        currentTab.isLz = !currentTab.isLz;
-                        currentTab.getlist();
-                        toolbar.hideExbar();
-                    }
-                }
-                Rectangle{
-                    width: parent.width;
-                    height: 1;
-                    color: Theme.rgba(Theme.highlightColor, 0.2)
-                }
-                TabButton{//Reverse-倒叙查看
-                    icon.source: "image://theme/icon-m-transfer";
-                    text:qsTr("Reverse")
-                    onClicked: {
-                            currentTab.isLz = false;
-                            currentTab.isReverse = !currentTab.isReverse;
-                            currentTab.getlist();
-                        toolbar.hideExbar();
-                    }
-                }
-                Rectangle{
-                    width: parent.width;
-                    height: 1;
-                    color: Theme.rgba(Theme.highlightColor, 0.2)
-                }
-                TabButton{//Jump to page-跳转
-                    icon.source: "image://theme/icon-m-rotate-right";
-                    text:qsTr("Jump to page");
-                    onClicked: {
-                        internal.jumpToPage();
-                        toolbar.hideExbar();
-                    }
-                }
-                Rectangle{
-                    width: parent.width;
-                    height: 1;
-                    color: Theme.rgba(Theme.highlightColor, 0.2)
-                }
+//                TabButton{//Author only-只看楼主
+//                    icon.source:"image://theme/icon-m-people"
+//                    text:qsTr("Author only");
+//                    onClicked: {
+//                        currentTab.isReverse = false;
+//                        currentTab.isLz = !currentTab.isLz;
+//                        currentTab.getlist();
+//                        toolbar.hideExbar();
+//                    }
+//                }
+//                Rectangle{
+//                    width: parent.width;
+//                    height: 1;
+//                    color: Theme.rgba(Theme.highlightColor, 0.2)
+//                }
+//                TabButton{//Reverse-倒叙查看
+//                    icon.source: "image://theme/icon-m-transfer";
+//                    text:qsTr("Reverse")
+//                    onClicked: {
+//                            currentTab.isLz = false;
+//                            currentTab.isReverse = !currentTab.isReverse;
+//                            currentTab.getlist();
+//                        toolbar.hideExbar();
+//                    }
+//                }
+//                Rectangle{
+//                    width: parent.width;
+//                    height: 1;
+//                    color: Theme.rgba(Theme.highlightColor, 0.2)
+//                }
+//                TabButton{//Jump to page-跳转
+//                    icon.source: "image://theme/icon-m-rotate-right";
+//                    text:qsTr("Jump to page");
+//                    onClicked: {
+//                        internal.jumpToPage();
+//                        toolbar.hideExbar();
+//                    }
+//                }
+//                Rectangle{
+//                    width: parent.width;
+//                    height: 1;
+//                    color: Theme.rgba(Theme.highlightColor, 0.2)
+//                }
                 TabButton{//Open browser-用浏览器打开本帖
                     icon.source: "image://theme/icon-m-computer"
                     text:qsTr("Open browser");

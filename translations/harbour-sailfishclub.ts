@@ -235,18 +235,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Author only</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Reverse</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Jump to page</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Open browser</source>
         <translation type="unfinished"></translation>
     </message>
@@ -256,6 +244,10 @@
     </message>
     <message>
         <source>Refresh</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replay</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
