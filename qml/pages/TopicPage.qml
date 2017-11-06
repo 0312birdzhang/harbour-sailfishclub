@@ -65,7 +65,7 @@ Page{
                     top:topicHeader.bottom
                     left:parent.left
                     right:parent.right
-                    topMargin: Theme.paddingLarge
+                    topMargin: Theme.paddingMedium
                     leftMargin: Theme.paddingMedium
                     rightMargin: Theme.paddingSmall
 //                    bottomMargin: Theme.paddingLarge
@@ -184,7 +184,8 @@ Page{
             id:exbar
             anchors.bottom: iconbar.top;
             color: "#08202c"
-            height: (Theme.iconSizeMedium+Theme.paddingMedium*2)*4+4;
+//            height: (Theme.iconSizeMedium+Theme.paddingMedium*2)*4+4;
+            height: Theme.iconSizeMedium+Theme.paddingMedium*2;
             width: topicPage.width;
             Column{
                 width: topicPage.width;

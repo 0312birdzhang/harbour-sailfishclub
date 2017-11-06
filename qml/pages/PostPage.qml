@@ -24,7 +24,7 @@ Dialog  {
             replaysTmpModel.append({
                                  "timestamp":ret.timestampISO,
                                  "content":subcomments.text,
-                                 "uid":userinfo.uid,
+                                 "uid":userinfo.uid.toString(),
                                  "username":userinfo.username,
                                  "picture":userinfo.avatar,
                                  "floor":ret.index,
@@ -80,6 +80,7 @@ Dialog  {
                     wrapMode: Text.WordWrap
                     placeholderText: qsTr("markdown is supported")
                     label: qsTr("Comments")
+                    focus: true
                 }
             }
 
