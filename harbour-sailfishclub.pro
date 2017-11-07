@@ -80,7 +80,8 @@ HEADERS += \
     src/settings.h
 
 DISTFILES += \
-    qml/pages/PostPage.qml
+    qml/pages/PostPage.qml \
+    qml/components/HtmlTagButton.qml
 
 
 

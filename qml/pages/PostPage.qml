@@ -1,91 +1,86 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import "../js/fontawesome.js" as FONT
 
-Dialog  {
-    id:dialog
-    property string replayTo:"";
-    property int tid;
-    property ListModel replaysTmpModel
-    property Page parentpage;
-    canAccept: subcomments.text.length > 2
-    acceptDestination: parentpage
-    acceptDestinationAction: PageStackAction.Pop
-    acceptDestinationProperties:replaysTmpModel
-    onAccepted: {
+Page{
+    id:postPage
 
-        //replay
-//      console.log("replay:"+tid+",uid:"+userinfo.uid+",comments:"+subcomments.text)
-        var ret = py.replayTopic(tid,userinfo.uid,subcomments.text);
-//        console.log(JSON.stringify(ret));
-        if(!ret || ret == "false"){
-            notification.showPopup(qsTr("ReplayError"),JSON.stringify(ret));
-            return;
-        }else{
-            replaysTmpModel.append({
-                                 "timestamp":ret.timestampISO,
-                                 "content":subcomments.text,
-                                 "uid":userinfo.uid.toString(),
-                                 "username":userinfo.username,
-                                 "picture":userinfo.avatar,
-                                 "floor":ret.index,
-                                 "user_group_icon":userinfo.groupIcon,
-                                 "user_group_name":userinfo.groupTitle,
-                                 "user_text":userinfo.user_text,
-                                 "user_color":userinfo.user_color
-                               })
-        }
-
+    ListModel{
+        id:categoryModel
     }
 
-    Flickable {
-        // ComboBox requires a flickable ancestor
-        width: parent.width
-        height: parent.height
-        interactive: false
+    SilicaFlickable{
+        id:filckable
         anchors.fill: parent
+        contentHeight: column.height + Theme.paddingLarge * 4
+        VerticalScrollDecorator {}
         Column{
-            id: column
-            width: parent.width
-            height: rectangle.height
-            DialogHeader {
-                title:qsTr("Replay")
+            id:column
+            anchors { left: parent.left; right: parent.right }
+            PageHeader {
+                id:header
+                title: qsTr("New Topic")
             }
-            anchors{
-                //top:dialogHead.bottom
-                left:parent.left
-                right:parent.right
+            spacing: Theme.paddingMedium
+
+            TextField {
+                id: title
+                anchors { left: parent.left; right: parent.right }
+                label: qsTr("Topic");
+                focus: true;
+                placeholderText: label
+                EnterKey.enabled: text || inputMethodComposing
+                EnterKey.iconSource: "image://theme/icon-m-enter-next"
             }
 
-            spacing: Theme.paddingLarge
-            Rectangle{
-                id:rectangle
-                width: parent.width-Theme.paddingLarge
-                height: subcomments.height + Theme.paddingLarge
-                anchors.horizontalCenter: parent.horizontalCenter
-                border.color:Theme.highlightColor
-                color:"#00000000"
-                radius: 30
-
-                TextArea {
-                    id:subcomments
-                    anchors{
-                        top:parent.top
-                        topMargin: Theme.paddingMedium
+            ComboBox {
+                anchors { left: parent.left; right: parent.right }
+                width: parent.width
+                label: qsTr("Categories")
+                menu: ContextMenu {
+                    Repeater {
+                        model: categoryModel
+                        MenuItem {
+                            text: name + " "+ FONT.Icon[icon.replace(/-/g,"_")]
+                        }
                     }
-                    //validator: RegExpValidator { regExp: /.{1,128}/ }
-                    width:window.width - Theme.paddingLarge*4
-                    height: Math.max(dialog.width/3, implicitHeight)
-                    text: "@"+replayTo+" "
-                    font.pixelSize: Theme.fontSizeMedium
-                    wrapMode: Text.WordWrap
-                    placeholderText: qsTr("markdown is supported")
-                    label: qsTr("Comments")
-                    focus: true
                 }
+                description: "This combobox comes with an extra description."
+            }
+
+
+            TextArea {
+                id:content
+                anchors { left: parent.left; right: parent.right }
+                width:window.width - Theme.paddingLarge*4
+                height: Math.max(filckable.width/3, implicitHeight)
+                text: ""
+                font.pixelSize: Theme.fontSizeMedium
+                wrapMode: Text.WordWrap
+                placeholderText: qsTr("markdown is supported")
+                label: qsTr("Comments")
+                focus: true
+            }
+        }
+    }
+
+
+    Component.onCompleted: {
+        var categories = py.getCategories();
+        console.log("ret:"+categories)
+        if(categories && categories != "Forbidden"){
+            for(var i=0;i<categories.length;i++){
+                categoryModel.append({
+                                       "cid":  categories[i].cid,
+                                       "name":categories[i].name,
+                                       "description":categories[i].description,
+                                       "icon":categories[i].icon,
+                                       "slug":categories[i].slug,
+                                       "parentCid":categories[i].parentCid
+
+                                     });
             }
 
         }
-
-
     }
 }

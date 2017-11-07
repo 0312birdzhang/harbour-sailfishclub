@@ -58,11 +58,11 @@ Page {
         PullDownMenu{
             id:pullDownMenu
             MenuItem{
-                text:logined?qsTr("New Topic"):qsTr("Login to create new topic")
+                text:userinfo.logined?qsTr("New Topic"):qsTr("Login to create new topic")
                 onClicked: {
                     //create new topic or 
-                    if(logined){
-
+                    if(userinfo.logined){
+                        pageStack.push(Qt.resolvedUrl("PostPage.qml"))
                     }else{
                         toLoginPage();
                     }

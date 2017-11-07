@@ -77,6 +77,14 @@
         <source> post time:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>New Topic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Login to create new topic</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ImagePage</name>
@@ -158,10 +166,6 @@
 <context>
     <name>PostPage</name>
     <message>
-        <source>Replay</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>markdown is supported</source>
         <translation type="unfinished"></translation>
     </message>
@@ -170,7 +174,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>ReplayError</source>
+        <source>New Topic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Topic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Categories</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -248,6 +260,18 @@
     </message>
     <message>
         <source>Replay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ReplayError</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>markdown is supported</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Comments</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

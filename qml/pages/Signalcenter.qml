@@ -19,15 +19,6 @@ QtObject{
         }
     }
 
-
-//    Python {
-//        Component.onCompleted: {
-//            setHandler('loadStarted', loadStarted);
-//            setHandler('loadFinished', loadFinished);
-//            setHandler('loadFailed', loadFailed);
-//        }
-
-//    }
 }
 
 
