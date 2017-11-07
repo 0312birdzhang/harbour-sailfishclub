@@ -53,7 +53,21 @@ Page {
         anchors.fill: parent
         header: PageHeader {
             title: appwindow.current_router == "recent"?qsTr("Recent Page"):
-                   appwindow.current_router == "popular"?qsTr("Popular"):""
+                   appwindow.current_router == "popular"?qsTr("Popular"):appwindow.current_router
+        }
+        PullDownMenu{
+            id:pullDownMenu
+            MenuItem{
+                text:logined?qsTr("New Topic"):qsTr("Login to create new topic")
+                onClicked: {
+                    //create new topic or 
+                    if(logined){
+
+                    }else{
+                        toLoginPage();
+                    }
+                }
+            }
         }
         delegate: BackgroundItem {
             id:showlist

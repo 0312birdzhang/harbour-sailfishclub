@@ -86,7 +86,7 @@ Page{
                         onClicked:{
                             pageStack.push(Qt.resolvedUrl("PostPage.qml"), {
                                                "tid":tid,
-                                               "replayTo":username,
+                                               "replayTo":userslug,
                                                "parentpage":topicPage,
                                                "replaysTmpModel":topicModel
                                            });
@@ -334,6 +334,7 @@ Page{
                                       "content":posts[i].content,
                                       "uid":posts[i].uid,
                                       "username":posts[i].user.username,
+                                      "userslug":posts[i].user.userslug,
                                       "picture":posts[i].user.picture,
                                       "floor":posts[i].index,
                                       "user_group_icon":posts[i].user.selectedGroup?posts[i].user.selectedGroup.icon:"",
