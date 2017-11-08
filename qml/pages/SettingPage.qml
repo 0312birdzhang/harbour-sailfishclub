@@ -6,11 +6,11 @@ Page{
     id:page
 
     SilicaFlickable {
-        id: settings
+        id: flickable
         anchors.fill: parent
         contentHeight: aboutRectangle.height
 
-        VerticalScrollDecorator { flickable: about }
+        VerticalScrollDecorator { flickable: flickable }
 
         Column {
             id: aboutRectangle
@@ -39,10 +39,9 @@ Page{
         }
 
 
-        Component.onDestoryed: {
+        Component.onDestruction: {
             settings.set_pagesize(slider.value);
         }
-
     }
 
     
