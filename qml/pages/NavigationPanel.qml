@@ -107,6 +107,7 @@ Panel {
                 anchors {
                     left: parent.left
                     leftMargin: Theme.paddingLarge
+                    right: parent.right
                 }
                 icon:FontAwesome.Icon.fa_list
                 text:  qsTr("categories")
@@ -126,6 +127,7 @@ Panel {
                 anchors {
                     left: parent.left
                     leftMargin: Theme.paddingLarge
+                    right: parent.right
                 }
                 icon:FontAwesome.Icon.fa_tags
                 text: qsTr("tags")
@@ -162,6 +164,7 @@ Panel {
                 anchors {
                     left: parent.left
                     leftMargin: Theme.paddingLarge
+                    right: parent.right
                 }
                 icon:FontAwesome.Icon.fa_clock_o
                 text:  qsTr("recent")
@@ -180,6 +183,7 @@ Panel {
                 anchors {
                     left: parent.left
                     leftMargin: Theme.paddingLarge
+                    right: parent.right
                 }
                 icon: FontAwesome.Icon.fa_cogs
                 text:  qsTr("Settings")

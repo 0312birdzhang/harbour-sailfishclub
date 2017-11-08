@@ -357,9 +357,7 @@ Page{
         }
     }
 
-    Component.onCompleted: {
-        load();
-    }
+    
 
 
     Dialog  {
@@ -449,5 +447,10 @@ Page{
 
 
         }
+    }
+
+
+    Component.onCompleted: {
+        load();
     }
 }
