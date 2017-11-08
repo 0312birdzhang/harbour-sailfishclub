@@ -17,7 +17,7 @@ Dialog  {
 
     SilicaFlickable{
         id:filckable
-        anchors.fill: parent
+//        anchors.fill: parent
         contentHeight: column.height + Theme.paddingLarge * 4
         PullDownMenu {
             MenuItem {
