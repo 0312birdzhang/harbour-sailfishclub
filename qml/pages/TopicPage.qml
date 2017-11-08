@@ -84,7 +84,7 @@ Page{
                     MenuItem {
                         text: qsTr("Replay")
                         onClicked:{
-                            pageStack.push(dialog, {
+                            pageStack.push(postComponent, {
                                                "tid":tid,
                                                "replayTo":userslug,
                                                "parentpage":topicPage,
@@ -267,7 +267,7 @@ Page{
                     width: (topicPage.width-Theme.iconSizeMedium-Theme.paddingMedium*2)/2
                     text:qsTr("New post");
                     onClicked: {
-                        pageStack.push(dialog, {
+                        pageStack.push(postComponent, {
                                            "tid":tid,
                                            "parentpage":topicPage,
                                            "replaysTmpModel":topicModel
@@ -359,96 +359,97 @@ Page{
 
     
 
+    Component{
+        id: postComponent
+        Dialog  {
+            id:dialog
+            property string replayTo:"";
+            property int tid;
+            property ListModel replaysTmpModel
+            property Page parentpage;
+            canAccept: subcomments.text.length > 2
+            acceptDestination: parentpage
+            acceptDestinationAction: PageStackAction.Pop
+            acceptDestinationProperties:replaysTmpModel
+            onAccepted: {
 
-    Dialog  {
-        id:dialog
-        property string replayTo:"";
-        property int tid;
-        property ListModel replaysTmpModel
-        property Page parentpage;
-        canAccept: subcomments.text.length > 2
-        acceptDestination: parentpage
-        acceptDestinationAction: PageStackAction.Pop
-        acceptDestinationProperties:replaysTmpModel
-        onAccepted: {
+                //replay
+                var ret = py.replayTopic(dialog.tid,userinfo.uid,subcomments.text);
+                console.log(JSON.stringify(ret));
+                if(!ret || ret == "false"){
+                    notification.showPopup(qsTr("ReplayError"),JSON.stringify(ret),"image://theme/icon-lock-warning");
+                    return;
+                }else{
+                    replaysTmpModel.append({
+                                         "timestamp":ret.timestampISO,
+                                         "content":subcomments.text,
+                                         "uid":userinfo.uid.toString(),
+                                         "username":userinfo.username,
+                                         "picture":userinfo.avatar,
+                                         "floor":ret.index,
+                                         "user_group_icon":userinfo.groupIcon,
+                                         "user_group_name":userinfo.groupTitle,
+                                         "user_text":userinfo.user_text,
+                                         "user_color":userinfo.user_color
+                                       })
+                }
 
-            //replay
-    //      console.log("replay:"+tid+",uid:"+userinfo.uid+",comments:"+subcomments.text)
-            var ret = py.replayTopic(tid,userinfo.uid,subcomments.text);
-    //        console.log(JSON.stringify(ret));
-            if(!ret || ret == "false"){
-                notification.showPopup(qsTr("ReplayError"),JSON.stringify(ret));
-                return;
-            }else{
-                replaysTmpModel.append({
-                                     "timestamp":ret.timestampISO,
-                                     "content":subcomments.text,
-                                     "uid":userinfo.uid.toString(),
-                                     "username":userinfo.username,
-                                     "picture":userinfo.avatar,
-                                     "floor":ret.index,
-                                     "user_group_icon":userinfo.groupIcon,
-                                     "user_group_name":userinfo.groupTitle,
-                                     "user_text":userinfo.user_text,
-                                     "user_color":userinfo.user_color
-                                   })
             }
 
-        }
-
-        Flickable {
-            // ComboBox requires a flickable ancestor
-            width: parent.width
-            height: parent.height
-            interactive: false
-            anchors.fill: parent
-            Column{
-                id: column
+            Flickable {
+                // ComboBox requires a flickable ancestor
                 width: parent.width
-                height: rectangle.height
-                DialogHeader {
-                    title:qsTr("Replay")
-                }
-                anchors{
-                    //top:dialogHead.bottom
-                    left:parent.left
-                    right:parent.right
-                }
-
-                spacing: Theme.paddingLarge
-                Rectangle{
-                    id:rectangle
-                    width: parent.width-Theme.paddingLarge
-                    height: subcomments.height + Theme.paddingLarge
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    border.color:Theme.highlightColor
-                    color:"#00000000"
-                    radius: 30
-
-                    TextArea {
-                        id:subcomments
-                        anchors{
-                            top:parent.top
-                            topMargin: Theme.paddingMedium
-                        }
-                        //validator: RegExpValidator { regExp: /.{1,128}/ }
-                        width:window.width - Theme.paddingLarge*4
-                        height: Math.max(dialog.width/3, implicitHeight)
-                        text: "@"+replayTo+" "
-                        font.pixelSize: Theme.fontSizeMedium
-                        wrapMode: Text.WordWrap
-                        placeholderText: qsTr("markdown is supported")
-                        label: qsTr("Comments")
-                        focus: true
+                height: parent.height
+                interactive: false
+                anchors.fill: parent
+                Column{
+                    id: column
+                    width: parent.width
+                    height: rectangle.height
+                    DialogHeader {
+                        title:qsTr("Replay")
                     }
+                    anchors{
+                        //top:dialogHead.bottom
+                        left:parent.left
+                        right:parent.right
+                    }
+
+                    spacing: Theme.paddingLarge
+                    Rectangle{
+                        id:rectangle
+                        width: parent.width-Theme.paddingLarge
+                        height: subcomments.height + Theme.paddingLarge
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        border.color:Theme.highlightColor
+                        color:"#00000000"
+                        radius: 30
+
+                        TextArea {
+                            id:subcomments
+                            anchors{
+                                top:parent.top
+                                topMargin: Theme.paddingMedium
+                            }
+                            //validator: RegExpValidator { regExp: /.{1,128}/ }
+                            width:window.width - Theme.paddingLarge*4
+                            height: Math.max(dialog.width/3, implicitHeight)
+                            text: "@"+dialog.replayTo+" "
+                            font.pixelSize: Theme.fontSizeMedium
+                            wrapMode: Text.WordWrap
+                            placeholderText: qsTr("markdown is supported")
+                            label: qsTr("Comments")
+                            focus: true
+                        }
+                    }
+
                 }
+
 
             }
-
-
         }
-    }
 
+    }
 
     Component.onCompleted: {
         load();

@@ -2,8 +2,14 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 import "../js/fontawesome.js" as FONT
 
-Page{
+Dialog  {
     id:postPage
+    property ListModel listModel;
+    property Page parentpage;
+    canAccept: false
+    acceptDestination: parentpage
+    acceptDestinationAction: PageStackAction.Pop
+    acceptDestinationProperties:listModel
 
     ListModel{
         id:categoryModel
@@ -11,17 +17,41 @@ Page{
 
     SilicaFlickable{
         id:filckable
-        anchors.fill: parent
+//        anchors.fill: parent
         contentHeight: column.height + Theme.paddingLarge * 4
         PullDownMenu {
             MenuItem {
                 text: qsTr("Post")
                 onClicked: {
-                    var cid = categoryModel.get(categoryCombo.currentIndex).value;
+                    var cid = categoryModel.get(categoryCombo.currentIndex).cid;
+                    console.log("cid:"+cid);
                     if(cid && title.text && content.text){
                         var ret = py.newTopic(title.text, content.text, userinfo.uid, cid);
+                        console.log(JSON.stringify(ret));
+                        if(ret){
+                            var topicData = ret.topicData;
+                            listModel.append({
+                                                 "title":topicData.title,
+                                                 "user":topicData.user.username,
+                                                 "viewcount":topicData.viewcount,
+                                                 "postcount":topicData.postcount,
+                                                 "latestpost":"",
+                                                 "latestuser":"",
+                                                 "tid":topicData.tid,
+                                                 "timestamp":topicData.timestampISO,
+                                                 "slug":topicData.slug,
+                                                 "mainPid":topicData.mainPid,
+                                                 "category":topicData.category.name,
+                                                 "category_icon":topicData.category.icon
+                                             })
+                            postPage.accept();
+                        }
                     }else{
-                        notification.showPopup(qsTr("Error"),qsTr("Field not completed"));
+                        notification.showPopup(
+                                    qsTr("Error"),
+                                    qsTr("Field not completed"),
+                                    "image://theme/icon-lock-warning"
+                                    );
                     }
                     
                 }
@@ -68,7 +98,7 @@ Page{
                 id:content
                 anchors { left: parent.left; right: parent.right }
                 width:window.width - Theme.paddingLarge*4
-                height: Math.max(filckable.width/3, implicitHeight)
+                height: Math.max(filckable.width/2, implicitHeight)
                 // text: ""
                 font.pixelSize: Theme.fontSizeMedium
                 wrapMode: Text.WordWrap

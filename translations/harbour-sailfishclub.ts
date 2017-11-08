@@ -185,6 +185,18 @@
         <source>Categories</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Post</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Field not completed</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RegisterComponent</name>
@@ -229,6 +241,21 @@
     </message>
     <message>
         <source>Item</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SettingPage</name>
+    <message>
+        <source>Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PageSize</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Every page size</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
