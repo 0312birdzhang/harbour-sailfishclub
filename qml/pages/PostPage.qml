@@ -13,6 +13,20 @@ Page{
         id:filckable
         anchors.fill: parent
         contentHeight: column.height + Theme.paddingLarge * 4
+        PullDownMenu {
+            MenuItem {
+                text: qsTr("Post")
+                onClicked: {
+                    var cid = categoryModel.get(categoryCombo.currentIndex).value;
+                    if(cid && title.text && content.text){
+                        var ret = py.newTopic(title.text, content.text, userinfo.uid, cid);
+                    }else{
+                        notification.showPopup(qsTr("Error"),qsTr("Field not completed"));
+                    }
+                    
+                }
+            }
+        }
         VerticalScrollDecorator {}
         Column{
             id:column
@@ -34,6 +48,7 @@ Page{
             }
 
             ComboBox {
+                id:categoryCombo
                 anchors { left: parent.left; right: parent.right }
                 width: parent.width
                 label: qsTr("Categories")
@@ -54,7 +69,7 @@ Page{
                 anchors { left: parent.left; right: parent.right }
                 width:window.width - Theme.paddingLarge*4
                 height: Math.max(filckable.width/3, implicitHeight)
-                text: ""
+                // text: ""
                 font.pixelSize: Theme.fontSizeMedium
                 wrapMode: Text.WordWrap
                 placeholderText: qsTr("markdown is supported")

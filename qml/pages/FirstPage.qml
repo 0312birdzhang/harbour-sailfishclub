@@ -160,7 +160,7 @@ Page {
         VerticalScrollDecorator {}
 
         ViewPlaceholder {
-            enabled: listView.count == 0 && !PageStatus.Active
+            enabled: listView.count === 0 && !PageStatus.Active
             text: qsTr("Load Failed,Click to retry")
             MouseArea{
                 anchors.fill: parent
@@ -168,6 +168,12 @@ Page {
                     load();
                 }
             }
+        }
+
+        BusyIndicator {
+            size: BusyIndicatorSize.Large
+            anchors.centerIn: parent
+            running: listView.count === 0
         }
     }
 

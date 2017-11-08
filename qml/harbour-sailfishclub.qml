@@ -45,7 +45,7 @@ ApplicationWindow
     id:appwindow
     property string appname: "旗鱼俱乐部"
     property bool loading: false
-    property bool logined: false
+    property int page_size: settings.get_pagesize()
     property string current_router: "recent"
     property string siteUrl: "https://sailfishos.club"
     property alias  userinfo: userinfo
@@ -129,6 +129,7 @@ ApplicationWindow
         Component.onCompleted: {
             addImportPath('qrc:/py/')
             py.importModule('main', function () {
+                py.call('main.initClient',[page_size]);
             });
             py.importModule('secret', function () {
             });
@@ -206,6 +207,10 @@ ApplicationWindow
 
         function replayTopic(tid,uid,content){
             return call_sync('main.replay',[tid,uid,content]);
+        }
+
+        function newTopic(title, content, uid, cid){
+            return call_sync('main.post',[title, content, uid, cid]);
         }
     }
 

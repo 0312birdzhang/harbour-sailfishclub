@@ -5,9 +5,11 @@ from sfctoken import access_token
 import logging
 
 client = Client('https://sailfishos.club', access_token)
-client.configure(**{
-  'page_size': 20
-})
+
+def initClient(page_size):
+    client.configure(**{
+        'page_size': page_size
+    })
 
 
 def login(user, password):

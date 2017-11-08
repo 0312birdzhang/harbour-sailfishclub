@@ -98,6 +98,12 @@ Page{
 
         }
 
+        BusyIndicator {
+            size: BusyIndicatorSize.Large
+            anchors.centerIn: parent
+            running: topicView.count === 0
+        }
+
         footer: Component{
 
             Item {

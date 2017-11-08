@@ -13,7 +13,7 @@ Name:       harbour-sailfishclub
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    My Sailfish OS Application
-Version:    0.1
+Version:    0.1.0
 Release:    1
 Group:      Qt/Qt
 License:    LICENSE
@@ -23,7 +23,7 @@ Source100:  harbour-sailfishclub.yaml
 Requires:   sailfishsilica-qt5 >= 0.10.9
 Requires:   pyotherside-qml-plugin-python3-qt5 >= 1.3.0
 Requires:   libsailfishapp-launcher
-Requires:   python3-pynodebb
+Requires:   python3-pynodebb >= 0.0.14
 Requires:   python3-crypto
 BuildRequires:  pkgconfig(sailfishapp) >= 1.0.2
 BuildRequires:  pkgconfig(Qt5Core)
