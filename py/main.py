@@ -71,3 +71,21 @@ def getTopic(tid,slug):
     if not status_code or status_code != 200:
         return False
     return topic
+
+
+
+def uploadImgSm(file):
+    import requests
+    import sys
+    url = 'https://sm.ms/api/upload'
+    try:
+        files = {'smfile' : open(file, 'rb')}
+        r = requests.post(url, files = files)
+        data1 = eval(r.text.encode('utf-8'))
+        smurl = data1['data']['url']
+        print(smurl)
+        return smurl
+    except Exception as e:
+        print(str(e))
+        return None
+
