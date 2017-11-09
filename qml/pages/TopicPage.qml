@@ -86,7 +86,7 @@ Page{
                         onClicked:{
                             pageStack.push(postComponent, {
                                                "tid":tid,
-                                               "replayTo":userslug,
+                                               "replayTo":"@"+userslug,
                                                "parentpage":topicPage,
                                                "replaysTmpModel":topicModel
                                            });
@@ -367,14 +367,15 @@ Page{
             property int tid;
             property ListModel replaysTmpModel
             property Page parentpage;
-            canAccept: subcomments.text.length > 2
+            canAccept: commentField.children[3].text.length > 2
             acceptDestination: parentpage
             acceptDestinationAction: PageStackAction.Pop
             acceptDestinationProperties:replaysTmpModel
             onAccepted: {
-
+                var subcomments = commentField.children[3].text;
                 //replay
-                var ret = py.replayTopic(dialog.tid,userinfo.uid,subcomments.text);
+                console.log("sub:"+ subcomments+",tid:"+dialog.tid+",uid:"+userinfo.uid);
+                var ret = py.replayTopic(dialog.tid,userinfo.uid,subcomments);
                 console.log(JSON.stringify(ret));
                 if(!ret || ret == "false"){
                     notification.showPopup(qsTr("ReplayError"),JSON.stringify(ret),"image://theme/icon-lock-warning");
@@ -382,7 +383,7 @@ Page{
                 }else{
                     replaysTmpModel.append({
                                          "timestamp":ret.timestampISO,
-                                         "content":subcomments.text,
+                                         "content":subcomments,
                                          "uid":userinfo.uid.toString(),
                                          "username":userinfo.username,
                                          "picture":userinfo.avatar,
@@ -396,6 +397,10 @@ Page{
 
             }
 
+            Component.onCompleted: {
+
+            }
+
             Flickable {
                 // ComboBox requires a flickable ancestor
                 width: parent.width
@@ -405,9 +410,9 @@ Page{
                 Column{
                     id: column
                     width: parent.width
-                    height: rectangle.height
+                    height: commentField.height
                     DialogHeader {
-                        title:qsTr("Replay")
+                        title:""
                     }
                     anchors{
                         //top:dialogHead.bottom
@@ -416,31 +421,10 @@ Page{
                     }
 
                     spacing: Theme.paddingLarge
-                    Rectangle{
-                        id:rectangle
-                        width: parent.width-Theme.paddingLarge
-                        height: subcomments.height + Theme.paddingLarge
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        border.color:Theme.highlightColor
-                        color:"#00000000"
-                        radius: 30
 
-                        TextArea {
-                            id:subcomments
-                            anchors{
-                                top:parent.top
-                                topMargin: Theme.paddingMedium
-                            }
-                            //validator: RegExpValidator { regExp: /.{1,128}/ }
-                            width:window.width - Theme.paddingLarge*4
-                            height: Math.max(dialog.width/3, implicitHeight)
-                            text: "@"+dialog.replayTo+" "
-                            font.pixelSize: Theme.fontSizeMedium
-                            wrapMode: Text.WordWrap
-                            placeholderText: qsTr("markdown is supported")
-                            label: qsTr("Comments")
-                            focus: true
-                        }
+                    CommentField{
+                        id: commentField
+                        replayUser: replayTo
                     }
 
                 }

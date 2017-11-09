@@ -11,38 +11,6 @@
         <source>Edit your comment</source>
         <translation type="unfinished"></translation>
     </message>
-    <message id="orn-tag-strong">
-        <source>B</source>
-        <extracomment>Tag strong</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="orn-tag-emphasize">
-        <source>I</source>
-        <extracomment>Tag emphasize</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="orn-tag-underscore">
-        <source>U</source>
-        <extracomment>Tag underscore</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="orn-comment-body">
-        <source>Your comment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="orn-comment-update">
-        <source>Update</source>
-        <extracomment>Update a comment</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="orn-reply">
-        <source></source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="orn-comment-send">
-        <source>Send</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>ApiMain</name>
@@ -52,6 +20,26 @@
     </message>
     <message>
         <source>loading erro...</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>CommentField</name>
+    <message>
+        <source>Your comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>update</source>
+        <extracomment>Update a comment</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>reply</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>send</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -165,14 +153,6 @@
 </context>
 <context>
     <name>PostPage</name>
-    <message>
-        <source>markdown is supported</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Comments</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>New Topic</source>
         <translation type="unfinished"></translation>
@@ -291,14 +271,6 @@
     </message>
     <message>
         <source>ReplayError</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>markdown is supported</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Comments</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

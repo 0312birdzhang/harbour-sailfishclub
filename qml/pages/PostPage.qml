@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import "../js/fontawesome.js" as FONT
+import "../components"
 
 Dialog  {
     id:postPage
@@ -24,13 +25,16 @@ Dialog  {
                 text: qsTr("Post")
                 onClicked: {
                     var cid = categoryModel.get(categoryCombo.currentIndex).cid;
-                    // console.log("cid:"+cid);
-                    if(cid && title.text && content.text){
-                        var ret = py.newTopic(title.text, content.text, userinfo.uid, cid);
+                    console.log(commentfield.children.length)
+                    var comments = commentfield.children[3].text;
+
+                     console.log("comments:"+comments);
+                    if(cid && title.text && comments){
+                        var ret = py.newTopic(title.text, comments, userinfo.uid, cid);
                         // console.log(JSON.stringify(ret));
                         if(ret){
                             var topicData = ret.topicData;
-                            listModel.insert(0,{
+                            listModel.insert({
                                                  "title":topicData.title,
                                                  "user":topicData.user.username,
                                                  "viewcount":topicData.viewcount,
@@ -90,28 +94,13 @@ Dialog  {
                         }
                     }
                 }
-                description: "This combobox comes with an extra description."
+
             }
 
             CommentField{
                 id:commentfield
                 
             }
-            // TextArea {
-            //     id:content
-            //     anchors { left: parent.left; right: parent.right }
-            //     width:window.width - Theme.paddingLarge*4
-            //     height: Math.max(filckable.width/2, implicitHeight)
-            //     // text: ""
-            //     font.pixelSize: Theme.fontSizeMedium
-            //     wrapMode: Text.WordWrap
-            //     placeholderText: qsTr("markdown is supported")
-            //     EnterKey.iconSource: "image://theme/icon-m-enter-next"
-            //     EnterKey.onClicked: {
-            //         content.focus = false;
-            //     }
-            //     label: qsTr("Comments")
-            // }
         }
     }
 
@@ -125,17 +114,22 @@ Dialog  {
 
     function fillModel(categories){
         for(var i=0;i<categories.length;i++){
-            if(categories[i].children && categories[i].children.length > 0){
-                fillModel(categories[i].children);
+            if(categories[i].parentCid != "0"){
+                categories[i].name = "  - " + categories[i].name;
             }
+
             categoryModel.append({
                 "cid":  categories[i].cid,
-                "name":categories[i].name,
+                "name": categories[i].name,
                 "description":categories[i].description,
                 "icon":categories[i].icon,
                 "slug":categories[i].slug,
                 "parentCid":categories[i].parentCid
                 });
+            if(categories[i].children && categories[i].children.length > 0){
+                fillModel(categories[i].children);
+            }
+
         }
     }
 }

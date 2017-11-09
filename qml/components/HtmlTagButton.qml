@@ -20,10 +20,10 @@ MouseArea {
         if (selected) {
             editor.remove(editor.selectionStart, editor.selectionEnd)
         }
-        editor.insert(editor.cursorPosition, "<%0%1>%2</%0>".arg(tag).arg(attrs).arg(selected))
+        editor.insert(editor.cursorPosition, "%0%1%2%0".arg(tag).arg(attrs).arg(selected))
         if (!selected) {
             // 3 is for "</>" length
-            editor.cursorPosition = editor.cursorPosition - tag.length - 3
+            editor.cursorPosition = editor.cursorPosition - tag.length //- 3
         }
     }
 

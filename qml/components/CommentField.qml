@@ -5,6 +5,7 @@ import Sailfish.Silica 1.0
 Column {
     property alias isActive: body.activeFocus
     property string _editId
+    property string replayUser: ""
     property string _replyToId
     readonly property bool _hasText: body.text.trim()
 
@@ -130,44 +131,44 @@ Column {
             HtmlTagButton {
                 //: Tag strong
                 //% "B"
-                text: "<b>%0</b>".arg(qsTrId("orn-tag-strong"))
-                tag: "strong"
+                text: "<b>B</b>"
+                tag: "**"
             }
 
             HtmlTagButton {
                 //: Tag emphasize
                 //% "I"
-                text: "<i>%0</i>".arg(qsTrId("orn-tag-emphasize"))
-                tag: "em"
+                text: "<i>I</i>"
+                tag: "*"
             }
 
-            HtmlTagButton {
-                //: Tag underscore
-                //% "U"
-                text: "<u>%0</u>".arg(qsTrId("orn-tag-underscore"))
-                tag: "u"
-            }
+//            HtmlTagButton {
+//                //: Tag underscore
+//                //% "U"
+//                text: "<u>U</u>"
+//                tag: "u"
+//            }
 
             HtmlTagButton {
-                text: "🙶"
-                tag: "blockquote"
+                text: "<s>S</s>"
+                tag: "~~"
             }
 
             HtmlTagButton {
                 text: '<font face="monospace">‹›</font>'
-                tag: "code"
+                tag: "\n```\n"
             }
 
-            HtmlTagButton {
-                text: '<font face="monospace">pre</font>'
-                tag: "pre"
-            }
+//            HtmlTagButton {
+//                text: '<font face="monospace">pre</font>'
+//                tag: "pre"
+//            }
 
-            HtmlTagButton {
-                text: "🔗"
-                tag: "a"
-                attrs: ' href=""'
-            }
+//            HtmlTagButton {
+//                text: "🔗"
+//                tag: "["
+//                attrs: '()'
+//            }
         }
     }
 
@@ -175,15 +176,16 @@ Column {
         id: body
         width: parent.width - sendButton.width - Theme.horizontalPageMargin
         //% "Your comment"
-        label: qsTrId("orn-comment-body")
+        label: qsTr("Your comment")
         placeholderText: label
         font.pixelSize: Theme.fontSizeSmall
         focusOutBehavior: FocusBehavior.KeepFocus
-
+        text: replayUser
         Component.onCompleted: _editor.textFormat = TextEdit.PlainText
 
         Label {
             id: sendButton
+            visible: _editId && _replyToId
             anchors {
                 verticalCenter: parent.top
                 verticalCenterOffset: body.textVerticalCenterOffset + (body._editor.height - height)
@@ -199,13 +201,13 @@ Column {
                 if (_editId) {
                     //: Update a comment
                     //% "Update"
-                    return qsTrId("orn-comment-update")
+                    return qsTr("update")
                 }
                 if (_replyToId) {
-                    return qsTrId("orn-reply")
+                    return qsTr("reply")
                 }
                 //% "Send"
-                return qsTrId("orn-comment-send")
+                return qsTr("send")
             }
 
             opacity: body.text || body.activeFocus ? 1.0 : 0.0
