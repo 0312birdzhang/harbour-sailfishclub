@@ -89,3 +89,7 @@ def uploadImgSm(file):
         print(str(e))
         return None
 
+
+def previewMd(text):
+    import mistune
+    return mistune.markdown(text)

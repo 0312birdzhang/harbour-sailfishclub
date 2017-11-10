@@ -3,5 +3,6 @@
         <file>py/main.py</file>
         <file>py/sfctoken.py</file>
         <file>py/secret.py</file>
+        <file>py/mistune.py</file>
     </qresource>
 </RCC>

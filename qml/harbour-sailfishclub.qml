@@ -212,6 +212,10 @@ ApplicationWindow
         function newTopic(title, content, uid, cid){
             return call_sync('main.post',[title, content, uid, cid]);
         }
+
+        function previewMd(text){
+            return call_sync('main.previewMd',[text]);
+        }
     }
 
     PanelView {
@@ -389,6 +393,10 @@ ApplicationWindow
     function toLoginPage(){
         popAttachedPages();
         pageStack.replace(Qt.resolvedUrl("pages/LoginDialog.qml"),{webviewurl:Main.webviewUrl});
+    }
+
+    function toUserInfoPage(uid){
+        //
     }
 
     function popAttachedPages() {

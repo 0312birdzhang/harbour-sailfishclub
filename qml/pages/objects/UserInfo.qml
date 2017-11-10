@@ -3,7 +3,7 @@ import Sailfish.Silica 1.0
 
 QtObject{
     property bool logined: false;
-    property int uid;
+    property string uid;
     property string userslug;
     property string aboutme;
     property string email;

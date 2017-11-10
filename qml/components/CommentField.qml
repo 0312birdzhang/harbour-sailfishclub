@@ -1,6 +1,6 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-// import harbour.orn 1.0
+import "../js/fontawesome.js" as FONT
 
 Column {
     property alias isActive: body.activeFocus
@@ -133,6 +133,7 @@ Column {
                 //% "B"
                 text: "<b>B</b>"
                 tag: "**"
+                attrs: tag
             }
 
             HtmlTagButton {
@@ -140,35 +141,44 @@ Column {
                 //% "I"
                 text: "<i>I</i>"
                 tag: "*"
+                attrs: tag
             }
 
-//            HtmlTagButton {
-//                //: Tag underscore
-//                //% "U"
-//                text: "<u>U</u>"
-//                tag: "u"
-//            }
+           HtmlTagButton {
+               //: Tag underscore
+               //% "H"
+               text: "<b>H</b>"
+               tag: "### "
+               attrs: tag
+           }
 
             HtmlTagButton {
                 text: "<s>S</s>"
                 tag: "~~"
+                attrs: tag
             }
 
             HtmlTagButton {
                 text: '<font face="monospace">‹›</font>'
                 tag: "\n```\n"
+                attrs: tag
             }
 
-//            HtmlTagButton {
-//                text: '<font face="monospace">pre</font>'
-//                tag: "pre"
-//            }
+           HtmlTagButton {
+               text: '🙶'
+               tag: "> "
+           }
 
-//            HtmlTagButton {
-//                text: "🔗"
-//                tag: "["
-//                attrs: '()'
-//            }
+           HtmlTagButton {
+               text: "🔗"
+               tag: "["+qsTr("link description")+"](http://"
+               attrs: ')'
+           }
+
+           HtmlTagButton {
+               text: FONT.Icon.fa_list_ol
+               tag: "- "
+           }
         }
     }
 

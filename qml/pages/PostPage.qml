@@ -49,6 +49,12 @@ Dialog  {
                                                  "category_icon":topicData.category.icon
                                              });
                             postPage.accept();
+                        }else{
+                            notification.showPopup(
+                                    qsTr("Error"),
+                                    ret.toString(),
+                                    "image://theme/icon-lock-warning"
+                                    );
                         }
                     }else{
                         notification.showPopup(

@@ -1,7 +1,7 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-// import "../js/main.js" as Script
-import io.thp.pyotherside 1.3
+import harbour.sailfishclub.settings 1.0
+
 Item {
     id:loginComponent
 
@@ -58,6 +58,7 @@ Item {
                         font.pixelSize: Theme.fontSizeMedium
                         placeholderText: qsTr("Enter UserName/Email")
                         label: qsTr("UserName")
+                        text: settings.get_username();
                         EnterKey.enabled: text || inputMethodComposing
                         EnterKey.iconSource: "image://theme/icon-m-enter-next"
                         EnterKey.onClicked: password.focus = true
@@ -70,6 +71,7 @@ Item {
                         font.pixelSize: Theme.fontSizeMedium
                         placeholderText: qsTr("Enter Password")
                         label: qsTr("Password")
+                        text: settings.get_password();
                         EnterKey.iconSource: "image://theme/icon-m-enter-next"
                         EnterKey.onClicked: {
                             submitButton.focus = true

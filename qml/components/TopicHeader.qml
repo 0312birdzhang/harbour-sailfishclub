@@ -4,6 +4,7 @@ import Sailfish.Silica 1.0
 Item{
     property alias avatar: avatar.avatar
     property alias user: username.text
+    property string user_id
     property alias groupTitle: groupTitle.text
     property alias time: postTime.text
     property alias index: floor.text
@@ -16,6 +17,12 @@ Item{
         id:avatar
         width: parent.height;
         height: parent.height;
+        MouseArea{
+            anchors.fill: parent
+                onClicked: {
+                    toUserInfoPage(user_id);
+            }
+        }
     }
 
 

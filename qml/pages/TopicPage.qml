@@ -35,7 +35,6 @@ Page{
             _titleItem.font.pixelSize: Theme.fontSizeSmall
             description: FONT.Icon[category_icon.replace(/-/g,"_")]  + category;
         }
-        spacing: Theme.paddingSmall
         delegate: ListItem {
             contentHeight: topicHeader.height +contentLabel.height + Theme.paddingMedium * 4
             width: topicView.width
@@ -44,6 +43,7 @@ Page{
                 id: topicHeader
                 avatar: picture?(siteUrl+picture):""
                 user: username
+                user_id: uid
                 groupTitle:"" == user_group_name?"":("["+user_group_name+"]")
                 index: floor+"#"
                 text: user_text
@@ -383,13 +383,13 @@ Page{
                 }else{
                     replaysTmpModel.append({
                                          "timestamp":ret.timestampISO,
-                                         "content":subcomments,
+                                         "content":ret.content,
                                          "uid":userinfo.uid.toString(),
                                          "username":userinfo.username,
                                          "picture":userinfo.avatar,
                                          "floor":ret.index,
                                          "user_group_icon":userinfo.groupIcon,
-                                         "user_group_name":userinfo.groupTitle,
+                                         "user_group_name":ret.user.selectedGroup?ret.user.selectedGroup.userTitle:"",
                                          "user_text":userinfo.user_text,
                                          "user_color":userinfo.user_color
                                        })
