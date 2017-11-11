@@ -13,12 +13,9 @@ QtObject{
     signal registerSucceed;
     signal registerFailed(string fail);
 
-    function showMessage(msg){
-        if (msg||false){
-            showMsg(msg);
-        }
-    }
-
+    signal getRecent(var result);
+    signal getTopic(var result);
+    signal getCategories(var result);
 }
 
 

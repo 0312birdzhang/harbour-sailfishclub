@@ -42,6 +42,14 @@
         <source>send</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Image upload failed</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FirstPage</name>
@@ -73,6 +81,10 @@
         <source>Login to create new topic</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Refresh</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ImagePage</name>
@@ -82,6 +94,21 @@
     </message>
     <message>
         <source>Error loading image</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ImagePreviewGrid</name>
+    <message>
+        <source>Latest first</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Oldest first</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select an image</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -254,18 +281,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Open browser</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>New post</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Refresh</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Replay</source>
         <translation type="unfinished"></translation>
     </message>
@@ -277,18 +292,6 @@
 <context>
     <name>TopicToolBar</name>
     <message>
-        <source>Author only</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Reverse</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Jump to page</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Open browser</source>
         <translation type="unfinished"></translation>
     </message>
@@ -297,7 +300,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>refresh</source>
+        <source>Login to post</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Refresh</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -313,6 +320,10 @@
     </message>
     <message>
         <source>SailfishClub</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Login failed,try again later</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

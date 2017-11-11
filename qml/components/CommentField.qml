@@ -149,7 +149,7 @@ Column {
                //% "H"
                text: "<b>H</b>"
                tag: "### "
-               attrs: tag
+               attrs: ' '
            }
 
             HtmlTagButton {
@@ -160,25 +160,35 @@ Column {
 
             HtmlTagButton {
                 text: '<font face="monospace">‹›</font>'
-                tag: "\n```\n"
+                tag: "```\n"
                 attrs: tag
             }
 
            HtmlTagButton {
                text: '🙶'
                tag: "> "
+               attrs: ' '
            }
 
            HtmlTagButton {
-               text: "🔗"
-               tag: "["+qsTr("link description")+"](http://"
-               attrs: ')'
+               text: FONT.Icon.fa_picture_o
+               tag: ""
+               MouseArea{
+                   anchors.fill: parent
+                   onClicked: {
+                       console.log("open image select dialog")
+                       pageStack.push(selectImageComponent);
+                   }
+               }
            }
 
            HtmlTagButton {
                text: FONT.Icon.fa_list_ol
-               tag: "- "
+               tag: "-"
+               attrs: ' '
            }
+
+
         }
     }
 
@@ -235,6 +245,30 @@ Column {
                         // OrnClient.comment(appId, body.text)
                     }
                     _reset()
+                }
+            }
+        }
+    }
+
+    Component{
+        id:selectImageComponent
+        ImagePreviewGrid{
+            onSelectImage: {
+                console.log("image path:"+url);
+                signalCenter.loadStarted();
+                var smurl = py.uploadImage(url);
+                signalCenter.loadFinished();
+                if(!smurl){
+                    notification.showPopup(
+                            qsTr("Error"),
+                            qsTr("Image upload failed"),
+                            "image://theme/icon-lock-warning"
+                            );
+                }else{
+                    var editor = body._editor;
+                    var mdurl = "![%0](%1)".arg(title).arg(smurl)
+                    editor.insert(editor.cursorPosition,mdurl);
+                    pageStack.pop();
                 }
             }
         }

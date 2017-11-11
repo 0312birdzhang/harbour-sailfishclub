@@ -3,7 +3,6 @@ import Sailfish.Silica 1.0
 
 Item{
     id:toolbar
-    property Page page
     clip: true;
     function hideExbar(){
         toolbar.showExbar=false;
@@ -13,70 +12,71 @@ Item{
     }
 
     anchors{
-        bottom: page.bottom
+        bottom: topicPage.bottom
     }
     height: 0;
     property int iheight: showExbar ? iconbar.height+exbar.height : iconbar.height;
     property bool showExbar: false
-    width: page.width;
+    width: topicPage.width;
 
     Rectangle{
         id:exbar
         anchors.bottom: iconbar.top;
         color: "#08202c"
-        height: (Theme.iconSizeMedium+Theme.paddingMedium*2)*4+4;
-        width: page.width;
+//            height: (Theme.iconSizeMedium+Theme.paddingMedium*2)*4+4;
+        height: Theme.iconSizeMedium+Theme.paddingMedium*2;
+        width: topicPage.width;
         Column{
-            width: page.width;
+            width: topicPage.width;
             height: parent.height;
-            TabButton{//Author only-只看楼主
-                icon.source:"image://theme/icon-m-people"
-                text:qsTr("Author only");
-                onClicked: {
-                    currentTab.isReverse = false;
-                    currentTab.isLz = !currentTab.isLz;
-                    currentTab.getlist();
-                    toolbar.hideExbar();
-                }
-            }
-            Rectangle{
-                width: parent.width;
-                height: 1;
-                color: Theme.rgba(Theme.highlightColor, 0.2)
-            }
-            TabButton{//Reverse-倒叙查看
-                icon.source: "image://theme/icon-m-transfer";
-                text:qsTr("Reverse")
-                onClicked: {
-                        currentTab.isLz = false;
-                        currentTab.isReverse = !currentTab.isReverse;
-                        currentTab.getlist();
-                    toolbar.hideExbar();
-                }
-            }
-            Rectangle{
-                width: parent.width;
-                height: 1;
-                color: Theme.rgba(Theme.highlightColor, 0.2)
-            }
-            TabButton{//Jump to page-跳转
-                icon.source: "image://theme/icon-m-rotate-right";
-                text:qsTr("Jump to page");
-                onClicked: {
-                    internal.jumpToPage();
-                    toolbar.hideExbar();
-                }
-            }
-            Rectangle{
-                width: parent.width;
-                height: 1;
-                color: Theme.rgba(Theme.highlightColor, 0.2)
-            }
+//                TabButton{//Author only-只看楼主
+//                    icon.source:"image://theme/icon-m-people"
+//                    text:qsTr("Author only");
+//                    onClicked: {
+//                        currentTab.isReverse = false;
+//                        currentTab.isLz = !currentTab.isLz;
+//                        currentTab.getlist();
+//                        toolbar.hideExbar();
+//                    }
+//                }
+//                Rectangle{
+//                    width: parent.width;
+//                    height: 1;
+//                    color: Theme.rgba(Theme.highlightColor, 0.2)
+//                }
+//                TabButton{//Reverse-倒叙查看
+//                    icon.source: "image://theme/icon-m-transfer";
+//                    text:qsTr("Reverse")
+//                    onClicked: {
+//                            currentTab.isLz = false;
+//                            currentTab.isReverse = !currentTab.isReverse;
+//                            currentTab.getlist();
+//                        toolbar.hideExbar();
+//                    }
+//                }
+//                Rectangle{
+//                    width: parent.width;
+//                    height: 1;
+//                    color: Theme.rgba(Theme.highlightColor, 0.2)
+//                }
+//                TabButton{//Jump to page-跳转
+//                    icon.source: "image://theme/icon-m-rotate-right";
+//                    text:qsTr("Jump to page");
+//                    onClicked: {
+//                        internal.jumpToPage();
+//                        toolbar.hideExbar();
+//                    }
+//                }
+//                Rectangle{
+//                    width: parent.width;
+//                    height: 1;
+//                    color: Theme.rgba(Theme.highlightColor, 0.2)
+//                }
             TabButton{//Open browser-用浏览器打开本帖
                 icon.source: "image://theme/icon-m-computer"
                 text:qsTr("Open browser");
                 onClicked: {
-                    signalCenter.openBrowser("http://tieba.baidu.com/p/"+currentTab.threadId);
+                    Qt.openUrlExternally(siteUrl+"/topic/"+tid);
                     toolbar.hideExbar();
                 }
             }
@@ -93,24 +93,32 @@ Item{
         anchors.bottom: parent.bottom
         color: "#08202c"
         height: Theme.iconSizeMedium+Theme.paddingMedium*2;
-        width: page.width;
+        width: topicPage.width;
         Row{
             TabButton{
                 icon.source: "image://theme/icon-m-edit"
-                width: (page.width-Theme.iconSizeMedium-Theme.paddingMedium*2)/2
-                text:qsTr("New post");
+                width: (topicPage.width-Theme.iconSizeMedium-Theme.paddingMedium*2)/2
+                text:userinfo.logined?qsTr("New post"):qsTr("Login to post")
                 onClicked: {
-                    var prop = { isReply: true, caller: currentTab }
-                    pageStack.push(Qt.resolvedUrl("../Post/PostPage.qml"), prop);
+                    if(userinfo.logined){
+                        pageStack.push(postComponent, {
+                                       "tid":tid,
+                                       "parentpage":topicPage,
+                                       "replaysTmpModel":topicModel
+                                   });
+                    }else{
+                        pageStack.push(loginDialog);
+                    }
+
                     toolbar.hideExbar();
                 }
             }
             TabButton{
                 icon.source: "image://theme/icon-m-refresh"
-                width: (page.width-Theme.iconSizeMedium-Theme.paddingMedium*2)/2
-                text:qsTr("refresh");
+                width: (topicPage.width-Theme.iconSizeMedium-Theme.paddingMedium*2)/2
+                text:qsTr("Refresh");
                 onClicked: {
-                    currentTab.getlist();
+                    load();
                     toolbar.hideExbar();
                 }
             }

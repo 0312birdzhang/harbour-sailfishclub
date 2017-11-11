@@ -68,6 +68,13 @@ Page {
                     }
                 }
             }
+
+            MenuItem{
+                text:qsTr("Refresh")
+                onClicked: {
+                    load();
+                }
+            }
         }
         delegate: BackgroundItem {
             id:showlist
@@ -181,38 +188,42 @@ Page {
     function load(){
         console.log("current router:"+current_router);
 
-        var result = "";
         switch(current_router){
         case "recent":
-            result = py.getRecent();
+            py.getRecent();
             break;
         case "popular":
-            result = py.getPopular();
+            py.getPopular();
             break;
         default:
-            result = py.getRecent();
+            py.getRecent();
         }
-//        console.log("result:"+JSON.stringify(result))
-        listModel.clear();
-        for(var i = 0;i<result.length;i++){
-            if(result[i].deleted)continue;
-            listModel.append({
-                                 "title":result[i].title,
-                                 "user":result[i].user.username,
-                                 "viewcount":result[i].viewcount,
-                                 "postcount":result[i].postcount,
-                                 "latestpost":result[i].teaser?result[i].teaser.content:"",
-                                 "latestuser":result[i].teaser?result[i].teaser.user.username:"",
-                                 "tid":result[i].tid,
-                                 "timestamp":result[i].timestampISO,
-                                 "slug":result[i].slug,
-                                 "mainPid":result[i].mainPid,
-                                 "category":result[i].category.name,
-                                 "category_icon":result[i].category.icon
+    }
 
-                             });
+    Connections{
+        target: signalCenter
+        onGetRecent:{
+            listModel.clear();
+            for(var i = 0;i<result.length;i++){
+                if(result[i].deleted)continue;
+                listModel.append({
+                                     "title":result[i].title,
+                                     "user":result[i].user.username,
+                                     "viewcount":result[i].viewcount,
+                                     "postcount":result[i].postcount,
+                                     "latestpost":result[i].teaser?result[i].teaser.content:"",
+                                     "latestuser":result[i].teaser?result[i].teaser.user.username:"",
+                                     "tid":result[i].tid,
+                                     "timestamp":result[i].timestampISO,
+                                     "slug":result[i].slug,
+                                     "mainPid":result[i].mainPid,
+                                     "category":result[i].category.name,
+                                     "category_icon":result[i].category.icon
+
+                                 });
+            }
+            listView.model = listModel;
         }
-        listView.model = listModel;
     }
 
     Component.onCompleted: {

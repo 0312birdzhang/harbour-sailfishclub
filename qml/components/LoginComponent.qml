@@ -71,9 +71,10 @@ Item {
                         font.pixelSize: Theme.fontSizeMedium
                         placeholderText: qsTr("Enter Password")
                         label: qsTr("Password")
-                        text: settings.get_password();
                         EnterKey.iconSource: "image://theme/icon-m-enter-next"
                         EnterKey.onClicked: {
+                            timer.start();
+                            submitButton.enabled = false;
                             submitButton.focus = true
                             errorLabel.visible = false;
                             busyIndicator.running = true;
@@ -95,10 +96,11 @@ Item {
                 text: qsTr("Login")
                 enabled: userName.text && password.text
                 onClicked: {
+                    timer.start();
+                    submitButton.enabled = false;
                     errorLabel.visible = false;
                     busyIndicator.running = true;
                     py.login(userName.text,password.text);
-
                 }
             }
             Label{
@@ -144,7 +146,16 @@ Item {
             onLoginFailed: {
                 busyIndicator.running = false;
                 errorLabel.visible = true;
-                errorLabel.text = qsTr("Login fail")+" [ "+fail+" ]. " + qsTr("Please try again.");
+                errorLabel.text = qsTr("Login fail")+" [ "+fail+" ]. " + qsTr("Please try again later.");
+            }
+        }
+
+        Timer{
+            id:timer
+            interval: 8000;
+            running: false;
+            onTriggered: {
+                submitButton.enabled = true;
             }
         }
 

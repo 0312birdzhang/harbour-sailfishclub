@@ -7,8 +7,8 @@ QtObject{
     property string userslug;
     property string aboutme;
     property string email;
-    property int postcount;
-    property int topiccount;
+    property string postcount;
+    property string topiccount;
     property string website;
     property string signature;
     property string groupTitle;
@@ -18,5 +18,5 @@ QtObject{
     property string status;
     property string user_text;
     property string user_color;
-    property int followerCount;
+    property string followerCount;
 }

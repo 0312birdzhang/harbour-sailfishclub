@@ -6,6 +6,7 @@
 Name:       harbour-sailfishclub
 
 # >> macros
+%define __requires_exclude ^libc.so.6(GLIBC_2.11)|libjpeg.so.62|libjpeg.so.62(LIBJPEG_6.2)|libpython3.4m.so.1.0|libtiff.so.5.*$
 # << macros
 
 %{!?qtc_qmake:%define qtc_qmake %qmake}
@@ -22,9 +23,10 @@ Source0:    %{name}-%{version}.tar.bz2
 Source100:  harbour-sailfishclub.yaml
 Requires:   sailfishsilica-qt5 >= 0.10.9
 Requires:   pyotherside-qml-plugin-python3-qt5 >= 1.3.0
-Requires:   libsailfishapp-launcher
 Requires:   python3-pynodebb >= 0.0.14
 Requires:   python3-crypto
+Requires:   mapplauncherd-booster-silica-qt5
+Requires:   nemo-qml-plugin-thumbnailer-qt5
 BuildRequires:  pkgconfig(sailfishapp) >= 1.0.2
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5Qml)

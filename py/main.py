@@ -3,6 +3,14 @@ from pynodebb import Client
 import pyotherside
 from sfctoken import access_token
 import logging
+import sys
+
+logger = logging.getLogger("sfcpython")
+formatter = logging.Formatter('%(asctime)s %(levelname)-8s: %(message)s')
+console_handler = logging.StreamHandler(sys.stdout)
+console_handler.formatter = formatter  # 也可以直接给formatter赋值
+logger.addHandler(console_handler)
+logger.setLevel(logging.DEBUG)
 
 client = Client('https://sailfishos.club', access_token)
 
@@ -13,11 +21,8 @@ def initClient(page_size):
 
 
 def login(user, password):
-    """{'lastonlineISO': '2017-10-19T01:16:54.375Z', 'birthday': '', 'email': '0312birdzhang@gmail.com', 'postcount': '99', 'icon:bgColor': '#1b5e20', 'uid': '2', 'signature': '———扬帆起航🚢', 'lastonline': '1508375814375', 'followerCount': '2', 'groupTitle': 'administrators', 'fullname': '', 'lastposttime': '1508242534975', 'username': 'BirdZhang', 'topiccount': '35', 'cover:position': '50.13333511352539% 63.46666717529297%', 'icon:text': 'B', 'picture': '/assets/uploads/profile/2-profileavatar.jpeg', 'joindate': '1492905871911', 'passwordExpiry': '0', 'email:confirmed': 1, 'userslug': 'birdzhang', 'aboutme': '没错，我就是站长😂', 'location': '', 'profileviews': '299', 'reputation': '1', 'website': 'http://birdzhang.xyz', 'githubid': '1762041', 'joindateISO': '2017-04-23T00:04:31.911Z', 'uploadedpicture': '/assets/uploads/profile/2-profileavatar.jpeg', 'status': 'offline', 'banned': '0'}
-    """
     status_code, userInfo = client.users.login(user, password)
-    logging.debug(status_code)
-    logging.debug(userInfo)
+    logger.debug(str(userInfo))
     if not status_code or status_code != 200:
         return False
     return userInfo
@@ -54,10 +59,8 @@ def getrecent():
 
 def getpopular():
     status_code, topics = client.topics.get_popular()
-    logging.debug(str(status_code))
     if not status_code or status_code != 200:
         return False
-    logging.debug(str(topics))
     return topics
 
 def listcategory():
@@ -74,19 +77,21 @@ def getTopic(tid,slug):
 
 
 
-def uploadImgSm(file):
+def uploadImgSm(path):
+    if path.startswith("file:"):
+        path = path.replace("file://","")
     import requests
     import sys
     url = 'https://sm.ms/api/upload'
     try:
-        files = {'smfile' : open(file, 'rb')}
+        files = {'smfile' : open(path, 'rb')}
         r = requests.post(url, files = files)
         data1 = eval(r.text.encode('utf-8'))
         smurl = data1['data']['url']
-        print(smurl)
+        logger.info(smurl)
         return smurl
     except Exception as e:
-        print(str(e))
+        logger.error(str(e))
         return None
 
 

@@ -112,13 +112,21 @@ Dialog  {
 
 
     Component.onCompleted: {
-        var categories = py.getCategories();
-        // console.log("ret:"+categories)
-        fillModel(categories);
+        py.getCategories();
     }
 
+    Connections{
+        target: signalCenter
+        onGetCategories:{
+           fillModel(result);
+        }
+    }
 
     function fillModel(categories){
+        if(!categories || categories == "Forbidden" || categories == "false"){
+            return;
+        }
+
         for(var i=0;i<categories.length;i++){
             if(categories[i].parentCid != "0"){
                 categories[i].name = "  - " + categories[i].name;

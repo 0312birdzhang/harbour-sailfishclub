@@ -36,7 +36,7 @@ import "components"
 import "js/main.js" as JS
 import "js/ApiMain.js" as Main
 import "js/fontawesome.js" as FontAwesome
-import io.thp.pyotherside 1.3
+import io.thp.pyotherside 1.5
 import org.nemomobile.notifications 1.0
 import harbour.sailfishclub.settings 1.0
 
@@ -45,7 +45,7 @@ ApplicationWindow
     id:appwindow
     property string appname: "旗鱼俱乐部"
     property bool loading: false
-    property int page_size: settings.get_pagesize()
+    property int page_size: 20
     property string current_router: "recent"
     property string siteUrl: "https://sailfishos.club"
     property alias  userinfo: userinfo
@@ -124,16 +124,23 @@ ApplicationWindow
 
 
 
+
+
     Python{
         id:py
         Component.onCompleted: {
             addImportPath('qrc:/py/')
             py.importModule('main', function () {
-                py.call('main.initClient',[page_size]);
+                initPagesize();
             });
             py.importModule('secret', function () {
             });
+
         }
+        function initPagesize(){
+            py.call('main.initClient',[page_size]);
+        }
+
         function login(username,password){
             if(!username||!password || username == "undefined" || password == "undefined"){
                 return;
@@ -149,16 +156,20 @@ ApplicationWindow
                     userinfo.groupTitle = result.groupTitle;
                     userinfo.groupIcon = result.groupIcon?result.groupIcon:"";
                     userinfo.signature = result.signature;
-                    userinfo.topiccount = result.topiccount;
-                    userinfo.postcount = result.postcount;
+                    userinfo.topiccount = result.topiccount.toString();
+                    userinfo.postcount = result.postcount.toString();
                     userinfo.aboutme = result.aboutme;
                     userinfo.user_text = result["icon:text"];
                     userinfo.user_color = result["icon:bgColor"];
                     userinfo.logined = true;
                     signalCenter.loginSucceed();
                     saveData(username,password);
+                }else if(result == "Forbidden"){
+                    notification.show(qsTr("Login failed,try again later"),
+                                      "image://theme/icon-s-high-importance"
+                                      );
                 }else{
-                    signalCenter.loginFailed("登录失败！");
+                    signalCenter.loginFailed(result);
                 }
             })
         }
@@ -179,17 +190,26 @@ ApplicationWindow
         }
 
         // 获取最新帖子
-        function getRecent(){
-            return call_sync('main.getrecent',[]);
+        function getRecent(model){
+//            return call_sync('main.getrecent',[]);
+            call('main.getrecent',[],function(result){
+                signalCenter.getRecent(result);
+            });
         }
         //获取热门贴子
         function getPopular(){
-            return call_sync('main.getpopular',[]);
+//            return call_sync('main.getpopular',[]);
+            call('main.getpopular',[],function(result){
+                signalCenter.getRecent(result);
+            });
         }
 
         // 获取分类
         function getCategories(){
-            return call_sync('main.listcategory',[]);
+//            return call_sync('main.listcategory',[]);
+            call('main.listcategory',[],function(result){
+                signalCenter.getCategories(result);
+            });
         }
         //加密密码
         function encryPass(password){
@@ -202,19 +222,30 @@ ApplicationWindow
 
         // 获取贴子内容
         function getTopic(tid,slug){
-            return call_sync('main.getTopic',[tid,slug]);
+//            return call_sync('main.getTopic',[tid,slug]);
+            call('main.getTopic',[tid,slug],function(result){
+                signalCenter.getTopic(result);
+            });
         }
 
+        // 回复贴子
         function replayTopic(tid,uid,content){
             return call_sync('main.replay',[tid,uid,content]);
         }
 
+        // 发新贴
         function newTopic(title, content, uid, cid){
             return call_sync('main.post',[title, content, uid, cid]);
         }
 
+        //预览发贴内容
         function previewMd(text){
             return call_sync('main.previewMd',[text]);
+        }
+
+        //上传图片到sm.ms
+        function uploadImage(path){
+            return call_sync('main.uploadImgSm',[path]);
         }
     }
 
@@ -469,6 +500,7 @@ ApplicationWindow
     }
     Component.onCompleted: {
         Main.signalcenter = signalCenter;
+        page_size = settings.get_pagesize();
     }
 }
 

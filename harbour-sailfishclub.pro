@@ -81,7 +81,8 @@ HEADERS += \
 
 DISTFILES += \
     qml/pages/PostPage.qml \
-    qml/components/HtmlTagButton.qml
+    qml/components/HtmlTagButton.qml \
+    qml/components/ImagePreviewGrid.qml
 
 
 

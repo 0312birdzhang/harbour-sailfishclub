@@ -86,7 +86,7 @@ Page{
                         onClicked:{
                             pageStack.push(postComponent, {
                                                "tid":tid,
-                                               "replayTo":"@"+userslug,
+                                               "replayTo":"@"+userslug+" ",
                                                "parentpage":topicPage,
                                                "replaysTmpModel":topicModel
                                            });
@@ -168,193 +168,57 @@ Page{
 
     }
 
-    Item{
+    TopicToolBar{
         id:toolbar
-        clip: true;
-        function hideExbar(){
-            toolbar.showExbar=false;
-            toolbar.height=toolbar.iheight;
-            mebubtn.visible=true;
-            mebubtn_down.visible=false;
-        }
+    }
 
-        anchors{
-            bottom: topicPage.bottom
-        }
-        height: 0;
-        property int iheight: showExbar ? iconbar.height+exbar.height : iconbar.height;
-        property bool showExbar: false
-        width: topicPage.width;
+    Connections{
+        target: signalCenter
+        onGetTopic:{
+            var topicData = result;
+            if (topicData && topicData != "Forbidden"){
+                var posts = topicData.posts;
+                var pagination = topicData.pagination;
+                current_page = pagination.currentPage;
+                pageCount = pagination.pageCount;
+                if(pageCount > 1){
+                    next_page = pagination.next.qs;
+                    next_active = pagination.next.active;
+                    prev_page = pagination.prev.qs;
+                    prev_active = pagination.prev.active;
+                }
+                topicModel.clear();
+                for(var i = 0;i<posts.length; i ++){
+                    //过滤掉删除的
+                    if(posts[i].deleted){
+                        continue;
+                    }
+                    topicModel.append({
+                                          "timestamp":posts[i].timestampISO,
+                                          "content":posts[i].content,
+                                          "uid":posts[i].uid,
+                                          "username":posts[i].user.username,
+                                          "userslug":posts[i].user.userslug,
+                                          "picture":posts[i].user.picture,
+                                          "floor":posts[i].index,
+                                          "user_group_icon":posts[i].user.selectedGroup?posts[i].user.selectedGroup.icon:"",
+                                          "user_group_name":posts[i].user.selectedGroup?posts[i].user.selectedGroup.userTitle:"",
+                                          "user_text":posts[i].user["icon:text"],
+                                          "user_color":posts[i].user["icon:bgColor"]
 
-        Rectangle{
-            id:exbar
-            anchors.bottom: iconbar.top;
-            color: "#08202c"
-//            height: (Theme.iconSizeMedium+Theme.paddingMedium*2)*4+4;
-            height: Theme.iconSizeMedium+Theme.paddingMedium*2;
-            width: topicPage.width;
-            Column{
-                width: topicPage.width;
-                height: parent.height;
-//                TabButton{//Author only-只看楼主
-//                    icon.source:"image://theme/icon-m-people"
-//                    text:qsTr("Author only");
-//                    onClicked: {
-//                        currentTab.isReverse = false;
-//                        currentTab.isLz = !currentTab.isLz;
-//                        currentTab.getlist();
-//                        toolbar.hideExbar();
-//                    }
-//                }
-//                Rectangle{
-//                    width: parent.width;
-//                    height: 1;
-//                    color: Theme.rgba(Theme.highlightColor, 0.2)
-//                }
-//                TabButton{//Reverse-倒叙查看
-//                    icon.source: "image://theme/icon-m-transfer";
-//                    text:qsTr("Reverse")
-//                    onClicked: {
-//                            currentTab.isLz = false;
-//                            currentTab.isReverse = !currentTab.isReverse;
-//                            currentTab.getlist();
-//                        toolbar.hideExbar();
-//                    }
-//                }
-//                Rectangle{
-//                    width: parent.width;
-//                    height: 1;
-//                    color: Theme.rgba(Theme.highlightColor, 0.2)
-//                }
-//                TabButton{//Jump to page-跳转
-//                    icon.source: "image://theme/icon-m-rotate-right";
-//                    text:qsTr("Jump to page");
-//                    onClicked: {
-//                        internal.jumpToPage();
-//                        toolbar.hideExbar();
-//                    }
-//                }
-//                Rectangle{
-//                    width: parent.width;
-//                    height: 1;
-//                    color: Theme.rgba(Theme.highlightColor, 0.2)
-//                }
-                TabButton{//Open browser-用浏览器打开本帖
-                    icon.source: "image://theme/icon-m-computer"
-                    text:qsTr("Open browser");
-                    onClicked: {
-                        Qt.openUrlExternally(siteUrl+"/topic/"+tid);
-                        toolbar.hideExbar();
-                    }
+                                      });
+                    topicView.model = topicModel;
                 }
-                Rectangle{
-                    width: parent.width;
-                    height: 1;
-                    color: Theme.rgba(Theme.highlightColor, 0.2)
-                }
-            }
-        }
-
-        Rectangle{
-            id:iconbar
-            anchors.bottom: parent.bottom
-            color: "#08202c"
-            height: Theme.iconSizeMedium+Theme.paddingMedium*2;
-            width: topicPage.width;
-            Row{
-                TabButton{
-                    icon.source: "image://theme/icon-m-edit"
-                    width: (topicPage.width-Theme.iconSizeMedium-Theme.paddingMedium*2)/2
-                    text:qsTr("New post");
-                    onClicked: {
-                        pageStack.push(postComponent, {
-                                           "tid":tid,
-                                           "parentpage":topicPage,
-                                           "replaysTmpModel":topicModel
-                                       });
-                        toolbar.hideExbar();
-                    }
-                }
-                TabButton{
-                    icon.source: "image://theme/icon-m-refresh"
-                    width: (topicPage.width-Theme.iconSizeMedium-Theme.paddingMedium*2)/2
-                    text:qsTr("Refresh");
-                    onClicked: {
-                        load();
-                        toolbar.hideExbar();
-                    }
-                }
-                IconButton{
-                    id:mebubtn
-                    width: Theme.iconSizeMedium+Theme.paddingMedium*2
-                    icon.source: "image://theme/icon-m-menu"
-                    onClicked: {
-                        toolbar.showExbar=true;
-                        toolbar.height=toolbar.iheight;
-                        mebubtn.visible=false;
-                        mebubtn_down.visible=true;
-                    }
-                }
-                IconButton{
-                    id:mebubtn_down
-                    width: Theme.iconSizeMedium+Theme.paddingMedium*2
-                    icon.source: "image://theme/icon-m-down"
-                    onClicked: {
-                        toolbar.showExbar=false;
-                        toolbar.height=toolbar.iheight;
-                        mebubtn.visible=true;
-                        mebubtn_down.visible=false;
-                    }
-                }
-            }
-        }
-        Behavior on height {NumberAnimation{duration: 150}}
-        Connections {
-            target: pageStack
-            onCurrentPageChanged: {
-                toolbar.hideExbar();
+                topicView.scrollToTop();
+            }else{
+                console.log("load failed!!!");
             }
         }
     }
-    function load(){
-        var topicData = py.getTopic(tid,slug+"?page="+current_page);
-        if (topicData && topicData != "Forbidden"){
-            var posts = topicData.posts;
-            var pagination = topicData.pagination;
-            current_page = pagination.currentPage;
-            pageCount = pagination.pageCount;
-            if(pageCount > 1){
-                next_page = pagination.next.qs;
-                next_active = pagination.next.active;
-                prev_page = pagination.prev.qs;
-                prev_active = pagination.prev.active;
-            }
-            topicModel.clear();
-            for(var i = 0;i<posts.length; i ++){
-                //过滤掉删除的
-                if(posts[i].deleted){
-                    continue;
-                }
-                topicModel.append({
-                                      "timestamp":posts[i].timestampISO,
-                                      "content":posts[i].content,
-                                      "uid":posts[i].uid,
-                                      "username":posts[i].user.username,
-                                      "userslug":posts[i].user.userslug,
-                                      "picture":posts[i].user.picture,
-                                      "floor":posts[i].index,
-                                      "user_group_icon":posts[i].user.selectedGroup?posts[i].user.selectedGroup.icon:"",
-                                      "user_group_name":posts[i].user.selectedGroup?posts[i].user.selectedGroup.userTitle:"",
-                                      "user_text":posts[i].user["icon:text"],
-                                      "user_color":posts[i].user["icon:bgColor"]
 
-                                  });
-                topicView.model = topicModel;
-            }
-            topicView.scrollToTop();
-        }else{
-            console.log("load failed!!!");
-        }
+    function load(){
+        py.getTopic(tid,slug+"?page="+current_page);
+
     }
 
     
@@ -433,6 +297,16 @@ Page{
             }
         }
 
+    }
+
+    Component{
+        id:loginDialog
+        LoginComponent{
+            anchors.fill: parent
+            onLoginSucceed: {
+                pageStack.pop();
+            }
+        }
     }
 
     Component.onCompleted: {
