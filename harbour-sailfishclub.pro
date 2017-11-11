@@ -20,7 +20,6 @@ SOURCES += src/harbour-sailfishclub.cpp \
 OTHER_FILES += qml/harbour-sailfishclub.qml \
     qml/cover/CoverPage.qml \
     qml/pages/FirstPage.qml \
-    qml/pages/SecondPage.qml \
     qml/pages/Signalcenter.qml \
     qml/pages/NavigationPanel.qml \
     qml/pages/objects/UserInfo.qml \
@@ -53,6 +52,7 @@ OTHER_FILES += qml/harbour-sailfishclub.qml \
     rpm/harbour-sailfishclub.changes.in \
     rpm/harbour-sailfishclub.spec \
     rpm/harbour-sailfishclub.yaml \
+    translations/harbour-sailfishclub-zh_CN.ts \
     harbour-sailfishclub.desktop
 
 SAILFISHAPP_ICONS = 86x86 108x108 128x128 256x256

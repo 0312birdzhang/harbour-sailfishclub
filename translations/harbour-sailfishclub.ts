@@ -24,6 +24,21 @@
     </message>
 </context>
 <context>
+    <name>CategoriesPage</name>
+    <message>
+        <source>Not completed yeat</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Comming soon...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Categories</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>CommentField</name>
     <message>
         <source>Your comment</source>
@@ -50,6 +65,10 @@
         <source>Image upload failed</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Start upload image...</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FirstPage</name>
@@ -67,10 +86,6 @@
     </message>
     <message>
         <source>Load Failed,Click to retry</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source> post time:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -143,20 +158,16 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Please try again.</source>
+        <source>Enter UserName/Email</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Enter UserName/Email</source>
+        <source>Please try again later.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>NavigationPanel</name>
-    <message>
-        <source>Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>categories</source>
         <translation type="unfinished"></translation>
@@ -166,15 +177,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>tags</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>popular</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>recent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Settings&amp;About</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -241,28 +252,33 @@
     </message>
 </context>
 <context>
-    <name>SecondPage</name>
-    <message>
-        <source>Nested Page</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Item</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>SettingPage</name>
     <message>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>PageSize</source>
+        <source>Every page size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Every page size</source>
+        <source>About</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Thanks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Thanks nodebb,pynodebb,harbour-storeman,sm.ms and other projects</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>About this app</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This app is a client for https://sailfishos.club ,an unofficial Chinese community.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

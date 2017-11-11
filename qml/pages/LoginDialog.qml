@@ -31,20 +31,6 @@ Dialog {
         //api.checkToken(_token); //signal onTokenExpired
     }
 
-//    Connections {
-//        target: api
-//        onTokenExpired: {
-//            if (!tokenExpired) {
-//                console.log("==== !tokenExpired")
-//                api.accessToken = Settings.getAccess_token();
-//                api.uid = Settings.getUid();
-//                timer.start();
-//            } else {
-//                _showLoginView = true;
-//            }
-//        }
-//    }
-
     Timer {
         id: timer
         interval: 300

@@ -62,7 +62,10 @@ Page {
                 onClicked: {
                     //create new topic or 
                     if(userinfo.logined){
-                        pageStack.push(Qt.resolvedUrl("PostPage.qml"))
+                        pageStack.push(Qt.resolvedUrl("PostPage.qml"),
+                                       {"listModel":listModel,
+                                         "parentpage":page
+                                       })
                     }else{
                         toLoginPage();
                     }
@@ -118,7 +121,7 @@ Page {
             }
             Label{
                 id:timeid
-                text:FONT.Icon[category_icon.replace(/-/g,"_")]  + category + qsTr(" post time:")+ JS.humanedate(timestamp)
+                text:FONT.Icon[category_icon.replace(/-/g,"_")]  + category + " "+ JS.humanedate(timestamp)
                 //opacity: 0.7
                 font.pixelSize: Theme.fontSizeTiny
                 //font.italic: true

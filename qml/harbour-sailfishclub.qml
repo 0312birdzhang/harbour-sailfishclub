@@ -307,6 +307,30 @@ ApplicationWindow
         }
     }
 
+    Component{
+        id: categoriesPageComponent
+        CategoriesPage{
+            id:categoriesPage
+            property bool _dataInitialized: false
+            property bool withPanelView: true
+            Binding {
+                target: categoriesPage.contentItem
+                property: "parent"
+                value: categoriesPage.status === PageStatus.Active
+                       ? (panelView .closed ? panelView : categoriesPage) //修正listview焦点
+                       : categoriesPage
+            }
+
+            onStatusChanged: {
+                if (categoriesPage.status === PageStatus.Active) {
+                    if (!_dataInitialized) {
+                        _dataInitialized = true;
+                    }
+                }
+            }
+        }
+    }
+
 
     initialPage: Component {
         Page{
@@ -423,7 +447,12 @@ ApplicationWindow
 
     function toLoginPage(){
         popAttachedPages();
-        pageStack.replace(Qt.resolvedUrl("pages/LoginDialog.qml"),{webviewurl:Main.webviewUrl});
+        pageStack.replace(Qt.resolvedUrl("pages/LoginDialog.qml"));
+    }
+
+    function toCategoriesPage(){
+        popAttachedPages();
+        pageStack.replace(categoriesPageComponent)
     }
 
     function toUserInfoPage(uid){

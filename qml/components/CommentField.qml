@@ -255,21 +255,23 @@ Column {
         ImagePreviewGrid{
             onSelectImage: {
                 console.log("image path:"+url);
-                signalCenter.loadStarted();
-                var smurl = py.uploadImage(url);
-                signalCenter.loadFinished();
-                if(!smurl){
-                    notification.showPopup(
-                            qsTr("Error"),
-                            qsTr("Image upload failed"),
-                            "image://theme/icon-lock-warning"
-                            );
-                }else{
-                    var editor = body._editor;
-                    var mdurl = "![%0](%1)".arg(title).arg(smurl)
-                    editor.insert(editor.cursorPosition,mdurl);
-                    pageStack.pop();
-                }
+                remorse.execute(qsTr("Start upload image..."),function(){
+                    signalCenter.loadStarted();
+                    var smurl = py.uploadImage(url);
+                    signalCenter.loadFinished();
+                    if(!smurl){
+                        notification.showPopup(
+                                qsTr("Error"),
+                                qsTr("Image upload failed"),
+                                "image://theme/icon-lock-warning"
+                                );
+                    }else{
+                        var editor = body._editor;
+                        var mdurl = "![%0](%1)".arg(title).arg(smurl)
+                        editor.insert(editor.cursorPosition,mdurl);
+                        pageStack.pop();
+                    }
+                },3000);
             }
         }
     }

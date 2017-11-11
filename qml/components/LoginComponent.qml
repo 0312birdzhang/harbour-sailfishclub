@@ -8,9 +8,6 @@ Item {
     signal loginSucceed()
     signal loginFailed(string fail)
 
-    
-
-
     SilicaFlickable {
         anchors.fill: parent
         BusyIndicator {

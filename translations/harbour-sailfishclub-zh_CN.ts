@@ -5,326 +5,342 @@
     <name></name>
     <message id="orn-reply-to">
         <source></source>
-        <translation type="unfinished"></translation>
+        <translation>回复</translation>
     </message>
     <message id="orn-comment-edit-label">
         <source>Edit your comment</source>
-        <translation type="unfinished"></translation>
+        <translation>编辑回复内容</translation>
     </message>
 </context>
 <context>
     <name>ApiMain</name>
     <message>
         <source>connect error,code:</source>
-        <translation type="unfinished"></translation>
+        <translation>连接异常，错误码:</translation>
     </message>
     <message>
         <source>loading erro...</source>
-        <translation type="unfinished"></translation>
+        <translation>加载错误...</translation>
+    </message>
+</context>
+<context>
+    <name>CategoriesPage</name>
+    <message>
+        <source>Not completed yeat</source>
+        <translation>暂未完成</translation>
+    </message>
+    <message>
+        <source>Comming soon...</source>
+        <translation>即将到来...</translation>
+    </message>
+    <message>
+        <source>Categories</source>
+        <translation>板块</translation>
     </message>
 </context>
 <context>
     <name>CommentField</name>
     <message>
         <source>Your comment</source>
-        <translation type="unfinished"></translation>
+        <translation>写下你的评论</translation>
     </message>
     <message>
         <source>update</source>
         <extracomment>Update a comment</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>更新评论</translation>
     </message>
     <message>
         <source>reply</source>
-        <translation type="unfinished"></translation>
+        <translation>回复</translation>
     </message>
     <message>
         <source>send</source>
-        <translation type="unfinished"></translation>
+        <translation>发送</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>错误</translation>
     </message>
     <message>
         <source>Image upload failed</source>
-        <translation type="unfinished"></translation>
+        <translation>图片上传失败</translation>
+    </message>
+    <message>
+        <source>Start upload image...</source>
+        <translation>开始上传图片...</translation>
     </message>
 </context>
 <context>
     <name>FirstPage</name>
     <message>
         <source>Recent Page</source>
-        <translation type="unfinished"></translation>
+        <translation>最新</translation>
     </message>
     <message>
         <source>Popular</source>
-        <translation type="unfinished"></translation>
+        <translation>热门</translation>
     </message>
     <message>
         <source>last post by</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source> post time:</source>
-        <translation type="unfinished"></translation>
+        <translation>最新回复</translation>
     </message>
     <message>
         <source>Load Failed,Click to retry</source>
-        <translation type="unfinished"></translation>
+        <translation>加载失败，点击重试</translation>
     </message>
     <message>
         <source>New Topic</source>
-        <translation type="unfinished"></translation>
+        <translation>发新贴</translation>
     </message>
     <message>
         <source>Login to create new topic</source>
-        <translation type="unfinished"></translation>
+        <translation>登录后发贴</translation>
     </message>
     <message>
         <source>Refresh</source>
-        <translation type="unfinished"></translation>
+        <translation>刷新</translation>
     </message>
 </context>
 <context>
     <name>ImagePage</name>
     <message>
         <source>Loading image...%1</source>
-        <translation type="unfinished"></translation>
+        <translation>加载图片...%1</translation>
     </message>
     <message>
         <source>Error loading image</source>
-        <translation type="unfinished"></translation>
+        <translation>加载图片失败</translation>
     </message>
 </context>
 <context>
     <name>ImagePreviewGrid</name>
     <message>
         <source>Latest first</source>
-        <translation type="unfinished"></translation>
+        <translation>最新</translation>
     </message>
     <message>
         <source>Oldest first</source>
-        <translation type="unfinished"></translation>
+        <translation>最旧</translation>
     </message>
     <message>
         <source>Select an image</source>
-        <translation type="unfinished"></translation>
+        <translation>选择图片上传</translation>
     </message>
 </context>
 <context>
     <name>LoginComponent</name>
     <message>
         <source>Login</source>
-        <translation type="unfinished"></translation>
+        <translation>登录</translation>
     </message>
     <message>
         <source>Enter UserName/Email</source>
-        <translation type="unfinished"></translation>
+        <translation>输入用户名或邮箱</translation>
     </message>
     <message>
         <source>UserName</source>
-        <translation type="unfinished"></translation>
+        <translation>用户名</translation>
     </message>
     <message>
         <source>Enter Password</source>
-        <translation type="unfinished"></translation>
+        <translation>输入密码</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation type="unfinished"></translation>
+        <translation>密码</translation>
     </message>
     <message>
         <source>Show Password</source>
-        <translation type="unfinished"></translation>
+        <translation>显示密码</translation>
     </message>
     <message>
         <source>Don&apos;t have accounts?</source>
-        <translation type="unfinished"></translation>
+        <translation>还没有账号？</translation>
     </message>
     <message>
         <source>Login fail</source>
-        <translation type="unfinished"></translation>
+        <translation>登录失败</translation>
     </message>
     <message>
-        <source>Please try again.</source>
-        <translation type="unfinished"></translation>
+        <source>Please try again later.</source>
+        <translation>请稍后重试</translation>
     </message>
 </context>
 <context>
     <name>NavigationPanel</name>
     <message>
         <source>Guest</source>
-        <translation type="unfinished"></translation>
+        <translation>游客</translation>
     </message>
     <message>
         <source>categories</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>tags</source>
-        <translation type="unfinished"></translation>
+        <translation>板块</translation>
     </message>
     <message>
         <source>popular</source>
-        <translation type="unfinished"></translation>
+        <translation>热门</translation>
     </message>
     <message>
         <source>recent</source>
-        <translation type="unfinished"></translation>
+        <translation>最新</translation>
     </message>
     <message>
-        <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <source>Settings&amp;About</source>
+        <translation>设置&amp;关于</translation>
     </message>
 </context>
 <context>
     <name>PostPage</name>
     <message>
         <source>New Topic</source>
-        <translation type="unfinished"></translation>
+        <translation>新贴</translation>
     </message>
     <message>
         <source>Topic</source>
-        <translation type="unfinished"></translation>
+        <translation>主题</translation>
     </message>
     <message>
         <source>Categories</source>
-        <translation type="unfinished"></translation>
+        <translation>板块</translation>
     </message>
     <message>
         <source>Post</source>
-        <translation type="unfinished"></translation>
+        <translation>发送</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>错误</translation>
     </message>
     <message>
         <source>Field not completed</source>
-        <translation type="unfinished"></translation>
+        <translation>还有未填写的</translation>
     </message>
 </context>
 <context>
     <name>RegisterComponent</name>
     <message>
         <source>Create Account</source>
-        <translation type="unfinished"></translation>
+        <translation>创建账号</translation>
     </message>
     <message>
         <source>Email address</source>
-        <translation type="unfinished"></translation>
+        <translation>邮箱地址</translation>
     </message>
     <message>
         <source>User Name</source>
-        <translation type="unfinished"></translation>
+        <translation>用户名</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation type="unfinished"></translation>
+        <translation>密码</translation>
     </message>
     <message>
         <source>Confirm Password</source>
-        <translation type="unfinished"></translation>
+        <translation>确认密码</translation>
     </message>
     <message>
         <source>Register</source>
-        <translation type="unfinished"></translation>
+        <translation>注册</translation>
     </message>
     <message>
         <source>Register fail</source>
-        <translation type="unfinished"></translation>
+        <translation>注册失败</translation>
     </message>
     <message>
         <source>Please try again.</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>SecondPage</name>
-    <message>
-        <source>Nested Page</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Item</source>
-        <translation type="unfinished"></translation>
+        <translation>请重试</translation>
     </message>
 </context>
 <context>
     <name>SettingPage</name>
     <message>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>PageSize</source>
-        <translation type="unfinished"></translation>
+        <translation>设置</translation>
     </message>
     <message>
         <source>Every page size</source>
-        <translation type="unfinished"></translation>
+        <translation>每页条数</translation>
+    </message>
+    <message>
+        <source>About</source>
+        <translation>关于</translation>
+    </message>
+    <message>
+        <source>Thanks</source>
+        <translation>感谢</translation>
+    </message>
+    <message>
+        <source>Thanks nodebb,pynodebb,harbour-storeman,sm.ms and other projects</source>
+        <translation>感谢nodebb、pynodebb、harbour-storeman、sm.ms和其他项目</translation>
+    </message>
+    <message>
+        <source>About this app</source>
+        <translation>关于这个软件</translation>
+    </message>
+    <message>
+        <source>This app is a client for https://sailfishos.club ,an unofficial Chinese community.</source>
+        <translation>这个软件是https://sailfishos.club（旗鱼俱乐部）的客户端，旗鱼俱乐部是一个非官方中文社区</translation>
     </message>
 </context>
 <context>
     <name>TopicPage</name>
     <message>
         <source>Replay</source>
-        <translation type="unfinished"></translation>
+        <translation>回复</translation>
     </message>
     <message>
         <source>Prev Page</source>
-        <translation type="unfinished"></translation>
+        <translation>上一页</translation>
     </message>
     <message>
         <source>Next Page</source>
-        <translation type="unfinished"></translation>
+        <translation>下一页</translation>
     </message>
     <message>
         <source>Empty,Click to retry</source>
-        <translation type="unfinished"></translation>
+        <translation>点击重试</translation>
     </message>
     <message>
         <source>ReplayError</source>
-        <translation type="unfinished"></translation>
+        <translation>回复出错</translation>
     </message>
 </context>
 <context>
     <name>TopicToolBar</name>
     <message>
         <source>Open browser</source>
-        <translation type="unfinished"></translation>
+        <translation>在浏览器中查看</translation>
     </message>
     <message>
         <source>New post</source>
-        <translation type="unfinished"></translation>
+        <translation>回复</translation>
     </message>
     <message>
         <source>Login to post</source>
-        <translation type="unfinished"></translation>
+        <translation>登录后回复</translation>
     </message>
     <message>
         <source>Refresh</source>
-        <translation type="unfinished"></translation>
+        <translation>刷新</translation>
     </message>
 </context>
 <context>
     <name>harbour-sailfishclub</name>
     <message>
         <source>请求超时</source>
-        <translation type="unfinished"></translation>
+        <translation>请求超时</translation>
     </message>
     <message>
         <source>Welcome to</source>
-        <translation type="unfinished"></translation>
+        <translation>Welcome to</translation>
     </message>
     <message>
         <source>SailfishClub</source>
-        <translation type="unfinished"></translation>
+        <translation>SailfishClub</translation>
     </message>
     <message>
         <source>Login failed,try again later</source>
-        <translation type="unfinished"></translation>
+        <translation>登录失败，请稍后重试</translation>
     </message>
 </context>
 </TS>

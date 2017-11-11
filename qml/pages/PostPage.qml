@@ -82,6 +82,7 @@ Dialog  {
                 anchors { left: parent.left; right: parent.right }
                 label: qsTr("Topic");
                 focus: true;
+                validator: RegExpValidator { regExp: /.{4,30}/ }
                 placeholderText: label
                 EnterKey.enabled: text || inputMethodComposing
                 EnterKey.iconSource: "image://theme/icon-m-enter-next"

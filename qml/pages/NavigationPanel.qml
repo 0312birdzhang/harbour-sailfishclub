@@ -20,7 +20,10 @@ Panel {
             current_router = router;
             if(router == "recent" || router == "popular"){
                 toIndexPage();
-            }else{
+            }else if(router == "categories"){
+                toCategoriesPage();
+            }
+            else{
 
             }
         }
@@ -77,7 +80,7 @@ Panel {
                 width: userAvatar.width/4
                 height: width
                 anchors.centerIn: cover
-                avatar: "" != userinfo.avatar?(siteUrl+userinfo.avatar):""
+                avatar: "" != userinfo.avatar?(siteUrl+userinfo.avatar):"image://theme/harbour-sailfishclub"
                 color:  userinfo.user_color
                 text:   userinfo.user_text
                 MouseArea {
@@ -120,24 +123,24 @@ Panel {
         }
 
 
-        Item {
-            width: column.width
-            height: Theme.itemSizeExtraSmall
-            HorizontalFontAwesomeTextButton {
-                anchors {
-                    left: parent.left
-                    leftMargin: Theme.paddingLarge
-                    right: parent.right
-                }
-                icon:FontAwesome.Icon.fa_tags
-                text: qsTr("tags")
-                color: Theme.secondaryColor
-                spacing: Theme.paddingMedium
-                onClicked: {
-                    goRouter("tags");
-                }
-            }
-        }
+//        Item {
+//            width: column.width
+//            height: Theme.itemSizeExtraSmall
+//            HorizontalFontAwesomeTextButton {
+//                anchors {
+//                    left: parent.left
+//                    leftMargin: Theme.paddingLarge
+//                    right: parent.right
+//                }
+//                icon:FontAwesome.Icon.fa_tags
+//                text: qsTr("tags")
+//                color: Theme.secondaryColor
+//                spacing: Theme.paddingMedium
+//                onClicked: {
+//                    goRouter("tags");
+//                }
+//            }
+//        }
 
         Item {
             width: column.width
@@ -186,7 +189,7 @@ Panel {
                     right: parent.right
                 }
                 icon: FontAwesome.Icon.fa_cogs
-                text:  qsTr("Settings")
+                text:  qsTr("Settings&About")
                 color: Theme.secondaryColor
                 spacing: Theme.paddingMedium
                 onClicked: {
