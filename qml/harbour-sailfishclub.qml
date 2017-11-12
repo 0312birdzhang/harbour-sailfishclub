@@ -152,13 +152,13 @@ ApplicationWindow
                     userinfo.username = result.username;
                     userinfo.email = result.email;
                     userinfo.website = result.website;
-                    userinfo.avatar = result.picture;
-                    userinfo.groupTitle = result.groupTitle;
+                    userinfo.avatar = result.picture?result.picture:"";
+                    userinfo.groupTitle = result.groupTitle?result.groupTitle:"";
                     userinfo.groupIcon = result.groupIcon?result.groupIcon:"";
-                    userinfo.signature = result.signature;
+                    userinfo.signature = result.signature?result.signature:"";
                     userinfo.topiccount = result.topiccount.toString();
                     userinfo.postcount = result.postcount.toString();
-                    userinfo.aboutme = result.aboutme;
+                    userinfo.aboutme = result.aboutme?result.aboutme:"";
                     userinfo.user_text = result["icon:text"];
                     userinfo.user_color = result["icon:bgColor"];
                     userinfo.logined = true;
@@ -246,6 +246,21 @@ ApplicationWindow
         //上传图片到sm.ms
         function uploadImage(path){
             return call_sync('main.uploadImgSm',[path]);
+        }
+
+        // 新用户注册
+        function register(user,password,email){
+//            console.log("register:"+user+",pass:"+password+",email:"+email)
+             call('main.createUser',[user,password,email],function(result){
+                 console.log("result:"+result)
+                 if(result && result != "Forbidden" && result != "False"){
+                     signalCenter.registerSucceed();
+                     py.login(user,password);
+                 }else{
+                     signalCenter.registerFailed(result);
+
+                 }
+             });
         }
     }
 

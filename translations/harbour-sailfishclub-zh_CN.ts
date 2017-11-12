@@ -281,6 +281,10 @@
         <source>This app is a client for https://sailfishos.club ,an unofficial Chinese community.</source>
         <translation>这个软件是https://sailfishos.club（旗鱼俱乐部）的客户端，旗鱼俱乐部是一个非官方中文社区</translation>
     </message>
+    <message>
+        <source>Version</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TopicPage</name>

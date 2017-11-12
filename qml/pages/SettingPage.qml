@@ -22,6 +22,21 @@ Page{
             PageHeader {
                 title: qsTr("About")
             }
+            Image{
+                id:logo
+                fillMode: Image.Stretch;
+                source:"image://theme/harbour-sailfishclub"
+                anchors.horizontalCenter: parent.horizontalCenter;
+            }
+
+            Item { width: 1; height: 1 }
+            Label{
+                id:version
+                anchors.horizontalCenter: parent.horizontalCenter
+                text:qsTr("Version")+" 0.1.3"
+
+            }
+            Item { width: 1; height: 1 }
             LabelText{
                 label: qsTr("Thanks")
                 text: qsTr("Thanks nodebb,pynodebb,harbour-storeman,sm.ms and other projects")

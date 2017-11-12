@@ -9,6 +9,8 @@ Column {
     property string _replyToId
     readonly property bool _hasText: body.text.trim()
 
+    signal sendButtonClicked();
+
     function reply(cid, name, text) {
         _editId = ""
         _replyToId = cid
@@ -46,6 +48,7 @@ Column {
 
     Item {
         id: typeItem
+        visible: false
         anchors {
             left: parent.left
             right: parent.right
@@ -205,7 +208,7 @@ Column {
 
         Label {
             id: sendButton
-            visible: _editId && _replyToId
+            visible: _editId || _replyToId
             anchors {
                 verticalCenter: parent.top
                 verticalCenterOffset: body.textVerticalCenterOffset + (body._editor.height - height)
@@ -241,10 +244,11 @@ Column {
                         // OrnClient.editComment(_editId, body.text)
                     } else if (_replyToId) {
                         // OrnClient.comment(appId, body.text, _replyToId)
+                        sendButtonClicked();
                     } else {
                         // OrnClient.comment(appId, body.text)
                     }
-                    _reset()
+//                    _reset()
                 }
             }
         }

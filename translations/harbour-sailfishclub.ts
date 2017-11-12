@@ -281,6 +281,10 @@
         <source>This app is a client for https://sailfishos.club ,an unofficial Chinese community.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Version</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TopicPage</name>

@@ -27,7 +27,8 @@ def login(user, password):
         return False
     return userInfo
 
-def create(user,password,email):
+def createUser(user,password,email):
+    logger.debug("start register");
     status_code, userInfo = client.users.create(user,**{
         "password":password,
         "email":email
@@ -35,9 +36,7 @@ def create(user,password,email):
     if not status_code or status_code != 200:
         return False
     else:
-        uid = userInfo.get("uid")
-        return uid
-    return True
+        return userInfo
 
 def post(title, content, uid, cid):
     status_code, response = client.topics.create(uid, cid, title, content)
@@ -85,7 +84,7 @@ def uploadImgSm(path):
     url = 'https://sm.ms/api/upload'
     try:
         files = {'smfile' : open(path, 'rb')}
-        r = requests.post(url, files = files, timeout=5)
+        r = requests.post(url, files = files, timeout=5000)
         data1 = eval(r.text.encode('utf-8'))
         smurl = data1['data']['url']
         logger.info(smurl)

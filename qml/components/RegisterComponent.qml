@@ -1,6 +1,6 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import "../js/main.js" as Script
+//import "../js/main.js" as Script
 
 Item {
     id:registerComponent
@@ -37,7 +37,7 @@ Item {
                 placeholderText: label
                 EnterKey.enabled: text || inputMethodComposing
                 EnterKey.iconSource: "image://theme/icon-m-enter-next"
-                EnterKey.onClicked: password.focus = true
+                EnterKey.onClicked: nickname.focus = true
             }
             // TextField {
             //     id: firstname
@@ -86,12 +86,9 @@ Item {
                 Behavior on opacity { FadeAnimation { } }
                 EnterKey.enabled: text || inputMethodComposing
                 EnterKey.highlighted: !errorHighlight
-                EnterKey.iconSource: "image://theme/icon-m-enter-next"
+                EnterKey.iconSource: "image://theme/icon-m-enter-close"
                 EnterKey.onClicked: {
-                    errorLabel.visible = false;
-                    registerButton.enabled = false;
-                    busyIndicator.running = true;
-//                    Script.registeR(email.text,nickname.text,password.text,confirmPassword.text,rea)
+                   confirmPassword.focus = false;
                 }
 
             }
@@ -112,7 +109,7 @@ Item {
                 errorLabel.visible = false;
                 registerButton.enabled = false;
                 busyIndicator.running = true;
-//                Script.registeR(email.text,nickname.text,password.text,confirmPassword.text,reason.text)
+                py.register(nickname.text,password.text,email.text);
 
             }
         }

@@ -231,46 +231,16 @@ Page{
             property int tid;
             property ListModel replaysTmpModel
             property Page parentpage;
-            canAccept: commentField.children[3].text.length > 2
+            canAccept: false
             acceptDestination: parentpage
             acceptDestinationAction: PageStackAction.Pop
             acceptDestinationProperties:replaysTmpModel
-            onAccepted: {
-                var subcomments = commentField.children[3].text;
-                //replay
-                console.log("sub:"+ subcomments+",tid:"+dialog.tid+",uid:"+userinfo.uid);
-                var ret = py.replayTopic(dialog.tid,userinfo.uid,subcomments);
-                console.log(JSON.stringify(ret));
-                if(!ret || ret == "false"){
-                    notification.showPopup(qsTr("ReplayError"),JSON.stringify(ret),"image://theme/icon-lock-warning");
-                    return;
-                }else{
-                    replaysTmpModel.append({
-                                         "timestamp":ret.timestampISO,
-                                         "content":ret.content,
-                                         "uid":userinfo.uid.toString(),
-                                         "username":userinfo.username,
-                                         "picture":userinfo.avatar,
-                                         "floor":ret.index,
-                                         "user_group_icon":userinfo.groupIcon,
-                                         "user_group_name":ret.user.selectedGroup?ret.user.selectedGroup.userTitle:"",
-                                         "user_text":userinfo.user_text,
-                                         "user_color":userinfo.user_color
-                                       })
-                }
-
-            }
-
-            Component.onCompleted: {
-
-            }
-
-            Flickable {
+            SilicaFlickable {
                 // ComboBox requires a flickable ancestor
                 width: parent.width
                 height: parent.height
-                interactive: false
                 anchors.fill: parent
+                contentHeight: column.height + Theme.paddingLarge * 2
                 Column{
                     id: column
                     width: parent.width
@@ -289,10 +259,42 @@ Page{
                     CommentField{
                         id: commentField
                         replayUser: replayTo
+                        _replyToId: tid;
+                        onSendButtonClicked: {
+                            var subcomments = commentField.children[3].text;
+                            //replay
+                            console.log("sub:"+ subcomments+",tid:"+dialog.tid+",uid:"+userinfo.uid);
+                            var ret = py.replayTopic(dialog.tid,userinfo.uid,subcomments);
+                            console.log(JSON.stringify(ret));
+                            if(!ret || ret == "false"){
+                                notification.showPopup(qsTr("ReplayError"),JSON.stringify(ret),"image://theme/icon-lock-warning");
+//                                return;
+                            }else{
+                                replaysTmpModel.append({
+                                                     "timestamp":ret.timestampISO,
+                                                     "content":ret.content,
+                                                     "uid":userinfo.uid.toString(),
+                                                     "username":userinfo.username,
+                                                     "picture":userinfo.avatar,
+                                                     "floor":ret.index,
+                                                     "user_group_icon":userinfo.groupIcon,
+                                                     "user_group_name":ret.user.selectedGroup?ret.user.selectedGroup.userTitle:"",
+                                                     "user_text":userinfo.user_text,
+                                                     "user_color":userinfo.user_color
+                                                   });
+                                pageStack.pop();
+                            }
+                        }
                     }
 
                 }
 
+                MouseArea{
+                    anchors.fill: parent
+                    onClicked: {
+
+                    }
+                }
 
             }
         }

@@ -32,9 +32,9 @@ Dialog  {
                     if(cid && title.text && comments){
                         var ret = py.newTopic(title.text, comments, userinfo.uid, cid);
                         // console.log(JSON.stringify(ret));
-                        if(ret){
+                        if(ret && (ret != "false" || ret != "Forbidden") ){
                             var topicData = ret.topicData;
-                            listModel.insert({
+                            listModel.insert(0,{
                                                  "title":topicData.title,
                                                  "user":topicData.user.username,
                                                  "viewcount":topicData.viewcount,
@@ -48,7 +48,7 @@ Dialog  {
                                                  "category":topicData.category.name,
                                                  "category_icon":topicData.category.icon
                                              });
-                            postPage.accept();
+                            pageStack.pop();
                         }else{
                             notification.showPopup(
                                     qsTr("Error"),
@@ -131,6 +131,9 @@ Dialog  {
         for(var i=0;i<categories.length;i++){
             if(categories[i].parentCid != "0"){
                 categories[i].name = "  - " + categories[i].name;
+            }
+            if(categories[i].name == "公告"||categories[i].name == "新闻"){
+                continue;
             }
 
             categoryModel.append({
