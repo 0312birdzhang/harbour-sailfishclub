@@ -36,7 +36,7 @@ import "components"
 import "js/main.js" as JS
 import "js/ApiMain.js" as Main
 import "js/fontawesome.js" as FontAwesome
-import io.thp.pyotherside 1.5
+import io.thp.pyotherside 1.4
 import org.nemomobile.notifications 1.0
 import harbour.sailfishclub.settings 1.0
 

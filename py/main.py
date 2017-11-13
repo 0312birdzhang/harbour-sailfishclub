@@ -83,7 +83,7 @@ def uploadImgSm(path):
     import sys
     url = 'https://sm.ms/api/upload'
     try:
-        files = {'smfile' : open(path, 'rb')}
+        files = {'smfile' : open(path.encode("utf-8"), 'rb')}
         r = requests.post(url, files = files, timeout=5000)
         data1 = eval(r.text.encode('utf-8'))
         smurl = data1['data']['url']
