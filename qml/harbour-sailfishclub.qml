@@ -233,6 +233,11 @@ ApplicationWindow
             return call_sync('main.replay',[tid,uid,content]);
         }
 
+        // 回复贴子中的楼层
+        function replayFloor(tid, uid, toPid, content){
+            return call_sync('main.replayTo',[tid, uid, toPid, content]);
+        }
+
         // 发新贴
         function newTopic(title, content, uid, cid){
             return call_sync('main.post',[title, content, uid, cid]);

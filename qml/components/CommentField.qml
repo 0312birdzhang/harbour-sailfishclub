@@ -251,6 +251,14 @@ Column {
 //                    _reset()
                 }
             }
+            Rectangle{
+                width: sendButton.width + Theme.paddingMedium * 2
+                height: sendButton.height
+                anchors.horizontalCenter: parent.horizontalCenter
+                border.color:Theme.highlightColor
+                color:"#00000000"
+                radius: 10
+            }
         }
     }
 

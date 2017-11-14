@@ -45,15 +45,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>update</source>
-        <extracomment>Update a comment</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>reply</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>send</source>
         <translation type="unfinished"></translation>
     </message>
@@ -67,6 +58,15 @@
     </message>
     <message>
         <source>Start upload image...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>update</source>
+        <extracomment>Update a comment</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>reply</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

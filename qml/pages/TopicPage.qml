@@ -87,6 +87,7 @@ Page{
                             pageStack.push(postComponent, {
                                                "tid":tid,
                                                "replayTo":"@"+userslug+" ",
+                                               "pid":pid,
                                                "parentpage":topicPage,
                                                "replaysTmpModel":topicModel
                                            });
@@ -197,6 +198,7 @@ Page{
                                           "timestamp":posts[i].timestampISO,
                                           "content":posts[i].content,
                                           "uid":posts[i].uid,
+                                          "pid":posts[i].pid,
                                           "username":posts[i].user.username,
                                           "userslug":posts[i].user.userslug,
                                           "picture":posts[i].user.picture,
@@ -228,13 +230,16 @@ Page{
         Dialog  {
             id:dialog
             property string replayTo:"";
-            property int tid;
+            property string tid;
+            property string pid;
+
             property ListModel replaysTmpModel
             property Page parentpage;
             canAccept: false
             acceptDestination: parentpage
             acceptDestinationAction: PageStackAction.Pop
             acceptDestinationProperties:replaysTmpModel
+
             SilicaFlickable {
                 // ComboBox requires a flickable ancestor
                 width: parent.width
@@ -245,8 +250,8 @@ Page{
                     id: column
                     width: parent.width
                     height: commentField.height
-                    DialogHeader {
-                        title:""
+                    DialogHeader{
+                         acceptText: ""
                     }
                     anchors{
                         //top:dialogHead.bottom
@@ -263,8 +268,14 @@ Page{
                         onSendButtonClicked: {
                             var subcomments = commentField.children[3].text;
                             //replay
-                            console.log("sub:"+ subcomments+",tid:"+dialog.tid+",uid:"+userinfo.uid);
-                            var ret = py.replayTopic(dialog.tid,userinfo.uid,subcomments);
+//                            console.log("sub:"+ subcomments+",tid:"+dialog.tid+",uid:"+userinfo.uid);
+                            var ret;
+                            if(pid){
+                                ret = py.replayFloor(dialog.tid,userinfo.uid,pid,subcomments);
+                            }else{
+                                ret = py.replayTopic(dialog.tid,userinfo.uid,subcomments);
+                            }
+
                             console.log(JSON.stringify(ret));
                             if(!ret || ret == "false"){
                                 notification.showPopup(qsTr("ReplayError"),JSON.stringify(ret),"image://theme/icon-lock-warning");

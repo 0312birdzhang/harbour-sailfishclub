@@ -50,6 +50,12 @@ def replay(tid,uid,content):
         return False
     return response
 
+def replayTo(tid, uid, toPid, content):
+    status_code, response = client.topics.post(tid, uid, toPid, content)
+    if not status_code or status_code != 200:
+        return False
+    return response
+
 def getrecent():
     status_code, topics = client.topics.get_recent()
     if not status_code or status_code != 200:

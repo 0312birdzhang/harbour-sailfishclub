@@ -45,15 +45,6 @@
         <translation>写下你的评论</translation>
     </message>
     <message>
-        <source>update</source>
-        <extracomment>Update a comment</extracomment>
-        <translation>更新评论</translation>
-    </message>
-    <message>
-        <source>reply</source>
-        <translation>回复</translation>
-    </message>
-    <message>
         <source>send</source>
         <translation>发送</translation>
     </message>
@@ -68,6 +59,15 @@
     <message>
         <source>Start upload image...</source>
         <translation>开始上传图片...</translation>
+    </message>
+    <message>
+        <source>update</source>
+        <extracomment>Update a comment</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>reply</source>
+        <translation>回复</translation>
     </message>
 </context>
 <context>
@@ -283,15 +283,15 @@
     </message>
     <message>
         <source>Version</source>
-        <translation type="unfinished"></translation>
+        <translation>版本</translation>
     </message>
     <message>
         <source>Logout</source>
-        <translation type="unfinished"></translation>
+        <translation>退出</translation>
     </message>
     <message>
         <source>Start logout...</source>
-        <translation type="unfinished"></translation>
+        <translation>即将退出...</translation>
     </message>
 </context>
 <context>
