@@ -296,9 +296,9 @@ Page{
 
     Component{
         id:loginDialog
-        LoginComponent{
+        LoginDialog{
             anchors.fill: parent
-            onLoginSucceed: {
+            onAccepted: {
                 pageStack.pop();
             }
         }

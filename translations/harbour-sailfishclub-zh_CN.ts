@@ -5,7 +5,7 @@
     <name></name>
     <message id="orn-reply-to">
         <source></source>
-        <translation>回复</translation>
+        <translation>发送回复</translation>
     </message>
     <message id="orn-comment-edit-label">
         <source>Edit your comment</source>
@@ -283,6 +283,14 @@
     </message>
     <message>
         <source>Version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start logout...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

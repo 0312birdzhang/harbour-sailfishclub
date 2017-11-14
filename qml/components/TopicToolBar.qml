@@ -108,6 +108,7 @@ Item{
                                    });
                     }else{
                         pageStack.push(loginDialog);
+                        toLoginPage();
                     }
 
                     toolbar.hideExbar();

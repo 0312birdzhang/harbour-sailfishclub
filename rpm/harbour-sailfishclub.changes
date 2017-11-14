@@ -8,7 +8,8 @@
 # * date Author's Name <author's email> version-release
 # - Summary of changes
 
-* Sun Apr 13 2014 Jack Tar <jack.tar@example.com> 0.0.1-1
-- Scrubbed the deck
-- Hoisted the sails
+* Mon Nov 13 2017 BirdZhang <0312birdzhang@gmail.com> 0.1.4
+- fix some bugs
 
+* Fri Nov 11 2017 BirdZhang <0312birdzhang@gmail.com> 0.1.0
+- init release

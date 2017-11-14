@@ -48,7 +48,7 @@ Page {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    console.log("path:"+url+",title:"+galleryModel.get(index).title)
+//                    console.log("path:"+url+",title:"+galleryModel.get(index).title)
                     selectImage(url,galleryModel.get(index).title);
                 }
             }

@@ -252,7 +252,7 @@ ApplicationWindow
         function register(user,password,email){
 //            console.log("register:"+user+",pass:"+password+",email:"+email)
              call('main.createUser',[user,password,email],function(result){
-                 console.log("result:"+result)
+//                 console.log("result:"+result)
                  if(result && result != "Forbidden" && result != "False"){
                      signalCenter.registerSucceed();
                      py.login(user,password);
@@ -428,14 +428,12 @@ ApplicationWindow
                 onTriggered: {
                     splash.visible = false;
                     loading = false;
-                    //                    toIndexPage();
-                    //                    var UserData = JS.getUserData();
                     var username = settings.get_username();
                     var password = settings.get_password();
                     if(username && password){
                         //login validate
                         var derpass = py.decryPass(password);
-                        console.log("user:"+username+",pass:"+derpass);
+//                        console.log("user:"+username+",pass:"+derpass);
                         if(derpass)py.login(username,derpass);
                     }
                     toIndexPage();

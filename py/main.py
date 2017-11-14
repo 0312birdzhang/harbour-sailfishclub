@@ -90,9 +90,18 @@ def uploadImgSm(path):
         logger.info(smurl)
         return smurl
     except Exception as e:
-        logger.error(str(e))
+        uploadVimCN(path)
         return None
 
+def uploadVimCN(file):
+    url = 'http://img.vim-cn.com/'
+    try:
+        files = {'file' : open(file.encode("utf-8"), 'rb')}
+        r = requests.post(url, files = files, timeout=5000)
+        return r.text
+    except Exception as e:
+        logger.error(str(e))
+        return None
 
 def previewMd(text):
     import mistune

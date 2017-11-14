@@ -285,6 +285,14 @@
         <source>Version</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Logout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start logout...</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TopicPage</name>

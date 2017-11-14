@@ -15,15 +15,14 @@ Panel {
 
     function goRouter(router){
         if(current_router == router){
-            return;
+//            return;
         }else{
             current_router = router;
             if(router == "recent" || router == "popular"){
                 toIndexPage();
             }else if(router == "categories"){
                 toCategoriesPage();
-            }
-            else{
+            } else{
 
             }
         }
@@ -149,6 +148,7 @@ Panel {
                 anchors {
                     left: parent.left
                     leftMargin: Theme.paddingLarge
+                    right: parent.right
                 }
                 icon:FontAwesome.Icon.fa_fire
                 text:  qsTr("popular")

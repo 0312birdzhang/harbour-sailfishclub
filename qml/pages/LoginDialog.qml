@@ -12,8 +12,6 @@ Dialog {
     property bool _canAccept: false
     property bool _showLoginView: true
 
-    
-
     onAccepted: toIndexPage();
     //只有当登陆成功的时候才能accept
     canAccept: _canAccept

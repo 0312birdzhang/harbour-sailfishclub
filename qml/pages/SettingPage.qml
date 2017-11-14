@@ -33,7 +33,7 @@ Page{
             Label{
                 id:version
                 anchors.horizontalCenter: parent.horizontalCenter
-                text:qsTr("Version")+" 0.1.3"
+                text:qsTr("Version")+" 0.1.4"
 
             }
             Item { width: 1; height: 1 }
@@ -61,6 +61,26 @@ Page{
                 width: parent.width
                 valueText: value
                 label: qsTr("Every page size")
+            }
+
+            Button{
+                text:qsTr("Logout")
+                anchors.horizontalCenter: parent.horizontalCenter
+                onClicked: {
+                    remorse.execute(qsTr("Start logout..."), function() {
+                        settings.set_username("");
+                        settings.set_password("");
+                        userinfo.logined = false;
+                        userinfo.uid = "";
+                        userinfo.userslug = "";
+                        userinfo.username = "";
+                        userinfo.avatar = "";
+                        userinfo.user_text = "";
+
+                        toIndexPage();
+                    },3000)
+
+                }
             }
 
         }

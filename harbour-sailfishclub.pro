@@ -49,7 +49,6 @@ OTHER_FILES += qml/harbour-sailfishclub.qml \
     qml/js/ApiMain.js \
     qml/pages/TopicPage.qml \
     qml/components/HorizontalFontAwesomeTextButton.qml \
-    rpm/harbour-sailfishclub.changes.in \
     rpm/harbour-sailfishclub.spec \
     rpm/harbour-sailfishclub.yaml \
     translations/harbour-sailfishclub-zh_CN.ts \
@@ -82,7 +81,8 @@ HEADERS += \
 DISTFILES += \
     qml/pages/PostPage.qml \
     qml/components/HtmlTagButton.qml \
-    qml/components/ImagePreviewGrid.qml
+    qml/components/ImagePreviewGrid.qml \
+    rpm/harbour-sailfishclub.changes
 
 
 
