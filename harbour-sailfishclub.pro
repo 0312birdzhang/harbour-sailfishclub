@@ -82,6 +82,7 @@ DISTFILES += \
     qml/pages/PostPage.qml \
     qml/components/HtmlTagButton.qml \
     qml/components/ImagePreviewGrid.qml \
+    qml/components/ShareToPage.qml \
     rpm/harbour-sailfishclub.changes
 
 

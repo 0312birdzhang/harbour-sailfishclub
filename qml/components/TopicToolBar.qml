@@ -4,6 +4,10 @@ import Sailfish.Silica 1.0
 Item{
     id:toolbar
     clip: true;
+
+    signal openShare();
+    signal openBrowser();
+
     function hideExbar(){
         toolbar.showExbar=false;
         toolbar.height=toolbar.iheight;
@@ -59,24 +63,24 @@ Item{
 //                    height: 1;
 //                    color: Theme.rgba(Theme.highlightColor, 0.2)
 //                }
-//                TabButton{//Jump to page-跳转
-//                    icon.source: "image://theme/icon-m-rotate-right";
-//                    text:qsTr("Jump to page");
-//                    onClicked: {
-//                        internal.jumpToPage();
-//                        toolbar.hideExbar();
-//                    }
-//                }
-//                Rectangle{
-//                    width: parent.width;
-//                    height: 1;
-//                    color: Theme.rgba(Theme.highlightColor, 0.2)
-//                }
+            TabButton{
+                icon.source: "image://theme/icon-m-share";
+                text:qsTr("Share");
+                onClicked: {
+                    openShare();
+                    toolbar.hideExbar();
+                }
+            }
+            Rectangle{
+                width: parent.width;
+                height: 1;
+                color: Theme.rgba(Theme.highlightColor, 0.2)
+            }
             TabButton{//Open browser-用浏览器打开本帖
                 icon.source: "image://theme/icon-m-computer"
                 text:qsTr("Open browser");
                 onClicked: {
-                    Qt.openUrlExternally(siteUrl+"/topic/"+tid);
+                    openBrowser();
                     toolbar.hideExbar();
                 }
             }

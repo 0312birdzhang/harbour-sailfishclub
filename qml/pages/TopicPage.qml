@@ -171,6 +171,16 @@ Page{
 
     TopicToolBar{
         id:toolbar
+        onOpenBrowser:{
+            Qt.openUrlExternally(siteUrl+"/topic/"+tid);
+        }
+        onOpenShare:{
+            pageStack.push(Qt.resolver("../components/ShareToPage.qml"),{
+                "link":siteUrl+"/topic/"+tid,
+                "linkTitle":topic_title
+            })
+        }
+
     }
 
     Connections{
