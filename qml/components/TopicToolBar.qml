@@ -28,7 +28,7 @@ Item{
         anchors.bottom: iconbar.top;
         color: "#08202c"
 //            height: (Theme.iconSizeMedium+Theme.paddingMedium*2)*4+4;
-        height: Theme.iconSizeMedium+Theme.paddingMedium*2;
+        height: (Theme.iconSizeMedium+Theme.paddingMedium *2) * 2 + 4;
         width: topicPage.width;
         Column{
             width: topicPage.width;

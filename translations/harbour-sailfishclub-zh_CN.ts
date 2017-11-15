@@ -295,6 +295,17 @@
     </message>
 </context>
 <context>
+    <name>ShareToPage</name>
+    <message>
+        <source>Share this topic!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No sharing plugins installed, try to install android-share or others from warehouse!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>TopicPage</name>
     <message>
         <source>Replay</source>
@@ -334,6 +345,10 @@
     <message>
         <source>Refresh</source>
         <translation>刷新</translation>
+    </message>
+    <message>
+        <source>Share</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

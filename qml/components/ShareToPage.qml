@@ -9,6 +9,7 @@ Page {
     property string linkTitle
 
     ShareMethodList {
+        id: methodlist
         anchors.fill: parent
         header: PageHeader {
             title: qsTr("Share this topic!")
