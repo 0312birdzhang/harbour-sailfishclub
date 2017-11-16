@@ -1,11 +1,4 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-'''
-Created on 2017年11月16日
-
-@author: debo.zhang
-'''
-import os
+import os,sys
 import requests
 import pyotherside
 from basedir import *
@@ -29,6 +22,8 @@ def getEtag(url):
     return etag
 
 def image_provider(image_id, requested_size ):
+    if not image_id.startswith("http"):
+        return bytearray(emptyImage), (-1, -1), pyotherside.format_data
     name = getMd5(image_id)
     etag, bindata = getData(name)
     newetag = getEtag(image_id)
@@ -41,7 +36,7 @@ def image_provider(image_id, requested_size ):
         else:
             bindata = emptyImage
         image_data = base64.b64decode(bindata)
-    return bytearray(image_data), requested_size, pyotherside.format_data
+    return bytearray(image_data), (-1, -1), pyotherside.format_data
 
 
 def getDbname():

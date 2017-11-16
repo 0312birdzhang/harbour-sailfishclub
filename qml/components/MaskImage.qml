@@ -2,18 +2,34 @@ import QtQuick 2.0
 import QtGraphicalEffects 1.0
 
 Item {
+    id:maskImage
     width: parent.width
     height: width
     property string msource
 
-    // Image {
-    ImageHandle {
-        id: img
-        source: msource
-        sourceSize: Qt.size(parent.width, parent.height)
-        smooth: true
-        visible: false
-        asynchronous: true
+    Loader{
+        id:img
+        sourceComponent: msource.indexOf("theme/harbour-sailfishclub") > -1 ?originImg:pyImg
+    }
+
+    Component{
+        id:originImg
+        Image{
+            source: msource
+            sourceSize: Qt.size(maskImage.width, maskImage.height)
+            smooth: true
+            visible: false
+        }
+    }
+    Component{
+        id:pyImg
+        ImageHandle {
+            id: img
+            cacheurl: msource
+            sourceSize: Qt.size(maskImage.width, maskImage.height)
+            smooth: true
+            visible: false
+        }
     }
 
     Rectangle{

@@ -83,7 +83,8 @@ DISTFILES += \
     qml/components/HtmlTagButton.qml \
     qml/components/ImagePreviewGrid.qml \
     qml/components/ShareToPage.qml \
-    rpm/harbour-sailfishclub.changes
+    rpm/harbour-sailfishclub.changes \
+    qml/components/ImageHandle.qml
 
 
 

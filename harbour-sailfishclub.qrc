@@ -5,6 +5,6 @@
         <file>py/secret.py</file>
         <file>py/mistune.py</file>
         <file>py/basedir.py</file>
-        <file>py/image.py</file>
+        <file>py/myprovider.py</file>
     </qresource>
 </RCC>
