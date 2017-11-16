@@ -4,5 +4,7 @@
         <file>py/sfctoken.py</file>
         <file>py/secret.py</file>
         <file>py/mistune.py</file>
+        <file>py/basedir.py</file>
+        <file>py/image.py</file>
     </qresource>
 </RCC>

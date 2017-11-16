@@ -112,3 +112,11 @@ def uploadVimCN(file):
 def previewMd(text):
     import mistune
     return mistune.markdown(text)
+
+
+
+def image_provider(image_id, requested_size):
+    
+    return None
+
+pyotherside.set_image_provider(image_provider)
