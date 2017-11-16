@@ -23,7 +23,7 @@ Page {
 
         ViewPlaceholder {
             enabled: methodlist.count == 0
-            text: qsTr("No sharing plugins installed, try to install android-share or others from warehouse!")
+            text: qsTr("No sharing plugins installed, try to install Aliendalvik Control or others from warehouse!")
         }
     }
 }

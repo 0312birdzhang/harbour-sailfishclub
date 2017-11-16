@@ -6,7 +6,8 @@ Item {
     height: width
     property string msource
 
-    Image {
+    // Image {
+    ImageHandle {
         id: img
         source: msource
         sourceSize: Qt.size(parent.width, parent.height)
