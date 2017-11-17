@@ -49,7 +49,6 @@ ApplicationWindow
     property string current_router: "recent"
     property string siteUrl: "https://sailfishos.club"
     property alias  userinfo: userinfo
-    property alias py : py
 
     Notification{
         id:notification
@@ -122,9 +121,6 @@ ApplicationWindow
     UserInfo{
         id:userinfo
     }
-
-
-
 
 
     Python{

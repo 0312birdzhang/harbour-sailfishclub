@@ -74,14 +74,30 @@ Panel {
                 source: "../gfx/background.png"
             }
 
-            Avatar{
+            // Avatar{
+            //     id:profile
+            //     width: userAvatar.width/4
+            //     height: width
+            //     anchors.centerIn: cover
+            //     avatar: "" != userinfo.avatar?(siteUrl+userinfo.avatar):"image://theme/harbour-sailfishclub"
+            //     color:  userinfo.user_color
+            //     text:   userinfo.user_text
+            //     MouseArea {
+            //         anchors.fill: parent
+            //         onClicked: {
+            //             userAvatarClicked();
+            //         }
+            //     }
+            // }
+            Image {
                 id:profile
                 width: userAvatar.width/4
                 height: width
                 anchors.centerIn: cover
-                avatar: "" != userinfo.avatar?(siteUrl+userinfo.avatar):"image://theme/harbour-sailfishclub"
-                color:  userinfo.user_color
-                text:   userinfo.user_text
+                //avatar: "" != userinfo.avatar?(siteUrl+userinfo.avatar):"image://theme/harbour-sailfishclub"
+                //color:  userinfo.user_color
+                //text:   userinfo.user_text
+                source: "" != userinfo.avatar?(siteUrl+userinfo.avatar):"image://theme/harbour-sailfishclub"
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
