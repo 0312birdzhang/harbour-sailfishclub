@@ -39,6 +39,25 @@ def image_provider(image_id, requested_size ):
     return bytearray(image_data), (-1, -1), pyotherside.format_data
 
 
+def load(image_id):
+    # "data:image/png;base64,"
+    if not image_id.startswith("http"):
+        return "data:image/png;base64," + emptyImage
+    name = getMd5(image_id)
+    etag, bindata = getData(name)
+    newetag = getEtag(image_id)
+    if not etag and etag == newetag:
+        image_data = bindata
+    else:
+        bindata = downloadImg(image_id)
+        if bindata:
+            insertDatas(name, newetag, bindata)
+        else:
+            bindata = emptyImage
+        image_data = bindata
+    return "data:image/png;base64," + emptyImage
+
+
 def getDbname():
     dbname = getMd5(__appname__)
     return dbPath+"/"+dbname+".sqlite"
@@ -91,4 +110,4 @@ def getMd5(name):
     h.update(name.encode(encoding='utf-8', errors='strict'))
     return h.hexdigest()
 
-pyotherside.set_image_provider(image_provider)
+#pyotherside.set_image_provider(image_provider)

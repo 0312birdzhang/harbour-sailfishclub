@@ -13,7 +13,14 @@ Image {
             console.log("cacheurl:"+cacheurl)
             addImportPath('qrc:/py/');
             provider.importModule('myprovider', function () {
-                image.source = 'image://python/'+ cacheurl;
+                call('myprovider.load',[cacheurl],,function(result){
+                    if(!result){
+                        thumbnail.source = "image://theme/harbour-sailfishclub"
+                    }else{
+                        thumbnail.source = result;
+                    }
+                     waitingIcon.visible = false;
+                });
             });
         }
         onError: console.log('Python error: ' + traceback)
