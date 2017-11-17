@@ -16,6 +16,8 @@ QtObject{
     signal getRecent(var result);
     signal getTopic(var result);
     signal getCategories(var result);
+
+    signal loadImage(var result);
 }
 
 

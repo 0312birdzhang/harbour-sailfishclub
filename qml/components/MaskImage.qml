@@ -7,40 +7,24 @@ Item {
     height: width
     property string msource
 
-    Loader{
-        id:img
-        sourceComponent: msource.indexOf("theme/harbour-sailfishclub") > -1 ?originImg:pyImg
+    ImageHandle {
+        id: img
+        cacheurl: msource
+        sourceSize: Qt.size(maskImage.width, maskImage.height)
+        smooth: true
+        // visible: false
     }
+ 
 
-    Component{
-        id:originImg
-        Image{
-            source: msource
-            sourceSize: Qt.size(maskImage.width, maskImage.height)
-            smooth: true
-            visible: false
-        }
-    }
-    Component{
-        id:pyImg
-        ImageHandle {
-            id: img
-            cacheurl: msource
-            sourceSize: Qt.size(maskImage.width, maskImage.height)
-            smooth: true
-            visible: false
-        }
-    }
+    // Rectangle{
+    //     id:mask
+    //     anchors.fill: parent
+    //     radius: width/2.
+    // }
 
-    Rectangle{
-        id:mask
-        anchors.fill: parent
-        radius: width/2.
-    }
-
-    OpacityMask {
-        anchors.fill: parent
-        source: img
-        maskSource: mask
-    }
+    // OpacityMask {
+    //     anchors.fill: parent
+    //     source: img
+    //     maskSource: mask
+    // }
 }

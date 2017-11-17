@@ -136,6 +136,10 @@ ApplicationWindow
             });
             py.importModule('secret', function () {
             });
+            py.importModule('myprovider', function () {
+                console.log("app window import module");
+            });
+            
 
         }
         function initPagesize(){
@@ -267,6 +271,19 @@ ApplicationWindow
 
                  }
              });
+        }
+
+        function loadImage(image_id){
+            call('myprovider.load',[image_id],function(result){
+                var source;
+                console.log(result);
+                if(!result){
+                    source = "image://theme/harbour-sailfishclub"
+                }else{
+                    source = result;
+                }
+                signalCenter.loadImage(source);
+            });
         }
     }
 
