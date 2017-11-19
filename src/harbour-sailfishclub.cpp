@@ -30,17 +30,22 @@
 
 
 #include <QtQuick>
+#include <QGuiApplication>
 #include <sailfishapp.h>
 #include "settings.h"
-
+#include "cache.h"
 
 int main(int argc, char *argv[])
 {
    qmlRegisterType<SettingsObject>("harbour.sailfishclub.settings",1,0,"SettingsObject");
    QGuiApplication *app = SailfishApp::application(argc, argv);
-   QScopedPointer<QQuickView> view(SailfishApp::createView());
+   Cache *imageCache = new Cache("sailfishclub",app);
+//   QScopedPointer<QQuickView> view(SailfishApp::createView());
+   QQuickView* view = SailfishApp::createView();
    view->setSource(SailfishApp::pathTo("qml/harbour-sailfishclub.qml"));
+   view->rootContext()->setContextProperty("imageCache", imageCache);
    view->show();
    // QObject::connect((QObject*)view->engine(), SIGNAL(quit()), app, SLOT(quit()));
+   QObject::connect(view->engine(), SIGNAL(quit()), QCoreApplication::instance(), SLOT(quit()));
    return app->exec();
 }

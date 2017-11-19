@@ -9,11 +9,24 @@ Item {
     property string name
 
 
-    Image{
+//    Image{
+//        id: img
+//        source: msource
+//        sourceSize: Qt.size(maskImage.width, maskImage.height)
+//        smooth: true
+//        visible: false
+//    }
+    CacheImage {
         id: img
-        source: msource
-        sourceSize: Qt.size(maskImage.width, maskImage.height)
+        asynchronous: true
+        sourceUncached: msource //photoCache
+        //cache: photoCache
         smooth: true
+        width: maskImage.width
+        height: maskImage.height
+        sourceSize.width: width // photoSourceSize
+        //sourceSize.height: height //photoSourceSize
+        clip: true
         visible: false
     }
  

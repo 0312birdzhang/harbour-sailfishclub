@@ -34,6 +34,7 @@ import "pages"
 import "pages/objects"
 import "components"
 import "js/main.js" as JS
+import "js/ApiCore.js" as Api
 import "js/ApiMain.js" as Main
 import "js/fontawesome.js" as FontAwesome
 import io.thp.pyotherside 1.4
@@ -581,6 +582,41 @@ ApplicationWindow
             Qt.openUrlExternally(link)
         }
     }
+
+    function onCacheUpdated(callbackObject, status, url) {
+        //console.log("Cache update callback: type: " + typeof(callbackObject) + " status: " + status + " url: " + url );
+        try {
+            if (typeof(callbackObject) === "function") {
+                //console.log("funtion!");
+                callbackObject(status,url);
+            } else if (typeof(callbackObject) === "object") {
+                //console.log("object!");
+                if (callbackObject.cacheCallback !== undefined) {
+                    callbackObject.cacheCallback(status,url);
+                } else {
+                    console.log("object callback is undefined!");
+                }
+            } else if (typeof(callbackObject) === "string") {
+                //console.log("string!");
+                var obj = Api.objs.get(callbackObject);
+                if (obj.cacheCallback !== undefined) {
+                    obj.cacheCallback(status,url);
+                } else {
+                    console.log("object callback is undefined!");
+                }
+                Api.objs.remove(callbackObject);
+            } else {
+                console.log("type is: " + typeof(callbackObject));
+            }
+        } catch (err) {
+            console.log("Cache callback error: " + err + " type: " + typeof(callbackObject) + " value: " + JSON.stringify(callbackObject) );
+        }
+    }
+    Connections {
+       target: imageCache
+       onCacheUpdated: appwindow.onCacheUpdated(callback, status, url)
+    }
+
     Component.onCompleted: {
         Main.signalcenter = signalCenter;
         page_size = settings.get_pagesize();

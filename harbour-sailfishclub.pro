@@ -16,6 +16,9 @@ CONFIG += sailfishapp
 
 SOURCES += src/harbour-sailfishclub.cpp \
             src/settings.cpp \
+    src/cache.cpp
+
+DEFINES += Q_OS_SAILFISH
 
 OTHER_FILES += qml/harbour-sailfishclub.qml \
     qml/cover/CoverPage.qml \
@@ -76,7 +79,8 @@ RESOURCES += \
 
 
 HEADERS += \
-    src/settings.h
+    src/settings.h \
+    src/cache.h
 
 DISTFILES += \
     qml/pages/PostPage.qml \
