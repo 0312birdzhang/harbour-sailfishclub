@@ -84,7 +84,8 @@ DISTFILES += \
     qml/components/ImagePreviewGrid.qml \
     qml/components/ShareToPage.qml \
     rpm/harbour-sailfishclub.changes \
-    qml/components/ImageHandle.qml
+    qml/components/ImageHandle.qml \
+    qml/components/BannerView.qml
 
 
 

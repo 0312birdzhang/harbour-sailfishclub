@@ -22,6 +22,8 @@ Page{
     property bool prev_active:false;
 
 
+    allowedOrientations:Orientation.All
+
     ListModel{
         id:topicModel
     }
@@ -50,7 +52,7 @@ Page{
                 color: user_color
                 time:JS.humanedate(timestamp)
                 width: parent.width
-                height: parent.width/8
+                height: Screen.sizeCategory >= Screen.Large?parent.width/12:parent.width/8
             }
 
             Label{
@@ -75,7 +77,7 @@ Page{
             Separator {
                 visible:(index > 0?true:false)
                 width:parent.width;
-                color: Theme.highlightColor
+                color: Theme.secondaryHighlightColor
             }
             menu: contextMenu
             Component {
@@ -230,7 +232,6 @@ Page{
 
     function load(){
         py.getTopic(tid,slug+"?page="+current_page);
-
     }
 
     
@@ -278,38 +279,47 @@ Page{
                         onSendButtonClicked: {
                             var subcomments = commentField.children[3].text;
                             //replay
-//                            console.log("sub:"+ subcomments+",tid:"+dialog.tid+",uid:"+userinfo.uid);
-                            var ret;
                             if(pid){
-                                ret = py.replayFloor(dialog.tid,userinfo.uid,pid,subcomments);
+                                py.replayFloor(dialog.tid,userinfo.uid,pid,subcomments);
                             }else{
-                                ret = py.replayTopic(dialog.tid,userinfo.uid,subcomments);
+                                py.replayTopic(dialog.tid,userinfo.uid,subcomments);
                             }
 
-                            console.log(JSON.stringify(ret));
-                            if(!ret || ret == "false"){
-                                notification.showPopup(qsTr("ReplayError"),JSON.stringify(ret),"image://theme/icon-lock-warning");
-//                                return;
-                            }else{
-                                replaysTmpModel.append({
-                                                     "timestamp":ret.timestampISO,
-                                                     "content":ret.content,
-                                                     "uid":userinfo.uid.toString(),
-                                                     "username":userinfo.username,
-                                                     "picture":userinfo.avatar,
-                                                     "floor":ret.index,
-                                                     "user_group_icon":userinfo.groupIcon,
-                                                     "user_group_name":ret.user.selectedGroup?ret.user.selectedGroup.userTitle:"",
-                                                     "user_text":userinfo.user_text,
-                                                     "user_color":userinfo.user_color
-                                                   });
-                                pageStack.pop();
-                            }
                         }
                     }
 
                 }
 
+            }
+
+            Connections{
+                target: signalCenter
+                onReplayFloor:{
+                    replayCallback(result);
+                }
+                onReplayTopic:{
+                    replayCallback(result);
+                }
+            }
+
+            function replayCallback(ret){
+                if(!ret || ret == "false"){
+                    notification.showPopup(qsTr("ReplayError"),JSON.stringify(ret),"image://theme/icon-lock-warning");
+                }else{
+                    replaysTmpModel.append({
+                                         "timestamp":ret.timestampISO,
+                                         "content":ret.content,
+                                         "uid":userinfo.uid.toString(),
+                                         "username":userinfo.username,
+                                         "picture":userinfo.avatar,
+                                         "floor":ret.index,
+                                         "user_group_icon":userinfo.groupIcon,
+                                         "user_group_name":ret.user.selectedGroup?ret.user.selectedGroup.userTitle:"",
+                                         "user_text":userinfo.user_text,
+                                         "user_color":userinfo.user_color
+                                       });
+                    pageStack.pop();
+                }
             }
         }
 

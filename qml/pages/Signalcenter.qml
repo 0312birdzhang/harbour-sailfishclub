@@ -17,6 +17,12 @@ QtObject{
     signal getTopic(var result);
     signal getCategories(var result);
 
+    signal replayTopic(var result);
+    signal replayFloor(var result);
+    signal newTopic(var result);
+    signal previewMd(var result);
+    signal uploadImage(var result);
+
     signal loadImage(var result);
 }
 

@@ -15,7 +15,7 @@ Panel {
 
     function goRouter(router){
         if(current_router == router){
-//            return;
+            clicked();
         }else{
             current_router = router;
             if(router == "recent" || router == "popular"){
@@ -67,37 +67,23 @@ Panel {
             Image {
                 id: cover
                 width: parent.width
-                height: cover.width *2/3
+                height: Screen.sizeCategory >= Screen.Large?cover.width/2:cover.width *2/3
                 fillMode: Image.PreserveAspectCrop
                 opacity: 0.6
                 asynchronous: true
                 source: "../gfx/background.png"
             }
 
-            // Avatar{
-            //     id:profile
-            //     width: userAvatar.width/4
-            //     height: width
-            //     anchors.centerIn: cover
-            //     avatar: "" != userinfo.avatar?(siteUrl+userinfo.avatar):"image://theme/harbour-sailfishclub"
-            //     color:  userinfo.user_color
-            //     text:   userinfo.user_text
-            //     MouseArea {
-            //         anchors.fill: parent
-            //         onClicked: {
-            //             userAvatarClicked();
-            //         }
-            //     }
-            // }
-            Image {
-                id:profile
+
+
+            Avatar{
+                id: profile
                 width: userAvatar.width/4
                 height: width
                 anchors.centerIn: cover
-                //avatar: "" != userinfo.avatar?(siteUrl+userinfo.avatar):"image://theme/harbour-sailfishclub"
-                //color:  userinfo.user_color
-                //text:   userinfo.user_text
-                source: "" != userinfo.avatar?(siteUrl+userinfo.avatar):"image://theme/harbour-sailfishclub"
+                avatar: "" != userinfo.avatar?(siteUrl+userinfo.avatar):"image://theme/harbour-sailfishclub"
+                color:  userinfo.user_color
+                text:   userinfo.user_text
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
@@ -105,6 +91,7 @@ Panel {
                     }
                 }
             }
+
             Label{
                 id:userName
                 text:userinfo.logined?userinfo.username:qsTr("Guest")
@@ -214,4 +201,6 @@ Panel {
             }
         }
     }
+
+
 }

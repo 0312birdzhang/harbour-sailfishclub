@@ -5,12 +5,14 @@ Item {
     property alias avatar: avatar.msource
     property alias color: fontAvatar.color
     property alias text: fontAvatar.text
+    property string username
 
     MaskImage{
         id:avatar
         width: parent.height;
         height: parent.height;
         visible: msource != ""
+        name: username
         anchors{
             top:parent.top
             topMargin: Theme.paddingSmall

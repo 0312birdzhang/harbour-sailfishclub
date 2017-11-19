@@ -15,7 +15,7 @@ Name:       harbour-sailfishclub
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    My Sailfish OS Application
 Version:    0.1.4
-Release:    1
+Release:    2
 Group:      Qt/Qt
 License:    LICENSE
 URL:        https://sailfishos.club/

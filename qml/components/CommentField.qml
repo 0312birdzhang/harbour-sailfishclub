@@ -152,7 +152,7 @@ Column {
                //% "H"
                text: "<b>H</b>"
                tag: "### "
-               attrs: ' '
+               attrs: '    '
            }
 
             HtmlTagButton {
@@ -169,8 +169,8 @@ Column {
 
            HtmlTagButton {
                text: '🙶'
-               tag: "> "
-               attrs: ' '
+               tag: ">"
+               attrs: '  '
            }
 
            HtmlTagButton {
@@ -181,6 +181,12 @@ Column {
                    onClicked: {
                        console.log("open image select dialog")
                        pageStack.push(selectImageComponent);
+                   }
+                   onPressedChanged: if (pressed) pressTimer.start()
+                   onCanceled: pressTimer.stop()
+                   Timer {
+                       id: pressTimer
+                       interval: Theme.minimumPressHighlightTime
                    }
                }
            }

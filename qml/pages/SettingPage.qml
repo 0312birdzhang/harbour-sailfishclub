@@ -5,6 +5,7 @@ import "../components"
 
 Page{
     id:page
+    allowedOrientations:Orientation.All
 
     SilicaFlickable {
         id: flickable
@@ -33,7 +34,7 @@ Page{
             Label{
                 id:version
                 anchors.horizontalCenter: parent.horizontalCenter
-                text:qsTr("Version")+" 0.1.4"
+                text:qsTr("Version")+" 0.1.4-2"
 
             }
             Item { width: 1; height: 1 }

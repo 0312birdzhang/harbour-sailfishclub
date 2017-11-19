@@ -40,6 +40,7 @@ SilicaListView {
 
     readonly property bool closed: container.contentX - container.originX === container.panelWidth
 
+
     pressDelay: 0 // important! (makes vertical flicking "stable")
 
     function hidePanel() {

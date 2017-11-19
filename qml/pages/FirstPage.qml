@@ -35,7 +35,8 @@ import "../js/ApiCore.js" as JS
 import "../js/fontawesome.js" as FONT
 Page {
     id: page
-    property alias contentItem:listView
+    property alias contentItem:column
+    allowedOrientations:Orientation.All
 
 //    property int current_page:1;
 //    property int pageCount:1;
@@ -44,149 +45,157 @@ Page {
 //    property string prev_page;
 //    property bool prev_active:false;
 
-    ListModel{
-        id:listModel
-    }
+    Column{
+        id:column
+        z: -2
+        width: page.width
+        height: page.height
 
-    SilicaListView {
-        id: listView
-        anchors.fill: parent
-        header: PageHeader {
-            title: appwindow.current_router == "recent"?qsTr("Recent Page"):
-                   appwindow.current_router == "popular"?qsTr("Popular"):appwindow.current_router
+
+        ListModel{
+            id:listModel
         }
-        PullDownMenu{
-            id:pullDownMenu
-            MenuItem{
-                text:userinfo.logined?qsTr("New Topic"):qsTr("Login to create new topic")
+
+        SilicaListView {
+            id: listView
+            width: parent.width
+            height: parent.height
+            header: PageHeader {
+                title: appwindow.current_router == "recent"?qsTr("Recent Page"):
+                       appwindow.current_router == "popular"?qsTr("Popular"):appwindow.current_router
+            }
+            PullDownMenu{
+                id:pullDownMenu
+                MenuItem{
+                    text:userinfo.logined?qsTr("New Topic"):qsTr("Login to create new topic")
+                    onClicked: {
+                        //create new topic or
+                        if(userinfo.logined){
+                            pageStack.push(Qt.resolvedUrl("PostPage.qml"),
+                                           {"listModel":listModel,
+                                             "parentpage":page
+                                           })
+                        }else{
+                            toLoginPage();
+                        }
+                    }
+                }
+
+                MenuItem{
+                    text:qsTr("Refresh")
+                    onClicked: {
+                        load();
+                    }
+                }
+            }
+            delegate: BackgroundItem {
+                id:showlist
+                height:titleid.height+latestPost.height+timeid.height+Theme.paddingMedium*4
+                width: parent.width
+                Label{
+                    id:titleid
+                    text:title
+                    font.pixelSize: Theme.fontSizeSmall
+                    truncationMode: TruncationMode.Fade
+                    wrapMode: Text.WordWrap
+                    color: Theme.highlightColor
+                    font.bold:true;
+                    anchors {
+                        top:parent.top;
+                        left: parent.left
+                        right: parent.right
+                        topMargin: Theme.paddingMedium
+                        leftMargin: Theme.paddingMedium
+                        rightMargin: Theme.paddingMedium
+                    }
+                }
+
+
+                Label{
+                    id:latestPost
+                    text: latestpost?(qsTr("last post by") + " " + latestuser +":"+ latestpost):""
+                    textFormat: Text.StyledText
+                    font.pixelSize: Theme.fontSizeExtraSmall
+                    wrapMode: Text.WordWrap
+                    linkColor:Theme.primaryColor
+                    maximumLineCount: 3
+                    anchors {
+                        top: titleid.bottom
+                        left: parent.left
+                        right: parent.right
+                        topMargin: Theme.paddingMedium
+                        leftMargin: Theme.paddingMedium
+                        rightMargin: Theme.paddingMedium
+                    }
+                }
+                Label{
+                    id:timeid
+                    text:FONT.Icon[category_icon.replace(/-/g,"_")]  + category + " "+ JS.humanedate(timestamp)
+                    //opacity: 0.7
+                    font.pixelSize: Theme.fontSizeTiny
+                    //font.italic: true
+                    color: Theme.secondaryColor
+                    //horizontalAlignment: Text.AlignRight
+                    anchors {
+                        top:latestPost.bottom
+                        left: parent.left
+                        topMargin: Theme.paddingMedium
+                        leftMargin: Theme.paddingMedium
+                    }
+                }
+                Label{
+                    id:viewinfo
+                    text:"评论 : "+postcount+" / 浏览 : "+viewcount
+                    //opacity: 0.7
+                    font.pixelSize: Theme.fontSizeTiny
+                    //font.italic: true
+                    color: Theme.secondaryColor
+                    //horizontalAlignment: Text.AlignRight
+                    anchors {
+                        top:latestPost.bottom
+                        right: parent.right
+                        topMargin: Theme.paddingMedium
+                        rightMargin: Theme.paddingMedium
+                    }
+                }
+                Separator {
+                    visible:(index > 0?true:false)
+                    width:parent.width;
+                    //alignment:Qt.AlignHCenter
+                    color: Theme.highlightColor
+                }
                 onClicked: {
-                    //create new topic or 
-                    if(userinfo.logined){
-                        pageStack.push(Qt.resolvedUrl("PostPage.qml"),
-                                       {"listModel":listModel,
-                                         "parentpage":page
-                                       })
-                    }else{
-                        toLoginPage();
+                    pageStack.push(Qt.resolvedUrl("TopicPage.qml"),{
+                                       "tid":tid,
+                                       "topic_title":title,
+                                       "slug":slug,
+                                       "user":user,
+                                       "category":category,
+                                       "category_icon":category_icon
+
+                                   });
+                }
+            }
+            VerticalScrollDecorator {}
+
+            ViewPlaceholder {
+                enabled: listView.count === 0 && !PageStatus.Active
+                text: qsTr("Load Failed,Click to retry")
+                MouseArea{
+                    anchors.fill: parent
+                    onClicked: {
+                        load();
                     }
                 }
             }
 
-            MenuItem{
-                text:qsTr("Refresh")
-                onClicked: {
-                    load();
-                }
+            BusyIndicator {
+                size: BusyIndicatorSize.Large
+                anchors.centerIn: parent
+                running: listView.count === 0
             }
-        }
-        delegate: BackgroundItem {
-            id:showlist
-            height:titleid.height+latestPost.height+timeid.height+Theme.paddingMedium*4
-            width: parent.width
-            Label{
-                id:titleid
-                text:title
-                font.pixelSize: Theme.fontSizeSmall
-                truncationMode: TruncationMode.Fade
-                wrapMode: Text.WordWrap
-                color: Theme.highlightColor
-                font.bold:true;
-                anchors {
-                    top:parent.top;
-                    left: parent.left
-                    right: parent.right
-                    topMargin: Theme.paddingMedium
-                    leftMargin: Theme.paddingMedium
-                    rightMargin: Theme.paddingMedium
-                }
-            }
-
-
-            Label{
-                id:latestPost
-                text: latestpost?(qsTr("last post by") + " " + latestuser +":"+ latestpost):""
-                textFormat: Text.StyledText
-                font.pixelSize: Theme.fontSizeExtraSmall
-                wrapMode: Text.WordWrap
-                linkColor:Theme.primaryColor
-                maximumLineCount: 3
-                anchors {
-                    top: titleid.bottom
-                    left: parent.left
-                    right: parent.right
-                    topMargin: Theme.paddingMedium
-                    leftMargin: Theme.paddingMedium
-                    rightMargin: Theme.paddingMedium
-                }
-            }
-            Label{
-                id:timeid
-                text:FONT.Icon[category_icon.replace(/-/g,"_")]  + category + " "+ JS.humanedate(timestamp)
-                //opacity: 0.7
-                font.pixelSize: Theme.fontSizeTiny
-                //font.italic: true
-                color: Theme.secondaryColor
-                //horizontalAlignment: Text.AlignRight
-                anchors {
-                    top:latestPost.bottom
-                    left: parent.left
-                    topMargin: Theme.paddingMedium
-                    leftMargin: Theme.paddingMedium
-                }
-            }
-            Label{
-                id:viewinfo
-                text:"评论 : "+postcount+" / 浏览 : "+viewcount
-                //opacity: 0.7
-                font.pixelSize: Theme.fontSizeTiny
-                //font.italic: true
-                color: Theme.secondaryColor
-                //horizontalAlignment: Text.AlignRight
-                anchors {
-                    top:latestPost.bottom
-                    right: parent.right
-                    topMargin: Theme.paddingMedium
-                    rightMargin: Theme.paddingMedium
-                }
-            }
-            Separator {
-                visible:(index > 0?true:false)
-                width:parent.width;
-                //alignment:Qt.AlignHCenter
-                color: Theme.highlightColor
-            }
-            onClicked: {
-                pageStack.push(Qt.resolvedUrl("TopicPage.qml"),{
-                                   "tid":tid,
-                                   "topic_title":title,
-                                   "slug":slug,
-                                   "user":user,
-                                   "category":category,
-                                   "category_icon":category_icon
-
-                               });
-            }
-        }
-        VerticalScrollDecorator {}
-
-        ViewPlaceholder {
-            enabled: listView.count === 0 && !PageStatus.Active
-            text: qsTr("Load Failed,Click to retry")
-            MouseArea{
-                anchors.fill: parent
-                onClicked: {
-                    load();
-                }
-            }
-        }
-
-        BusyIndicator {
-            size: BusyIndicatorSize.Large
-            anchors.centerIn: parent
-            running: listView.count === 0
         }
     }
-
 
     function load(){
         console.log("current router:"+current_router);

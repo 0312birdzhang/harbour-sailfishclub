@@ -43,12 +43,24 @@ import harbour.sailfishclub.settings 1.0
 ApplicationWindow
 {
     id:appwindow
+
+    property Page currentPage: pageStack.currentPage
+
     property string appname: "旗鱼俱乐部"
     property bool loading: false
+    property bool pymodelLoaded: false
     property int page_size: 20
     property string current_router: "recent"
     property string siteUrl: "https://sailfishos.club"
     property alias  userinfo: userinfo
+
+    cover: Qt.resolvedUrl("cover/CoverPage.qml")
+    allowedOrientations:Orientation.All
+
+
+    onCurrentPageChanged: {
+
+    }
 
     Notification{
         id:notification
@@ -123,17 +135,26 @@ ApplicationWindow
     }
 
 
+
     Python{
         id:py
         Component.onCompleted: {
             addImportPath('qrc:/py/')
             py.importModule('main', function () {
                 initPagesize();
+                py.importModule('secret', function () {
+                    // 登录
+                    var username = settings.get_username();
+                    var password = settings.get_password();
+                    if(username && password){
+                        var derpass = py.decryPass(password);
+                        if(derpass)py.login(username,derpass);
+                    }
+                });
             });
-            py.importModule('secret', function () {
-            });
+
             py.importModule('myprovider', function () {
-                console.log("app window import module");
+                //console.log("app window import module");
             });
             
 
@@ -192,23 +213,26 @@ ApplicationWindow
 
         // 获取最新帖子
         function getRecent(model){
-//            return call_sync('main.getrecent',[]);
+            loading = true;
             call('main.getrecent',[],function(result){
+                loading = false;
                 signalCenter.getRecent(result);
             });
         }
         //获取热门贴子
         function getPopular(){
-//            return call_sync('main.getpopular',[]);
+            loading = true;
             call('main.getpopular',[],function(result){
+                loading = false;
                 signalCenter.getRecent(result);
             });
         }
 
         // 获取分类
         function getCategories(){
-//            return call_sync('main.listcategory',[]);
+            loading = true;
             call('main.listcategory',[],function(result){
+                loading = false;
                 signalCenter.getCategories(result);
             });
         }
@@ -223,30 +247,47 @@ ApplicationWindow
 
         // 获取贴子内容
         function getTopic(tid,slug){
-//            return call_sync('main.getTopic',[tid,slug]);
+            loading = true;
             call('main.getTopic',[tid,slug],function(result){
+                loading = false;
                 signalCenter.getTopic(result);
             });
         }
 
         // 回复贴子
         function replayTopic(tid,uid,content){
-            return call_sync('main.replay',[tid,uid,content]);
+            loading = true;
+            call('main.replay',[tid,uid,content],function(result){
+                loading = false;
+                signalCenter.replayTopic(result);
+            });
         }
 
         // 回复贴子中的楼层
         function replayFloor(tid, uid, toPid, content){
-            return call_sync('main.replayTo',[tid, uid, toPid, content]);
+            loading = true;
+            call('main.replayTo',[tid, uid, toPid, content],function(result){
+                loading = false;
+                signalCenter.replayFloor(result);
+            });
         }
 
         // 发新贴
         function newTopic(title, content, uid, cid){
-            return call_sync('main.post',[title, content, uid, cid]);
+            loading = true;
+            call('main.post',[title, content, uid, cid],function(result){
+                loading = false;
+                signalCenter.newTopic(result);
+            });
         }
 
         //预览发贴内容
         function previewMd(text){
-            return call_sync('main.previewMd',[text]);
+            loading = true;
+            call('main.previewMd',[text],function(result){
+                loading = false;
+                signalCenter.previewMd(result);
+            });
         }
 
         //上传图片到sm.ms
@@ -269,15 +310,15 @@ ApplicationWindow
              });
         }
 
-        function loadImage(image_id){
-            call('myprovider.load',[image_id],function(result){
+        function loadImage(username,image_id){
+            call('myprovider.load',[username,image_id],function(result){
                 var source;
-                console.log(result);
                 if(!result){
                     source = "image://theme/harbour-sailfishclub"
                 }else{
                     source = result;
                 }
+                pymodelLoaded = true;
                 signalCenter.loadImage(source);
             });
         }
@@ -285,18 +326,21 @@ ApplicationWindow
 
     PanelView {
         id: panelView
-
-        property Page currentPage: pageStack.currentPage
-
-        width: currentPage.width
-        panelWidth: Screen.width *0.6
+        property int ori: pageStack.currentPage.orientation
+        width: pageStack.currentPage.width
+        panelWidth: Screen.width / 3 * 2
         panelHeight: pageStack.currentPage.height
         height: currentPage && currentPage.contentHeight || pageStack.currentPage.height
-        visible:  (!!currentPage && !!currentPage.withPanelView) || !panelView.closed
-        anchors.centerIn: parent
-        //anchors.verticalCenterOffset:  -(panelHeight - height) / 2
+        visible:  (!!currentPage && !!currentPage.__withPanelView) || !panelView.closed
 
-        anchors.horizontalCenterOffset:  0
+        rotation: pageStack.currentPage.rotation
+
+
+        anchors.centerIn: parent
+        anchors.verticalCenterOffset: ori === Orientation.Portrait ? -(panelHeight - height) / 2 :
+                                             ori === Orientation.PortraitInverted ? (panelHeight - height) / 2 : 0
+        anchors.horizontalCenterOffset: ori === Orientation.Landscape ? (panelHeight - height) / 2 :
+                                               ori === Orientation.LandscapeInverted ? -(panelHeight - height) / 2 : 0
 
         Connections {
             target: pageStack
@@ -321,22 +365,13 @@ ApplicationWindow
         id: indexPageComponent
         FirstPage {
             id: indexPage
-            property bool _dataInitialized: false
-            property bool withPanelView: true
+            property bool __withPanelView: true
             Binding {
                 target: indexPage.contentItem
                 property: "parent"
                 value: indexPage.status === PageStatus.Active
-                       ? (panelView .closed ? panelView : indexPage) //修正listview焦点
+                       ? (panelView.closed ? panelView : indexPage)
                        : indexPage
-            }
-
-            onStatusChanged: {
-                if (indexPage.status === PageStatus.Active) {
-                    if (!_dataInitialized) {
-                        _dataInitialized = true;
-                    }
-                }
             }
         }
     }
@@ -345,23 +380,16 @@ ApplicationWindow
         id: categoriesPageComponent
         CategoriesPage{
             id:categoriesPage
-            property bool _dataInitialized: false
-            property bool withPanelView: true
+            property bool __withPanelView: true
             Binding {
                 target: categoriesPage.contentItem
                 property: "parent"
                 value: categoriesPage.status === PageStatus.Active
-                       ? (panelView .closed ? panelView : categoriesPage) //修正listview焦点
+                       ? (panelView.closed ? panelView : categoriesPage)
                        : categoriesPage
             }
 
-            onStatusChanged: {
-                if (categoriesPage.status === PageStatus.Active) {
-                    if (!_dataInitialized) {
-                        _dataInitialized = true;
-                    }
-                }
-            }
+
         }
     }
 
@@ -369,9 +397,12 @@ ApplicationWindow
     initialPage: Component {
         Page{
             id:splashPage
+            allowedOrientations:Orientation.All
             Component.onCompleted: {
                 splash.visible = true;
                 timerDisplay.running = true;
+
+
             }
 
             SilicaFlickable {
@@ -443,26 +474,17 @@ ApplicationWindow
                 running: false;
                 repeat: false;
                 triggeredOnStart: false
-                interval: 2 * 1000
+                interval: 1.5 * 1000
                 onTriggered: {
                     splash.visible = false;
                     loading = false;
-                    var username = settings.get_username();
-                    var password = settings.get_password();
-                    if(username && password){
-                        //login validate
-                        var derpass = py.decryPass(password);
-//                        console.log("user:"+username+",pass:"+derpass);
-                        if(derpass)py.login(username,derpass);
-                    }
                     toIndexPage();
 
                 }
             }
         }
     }
-    cover: Qt.resolvedUrl("cover/CoverPage.qml")
-    allowedOrientations: defaultAllowedOrientations
+
 
 
     function toIndexPage() {
@@ -563,5 +585,6 @@ ApplicationWindow
         Main.signalcenter = signalCenter;
         page_size = settings.get_pagesize();
     }
+
 }
 

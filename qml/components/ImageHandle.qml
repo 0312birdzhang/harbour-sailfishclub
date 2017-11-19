@@ -6,20 +6,9 @@ Image {
     id: image
     asynchronous: true
     property string cacheurl
+    property string username
 
-    // Qt.createComponent() ???
 
-    // Python {
-    //     id: propy
-    //     Component.onCompleted: {
-    //         addImportPath("qrc:/py/");
-    //         propy.importModule('myprovider', function () {
-    //             image.source = 'image://python/' + cacheurl;
-    //         });
-    //     }
-
-    //     onError: console.log('Python error: ' + traceback)
-    // }
     Image{
         id:waitingIcon
         anchors.centerIn: parent
@@ -29,7 +18,8 @@ Image {
     }
 
     Component.onCompleted: {
-        py.loadImage(cacheurl);
+        image.source = "";
+        py.loadImage(username,cacheurl);
     }
 
     Connections{

@@ -4,12 +4,16 @@ import harbour.sailfishclub.settings 1.0
 
 Item {
     id:loginComponent
+    width: parent.width
+    height: parent.height
+
 
     signal loginSucceed()
     signal loginFailed(string fail)
 
     SilicaFlickable {
         anchors.fill: parent
+        contentHeight: column.height + Theme.paddingLarge * 2
         BusyIndicator {
             id:busyIndicator
             parent: loginComponent
@@ -60,6 +64,8 @@ Item {
                         EnterKey.iconSource: "image://theme/icon-m-enter-next"
                         EnterKey.onClicked: password.focus = true
                     }
+
+
                     TextField {
                         id:password
                         width:loginComponent.width - Theme.paddingLarge*4
@@ -156,5 +162,6 @@ Item {
             }
         }
 
+        VerticalScrollDecorator{}
     }
 }

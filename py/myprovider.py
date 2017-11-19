@@ -25,7 +25,7 @@ def getEtag(url):
     r = requests.head(url)
     header = r.headers
     etag = header.get("ETag")
-    print(etag)
+#    print(etag)
     return etag
 
 def image_provider(image_id, requested_size ):
@@ -48,25 +48,24 @@ def image_provider(image_id, requested_size ):
     return bytearray(image_data), (-1, -1), pyotherside.format_data
 
 
-def load(image_id):
+def load(username,image_id):
     if not image_id:
         return "data:image/png;base64," + emptyImage.decode("utf-8")
     if image_id.startswith("image://theme"):
         return image_id;
-    name = getMd5(image_id)
+    name = getMd5(username)
     etag, bindata = getData(name)
-    newetag = getEtag(image_id)
+#    newetag = getEtag(image_id)
     logger.debug("-----etag-----")
-    if etag and etag == newetag:
+#    if etag and etag == newetag:
+    if etag:
         image_data = base64.b64encode(bindata)
-        logger.debug("==========")
     else:
         bindata = downloadImg(image_id)
         if bindata:
-            logger.debug("++++++")
-            insertDatas(name, newetag, bindata)
+#            insertDatas(name, newetag, bindata)
+            insertDatas(name, "foobar", bindata)
         else:
-            logger.debug("download failed")
             bindata = emptyImage
         image_data = base64.b64encode(bindata)
     return "data:image/png;base64," + image_data.decode("utf-8")

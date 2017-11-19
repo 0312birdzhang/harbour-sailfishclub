@@ -5,6 +5,9 @@ import "../components"
 
 Dialog  {
     id:postPage
+
+    allowedOrientations:Orientation.All
+
     property ListModel listModel;
     property Page parentpage;
     canAccept: false
@@ -30,32 +33,9 @@ Dialog  {
 
                      console.log("comments:"+comments);
                     if(cid && title.text && comments){
-                        var ret = py.newTopic(title.text, comments, userinfo.uid, cid);
+                        py.newTopic(title.text, comments, userinfo.uid, cid);
                         // console.log(JSON.stringify(ret));
-                        if(ret && (ret != "false" || ret != "Forbidden") ){
-                            var topicData = ret.topicData;
-                            listModel.insert(0,{
-                                                 "title":topicData.title,
-                                                 "user":topicData.user.username,
-                                                 "viewcount":topicData.viewcount,
-                                                 "postcount":topicData.postcount,
-                                                 "latestpost":"",
-                                                 "latestuser":"",
-                                                 "tid":topicData.tid,
-                                                 "timestamp":topicData.timestampISO,
-                                                 "slug":topicData.slug,
-                                                 "mainPid":topicData.mainPid,
-                                                 "category":topicData.category.name,
-                                                 "category_icon":topicData.category.icon
-                                             });
-                            pageStack.pop();
-                        }else{
-                            notification.showPopup(
-                                    qsTr("Error"),
-                                    ret.toString(),
-                                    "image://theme/icon-lock-warning"
-                                    );
-                        }
+
                     }else{
                         notification.showPopup(
                                     qsTr("Error"),
@@ -120,6 +100,33 @@ Dialog  {
         target: signalCenter
         onGetCategories:{
            fillModel(result);
+        }
+
+        onNewTopic:{
+            if(result && (result != "false" || result != "Forbidden") ){
+                var topicData = result.topicData;
+                listModel.insert(0,{
+                                     "title":topicData.title,
+                                     "user":topicData.user.username,
+                                     "viewcount":topicData.viewcount,
+                                     "postcount":topicData.postcount,
+                                     "latestpost":"",
+                                     "latestuser":"",
+                                     "tid":topicData.tid,
+                                     "timestamp":topicData.timestampISO,
+                                     "slug":topicData.slug,
+                                     "mainPid":topicData.mainPid,
+                                     "category":topicData.category.name,
+                                     "category_icon":topicData.category.icon
+                                 });
+                pageStack.pop();
+            }else{
+                notification.showPopup(
+                        qsTr("Error"),
+                        ret.toString(),
+                        "image://theme/icon-lock-warning"
+                        );
+            }
         }
     }
 

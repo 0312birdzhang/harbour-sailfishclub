@@ -6,25 +6,27 @@ Item {
     width: parent.width
     height: width
     property string msource
+    property string name
 
-    ImageHandle {
+
+    Image{
         id: img
-        cacheurl: msource
+        source: msource
         sourceSize: Qt.size(maskImage.width, maskImage.height)
         smooth: true
-        // visible: false
+        visible: false
     }
  
 
-    // Rectangle{
-    //     id:mask
-    //     anchors.fill: parent
-    //     radius: width/2.
-    // }
+     Rectangle{
+         id:mask
+         anchors.fill: parent
+         radius: width/2.
+     }
 
-    // OpacityMask {
-    //     anchors.fill: parent
-    //     source: img
-    //     maskSource: mask
-    // }
+     OpacityMask {
+         anchors.fill: parent
+         source: img
+         maskSource: mask
+     }
 }

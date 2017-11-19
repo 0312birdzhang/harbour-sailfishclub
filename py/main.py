@@ -8,7 +8,7 @@ import sys
 logger = logging.getLogger("sfcpython")
 formatter = logging.Formatter('%(asctime)s %(levelname)-8s: %(message)s')
 console_handler = logging.StreamHandler(sys.stdout)
-console_handler.formatter = formatter  # 也可以直接给formatter赋值
+console_handler.formatter = formatter
 logger.addHandler(console_handler)
 logger.setLevel(logging.DEBUG)
 
@@ -22,7 +22,7 @@ def initClient(page_size):
 
 def login(user, password):
     status_code, userInfo = client.users.login(user, password)
-    logger.debug(str(userInfo))
+#    logger.debug(str(userInfo))
     if not status_code or status_code != 200:
         return False
     return userInfo

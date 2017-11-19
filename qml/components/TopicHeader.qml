@@ -17,6 +17,7 @@ Item{
         id:avatar
         width: parent.height;
         height: parent.height;
+        username: username.text
         MouseArea{
             anchors.fill: parent
                 onClicked: {

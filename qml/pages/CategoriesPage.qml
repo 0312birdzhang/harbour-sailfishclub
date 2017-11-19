@@ -5,22 +5,31 @@ import "../js/fontawesome.js" as FONT
 
 Page{
     id: page
-    property alias contentItem:listView
-    SilicaListView {
-        id: listView
-        header: PageHeader{
-            title: qsTr("Categories")
-        }
+    property alias contentItem:column
+    allowedOrientations:Orientation.All
 
-        anchors.fill: parent
-        delegate: Item {
+    Column{
+        id: column
+        z: -2
+        width: page.width
+        height: page.height
+        SilicaListView {
+            id: listView
+            header: PageHeader{
+                title: qsTr("Categories")
+            }
+            width: parent.width
+            height: parent.height
 
-        }
+            delegate: Item {
 
-        ViewPlaceholder{
-            enabled: true
-            text: qsTr("Not completed yeat")
-            hintText: qsTr("Comming soon...")
+            }
+
+            ViewPlaceholder{
+                enabled: true
+                text: qsTr("Not completed yeat")
+                hintText: qsTr("Comming soon...")
+            }
         }
     }
 }
