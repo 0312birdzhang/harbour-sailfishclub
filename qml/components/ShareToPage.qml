@@ -5,6 +5,8 @@ import Sailfish.TransferEngine 1.0
 Page {
     id: page
 
+    allowedOrientations:Orientation.All
+    
     property string link
     property string linkTitle
 

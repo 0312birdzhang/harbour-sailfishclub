@@ -5,7 +5,8 @@ import org.nemomobile.thumbnailer 1.0
 
 Page {
     signal selectImage(string url,string title)
-
+    allowedOrientations:Orientation.All
+    
     DocumentGalleryModel {
         id: galleryModel
         rootType: DocumentGallery.Image

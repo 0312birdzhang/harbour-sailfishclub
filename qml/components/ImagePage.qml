@@ -7,7 +7,7 @@ Page {
     property string remoteUrl:""
     property string imgname: ""
     property string localUrl: ""
-    allowedOrientations: Orientation.Portrait | Orientation.Landscape
+    allowedOrientations:Orientation.All
 
     Flickable {
         id: imageFlickable

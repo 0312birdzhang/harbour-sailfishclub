@@ -34,6 +34,23 @@
 * [nodebb-plugin-ns-login](https://github.com/NicolasSiver/nodebb-plugin-ns-login)
 
 
+
+## 感谢
+
+
+* NodeBB
+
+* pynodebb
+
+* harbour-storeman
+
+* communi-sailfish
+
+* orn-warehouse
+
+* sm.ms
+
+
 ## Bug
 
-* 有一定几率出现自动登录不成功的bug
+* ~~有一定几率出现自动登录不成功的bug~~
