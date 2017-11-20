@@ -30,39 +30,39 @@ Page{
                 anchors.horizontalCenter: parent.horizontalCenter;
             }
 
-            Item { width: 1; height: 1 }
+            Item { width: 1; height: Theme.paddingMedium }
             Label{
                 id:version
                 anchors.horizontalCenter: parent.horizontalCenter
                 text:qsTr("Version")+" 0.1.4-2"
 
             }
-            Item { width: 1; height: 1 }
+            Item { width: 1; height: Theme.paddingMedium }
             LabelText{
                 label: qsTr("Thanks")
                 text: qsTr("Thanks nodebb,pynodebb,harbour-storeman,sm.ms and other projects")
             }
-            Item{width: 1;height: 1}
+            Item{width: 1;height: Theme.paddingMedium}
 
             LabelText{
                 label: qsTr("About this app")
                 text: qsTr("This app is a client for https://sailfishos.club ,an unofficial Chinese community.")
             }
-            Item{width: 1;height: 1}
-            SectionHeader {
-                text: qsTr("Settings")
-            }
+            Item{width: 1;height: Theme.paddingMedium}
+//            SectionHeader {
+//                text: qsTr("Settings")
+//            }
 
-            Slider {
-                id:slider
-                value:settings.get_pagesize()
-                minimumValue:10
-                maximumValue:50
-                stepSize: 5
-                width: parent.width
-                valueText: value
-                label: qsTr("Every page size")
-            }
+//            Slider {
+//                id:slider
+//                value:settings.get_pagesize()
+//                minimumValue:10
+//                maximumValue:50
+//                stepSize: 5
+//                width: parent.width
+//                valueText: value
+//                label: qsTr("Every page size")
+//            }
 
             Button{
                 text:qsTr("Logout")

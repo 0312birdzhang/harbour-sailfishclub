@@ -226,6 +226,9 @@ Page{
                 topicView.scrollToTop();
             }else{
                 console.log("load failed!!!");
+                notification.show(qsTr("Load failed,try again later"),
+                                  "image://theme/icon-lock-warning"
+                                  )
             }
         }
     }

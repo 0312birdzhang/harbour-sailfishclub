@@ -38,12 +38,12 @@ Page {
     property alias contentItem:column
     allowedOrientations:Orientation.All
 
-//    property int current_page:1;
-//    property int pageCount:1;
-//    property string next_page;
-//    property bool next_active:false;
-//    property string prev_page;
-//    property bool prev_active:false;
+    property int current_page:1;
+    property int pageCount:1;
+    property string next_page;
+    property bool next_active:false;
+    property string prev_page;
+    property bool prev_active:false;
 
     Column{
         id:column
@@ -189,6 +189,40 @@ Page {
                 }
             }
 
+            footer: Component{
+
+                Item {
+                    id: loadMoreID
+                    anchors {
+                        left: parent.left;
+                        right: parent.right;
+                    }
+                    height: Theme.itemSizeMedium
+                    Row {
+                        id:footItem
+                        spacing: Theme.paddingLarge
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        Button {
+                            text: qsTr("Prev Page")
+                            visible: prev_active
+                            onClicked: {
+                                current_page--;
+                                load();
+                            }
+                        }
+                        Button{
+                            text:qsTr("Next Page")
+                            visible: next_active
+                            onClicked: {
+                                current_page++;
+                                load();
+                            }
+                        }
+                    }
+                }
+
+            }
+
             BusyIndicator {
                 size: BusyIndicatorSize.Large
                 anchors.centerIn: parent
@@ -202,10 +236,10 @@ Page {
 
         switch(current_router){
         case "recent":
-            py.getRecent();
+            py.getRecent("page="+current_page);
             break;
         case "popular":
-            py.getPopular();
+            py.getPopular("page="+current_page);
             break;
         default:
             py.getRecent();
@@ -215,26 +249,50 @@ Page {
     Connections{
         target: signalCenter
         onGetRecent:{
-            listModel.clear();
-            for(var i = 0;i<result.length;i++){
-                if(result[i].deleted)continue;
-                listModel.append({
-                                     "title":result[i].title,
-                                     "user":result[i].user.username,
-                                     "viewcount":result[i].viewcount,
-                                     "postcount":result[i].postcount,
-                                     "latestpost":result[i].teaser?result[i].teaser.content:"",
-                                     "latestuser":result[i].teaser?result[i].teaser.user.username:"",
-                                     "tid":result[i].tid,
-                                     "timestamp":result[i].timestampISO,
-                                     "slug":result[i].slug,
-                                     "mainPid":result[i].mainPid,
-                                     "category":result[i].category.name,
-                                     "category_icon":result[i].category.icon
+            if (result && result != "Forbidden"){
+                var topics = result.topics;
+                var pagination = result.pagination;
+                if(pagination){
+                    current_page = pagination.currentPage;
+                    pageCount = pagination.pageCount;
+                    if(pageCount > 1){
+                        next_page = pagination.next.qs;
+                        next_active = pagination.next.active;
+                        prev_page = pagination.prev.qs;
+                        prev_active = pagination.prev.active;
+                    }
+                }else{
+                    next_active = false;
+                    prev_active = false;
+                }
 
-                                 });
+                listModel.clear();
+                for(var i = 0;i<topics.length;i++){
+                    if(topics[i].deleted)continue;
+                    listModel.append({
+                                         "title":topics[i].title,
+                                         "user":topics[i].user.username,
+                                         "viewcount":topics[i].viewcount,
+                                         "postcount":topics[i].postcount,
+                                         "latestpost":topics[i].teaser?topics[i].teaser.content:"",
+                                         "latestuser":topics[i].teaser?topics[i].teaser.user.username:"",
+                                         "tid":topics[i].tid,
+                                         "timestamp":topics[i].timestampISO,
+                                         "slug":topics[i].slug,
+                                         "mainPid":topics[i].mainPid,
+                                         "category":topics[i].category.name,
+                                         "category_icon":topics[i].category.icon
+
+                                     });
+                }
+                listView.model = listModel;
+                listView.scrollToTop();
+            }else{
+                console.log("load failed!!!");
+                notification.show(qsTr("Load failed,try again later"),
+                                  "image://theme/icon-lock-warning"
+                                  )
             }
-            listView.model = listModel;
         }
     }
 

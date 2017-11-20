@@ -100,6 +100,18 @@
         <source>Refresh</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Load failed,try again later</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Prev Page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Next Page</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ImagePage</name>
@@ -254,14 +266,6 @@
 <context>
     <name>SettingPage</name>
     <message>
-        <source>Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Every page size</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
@@ -325,6 +329,10 @@
     </message>
     <message>
         <source>ReplayError</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load failed,try again later</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

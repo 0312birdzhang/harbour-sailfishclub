@@ -142,7 +142,6 @@ ApplicationWindow
         Component.onCompleted: {
             addImportPath('qrc:/py/')
             py.importModule('main', function () {
-                initPagesize();
                 py.importModule('secret', function () {
                     // 登录
                     var username = settings.get_username();
@@ -160,16 +159,13 @@ ApplicationWindow
             
 
         }
-        function initPagesize(){
-            py.call('main.initClient',[page_size]);
-        }
+
 
         function login(username,password){
             if(!username||!password || username == "undefined" || password == "undefined"){
                 return;
             }
             call('main.login',[username,password],function(result){
-//                console.log("result:"+result)
                 if(result && result != "Forbidden" && result != "False"){
                     userinfo.uid = result.uid;
                     userinfo.username = result.username;
@@ -213,17 +209,17 @@ ApplicationWindow
         }
 
         // 获取最新帖子
-        function getRecent(model){
+        function getRecent(slug){
             loading = true;
-            call('main.getrecent',[],function(result){
+            call('main.getrecent',[slug],function(result){
                 loading = false;
                 signalCenter.getRecent(result);
             });
         }
         //获取热门贴子
-        function getPopular(){
+        function getPopular(slug){
             loading = true;
-            call('main.getpopular',[],function(result){
+            call('main.getpopular',[slug],function(result){
                 loading = false;
                 signalCenter.getRecent(result);
             });

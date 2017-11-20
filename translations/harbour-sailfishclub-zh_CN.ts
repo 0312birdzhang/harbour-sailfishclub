@@ -100,6 +100,18 @@
         <source>Refresh</source>
         <translation>刷新</translation>
     </message>
+    <message>
+        <source>Load failed,try again later</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Prev Page</source>
+        <translation type="unfinished">上一页</translation>
+    </message>
+    <message>
+        <source>Next Page</source>
+        <translation type="unfinished">下一页</translation>
+    </message>
 </context>
 <context>
     <name>ImagePage</name>
@@ -254,14 +266,6 @@
 <context>
     <name>SettingPage</name>
     <message>
-        <source>Settings</source>
-        <translation>设置</translation>
-    </message>
-    <message>
-        <source>Every page size</source>
-        <translation>每页条数</translation>
-    </message>
-    <message>
         <source>About</source>
         <translation>关于</translation>
     </message>
@@ -326,6 +330,10 @@
     <message>
         <source>ReplayError</source>
         <translation>回复出错</translation>
+    </message>
+    <message>
+        <source>Load failed,try again later</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

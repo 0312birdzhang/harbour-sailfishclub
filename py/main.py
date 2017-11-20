@@ -13,11 +13,9 @@ logger.addHandler(console_handler)
 logger.setLevel(logging.DEBUG)
 
 client = Client('https://sailfishos.club', access_token)
-
-def initClient(page_size):
-    client.configure(**{
-        'page_size': page_size
-    })
+client.configure(**{
+    'page_size': 20
+})
 
 
 def login(user, password):
@@ -56,14 +54,14 @@ def replayTo(tid, uid, toPid, content):
         return False
     return response
 
-def getrecent():
-    status_code, topics = client.topics.get_recent()
+def getrecent(slug):
+    status_code, topics = client.topics.get_recent(slug=slug)
     if not status_code or status_code != 200:
         return False
     return topics
 
-def getpopular():
-    status_code, topics = client.topics.get_popular()
+def getpopular(slug):
+    status_code, topics = client.topics.get_popular(slug=slug)
     if not status_code or status_code != 200:
         return False
     return topics

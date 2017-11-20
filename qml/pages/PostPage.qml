@@ -130,7 +130,8 @@ Dialog  {
         }
     }
 
-    function fillModel(categories){
+    function fillModel(result){
+        var categories = result.categories;
         if(!categories || categories == "Forbidden" || categories == "false"){
             return;
         }
