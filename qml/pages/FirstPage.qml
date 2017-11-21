@@ -60,6 +60,7 @@ Page {
             id: listView
             width: parent.width
             height: parent.height
+            enabled: PageStatus.Active
             header: PageHeader {
                 title: appwindow.current_router == "recent"?qsTr("Recent Page"):
                        appwindow.current_router == "popular"?qsTr("Popular"):appwindow.current_router
@@ -91,7 +92,7 @@ Page {
             delegate: BackgroundItem {
                 id:showlist
                 height:titleid.height+latestPost.height+timeid.height+Theme.paddingMedium*4
-                width: parent.width
+                width: listView.width
                 Label{
                     id:titleid
                     text:title

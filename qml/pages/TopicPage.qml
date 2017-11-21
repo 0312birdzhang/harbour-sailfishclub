@@ -32,6 +32,7 @@ Page{
     SilicaListView{
         id:topicView
         anchors.fill: parent
+        enabled: PageStatus.Active
         header: PageHeader {
             title: topic_title;
             _titleItem.font.pixelSize: Theme.fontSizeSmall

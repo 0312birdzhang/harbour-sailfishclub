@@ -26,15 +26,11 @@
 <context>
     <name>CategoriesPage</name>
     <message>
-        <source>Not completed yeat</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Comming soon...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Categories</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load Failed,Click to retry</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -26,16 +26,12 @@
 <context>
     <name>CategoriesPage</name>
     <message>
-        <source>Not completed yeat</source>
-        <translation>暂未完成</translation>
-    </message>
-    <message>
-        <source>Comming soon...</source>
-        <translation>即将到来...</translation>
-    </message>
-    <message>
         <source>Categories</source>
         <translation>板块</translation>
+    </message>
+    <message>
+        <source>Load Failed,Click to retry</source>
+        <translation type="unfinished">加载失败，点击重试</translation>
     </message>
 </context>
 <context>
@@ -102,15 +98,15 @@
     </message>
     <message>
         <source>Load failed,try again later</source>
-        <translation type="unfinished"></translation>
+        <translation>加载失败，请稍后重试</translation>
     </message>
     <message>
         <source>Prev Page</source>
-        <translation type="unfinished">上一页</translation>
+        <translation>上一页</translation>
     </message>
     <message>
         <source>Next Page</source>
-        <translation type="unfinished">下一页</translation>
+        <translation>下一页</translation>
     </message>
 </context>
 <context>
@@ -302,11 +298,11 @@
     <name>ShareToPage</name>
     <message>
         <source>Share this topic!</source>
-        <translation type="unfinished"></translation>
+        <translation>分享贴子</translation>
     </message>
     <message>
         <source>No sharing plugins installed, try to install Aliendalvik Control or others from warehouse!</source>
-        <translation type="unfinished"></translation>
+        <translation>没有发现分享插件，请从warehouse安装Aliendalvik Control或其他分享插件</translation>
     </message>
 </context>
 <context>
@@ -333,7 +329,7 @@
     </message>
     <message>
         <source>Load failed,try again later</source>
-        <translation type="unfinished"></translation>
+        <translation>加载失败，请稍后重试</translation>
     </message>
 </context>
 <context>
@@ -356,7 +352,7 @@
     </message>
     <message>
         <source>Share</source>
-        <translation type="unfinished"></translation>
+        <translation>分享</translation>
     </message>
 </context>
 <context>

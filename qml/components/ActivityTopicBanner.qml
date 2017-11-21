@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import "../../js/main.js" as Script
+import "../js/fontawesome.js" as FONT
+import "../js/ApiCore.js" as JS
 
 Item{
     property alias model:banner.model
@@ -16,8 +17,8 @@ Item{
         //y:-newappItem.contentY;
         //            opacity: view.contentY/height > 1 ? 0 : 1-view.contentY/height;
         //            visible: opacity>0.0;
-        width: parent.width;
-        height: Screen.height/3.5
+        width: /*Screen.sizeCategory >=Screen.Large?parent.width/2:*/parent.width;
+        height: Screen.sizeCategory >=Screen.Large?Screen.height/5:Screen.height/3.5
         preferredHighlightBegin: 0.5;
         preferredHighlightEnd: 0.5;
         path: Path {
@@ -34,20 +35,6 @@ Item{
             implicitWidth: banner.width;
             implicitHeight: banner.height;
             clip:true
-            Image {
-                anchors.centerIn: parent;
-                fillMode: Image.PreserveAspectCrop;
-                source: previewImg.status === Image.Ready
-                        ? "" : "image://theme/icon-m-refresh";
-            }
-            CacheImage {
-                id: previewImg;
-                anchors.fill: parent;
-                fillMode: Image.PreserveAspectCrop
-                width: parent.width
-                height: parent.height
-                cacheurl: Script.getPostericon(uploader.uid,_id)
-            }
             Rectangle{
                 width: parent.width;
                 height: parent.height;
@@ -57,19 +44,60 @@ Item{
                     GradientStop { position: 1.0; color:"#08202c" }
                 }
             }
+            Rectangle{
+                id: rectColor
+                width: parent.width
+                height: parent.height
+                color: category_bgColor
+                opacity: 0.8
+
+            }
+
             Label{
-                id:articatitle
+                id:topicTitle
                 anchors{
+                    top: parent.top
                     left: parent.left
                     right: parent.right
-                    bottom: parent.bottom
                     margins: Theme.paddingMedium
                 }
-                text:""/*appname*/
+                text: model.title
                 font.pixelSize: Theme.fontSizeSmall;
+                maximumLineCount: 2
                 wrapMode: Text.WrapAnywhere;
                 font.letterSpacing: 2;
-                color: Theme.highlightColor
+                color: Theme.secondaryColor
+            }
+            Label{
+                id:timeid
+                text:FONT.Icon[category_icon.replace(/-/g,"_")]  + category + " "+ JS.humanedate(timestamp)
+                //opacity: 0.7
+                font.pixelSize: Theme.fontSizeTiny
+                //font.italic: true
+                color: Theme.secondaryColor
+                //horizontalAlignment: Text.AlignRight
+                anchors {
+                    bottom: parent.bottom
+                    left: parent.left
+                    topMargin: Theme.paddingLarge
+                    leftMargin: Theme.paddingMedium
+                }
+            }
+
+            Label{
+                id:viewinfo
+                text:"评论 : "+postcount+" / 浏览 : "+viewcount
+                //opacity: 0.7
+                font.pixelSize: Theme.fontSizeTiny
+                //font.italic: true
+                color: Theme.secondaryColor
+                //horizontalAlignment: Text.AlignRight
+                anchors {
+                    bottom :parent.bottom
+                    right: parent.right
+                    topMargin: Theme.paddingLarge
+                    rightMargin: Theme.paddingMedium
+                }
             }
             Rectangle {
                 anchors.fill: parent;
@@ -80,9 +108,9 @@ Item{
                 id: mouseArea;
                 anchors.fill: parent;
                 onClicked: {
-                    pageStack.push(Qt.resolvedUrl("TopicPage.qml"),{
+                    pageStack.push(Qt.resolvedUrl("../pages/TopicPage.qml"),{
                                    "tid":tid,
-                                   "topic_title":title,
+                                   "topic_title": title,
                                    "slug":slug,
                                    "user":user,
                                    "category":category,
