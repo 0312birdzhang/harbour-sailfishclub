@@ -4,6 +4,7 @@ import pyotherside
 from sfctoken import access_token
 import logging
 import sys
+import requests
 
 logger = logging.getLogger("sfcpython")
 formatter = logging.Formatter('%(asctime)s %(levelname)-8s: %(message)s')
@@ -83,8 +84,6 @@ def getTopic(tid,slug):
 def uploadImgSm(path):
     if path.startswith("file:"):
         path = path.replace("file://","")
-    import requests
-    import sys
     url = 'https://sm.ms/api/upload'
     try:
         files = {'smfile' : open(path.encode("utf-8"), 'rb')}
@@ -104,6 +103,7 @@ def uploadVimCN(file):
         r = requests.post(url, files = files, timeout=5000)
         return r.text
     except Exception as e:
+        
         logger.error(str(e))
         return None
 

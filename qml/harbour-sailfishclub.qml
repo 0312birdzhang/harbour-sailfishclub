@@ -307,6 +307,7 @@ ApplicationWindow
              });
         }
 
+        // 弃用
         function loadImage(username,image_id){
             call('myprovider.load',[username,image_id],function(result){
                 var source;
