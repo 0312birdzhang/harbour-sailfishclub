@@ -13,6 +13,17 @@
     </message>
 </context>
 <context>
+    <name>ActivityTopicBanner</name>
+    <message>
+        <source>comments: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>views: </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ApiMain</name>
     <message>
         <source>connect error,code:</source>
@@ -107,6 +118,14 @@
     <message>
         <source>Next Page</source>
         <translation>下一页</translation>
+    </message>
+    <message>
+        <source>comments: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>views: </source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

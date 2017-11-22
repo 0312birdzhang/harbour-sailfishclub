@@ -53,7 +53,7 @@ Page{
                 color: user_color
                 time:JS.humanedate(timestamp)
                 width: parent.width
-                height: Screen.sizeCategory >= Screen.Large?parent.width/12:parent.width/8
+                height: isLandscape?parent.width/12:parent.width/8
             }
 
             Label{

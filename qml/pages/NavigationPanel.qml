@@ -67,7 +67,7 @@ Panel {
             Image {
                 id: cover
                 width: parent.width
-                height: Screen.sizeCategory >= Screen.Large?cover.width/2:cover.width *2/3
+                height: parent.isLandscape?cover.width/2:cover.width *2/3
                 fillMode: Image.PreserveAspectCrop
                 opacity: 0.6
                 asynchronous: true

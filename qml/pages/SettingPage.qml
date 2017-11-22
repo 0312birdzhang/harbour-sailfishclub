@@ -88,8 +88,8 @@ Page{
 
 
         Component.onDestruction: {
-            settings.set_pagesize(slider.value);
-            py.initPagesize();
+//            settings.set_pagesize(slider.value);
+//            py.initPagesize();
         }
     }
 

@@ -5,7 +5,9 @@ import "../js/ApiCore.js" as JS
 
 Item{
     property alias model:banner.model
-//    property Page name: value
+    property alias bannerHeight: banner.height
+    implicitHeight: banner.height + isLandscape?Screen.height/10:Screen.height/4/2 + Theme.paddingSmall
+    implicitWidth: parent.width
     anchors{
         left:parent.left
         right:parent.right
@@ -18,26 +20,27 @@ Item{
         //            opacity: view.contentY/height > 1 ? 0 : 1-view.contentY/height;
         //            visible: opacity>0.0;
         width: parent.width;
-        height: Screen.sizeCategory >=Screen.Large?Screen.height/5:Screen.height/3.5
+        height: isLandscape?Screen.height/5:Screen.height/3.5
         preferredHighlightBegin: 0.5;
         preferredHighlightEnd: 0.5;
         path: Path {
-            startX: -banner.width*banner.count/2 + banner.width/2;
+            startX: isLandscape?(-banner.width*banner.count/4 + banner.width/4):(-banner.width*banner.count/2 + banner.width/2)
             startY: banner.height/2;
             PathLine {
-                x: banner.width*banner.count/2 + banner.width/2;
+                x: isLandscape?(banner.width*banner.count/4 + banner.width/4 ):(banner.width*banner.count/2 + banner.width/2)
                 y: banner.height/2;
             }
         }
         clip: true
         delegate: Item {
-            implicitWidth: Screen.sizeCategory >=Screen.Large?banner.width/2:banner.width;
+            implicitWidth: isLandscape?banner.width/2:banner.width;
             implicitHeight: banner.height;
             clip:true
             Rectangle{
                 width: parent.width;
                 height: parent.height;
                 //anchor.fill:parent;
+                rotation: 90
                 gradient: Gradient {
                     GradientStop { position: 0.5; color: "#00000000" }
                     GradientStop { position: 1.0; color:"#08202c" }
@@ -49,7 +52,6 @@ Item{
                 height: parent.height
                 color: category_bgColor
                 opacity: 0.8
-
             }
 
             Label{
@@ -65,7 +67,7 @@ Item{
                 maximumLineCount: 2
                 wrapMode: Text.WrapAnywhere;
                 font.letterSpacing: 2;
-                color: Theme.secondaryColor
+                color: Theme.primaryColor
             }
             Label{
                 id:timeid
@@ -131,7 +133,7 @@ Item{
         //            opacity: view.contentY/banner.height > 1 ? 0 : 1-view.contentY/banner.height;
         //            visible: opacity>0.0;
         width: parent.width;
-        height: Screen.height/4/2
+        height: isLandscape?Screen.height/10:Screen.height/4/2
         gradient: Gradient {
             GradientStop { position: 0; color: "#08202c" }
             GradientStop { position: 1.0; color: "#00000000" }
@@ -144,9 +146,9 @@ Item{
         //            opacity: view.contentY/banner.height > 1 ? 0 : 1-view.contentY/banner.height;
         //            visible: opacity>0.0;
         Repeater{
-            model: 5
+            model: banner.count
             Rectangle{
-                width: Screen.width/5
+                width:  isLandscape?Screen.width/banner.count*2:Screen.width/banner.count
                 height: Theme.paddingSmall
                 color: banner.currentIndex==index?"#22ffffff":"#44000000"
                 MouseArea {

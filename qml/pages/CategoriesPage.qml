@@ -34,7 +34,7 @@ Page{
             Item{
                 id: content
                 width: parent.width
-                height: bannerItem.height + Theme.paddingMedium
+                height: bannerItem.height + listView.height + Theme.paddingMedium
                 anchors.top: header.bottom
 
                 //banner
@@ -45,17 +45,38 @@ Page{
                 }
 
                 SilicaListView{
+                    id: listView
                     anchors{
-                        top: bannerItem.bottom
+                        top: parent.top
+                        topMargin: bannerItem.bannerHeight
+                        leftMargin: Theme.paddingMedium
                         left: parent.left
                         right: parent.right
                     }
-                    id: listView
+                    width: page.width
+                    height: childrenRect.height
                     clip: true
-                    delegate: Label{
-                        text: name + " "+ FONT.Icon[icon.replace(/-/g,"_")]
-                        
+                    delegate: ListItem{
+                        contentHeight: nameLabel.height + descLabel.height
+                        width: parent.width
+                        Label{
+                            id: nameLabel
+                            text: name + " "+ FONT.Icon[icon.replace(/-/g,"_")]
+                            color: Theme.highlightColor
+                            font.bold:true;
+                            font.pixelSize: Theme.fontSizeMedium
+                        }
+                        Label{
+                            id: descLabel
+                            text: description
+                            color: Theme.secondaryColor
+                            font.pixelSize: Theme.fontSizeTiny
+                            anchors{
+                                top: nameLabel.bottom
+                            }
+                        }
                     }
+                    VerticalScrollDecorator{}
                 }
             }
 
@@ -70,7 +91,9 @@ Page{
                 }
             }
 
-            VerticalScrollDecorator{}
+            VerticalScrollDecorator{
+                flickable: flickable
+            }
 
         }
     }
@@ -81,6 +104,7 @@ Page{
             if(result && result != "Forbidden"){
                 var banners = result.topics;
                 var categories = result.categories;
+//                console.log(JSON.stringify(categories))
                 for(var i = 0;i<banners.length;i++){
                     bannerModel.append({
                                        "title":banners[i].title,
@@ -109,15 +133,11 @@ Page{
     }
 
 
-    function fillCategoryModel(result){
-        var categories = result.categories;
-        if(!categories || categories == "Forbidden" || categories == "false"){
-            return;
-        }
-
+    function fillCategoryModel(categories){
         for(var i=0;i<categories.length;i++){
             if(categories[i].parentCid != "0"){
                 categories[i].name = "  - " + categories[i].name;
+                categories[i].description = "    " + categories[i].description;
             }
             categoriesModel.append({
                 "cid":  categories[i].cid,
