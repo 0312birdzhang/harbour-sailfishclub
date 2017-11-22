@@ -17,7 +17,7 @@ Item{
         //y:-newappItem.contentY;
         //            opacity: view.contentY/height > 1 ? 0 : 1-view.contentY/height;
         //            visible: opacity>0.0;
-        width: /*Screen.sizeCategory >=Screen.Large?parent.width/2:*/parent.width;
+        width: parent.width;
         height: Screen.sizeCategory >=Screen.Large?Screen.height/5:Screen.height/3.5
         preferredHighlightBegin: 0.5;
         preferredHighlightEnd: 0.5;
@@ -29,10 +29,9 @@ Item{
                 y: banner.height/2;
             }
         }
-        // model:coverModel
         clip: true
         delegate: Item {
-            implicitWidth: banner.width;
+            implicitWidth: Screen.sizeCategory >=Screen.Large?banner.width/2:banner.width;
             implicitHeight: banner.height;
             clip:true
             Rectangle{
@@ -79,14 +78,14 @@ Item{
                 anchors {
                     bottom: parent.bottom
                     left: parent.left
-                    topMargin: Theme.paddingLarge
+                    bottomMargin: Theme.paddingLarge
                     leftMargin: Theme.paddingMedium
                 }
             }
 
             Label{
                 id:viewinfo
-                text:"评论 : "+postcount+" / 浏览 : "+viewcount
+                text:qsTr("comments: ") +postcount+" / " + qsTr("views: ") +viewcount
                 //opacity: 0.7
                 font.pixelSize: Theme.fontSizeTiny
                 //font.italic: true
@@ -95,7 +94,7 @@ Item{
                 anchors {
                     bottom :parent.bottom
                     right: parent.right
-                    topMargin: Theme.paddingLarge
+                    bottomMargin: Theme.paddingLarge
                     rightMargin: Theme.paddingMedium
                 }
             }

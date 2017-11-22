@@ -146,7 +146,7 @@ Page {
                 }
                 Label{
                     id:viewinfo
-                    text:"评论 : "+postcount+" / 浏览 : "+viewcount
+                    text:qsTr("comments: ") +postcount+" / " + qsTr("views: ") +viewcount
                     //opacity: 0.7
                     font.pixelSize: Theme.fontSizeTiny
                     //font.italic: true
@@ -237,13 +237,13 @@ Page {
 
         switch(current_router){
         case "recent":
-            py.getRecent("page="+current_page);
+            py.getRecent("page=" + current_page);
             break;
         case "popular":
-            py.getPopular("page="+current_page);
+            py.getPopular("page=" + current_page);
             break;
         default:
-            py.getRecent();
+            py.getRecent("page=" + current_page);
         }
     }
 

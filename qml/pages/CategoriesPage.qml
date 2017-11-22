@@ -42,7 +42,20 @@ Page{
                     id:bannerItem
                     anchors.top:parent.top
                     width: parent.width
-    //                height: Screen.height/3.5
+                }
+
+                SilicaListView{
+                    anchors{
+                        top: bannerItem.bottom
+                        left: parent.left
+                        right: parent.right
+                    }
+                    id: listView
+                    clip: true
+                    delegate: Label{
+                        text: name + " "+ FONT.Icon[icon.replace(/-/g,"_")]
+                        
+                    }
                 }
             }
 
@@ -67,6 +80,7 @@ Page{
         onGetCategories:{
             if(result && result != "Forbidden"){
                 var banners = result.topics;
+                var categories = result.categories;
                 for(var i = 0;i<banners.length;i++){
                     bannerModel.append({
                                        "title":banners[i].title,
@@ -84,9 +98,37 @@ Page{
                                        "category_bgColor":banners[i].category.bgColor
                                    });
                 }
+                fillCategoryModel(categories);
                 bannerItem.model = bannerModel;
+                listView.model = categoriesModel;
             }else{
 
+            }
+
+        }
+    }
+
+
+    function fillCategoryModel(result){
+        var categories = result.categories;
+        if(!categories || categories == "Forbidden" || categories == "false"){
+            return;
+        }
+
+        for(var i=0;i<categories.length;i++){
+            if(categories[i].parentCid != "0"){
+                categories[i].name = "  - " + categories[i].name;
+            }
+            categoriesModel.append({
+                "cid":  categories[i].cid,
+                "name": categories[i].name,
+                "description":categories[i].description,
+                "icon":categories[i].icon,
+                "slug":categories[i].slug,
+                "parentCid":categories[i].parentCid
+                });
+            if(categories[i].children && categories[i].children.length > 0){
+                fillCategoryModel(categories[i].children);
             }
 
         }
