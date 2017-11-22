@@ -36,16 +36,7 @@ Item{
             implicitWidth: isLandscape?banner.width/2:banner.width;
             implicitHeight: banner.height;
             clip:true
-            Rectangle{
-                width: parent.width;
-                height: parent.height;
-                //anchor.fill:parent;
-                rotation: 90
-                gradient: Gradient {
-                    GradientStop { position: 0.5; color: "#00000000" }
-                    GradientStop { position: 1.0; color:"#08202c" }
-                }
-            }
+
             Rectangle{
                 id: rectColor
                 width: parent.width
@@ -53,7 +44,12 @@ Item{
                 color: category_bgColor
                 opacity: 0.8
             }
-
+            OpacityRampEffect {
+                id: effect
+                slope: 3.00
+                offset: 0.75
+                sourceItem: rectColor
+            }
             Label{
                 id:topicTitle
                 anchors{

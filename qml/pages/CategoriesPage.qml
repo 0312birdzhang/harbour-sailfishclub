@@ -30,11 +30,11 @@ Page{
                 title: qsTr("Categories")
             }
 //            anchors.fill: parent
-            contentHeight: content.height + header.height + Theme.paddingLarge
+            contentHeight: content.height + header.height + Theme.paddingLarge * 3
             Item{
                 id: content
                 width: parent.width
-                height: bannerItem.height + listView.height + Theme.paddingMedium
+                height: bannerItem.height + listView.height + Theme.itemSizeMedium
                 anchors.top: header.bottom
 
                 //banner
@@ -76,7 +76,7 @@ Page{
                             }
                         }
                     }
-                    VerticalScrollDecorator{}
+                    VerticalScrollDecorator{flickable: listView}
                 }
             }
 
