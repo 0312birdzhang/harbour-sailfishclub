@@ -20,8 +20,8 @@ Page {
     SilicaGridView {
         id: grid
         header: PageHeader { title: qsTr("Select an image") }
-        cellWidth: width / 3
-        cellHeight: width / 3
+        cellWidth: isLandscape? width / 5 : width / 3
+        cellHeight: cellWidth
         anchors.fill: parent
         model: galleryModel
 

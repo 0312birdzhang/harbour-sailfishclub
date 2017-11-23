@@ -38,6 +38,8 @@ Page {
     property alias contentItem:column
     allowedOrientations:Orientation.All
 
+    property string cid;
+    property string cname;
     property int current_page:1;
     property int pageCount:1;
     property string next_page;
@@ -63,7 +65,8 @@ Page {
             enabled: PageStatus.Active
             header: PageHeader {
                 title: appwindow.current_router == "recent"?qsTr("Recent Page"):
-                       appwindow.current_router == "popular"?qsTr("Popular"):appwindow.current_router
+                       appwindow.current_router == "popular"?qsTr("Popular"):
+                       appwindow.current_router == "categories"?cname:appwindow.current_router
             }
             PullDownMenu{
                 id:pullDownMenu
@@ -237,13 +240,16 @@ Page {
 
         switch(current_router){
         case "recent":
-            py.getRecent("page=" + current_page);
+            py.getRecent("page=" + current_page );
             break;
         case "popular":
             py.getPopular("page=" + current_page);
             break;
+        case "categories":
+            py.getRecent("page=" + current_page + (cid?("&cid=" + cid ):""));
+            break;
         default:
-            py.getRecent("page=" + current_page);
+            py.getRecent("page=" + current_page );
         }
     }
 

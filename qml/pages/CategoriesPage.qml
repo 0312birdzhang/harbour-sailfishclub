@@ -61,7 +61,7 @@ Page{
                         width: parent.width
                         Label{
                             id: nameLabel
-                            text: name + " "+ FONT.Icon[icon.replace(/-/g,"_")]
+                            text: cname + " "+ FONT.Icon[icon.replace(/-/g,"_")]
                             color: Theme.highlightColor
                             font.bold:true;
                             font.pixelSize: Theme.fontSizeMedium
@@ -75,6 +75,14 @@ Page{
                                 top: nameLabel.bottom
                             }
                         }
+                        onClicked: {
+                            pageStack.push(Qt.resolvedUrl("./FirstPage.qml"),{
+                                               "cid":cid,
+                                               "cname":cname
+                                           });
+                        }
+
+                        
                     }
                     VerticalScrollDecorator{flickable: listView}
                 }
@@ -141,7 +149,7 @@ Page{
             }
             categoriesModel.append({
                 "cid":  categories[i].cid,
-                "name": categories[i].name,
+                "cname": categories[i].name,
                 "description":categories[i].description,
                 "icon":categories[i].icon,
                 "slug":categories[i].slug,

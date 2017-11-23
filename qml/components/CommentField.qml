@@ -201,73 +201,80 @@ Column {
         }
     }
 
-    TextArea {
-        id: body
-        width: parent.width - sendButton.width - Theme.horizontalPageMargin
-        //% "Your comment"
-        label: qsTr("Your comment")
-        placeholderText: label
-        font.pixelSize: Theme.fontSizeSmall
-        focusOutBehavior: FocusBehavior.KeepFocus
-        text: replayUser
-        Component.onCompleted: _editor.textFormat = TextEdit.PlainText
-
-        Label {
-            id: sendButton
-            visible: _editId || _replyToId
-            anchors {
-                verticalCenter: parent.top
-                verticalCenterOffset: body.textVerticalCenterOffset + (body._editor.height - height)
-            }
-            x: parent.x + parent.width
-            color: !_hasText ? Theme.secondaryColor :
-                        sendButtonMouseArea.pressed ? Theme.highlightColor : Theme.primaryColor
+    Row{
+        spacing: Theme.paddingMedium
+        TextArea {
+            id: body
+            width: isLandscape?(parent.width / 2 - Theme.horizontalPageMargin - Theme.paddingMedium)
+                              :(parent.width - Theme.horizontalPageMargin)
+            //% "Your comment"
+            label: qsTr("Your comment")
+            placeholderText: label
             font.pixelSize: Theme.fontSizeSmall
-            text: {
-                if (opacity < 1.0) {
-                    return ""
+//            focusOutBehavior: FocusBehavior.KeepFocus
+            text: replayUser
+            Component.onCompleted: _editor.textFormat = TextEdit.PlainText
+            onTextChanged: {
+                if(isLandscape){
+                    py.previewMd(text);
                 }
-                if (_editId) {
-                    //: Update a comment
-                    //% "Update"
-                    return qsTr("update")
-                }
-                if (_replyToId) {
-                    return qsTr("reply")
-                }
-                //% "Send"
-                return qsTr("send")
             }
+        }
 
-            opacity: body.text || body.activeFocus ? 1.0 : 0.0
-            Behavior on opacity { FadeAnimation { } }
+        TextArea{
+            id: previewBody
+            visible: isLandscape
+            width: isLandscape? (parent.width / 2 - Theme.horizontalPageMargin - Theme.paddingMedium):0
+            font.pixelSize: Theme.fontSizeSmall
+            label: qsTr("Markdown preview")
+            placeholderText: label
+            readOnly: true
 
-            MouseArea {
-                id: sendButtonMouseArea
-                anchors.fill: parent
-                onClicked: {
-                    if (_editId) {
-                        // OrnClient.editComment(_editId, body.text)
-                    } else if (_replyToId) {
-                        // OrnClient.comment(appId, body.text, _replyToId)
-                        sendButtonClicked();
-                    } else {
-                        // OrnClient.comment(appId, body.text)
-                    }
-//                    _reset()
-                }
-            }
-            Rectangle{
-                width: sendButton.width + Theme.paddingMedium * 2
-                height: sendButton.height
-                anchors.horizontalCenter: parent.horizontalCenter
-                border.color:Theme.highlightColor
-                color:"#00000000"
-                radius: 10
-            }
+        }
+
+    }
+
+    Connections{
+        target: signalCenter
+        onPreviewMd:{
+            previewBody.text = result;
         }
     }
 
+
+    Button{
+        id: sendButton
+        text: {
+            if (opacity < 1.0) {
+                return ""
+            }
+            if (_editId) {
+                //: Update a comment
+                //% "Update"
+                return qsTr("update")
+            }
+            if (_replyToId) {
+                return qsTr("reply")
+            }
+            //% "Send"
+            return qsTr("send")
+        }
+        anchors.horizontalCenter: parent.horizontalCenter
+        opacity: body.text || body.activeFocus ? 1.0 : 0.0
+        Behavior on opacity { FadeAnimation { } }
+        onClicked: {
+            if (_editId) {
+                // OrnClient.editComment(_editId, body.text)
+            } else if (_replyToId) {
+                // OrnClient.comment(appId, body.text, _replyToId)
+                sendButtonClicked();
+            } else {
+                // OrnClient.comment(appId, body.text)
+            }
+//                    _reset()
+        }
+        
+    }
     Component{
         id:selectImageComponent
         ImagePreviewGrid{

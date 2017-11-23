@@ -98,6 +98,7 @@ Dialog  {
 
     Connections{
         target: signalCenter
+
         onGetCategories:{
            fillModel(result);
         }
