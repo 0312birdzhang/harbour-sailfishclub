@@ -25,11 +25,11 @@ QString SettingsObject::get_password() {
 }
 
 void SettingsObject::set_uid(const int &uid) {
-    settings->setValue(QString("settings/uid"),uid);
+    settings->setValue(QString("logindata/uid"),uid);
 }
 
 int SettingsObject::get_uid() {
-    return settings->value(QString("settings/uid"),0).toInt();
+    return settings->value(QString("logindata/uid"),0).toInt();
 }
 
 void SettingsObject::set_token(const QString &token) {

@@ -201,45 +201,46 @@ Column {
         }
     }
 
-    Row{
-        spacing: Theme.paddingMedium
+//    Row{
+//        spacing: Theme.paddingMedium
         TextArea {
             id: body
-            width: isLandscape?(parent.width / 2 - Theme.horizontalPageMargin - Theme.paddingMedium)
-                              :(parent.width - Theme.horizontalPageMargin)
+            width: parent.width - Theme.horizontalPageMargin
+//            width: isLandscape?(parent.width / 2 - Theme.horizontalPageMargin - Theme.paddingMedium)
+//                              :(parent.width - Theme.horizontalPageMargin)
             //% "Your comment"
             label: qsTr("Your comment")
             placeholderText: label
             font.pixelSize: Theme.fontSizeSmall
-//            focusOutBehavior: FocusBehavior.KeepFocus
+            focusOutBehavior: FocusBehavior.KeepFocus
             text: replayUser
             Component.onCompleted: _editor.textFormat = TextEdit.PlainText
-            onTextChanged: {
-                if(isLandscape){
-                    py.previewMd(text);
-                }
-            }
+//            onTextChanged: {
+//                if(isLandscape){
+//                    py.previewMd(text);
+//                }
+//            }
         }
 
-        TextArea{
-            id: previewBody
-            visible: isLandscape
-            width: isLandscape? (parent.width / 2 - Theme.horizontalPageMargin - Theme.paddingMedium):0
-            font.pixelSize: Theme.fontSizeSmall
-            label: qsTr("Markdown preview")
-            placeholderText: label
-            readOnly: true
+//        TextArea{
+//            id: previewBody
+//            visible: isLandscape
+//            width: isLandscape? (parent.width / 2 - Theme.horizontalPageMargin - Theme.paddingMedium):0
+//            font.pixelSize: Theme.fontSizeSmall
+//            label: qsTr("Markdown preview")
+//            placeholderText: label
+//            readOnly: true
 
-        }
+//        }
 
-    }
+//    }
 
-    Connections{
-        target: signalCenter
-        onPreviewMd:{
-            previewBody.text = result;
-        }
-    }
+//    Connections{
+//        target: signalCenter
+//        onPreviewMd:{
+//            previewBody.text = result;
+//        }
+//    }
 
 
     Button{
@@ -260,7 +261,7 @@ Column {
             return qsTr("send")
         }
         anchors.horizontalCenter: parent.horizontalCenter
-        opacity: body.text || body.activeFocus ? 1.0 : 0.0
+        opacity: body.text && body.text.length > 2
         Behavior on opacity { FadeAnimation { } }
         onClicked: {
             if (_editId) {

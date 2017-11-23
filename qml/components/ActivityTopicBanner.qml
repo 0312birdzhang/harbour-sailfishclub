@@ -47,7 +47,7 @@ Item{
             OpacityRampEffect {
                 id: effect
                 slope: 3.00
-                offset: 0.75
+                offset: 0.8
                 sourceItem: rectColor
             }
             Label{

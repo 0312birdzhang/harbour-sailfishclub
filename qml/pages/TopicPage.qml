@@ -244,6 +244,7 @@ Page{
         id: postComponent
         Dialog  {
             id:dialog
+            orientation: Orientation.All
             property string replayTo:"";
             property string tid;
             property string pid;

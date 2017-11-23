@@ -76,10 +76,6 @@
         <source>reply</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Markdown preview</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>FirstPage</name>

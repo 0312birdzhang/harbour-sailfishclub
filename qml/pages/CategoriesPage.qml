@@ -34,7 +34,7 @@ Page{
             Item{
                 id: content
                 width: parent.width
-                height: bannerItem.height + listView.height + Theme.itemSizeMedium
+                height: bannerItem.height + listView.height + Theme.paddingLarge * 2
                 anchors.top: header.bottom
 
                 //banner
@@ -55,6 +55,7 @@ Page{
                     }
                     width: page.width
                     height: childrenRect.height
+                    spacing: Theme.paddingMedium
                     clip: true
                     delegate: ListItem{
                         contentHeight: nameLabel.height + descLabel.height

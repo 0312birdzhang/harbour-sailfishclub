@@ -54,7 +54,7 @@ def validate(uid, token):
     if token not in tokens.get("tokens"):
         return False
     else:
-        return True
+        return getuserinfo(uid,False)
 
 def createToken(uid, password):
     status_code, playload = client.users.grant_token(uid, password)
@@ -62,8 +62,8 @@ def createToken(uid, password):
         return False
     return playload.get("token")
 
-def getuserinfo(user):
-    status_code, userinfo = client.users.get(user, True)
+def getuserinfo(user,is_username = True):
+    status_code, userinfo = client.users.get(user, is_username)
     if not status_code or status_code != 200:
         return False
     return userinfo

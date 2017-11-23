@@ -148,6 +148,7 @@ ApplicationWindow
                     var password = settings.get_password();
                     var uid = settings.get_uid();
                     var token = settings.get_token();
+                    console.log("uid:"+uid+",token:"+token+",username:"+username+",password:"+password);
                     if(uid && token){
                         py.validate(uid, token)
                     }else if(username && password){
@@ -165,14 +166,15 @@ ApplicationWindow
         }
 
         function validate(uid, token){
-            if(!uid||!token || uid == "undefined" || token == "undefined"){
+            if(!uid||!token || uid == 0 || token == "undefined"){
                 return;
             }
             call('main.validate',[uid, token],function(result){
+                console.log(JSON.stringify(result))
                 if(result && result != "Forbidden" && result != "False"){
-                    userinfo.uid = result.uid;
+                    userinfo.uid = uid.toString();
                     userinfo.username = result.username;
-                    userinfo.email = result.email;
+                    userinfo.email = result.email?result.email:"";
                     userinfo.website = result.website;
                     userinfo.avatar = result.picture?result.picture:"";
                     userinfo.groupTitle = result.groupTitle?result.groupTitle:"";
@@ -185,7 +187,7 @@ ApplicationWindow
                     userinfo.user_color = result["icon:bgColor"];
                     userinfo.logined = true;
                     signalCenter.loginSucceed();
-                    saveData(result.uid, result.token, username,password);
+                    saveData(uid, result.token, username,password);
 
                 }
             })
@@ -196,9 +198,9 @@ ApplicationWindow
             }
             call('main.login',[username,password],function(result){
                 if(result && result != "Forbidden" && result != "False"){
-                    userinfo.uid = result.uid;
+                    userinfo.uid = result.uid.toString();
                     userinfo.username = result.username;
-                    userinfo.email = result.email;
+                    userinfo.email = result.email?result.email:"";
                     userinfo.website = result.website;
                     userinfo.avatar = result.picture?result.picture:"";
                     userinfo.groupTitle = result.groupTitle?result.groupTitle:"";
@@ -242,7 +244,7 @@ ApplicationWindow
                 settings.set_username(username);
                 settings.set_password(pass_encrypted);
             }
-            settings.set_uid(uid);
+            settings.set_uid(parseInt(uid));
             settings.set_token(token);
         }
 

@@ -10,7 +10,7 @@ Page{
     SilicaFlickable {
         id: flickable
         anchors.fill: parent
-        contentHeight: aboutRectangle.height
+        contentHeight: aboutRectangle.height + Theme.paddingLarge * 4
 
         VerticalScrollDecorator { flickable: flickable }
 
@@ -41,7 +41,7 @@ Page{
             LabelText{
                 label: qsTr("Thanks")
                 text: qsTr("Thanks nodebb,pynodebb,harbour-storeman,orn-warehouse,sm.ms and other projects") + 
-                        "<style>a:link { color: " + Theme.highlightColor + "; }</style><br/><a href=\"https://community.nodebb.org/\" >nodebb</a><br/>" +
+                        "<br/><a href=\"https://community.nodebb.org/\" >nodebb</a><br/>" +
                         "<a href=\"https://github.com/davidvuong/pynodebb\" >pynodebb</a><br/>" +
                         "<a href=\"https://github.com/mentaljam/harbour-storeman\" >harbour-storeman</a><br/>" +
                         "<a href=\"https://github.com/custodian/orn-warehouse\" >orn-warehouse</a><br/>" +

@@ -41,6 +41,8 @@ Item {
         color: Theme.primaryColor
         font.pixelSize: Theme.fontSizeSmall
         wrapMode: Text.Wrap
+        textFormat: Text.StyledText
+        linkColor:Theme.primaryColor
         width: parent.width - (2 * Theme.paddingLarge)
     }
 
