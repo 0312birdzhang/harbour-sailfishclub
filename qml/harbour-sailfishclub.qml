@@ -170,7 +170,7 @@ ApplicationWindow
                 return;
             }
             call('main.validate',[uid, token],function(result){
-                console.log(JSON.stringify(result))
+//                console.log(JSON.stringify(result))
                 if(result && result != "Forbidden" && result != "False"){
                     userinfo.uid = uid.toString();
                     userinfo.username = result.username;
@@ -187,7 +187,7 @@ ApplicationWindow
                     userinfo.user_color = result["icon:bgColor"];
                     userinfo.logined = true;
                     signalCenter.loginSucceed();
-                    saveData(uid, result.token, username,password);
+                    saveData(uid, result.token,userinfo.username,"");
 
                 }
             })
@@ -228,7 +228,10 @@ ApplicationWindow
             var uid = settings.get_uid();
             var token = settings.get_token();
             call('main.logout',[uid, token],function(result){
-
+                settings.set_username("");
+                settings.set_password("");
+                settings.set_uid(0);
+                settings.set_token("");
             })
         }
 
@@ -237,12 +240,12 @@ ApplicationWindow
                 console.log("not logined")
                 return;
             }
-
-            //保持加密后的密码
-            var pass_encrypted = encryPass(password);
-            if(pass_encrypted){
-                settings.set_username(username);
-                settings.set_password(pass_encrypted);
+            settings.set_username(username);
+            if(password){
+                var pass_encrypted = encryPass(password);
+                if(pass_encrypted){
+                    settings.set_password(pass_encrypted);
+                }
             }
             settings.set_uid(parseInt(uid));
             settings.set_token(token);

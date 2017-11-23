@@ -76,8 +76,7 @@ Page{
                 anchors.horizontalCenter: parent.horizontalCenter
                 onClicked: {
                     remorse.execute(qsTr("Start logout..."), function() {
-                        settings.set_username("");
-                        settings.set_password("");
+
                         userinfo.logined = false;
                         userinfo.uid = "";
                         userinfo.userslug = "";

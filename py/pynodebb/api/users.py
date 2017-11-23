@@ -145,10 +145,7 @@ class User(Resource):
     def remove_token(self, id_, token):
         """Revokes an active user token
         """
-        settings = {
-            "master_token": token
-        }
-        self.client.update_settings(settings)
+        self.client.headers = {'Authorization': 'Bearer %s' % token}
         return self.client.delete(
             '/api/v2/users/%s/tokens/%s' % (id_, token), **{
                 "_uid": id_
