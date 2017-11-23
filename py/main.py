@@ -19,12 +19,54 @@ client.configure(**{
 })
 
 
+# def login(user, password):
+#     status_code, userInfo = client.users.login(user, password)
+#     if not status_code or status_code != 200:
+#         return False
+#     return userInfo
+
 def login(user, password):
-    status_code, userInfo = client.users.login(user, password)
-#    logger.debug(str(userInfo))
+    userinfo = getuserinfo(user)
+    if not userinfo:
+        return False
+    uid = userinfo.get("uid")
+    if not uid:
+        return False
+    token = createToken(uid, password)
+    if not token:
+        return False
+    userinfo["token"] = token
+    return userinfo
+    
+def logout(uid, token):
+    status_code, response = client.users.remove_token(uid, token)
     if not status_code or status_code != 200:
         return False
-    return userInfo
+    return True
+
+
+def validate(uid, token):
+    """validate user token
+    """
+    status_code, tokens = client.users.get_tokens(uid)
+    if not status_code or status_code != 200:
+        return False
+    if token not in tokens.get("tokens"):
+        return False
+    else:
+        return True
+
+def createToken(uid, password):
+    status_code, playload = client.users.grant_token(uid, password)
+    if not status_code or status_code != 200:
+        return False
+    return playload.get("token")
+
+def getuserinfo(user):
+    status_code, userinfo = client.users.get(user, True)
+    if not status_code or status_code != 200:
+        return False
+    return userinfo
 
 def createUser(user,password,email):
     logger.debug("start register");

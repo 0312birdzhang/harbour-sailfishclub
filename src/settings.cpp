@@ -24,6 +24,22 @@ QString SettingsObject::get_password() {
     return settings->value(QString("logindata/password"),QString("")).toString();
 }
 
+void SettingsObject::set_uid(const int &uid) {
+    settings->setValue(QString("settings/uid"),uid);
+}
+
+int SettingsObject::get_uid() {
+    return settings->value(QString("settings/uid"),0).toInt();
+}
+
+void SettingsObject::set_token(const QString &token) {
+    settings->setValue(QString("logindata/token"),token);
+}
+
+QString SettingsObject::get_token() {
+    return settings->value(QString("logindata/token"),QString("")).toString();
+}
+
 void SettingsObject::set_pagesize(const int &pagesize) {
     settings->setValue(QString("settings/pagesize"),pagesize);
 }

@@ -84,7 +84,7 @@ Page{
                         userinfo.username = "";
                         userinfo.avatar = "";
                         userinfo.user_text = "";
-
+                        py.logout();
                         toIndexPage();
                     },3000)
 

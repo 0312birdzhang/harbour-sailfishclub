@@ -76,6 +76,10 @@
         <source>reply</source>
         <translation>回复</translation>
     </message>
+    <message>
+        <source>Markdown preview</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FirstPage</name>
@@ -289,10 +293,6 @@
         <translation>感谢</translation>
     </message>
     <message>
-        <source>Thanks nodebb,pynodebb,harbour-storeman,sm.ms and other projects</source>
-        <translation>感谢nodebb、pynodebb、harbour-storeman、sm.ms和其他项目</translation>
-    </message>
-    <message>
         <source>About this app</source>
         <translation>关于这个软件</translation>
     </message>
@@ -311,6 +311,10 @@
     <message>
         <source>Start logout...</source>
         <translation>即将退出...</translation>
+    </message>
+    <message>
+        <source>Thanks nodebb,pynodebb,harbour-storeman,orn-warehouse,sm.ms and other projects</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -378,19 +382,19 @@
     <name>harbour-sailfishclub</name>
     <message>
         <source>请求超时</source>
-        <translation>请求超时</translation>
-    </message>
-    <message>
-        <source>Welcome to</source>
-        <translation>Welcome to</translation>
-    </message>
-    <message>
-        <source>SailfishClub</source>
-        <translation>SailfishClub</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Login failed,try again later</source>
-        <translation>登录失败，请稍后重试</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Welcome to</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SailfishClub</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

@@ -122,6 +122,39 @@ class User(Resource):
             ('/api/user/%s' if is_username else '/api/user/uid/%s') % id_
         ) if id_ else (404, 'Not Found')
 
+    def grant_token(self, id_, password ):
+        """Creates a new user token for the passed in uid
+
+        """
+        return self.client.post(
+            '/api/v2/users/%s/tokens' % ( id_ ,) ,**{
+                'password': password,
+                '_uid': id_
+            }
+        ) if id_ else (404, 'id_ is need')
+
+    def get_tokens(self, id_ ):
+        """Retrieves a list of active tokens for that user
+        """
+        return self.client.get(
+            '/api/v2/users/%s/tokens' % (id_ ,), **{
+                "_uid": id_
+            }
+        )
+
+    def remove_token(self, id_, token):
+        """Revokes an active user token
+        """
+        settings = {
+            "master_token": token
+        }
+        self.client.update_settings(settings)
+        return self.client.delete(
+            '/api/v2/users/%s/tokens/%s' % (id_, token), **{
+                "_uid": id_
+            }
+        )
+
     def login(self, username, password):
         """You must install nodebb-plugin-ns-login first
 

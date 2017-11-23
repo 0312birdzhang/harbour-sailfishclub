@@ -76,6 +76,10 @@
         <source>reply</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Markdown preview</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FirstPage</name>
@@ -289,10 +293,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Thanks nodebb,pynodebb,harbour-storeman,sm.ms and other projects</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>About this app</source>
         <translation type="unfinished"></translation>
     </message>
@@ -310,6 +310,10 @@
     </message>
     <message>
         <source>Start logout...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Thanks nodebb,pynodebb,harbour-storeman,orn-warehouse,sm.ms and other projects</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -381,15 +385,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Login failed,try again later</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Welcome to</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>SailfishClub</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Login failed,try again later</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

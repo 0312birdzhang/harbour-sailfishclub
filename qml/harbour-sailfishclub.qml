@@ -146,7 +146,11 @@ ApplicationWindow
                     // 登录
                     var username = settings.get_username();
                     var password = settings.get_password();
-                    if(username && password){
+                    var uid = settings.get_uid();
+                    var token = settings.get_token();
+                    if(uid && token){
+                        py.validate(uid, token)
+                    }else if(username && password){
                         var derpass = py.decryPass(password);
                         if(derpass)py.login(username,derpass);
                     }
@@ -160,8 +164,33 @@ ApplicationWindow
 
         }
 
+        function validate(uid, token){
+            if(!uid||!token || uid == "undefined" || token == "undefined"){
+                return;
+            }
+            call('main.validate',[uid, token],function(result){
+                if(result && result != "Forbidden" && result != "False"){
+                    userinfo.uid = result.uid;
+                    userinfo.username = result.username;
+                    userinfo.email = result.email;
+                    userinfo.website = result.website;
+                    userinfo.avatar = result.picture?result.picture:"";
+                    userinfo.groupTitle = result.groupTitle?result.groupTitle:"";
+                    userinfo.groupIcon = result.groupIcon?result.groupIcon:"";
+                    userinfo.signature = result.signature?result.signature:"";
+                    userinfo.topiccount = result.topiccount.toString();
+                    userinfo.postcount = result.postcount.toString();
+                    userinfo.aboutme = result.aboutme?result.aboutme:"";
+                    userinfo.user_text = result["icon:text"];
+                    userinfo.user_color = result["icon:bgColor"];
+                    userinfo.logined = true;
+                    signalCenter.loginSucceed();
+                    saveData(result.uid, result.token, username,password);
 
-        function login(username,password){
+                }
+            })
+        }
+        function login(username, password){
             if(!username||!password || username == "undefined" || password == "undefined"){
                 return;
             }
@@ -182,7 +211,7 @@ ApplicationWindow
                     userinfo.user_color = result["icon:bgColor"];
                     userinfo.logined = true;
                     signalCenter.loginSucceed();
-                    saveData(username,password);
+                    saveData(result.uid, result.token, username,password);
                 }else if(result == "Forbidden"){
                     notification.show(qsTr("Login failed,try again later"),
                                       "image://theme/icon-s-high-importance"
@@ -193,7 +222,15 @@ ApplicationWindow
             })
         }
 
-        function saveData(username,password){
+        function logout(){
+            var uid = settings.get_uid();
+            var token = settings.get_token();
+            call('main.logout',[uid, token],function(result){
+
+            })
+        }
+
+        function saveData(uid, token, username, password){
             if(!userinfo.logined){
                 console.log("not logined")
                 return;
@@ -202,10 +239,11 @@ ApplicationWindow
             //保持加密后的密码
             var pass_encrypted = encryPass(password);
             if(pass_encrypted){
-                //                JS.setUserData(username,pass_encrypted);
                 settings.set_username(username);
                 settings.set_password(pass_encrypted);
             }
+            settings.set_uid(uid);
+            settings.set_token(token);
         }
 
         // 获取最新帖子
