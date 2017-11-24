@@ -150,7 +150,7 @@ ApplicationWindow
                     var token = settings.get_token();
                     console.log("uid:"+uid+",token:"+token+",username:"+username+",password:"+password);
                     if(uid && token){
-                        py.validate(uid, token)
+                        py.validate(uid, py.decryPass(token))
                     }else if(username && password){
                         var derpass = py.decryPass(password);
                         if(derpass)py.login(username,derpass);
@@ -248,7 +248,7 @@ ApplicationWindow
                 }
             }
             settings.set_uid(parseInt(uid));
-            settings.set_token(token);
+            settings.set_token(encryPass(token));
         }
 
         // 获取最新帖子
@@ -276,11 +276,11 @@ ApplicationWindow
                 signalCenter.getCategories(result);
             });
         }
-        //加密密码
+        //加密
         function encryPass(password){
             return call_sync('secret.encrypt',[password]);
         }
-        //解密密码
+        //解密
         function decryPass(password){
             return call_sync('secret.decrypt',[password]);
         }

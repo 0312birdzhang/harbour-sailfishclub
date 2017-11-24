@@ -19,8 +19,7 @@ Page{
     Column{
         id:column
         z: -2
-        width: page.width
-        height: page.height
+        width: parent.width
         SilicaFlickable{
             id: flickable
             width: page.width
@@ -29,9 +28,9 @@ Page{
                 id: header
                 title: qsTr("Categories")
             }
-//            anchors.fill: parent
+            anchors.fill: parent
             contentHeight: content.height + header.height + Theme.paddingLarge * 3
-            Item{
+            Column{
                 id: content
                 width: parent.width
                 anchors.top: header.bottom
@@ -43,6 +42,10 @@ Page{
                     width: parent.width
                 }
 
+                Item{
+                    width: parent.width
+                    height: Theme.itemSizeLarge
+                }
                 SilicaListView{
                     id: listView
                     anchors{
@@ -65,6 +68,9 @@ Page{
                             color: Theme.highlightColor
                             font.bold:true;
                             font.pixelSize: Theme.fontSizeMedium
+                            anchors{
+                                leftMargin: Theme.paddingMedium
+                            }
                         }
                         Label{
                             id: descLabel
@@ -73,6 +79,7 @@ Page{
                             font.pixelSize: Theme.fontSizeTiny
                             anchors{
                                 top: nameLabel.bottom
+                                leftMargin: Theme.paddingMedium
                             }
                         }
                         onClicked: {
