@@ -288,10 +288,19 @@ ApplicationWindow
         // 获取贴子内容
         function getTopic(tid,slug){
             loading = true;
-            call('main.getTopic',[tid,slug],function(result){
-                loading = false;
-                signalCenter.getTopic(result);
-            });
+            if(userinfo.logined){
+                var token = settings.get_token();
+                call('main.getTopic',[tid,slug,token],function(result){
+                    loading = false;
+                    signalCenter.getTopic(result);
+                });
+            }else{
+                call('main.getTopic',[tid,slug],function(result){
+                    loading = false;
+                    signalCenter.getTopic(result);
+                });
+            }
+            
         }
 
         // 回复贴子
