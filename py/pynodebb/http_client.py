@@ -37,6 +37,10 @@ class HttpClient(object):
         if kwargs['_uid'] is None:
             return 404, 'Not Found'
 
+        if '_token' in kwargs:
+            self.headers = {'Authorization': 'Bearer %s' % kwargs['_token']}
+            kwargs.pop("_token", None)
+
         # Query the NodeBB instance, extracting the status code and fail reason.
         response = requests.request(
             method, urljoin(self.endpoint, path),

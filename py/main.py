@@ -115,8 +115,8 @@ def listcategory():
         return False
     return categories
 
-def getTopic(tid,slug):
-    status_code, topic = client.topics.get(tid,slug=slug)
+def getTopic(tid, slug, token = access_token ):
+    status_code, topic = client.topics.get(tid, slug=slug, **{"_token" : token})
     if not status_code or status_code != 200:
         return False
     return topic
@@ -159,4 +159,4 @@ def image_provider(image_id, requested_size):
     
     return None
 
-pyotherside.set_image_provider(image_provider)
+# pyotherside.set_image_provider(image_provider)

@@ -35,7 +35,8 @@ BuildRequires:  pkgconfig(Qt5Quick)
 BuildRequires:  desktop-file-utils
 
 %description
-Short description of my Sailfish OS Application
+SailfishClub client for Sailfish OS
+SailfishClub is an unofficial Chinese community
 
 
 %prep

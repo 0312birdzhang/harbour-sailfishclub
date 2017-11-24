@@ -34,7 +34,6 @@ Page{
             Item{
                 id: content
                 width: parent.width
-                height: bannerItem.height + listView.height + Theme.paddingLarge * 2
                 anchors.top: header.bottom
 
                 //banner

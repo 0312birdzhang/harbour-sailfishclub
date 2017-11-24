@@ -66,7 +66,7 @@ class ResourceListMixin(object):
 
 
 class ResourceRetrieveMixin(object):
-    def get(self, id_, slug=None):
+    def get(self, id_, slug=None, **kwargs):
         """Retrieves the resource given the `id_` and (optional) `slug`.
 
         Args:
@@ -84,4 +84,4 @@ class ResourceRetrieveMixin(object):
 
         # The slug returned by NodeBB contains the `id_` (:id_/:slug).
         url_path = '/api/%s/%s' % (self.resource_type, slug)
-        return self.client.get(url_path)
+        return self.client.get(url_path, **kwargs)
