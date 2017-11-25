@@ -19,34 +19,38 @@ Dialog  {
         id:categoryModel
     }
 
+    function send(){
+        var cid = categoryModel.get(categoryCombo.currentIndex).cid;
+        console.log(commentfield.children.length)
+        var comments = commentfield.children[3].text;
+
+         console.log("comments:"+comments);
+        if(cid && title.text && comments){
+            py.newTopic(title.text, comments, userinfo.uid, cid);
+            // console.log(JSON.stringify(ret));
+
+        }else{
+            notification.showPopup(
+                        qsTr("Error"),
+                        qsTr("Field not completed"),
+                        "image://theme/icon-lock-warning"
+                        );
+        }
+    }
+
     SilicaFlickable{
         id:filckable
         anchors.fill: parent
         contentHeight: column.height + Theme.paddingLarge * 4
-        PullDownMenu {
-            MenuItem {
-                text: qsTr("Post")
-                onClicked: {
-                    var cid = categoryModel.get(categoryCombo.currentIndex).cid;
-                    console.log(commentfield.children.length)
-                    var comments = commentfield.children[3].text;
-
-                     console.log("comments:"+comments);
-                    if(cid && title.text && comments){
-                        py.newTopic(title.text, comments, userinfo.uid, cid);
-                        // console.log(JSON.stringify(ret));
-
-                    }else{
-                        notification.showPopup(
-                                    qsTr("Error"),
-                                    qsTr("Field not completed"),
-                                    "image://theme/icon-lock-warning"
-                                    );
-                    }
+//        PullDownMenu {
+//            MenuItem {
+//                text: qsTr("Post")
+//                onClicked: {
+//                    send();
                     
-                }
-            }
-        }
+//                }
+//            }
+//        }
         VerticalScrollDecorator {}
         Column{
             id:column
@@ -86,7 +90,9 @@ Dialog  {
 
             CommentField{
                 id:commentfield
-                
+                onSendButtonClicked: {
+                    send();
+                }
             }
         }
     }

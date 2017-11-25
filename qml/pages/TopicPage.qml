@@ -75,6 +75,13 @@ Page{
                 }
             }
 
+            OpacityRampEffect {
+                id: effect
+                slope: 0.60
+                offset: 0.10
+                sourceItem: contentLabel
+            }
+
             Separator {
                 visible:(index > 0?true:false)
                 width:parent.width;
@@ -342,5 +349,8 @@ Page{
 
     Component.onCompleted: {
         load();
+    }
+    Component.onDestruction: {
+
     }
 }

@@ -150,17 +150,19 @@ ApplicationWindow
                     var token = settings.get_token();
                     console.log("uid:"+uid+",token:"+token+",username:"+username+",password:"+password);
                     if(uid && token){
-                        py.validate(uid, py.decryPass(token))
+                        console.log("logined via token")
+                        py.validate(uid, token)
                     }else if(username && password){
                         var derpass = py.decryPass(password);
                         if(derpass)py.login(username,derpass);
+                        console.log("logined via password")
                     }
                 });
             });
 
-            py.importModule('myprovider', function () {
+//            py.importModule('myprovider', function () {
                 //console.log("app window import module");
-            });
+//            });
             
 
         }
@@ -187,7 +189,7 @@ ApplicationWindow
                     userinfo.user_color = result["icon:bgColor"];
                     userinfo.logined = true;
                     signalCenter.loginSucceed();
-                    saveData(uid, result.token,userinfo.username,"");
+                    saveData(uid, token,userinfo.username,"");
 
                 }
             })
@@ -241,14 +243,14 @@ ApplicationWindow
                 return;
             }
             settings.set_username(username);
-            if(password){
+            if(password && password !== ""){
                 var pass_encrypted = encryPass(password);
                 if(pass_encrypted){
                     settings.set_password(pass_encrypted);
                 }
             }
             settings.set_uid(parseInt(uid));
-            settings.set_token(encryPass(token));
+            settings.set_token(token);
         }
 
         // 获取最新帖子

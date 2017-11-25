@@ -231,10 +231,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Post</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
@@ -309,7 +305,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Thanks nodebb,pynodebb,harbour-storeman,orn-warehouse,sm.ms and other projects</source>
+        <source>and other projects</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

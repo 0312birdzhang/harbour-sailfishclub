@@ -5,13 +5,11 @@ import "../js/ApiCore.js" as JS
 
 Item{
     property alias model:banner.model
-    property alias bannerHeight: banner.height
-    implicitHeight: banner.height + isLandscape?Screen.height/10:Screen.height/4/2 + Theme.paddingSmall
-    implicitWidth: parent.width
+    width: parent.width
+    height: banner.height //+ (isLandscape?Screen.height/10:Screen.height/8)
     anchors{
         left:parent.left
         right:parent.right
-        top:parent.top
     }
     PathView {
         z:10
@@ -20,7 +18,7 @@ Item{
         //            opacity: view.contentY/height > 1 ? 0 : 1-view.contentY/height;
         //            visible: opacity>0.0;
         width: parent.width;
-        height: isLandscape?Screen.height/5:Screen.height/3.5
+        height: isLandscape?Screen.height/5.5:Screen.height/4
         preferredHighlightBegin: 0.5;
         preferredHighlightEnd: 0.5;
         path: Path {
@@ -31,6 +29,7 @@ Item{
                 y: banner.height/2;
             }
         }
+
         clip: true
         delegate: Item {
             implicitWidth: isLandscape?banner.width/2:banner.width;
@@ -46,14 +45,13 @@ Item{
             }
             OpacityRampEffect {
                 id: effect
-                slope: 3.00
-                offset: 0.8
+                slope: 0.60
+                offset: 0.10
                 sourceItem: rectColor
             }
             Label{
                 id:topicTitle
                 anchors{
-                    top: parent.top
                     left: parent.left
                     right: parent.right
                     margins: Theme.paddingMedium
@@ -65,6 +63,23 @@ Item{
                 font.letterSpacing: 2;
                 color: Theme.primaryColor
             }
+            Label{
+                id: summaryLabel
+                anchors{
+                    top: topicTitle.bottom
+                    left: parent.left
+                    right: parent.right
+                    margins: Theme.paddingMedium
+                }
+                text: model.latestpost
+                font.pixelSize: Theme.fontSizeTiny
+                maximumLineCount: 3
+                linkColor: Theme.highlightColor
+                wrapMode: Text.WrapAnywhere
+                font.letterSpacing: 2;
+                color: Theme.primaryColor
+            }
+
             Label{
                 id:timeid
                 text:FONT.Icon[category_icon.replace(/-/g,"_")]  + category + " "+ JS.humanedate(timestamp)

@@ -35,6 +35,7 @@ def login(user, password):
     token = createToken(uid, password)
     if not token:
         return False
+    logger.debug(token)
     userinfo["token"] = token
     return userinfo
     

@@ -62,7 +62,6 @@ Page {
             id: listView
             width: parent.width
             height: parent.height
-            enabled: PageStatus.Active
             header: PageHeader {
                 title: appwindow.current_router == "recent"?qsTr("Recent Page"):
                        appwindow.current_router == "popular"?qsTr("Popular"):
@@ -70,6 +69,8 @@ Page {
             }
             PullDownMenu{
                 id:pullDownMenu
+                busy: PageStatus.Activating
+                enabled: PageStatus.Active
                 MenuItem{
                     text:userinfo.logined?qsTr("New Topic"):qsTr("Login to create new topic")
                     onClicked: {

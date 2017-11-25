@@ -16,11 +16,11 @@
     <name>ActivityTopicBanner</name>
     <message>
         <source>comments: </source>
-        <translation type="unfinished"></translation>
+        <translation>评论：</translation>
     </message>
     <message>
         <source>views: </source>
-        <translation type="unfinished"></translation>
+        <translation>查看：</translation>
     </message>
 </context>
 <context>
@@ -42,7 +42,7 @@
     </message>
     <message>
         <source>Load Failed,Click to retry</source>
-        <translation type="unfinished">加载失败，点击重试</translation>
+        <translation>加载失败，点击重试</translation>
     </message>
 </context>
 <context>
@@ -121,11 +121,11 @@
     </message>
     <message>
         <source>comments: </source>
-        <translation type="unfinished"></translation>
+        <translation>评论：</translation>
     </message>
     <message>
         <source>views: </source>
-        <translation type="unfinished"></translation>
+        <translation>查看：</translation>
     </message>
 </context>
 <context>
@@ -231,10 +231,6 @@
         <translation>板块</translation>
     </message>
     <message>
-        <source>Post</source>
-        <translation>发送</translation>
-    </message>
-    <message>
         <source>Error</source>
         <translation>错误</translation>
     </message>
@@ -309,8 +305,8 @@
         <translation>即将退出...</translation>
     </message>
     <message>
-        <source>Thanks nodebb,pynodebb,harbour-storeman,orn-warehouse,sm.ms and other projects</source>
-        <translation type="unfinished"></translation>
+        <source>and other projects</source>
+        <translation>和其他项目</translation>
     </message>
 </context>
 <context>
@@ -382,7 +378,7 @@
     </message>
     <message>
         <source>Login failed,try again later</source>
-        <translation type="unfinished"></translation>
+        <translation>登录失败，请稍后再试</translation>
     </message>
     <message>
         <source>Welcome to</source>

@@ -19,53 +19,50 @@ Page{
     Column{
         id:column
         z: -2
-        width: parent.width
+        width: page.width
+        height: page.height
+
         SilicaFlickable{
             id: flickable
-            width: page.width
-            height: page.height
             PageHeader{
                 id: header
                 title: qsTr("Categories")
             }
-            anchors.fill: parent
-            contentHeight: content.height + header.height + Theme.paddingLarge * 3
+            width: parent.width
+            height: parent.height
+            clip: true
+            contentWidth: width;
+            contentHeight: content.height + Theme.itemSizeExtraLarge
             Column{
                 id: content
                 width: parent.width
-                anchors.top: header.bottom
+                anchors{
+                    left: parent.left
+                    right: parent.right
+                    top:header.bottom
+                    margins: Theme.paddingSmall
+                }
+                spacing: Theme.paddingMedium
 
                 //banner
                 ActivityTopicBanner{
                     id:bannerItem
-                    anchors.top:parent.top
-                    width: parent.width
                 }
 
-                Item{
-                    width: parent.width
-                    height: Theme.itemSizeLarge
-                }
-                SilicaListView{
+//                Item{
+//                    width: parent.width
+//                    height: Theme.paddingSmall
+//                }
+
+                Repeater{
                     id: listView
-                    anchors{
-                        top: parent.top
-                        topMargin: bannerItem.bannerHeight
-                        leftMargin: Theme.paddingMedium
-                        left: parent.left
-                        right: parent.right
-                    }
-                    width: page.width
-                    height: childrenRect.height
-                    spacing: Theme.paddingMedium
-                    clip: true
                     delegate: ListItem{
-                        contentHeight: nameLabel.height + descLabel.height
+                        height: nameLabel.height + descLabel.height
                         width: parent.width
                         Label{
                             id: nameLabel
-                            text: cname + " "+ FONT.Icon[icon.replace(/-/g,"_")]
-                            color: Theme.highlightColor
+                            text:  cname + FONT.Icon[icon.replace(/-/g,"_")]
+                            color: Theme.primaryColor
                             font.bold:true;
                             font.pixelSize: Theme.fontSizeMedium
                             anchors{
@@ -82,17 +79,19 @@ Page{
                                 leftMargin: Theme.paddingMedium
                             }
                         }
-                        onClicked: {
-                            pageStack.push(Qt.resolvedUrl("./FirstPage.qml"),{
-                                               "cid":cid,
-                                               "cname":cname
-                                           });
+                        MouseArea{
+                            anchors.fill: parent
+                            onClicked: {
+                                pageStack.push(Qt.resolvedUrl("./FirstPage.qml"),{
+                                                   "cid":cid,
+                                                   "cname":cname + FONT.Icon[icon.replace(/-/g,"_")]
+                                               });
+                            }
                         }
 
-                        
                     }
-                    VerticalScrollDecorator{flickable: listView}
                 }
+
             }
 
             ViewPlaceholder {
@@ -151,7 +150,7 @@ Page{
     function fillCategoryModel(categories){
         for(var i=0;i<categories.length;i++){
             if(categories[i].parentCid != "0"){
-                categories[i].name = "  - " + categories[i].name;
+                categories[i].name = "   " + categories[i].name;
                 categories[i].description = "    " + categories[i].description;
             }
             categoriesModel.append({

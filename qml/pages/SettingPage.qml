@@ -40,7 +40,7 @@ Page{
             Item { width: 1; height: Theme.paddingMedium }
             LabelText{
                 label: qsTr("Thanks")
-                text: qsTr("Thanks nodebb,pynodebb,harbour-storeman,orn-warehouse,sm.ms and other projects") + 
+                text: qsTr("Thanks")+ " nodebb,pynodebb,harbour-storeman,orn-warehouse,sm.ms "+qsTr("and other projects") +
                         "<br/><a href=\"https://community.nodebb.org/\" >nodebb</a><br/>" +
                         "<a href=\"https://github.com/davidvuong/pynodebb\" >pynodebb</a><br/>" +
                         "<a href=\"https://github.com/mentaljam/harbour-storeman\" >harbour-storeman</a><br/>" +
@@ -73,10 +73,11 @@ Page{
 
             Button{
                 text:qsTr("Logout")
+                enabled: userinfo.logined
+                visible: enabled
                 anchors.horizontalCenter: parent.horizontalCenter
                 onClicked: {
                     remorse.execute(qsTr("Start logout..."), function() {
-
                         userinfo.logined = false;
                         userinfo.uid = "";
                         userinfo.userslug = "";
