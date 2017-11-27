@@ -1,8 +1,20 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import "../components"
 
 Page{
     property string uid;
+    property variant userData: null;
+    property bool isMe: getUid() === userinfo.uid;
+
+    function getUid(){
+        return userData ? userData.id : uid;
+    }
+
+    function getProfile(){
+
+    }
+
     onUidChanged: getProfile();
 
     Image {
@@ -10,7 +22,7 @@ Page{
         anchors { left: parent.left; right: parent.right; top: parent.top; }
         height: constant.graphicSizeLarge*2.7 - view.contentY;
         clip: true;
-        source: "gfx/pic_banner_pic.png"
+        source: "../gfx/background.png"
         fillMode: Image.PreserveAspectCrop;
     }
 
@@ -156,8 +168,8 @@ Page{
                     title: qsTr("Collections");
                     markVisible: getUid() === tbsettings.currentUid && infoCenter.bookmark > 0;
                     onClicked: {
-                        var prop = { title: title }
-                        pageStack.push(Qt.resolvedUrl("Profile/BookmarkPage.qml"), prop);
+//                        var prop = { title: title }
+//                        pageStack.push(Qt.resolvedUrl("Profile/BookmarkPage.qml"), prop);
                     }
                 }
                 ProfileCell {
@@ -165,8 +177,8 @@ Page{
                     title: qsTr("Tieba");
                     subTitle: userData ? userData.my_like_num : "";
                     onClicked: {
-                        var prop = { title: title, uid: getUid() }
-                        pageStack.push(Qt.resolvedUrl("Profile/ProfileForumList.qml"), prop);
+//                        var prop = { title: title, uid: getUid() }
+//                        pageStack.push(Qt.resolvedUrl("Profile/ProfileForumList.qml"), prop);
                     }
                 }
                 ProfileCell {
@@ -174,8 +186,8 @@ Page{
                     title: qsTr("Concerns");
                     subTitle: userData ? userData.concern_num : "";
                     onClicked: {
-                        var prop = { title: title, type: "follow", uid: getUid() }
-                        pageStack.push(Qt.resolvedUrl("Profile/FriendsPage.qml"), prop);
+//                        var prop = { title: title, type: "follow", uid: getUid() }
+//                        pageStack.push(Qt.resolvedUrl("Profile/FriendsPage.qml"), prop);
                     }
                 }
                 ProfileCell {
@@ -186,8 +198,8 @@ Page{
                         if (getUid() === tbsettings.currentUid){
                             infoCenter.clear("fans");
                         }
-                        var prop = { title: title, type: "fans", uid: getUid() }
-                        pageStack.push(Qt.resolvedUrl("Profile/FriendsPage.qml"), prop);
+//                        var prop = { title: title, type: "fans", uid: getUid() }
+//                        pageStack.push(Qt.resolvedUrl("Profile/FriendsPage.qml"), prop);
                     }
                     markVisible: getUid() === tbsettings.currentUid && infoCenter.fans > 0;
                 }
@@ -195,8 +207,8 @@ Page{
                     iconName: "tiezi";
                     title: qsTr("Posts");
                     onClicked: {
-                        var prop = { title: title, uid: getUid() };
-                        pageStack.push(Qt.resolvedUrl("Profile/ProfilePost.qml"), prop);
+//                        var prop = { title: title, uid: getUid() };
+//                        pageStack.push(Qt.resolvedUrl("Profile/ProfilePost.qml"), prop);
                     }
                 }
             }

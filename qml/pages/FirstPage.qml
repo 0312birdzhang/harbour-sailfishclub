@@ -69,8 +69,8 @@ Page {
             }
             PullDownMenu{
                 id:pullDownMenu
-                busy: !PageStatus.Active
-                enabled: PageStatus.Active
+//                busy: !PageStatus.Active
+//                enabled: PageStatus.Active
                 MenuItem{
                     text:userinfo.logined?qsTr("New Topic"):qsTr("Login to create new topic")
                     onClicked: {

@@ -240,6 +240,37 @@
     </message>
 </context>
 <context>
+    <name>ProfilePage</name>
+    <message>
+        <source>Edit profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unfollow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Collections</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tieba</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Concerns</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fans</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Posts</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>RegisterComponent</name>
     <message>
         <source>Create Account</source>
@@ -344,6 +375,10 @@
     </message>
     <message>
         <source>Load failed,try again later</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Starting open link...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

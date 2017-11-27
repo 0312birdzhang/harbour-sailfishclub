@@ -71,20 +71,22 @@ Page{
                     topMargin: Theme.paddingMedium
                     leftMargin: Theme.paddingMedium
                     rightMargin: Theme.paddingSmall
-//                    bottomMargin: Theme.paddingLarge
                 }
                 onLinkActivated: {
                     console.log(link);
                     var linklist=link.split(".");
                     var linktype=linklist[linklist.length -1];
-                    var uidlink;
                     if(linktype =="png" ||linktype =="jpg"||linktype =="jpeg"||linktype =="gif"||linktype =="ico"||linktype =="svg"){
-
-                    }else if (uidlink = /https:\/\/sailfishos\.club\/uid\/[1-9]{1,}/.exec(link) !== null ) {
+                        pageStack.push(Qt.resolvedUrl("../components/ImagePage.qml"),{"localUrl":link});
+                    }else if (/https:\/\/sailfishos\.club\/uid\/[1-9]{1,}/.exec(link)) {
+                        var uidlink = /https:\/\/sailfishos\.club\/uid\/[1-9]{1,}/.exec(link)
                         var uid = /[1-9]{1,}/.exec(uidlink[0].split("/"))[0];
                         //to user profile page
+
                     }else{
-                       Qt.openUrlExternally(link)
+                        remorse.execute(qsTr("Starting open link..."),function(){
+                            Qt.openUrlExternally(link);
+                        },3000);
                     }
 
                 }

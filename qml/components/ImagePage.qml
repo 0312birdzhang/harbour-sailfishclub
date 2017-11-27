@@ -4,8 +4,6 @@ import Sailfish.Silica 1.0
 Page {
     id: imagePage
 
-    property string remoteUrl:""
-    property string imgname: ""
     property string localUrl: ""
     allowedOrientations:Orientation.All
 
@@ -21,7 +19,7 @@ Page {
             width: Math.max(imagePreview.width * imagePreview.scale, imageFlickable.width)
             height: Math.max(imagePreview.height * imagePreview.scale, imageFlickable.height)
 
-            Image {
+            CacheImage {
                 id: imagePreview
 
                 property real prevScale
@@ -36,7 +34,7 @@ Page {
                 fillMode: Image.PreserveAspectFit
                 cache: false
                 asynchronous: true
-                source: localUrl
+                sourceUncached: localUrl
                 sourceSize.height: 1000;
                 smooth: !imageFlickable.moving
 
@@ -152,18 +150,18 @@ Page {
     }
 
     VerticalScrollDecorator { flickable: imageFlickable }
-    IconButton {
-        anchors{
-            right: imagePage.right;
-            rightMargin: Theme.paddingLarge;
-            bottom: imagePage.bottom;
-            bottomMargin: Theme.paddingLarge;
-        }
-        width: Theme.iconSizeMedium+Theme.paddingMedium*2
+//    IconButton {
+//        anchors{
+//            right: imagePage.right;
+//            rightMargin: Theme.paddingLarge;
+//            bottom: imagePage.bottom;
+//            bottomMargin: Theme.paddingLarge;
+//        }
+//        width: Theme.iconSizeMedium+Theme.paddingMedium*2
 
-        icon.source: "image://theme/icon-m-cloud-download"
-        onClicked: {
+//        icon.source: "image://theme/icon-m-cloud-download"
+//        onClicked: {
 
-        }
-    }
+//        }
+//    }
 }

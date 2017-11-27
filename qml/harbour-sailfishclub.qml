@@ -586,7 +586,7 @@ ApplicationWindow
         html=html.replace(/<p style='text-indent:24px'><img/g,"<p><img");
         html=html.replace(/<p style='text-indent:24px'><a [^<>]*href=\"([^<>"]*)\".*?><img/g,"<p><a href='$1'><img");
         html=html.replace(/&#x2F;/g,"/");
-        html=html.replace(/<img src=\"([^<>"]*)\".*?>/g,"<img src=\"$1\" width="+(Screen.width-Theme.paddingMedium*2)+"/>");
+        html=html.replace(/<img src=\"([^<>"]*)\".*?>/g,"<a href='$1'><img src=\"$1\" width="+(Screen.width-Theme.paddingMedium*2)+"/></a>");
         html = "<style>pre {display: flex;white-space: normal;word-break: break-word;}</style>" + html;
 
         return html;
