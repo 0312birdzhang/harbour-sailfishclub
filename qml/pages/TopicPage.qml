@@ -79,6 +79,7 @@ Page{
                 id: effect
                 slope: 0.60
                 offset: 0.10
+                direction: OpacityRamp.TopToBottom
                 sourceItem: contentLabel
             }
 
