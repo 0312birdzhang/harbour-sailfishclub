@@ -73,6 +73,21 @@ Page{
                     rightMargin: Theme.paddingSmall
 //                    bottomMargin: Theme.paddingLarge
                 }
+                onLinkActivated: {
+                    console.log(link);
+                    var linklist=link.split(".");
+                    var linktype=linklist[linklist.length -1];
+                    var uidlink;
+                    if(linktype =="png" ||linktype =="jpg"||linktype =="jpeg"||linktype =="gif"||linktype =="ico"||linktype =="svg"){
+
+                    }else if (uidlink = /https:\/\/sailfishos\.club\/uid\/[1-9]{1,}/.exec(link) !== null ) {
+                        var uid = /[1-9]{1,}/.exec(uidlink[0].split("/"))[0];
+                        //to user profile page
+                    }else{
+                       Qt.openUrlExternally(link)
+                    }
+
+                }
             }
 
             OpacityRampEffect {

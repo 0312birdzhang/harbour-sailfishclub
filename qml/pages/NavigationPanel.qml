@@ -81,7 +81,7 @@ Panel {
                 width: userAvatar.width/4
                 height: width
                 anchors.centerIn: cover
-                avatar: "" != userinfo.avatar?(siteUrl+userinfo.avatar):"image://theme/harbour-sailfishclub"
+                avatar: userinfo.logined?("" != userinfo.avatar?(siteUrl+userinfo.avatar):""):"image://theme/harbour-sailfishclub"
                 color:  userinfo.user_color
                 text:   userinfo.user_text
                 MouseArea {

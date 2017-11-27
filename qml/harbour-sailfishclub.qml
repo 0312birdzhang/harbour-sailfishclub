@@ -599,7 +599,7 @@ ApplicationWindow
             return
         }
         // Check if link looks like an OpenRepos application link
-        if (/http[s]:\/\/sailfishos\.club\/topic\/[1-9]*/.exec(link)) {
+        if (/http[s]:\/\/sailfishos\.club\/topic\/[1-9]{1,}*\//.exec(link)) {
             _processingLink = link
             var req = new XMLHttpRequest()
             // Prepare a http request to get headers
