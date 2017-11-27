@@ -21,10 +21,10 @@ Dialog  {
 
     function send(){
         var cid = categoryModel.get(categoryCombo.currentIndex).cid;
-        console.log(commentfield.children.length)
+        // console.log(commentfield.children.length)
         var comments = commentfield.children[3].text;
 
-         console.log("comments:"+comments);
+        //  console.log("comments:"+comments);
         if(cid && title.text && comments){
             py.newTopic(title.text, comments, userinfo.uid, cid);
             // console.log(JSON.stringify(ret));
