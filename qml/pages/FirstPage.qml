@@ -171,13 +171,7 @@ Page {
                 }
                 onClicked: {
                     pageStack.push(Qt.resolvedUrl("TopicPage.qml"),{
-                                       "tid":tid,
-                                       "topic_title":title,
-                                       "slug":slug,
-                                       "user":user,
-                                       "category":category,
-                                       "category_icon":category_icon
-
+                                       "tid":tid
                                    });
                 }
             }

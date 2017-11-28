@@ -12,7 +12,7 @@ Page{
     }
 
     function getProfile(){
-
+        
     }
 
     onUidChanged: getProfile();

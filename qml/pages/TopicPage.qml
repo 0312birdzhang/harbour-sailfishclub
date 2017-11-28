@@ -73,22 +73,7 @@ Page{
                     rightMargin: Theme.paddingSmall
                 }
                 onLinkActivated: {
-                    console.log(link);
-                    var linklist=link.split(".");
-                    var linktype=linklist[linklist.length -1];
-                    if(linktype =="png" ||linktype =="jpg"||linktype =="jpeg"||linktype =="gif"||linktype =="ico"||linktype =="svg"){
-                        pageStack.push(Qt.resolvedUrl("../components/ImagePage.qml"),{"localUrl":link});
-                    }else if (/https:\/\/sailfishos\.club\/uid\/[1-9]{1,}/.exec(link)) {
-                        var uidlink = /https:\/\/sailfishos\.club\/uid\/[1-9]{1,}/.exec(link)
-                        var uid = /[1-9]{1,}/.exec(uidlink[0].split("/"))[0];
-                        //to user profile page
-
-                    }else{
-                        remorse.execute(qsTr("Starting open link..."),function(){
-                            Qt.openUrlExternally(link);
-                        },3000);
-                    }
-
+                    appwindow.openLink(link);
                 }
             }
 
@@ -220,6 +205,11 @@ Page{
                 var pagination = topicData.pagination;
                 current_page = pagination.currentPage;
                 pageCount = pagination.pageCount;
+                topic_title = topicData.title;
+                slug = topicData.slug;
+                category = topicData.category.name;
+                category_icon = topicData.category.icon;
+
                 if(pageCount > 1){
                     next_page = pagination.next.qs;
                     next_active = pagination.next.active;

@@ -348,9 +348,7 @@ ApplicationWindow
 
         // 新用户注册
         function register(user,password,email){
-//            console.log("register:"+user+",pass:"+password+",email:"+email)
              call('main.createUser',[user,password,email],function(result){
-//                 console.log("result:"+result)
                  if(result && result != "Forbidden" && result != "False"){
                      signalCenter.registerSucceed();
                      py.login(user,password);
@@ -359,6 +357,14 @@ ApplicationWindow
 
                  }
              });
+        }
+
+        function getUserInfo(uid){
+            loading = true;
+            call('main.getuserinfo',[uid,false],function(result){
+                loading = false;
+                signalCenter.getUserInfo(result);
+            });
         }
 
         // 弃用
@@ -562,7 +568,9 @@ ApplicationWindow
     }
 
     function toUserInfoPage(uid){
-        //
+        pageStack.push(Qt.resolvedUrl("ProfilePage.qml",{
+                "uid":uid
+            });
     }
 
     function popAttachedPages() {
@@ -595,42 +603,26 @@ ApplicationWindow
 
 
     function openLink(link) {
-        if (link === _processingLink) {
-            return
-        }
-        // Check if link looks like an OpenRepos application link
-        if (/http[s]:\/\/sailfishos\.club\/topic\/[1-9]{1,}*\//.exec(link)) {
-            _processingLink = link
-            var req = new XMLHttpRequest()
-            // Prepare a http request to get headers
-            req.open("GET", link, true)
-            req.onreadystatechange = function() {
-                if (req.readyState == 4) {
-                    if (req.status == 200) {
-                        // Check if headers contain an id link
-                        var match = /<\/node\/(\d*)>.*/.exec(req.getResponseHeader("link"))
-                        if (match) {
-                            // Load the application page
-                            pageStack.push(Qt.resolvedUrl("pages/TopicPage.qml"), {
-                                               tid: match[1],
-                                               returnToUser: false
-                                           })
-                            _processingLink = ""
-                            return
-                        }
-                    }
-                    _processingLink = ""
-                    Qt.openUrlExternally(link)
-                }
-            }
-            req.send(null)
-        // Open other links externally
-        } 
-        // @someone
-        else if(true){
-
-        }else {
-            Qt.openUrlExternally(link)
+        var linklist=link.split(".");
+        var linktype=linklist[linklist.length -1];
+        if(linktype =="png" ||linktype =="jpg"||linktype =="jpeg"||linktype =="gif"||linktype =="ico"||linktype =="svg"){
+            pageStack.push(Qt.resolvedUrl("./components/ImagePage.qml"),{"localUrl":link});
+        }else if (/https:\/\/sailfishos\.club\/uid\/[1-9]{1,}/.exec(link)) {
+            var uidlink = /https:\/\/sailfishos\.club\/uid\/[1-9]{1,}/.exec(link)
+            var uid = /[1-9]{1,}/.exec(uidlink[0].split("/"))[0];
+            //to user profile page
+            toUserInfoPage(uid);
+        }else if (/https:\/\/sailfishos\.club\/topic\/[1-9]{1,}/.exec(link)) {
+            var topiclink = /https:\/\/sailfishos\.club\/topic\/[1-9]{1,}/.exec(link)
+            var tid = /[1-9]{1,}/.exec(topiclink[0].split("/"))[0];
+            //to topic page
+            pageStack.push(Qt.resolvedUrl("TopicPage.qml"),{
+                                       "tid":tid
+                                   });
+        }else{
+            remorse.execute(qsTr("Starting open link..."),function(){
+                Qt.openUrlExternally(link);
+            },3000);
         }
     }
 

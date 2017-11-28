@@ -24,6 +24,7 @@ QtObject{
     signal uploadImage(var result);
 
     signal loadImage(var result);
+    signal getUserInfo(var result);
 }
 
 
