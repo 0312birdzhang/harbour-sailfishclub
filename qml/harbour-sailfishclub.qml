@@ -292,6 +292,7 @@ ApplicationWindow
             loading = true;
             if(userinfo.logined){
                 var token = settings.get_token();
+                console.log("token:"+token)
                 call('main.getTopic',[tid,slug,token],function(result){
                     loading = false;
                     signalCenter.getTopic(result);
@@ -568,9 +569,9 @@ ApplicationWindow
     }
 
     function toUserInfoPage(uid){
-        pageStack.push(Qt.resolvedUrl("ProfilePage.qml",{
+        pageStack.push(Qt.resolvedUrl("pages/ProfilePage.qml",{
                 "uid":uid
-            });
+            }));
     }
 
     function popAttachedPages() {

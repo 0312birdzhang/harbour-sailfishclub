@@ -200,6 +200,7 @@ Page{
         target: signalCenter
         onGetTopic:{
             var topicData = result;
+            console.log(result)
             if (topicData && topicData != "Forbidden"){
                 var posts = topicData.posts;
                 var pagination = topicData.pagination;

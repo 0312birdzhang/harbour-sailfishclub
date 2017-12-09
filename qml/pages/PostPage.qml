@@ -36,6 +36,7 @@ Dialog  {
                         "image://theme/icon-lock-warning"
                         );
         }
+
     }
 
     SilicaFlickable{
@@ -85,6 +86,7 @@ Dialog  {
                         }
                     }
                 }
+
 
             }
 

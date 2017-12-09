@@ -12,7 +12,13 @@ Page{
     }
 
     function getProfile(){
-        
+        if ( isMe ){
+            userData = userinfo;
+        }else{
+            py.getUserInfo(uid);
+        }
+
+
     }
 
     onUidChanged: getProfile();
@@ -20,7 +26,7 @@ Page{
     Image {
         id: imageBg;
         anchors { left: parent.left; right: parent.right; top: parent.top; }
-        height: constant.graphicSizeLarge*2.7 - view.contentY;
+        height: Theme.graphicSizeLarge*2.7 - view.contentY;
         clip: true;
         source: "../gfx/background.png"
         fillMode: Image.PreserveAspectCrop;
@@ -34,10 +40,10 @@ Page{
         Column {
             id: contentCol;
             width: parent.width;
-            Item { width: 1; height: constant.thumbnailSize; }
+            Item { width: 1; height: Theme.thumbnailSize; }
             Item {
                 width: parent.width;
-                height: constant.graphicSizeLarge*2;
+                height: Theme.graphicSizeLarge*2;
 
                 Rectangle {
                     id: bottomBanner;
@@ -48,45 +54,47 @@ Page{
                 Image {
                     id: avatar;
                     anchors {
-                        left: parent.left; leftMargin: constant.paddingMedium;
+                        left: parent.left; leftMargin: Theme.paddingMedium;
                         verticalCenter: parent.verticalCenter;
                     }
                     width: 100; height: 100;
-                    source: "gfx/person_photo_bg.png"
-                    Image {
-                        anchors { fill: parent; margins: constant.paddingMedium; }
-                        source: userData ? "http://himg.baidu.com/sys/portraith/item/"+userData.portraith
-                                         : "gfx/person_photo.png";
+                    source: "../gfx/person_photo_bg.png"
+                    Avatar{
+                        id: profile
+                        anchors { fill: parent; margins: Theme.paddingMedium; }
+                        avatar: userData?("" !== userData.avatar?(siteUrl+userData.avatar):""):"image://theme/harbour-sailfishclub"
+                        color:  userData.user_color
+                        text:   userData.user_text
                     }
                 }
 
                 Column {
                     anchors {
-                        left: avatar.right; leftMargin: constant.paddingMedium;
-                        right: parent.right; rightMargin: constant.paddingMedium;
+                        left: avatar.right; leftMargin: Theme.paddingMedium;
+                        right: parent.right; rightMargin: Theme.paddingMedium;
                         bottom: bottomBanner.top;
                     }
                     Row {
-                        spacing: constant.paddingSmall;
+                        spacing: Theme.paddingSmall;
                         Text {
                             anchors.verticalCenter: parent.verticalCenter;
-                            font.pixelSize: constant.fontXSmall;
+                            font.pixelSize: Theme.fontXSmall;
                             color: "white";
-                            text: userData ? userData.name_show : "";
+                            text: userData ? userData.username : "";
                         }
-                        Image {
-                            source: {
-                                if (userData){
-                                    if (userData.sex === "1"){
-                                        return "gfx/icon_man"+constant.invertedString;
-                                    } else {
-                                        return "gfx/icon_woman"+constant.invertedString;
-                                    }
-                                } else {
-                                    return "";
-                                }
-                            }
-                        }
+//                        Image {
+//                            source: {
+//                                if (userData){
+//                                    if (userData.sex === "1"){
+//                                        return "gfx/icon_man"+Theme.invertedString;
+//                                    } else {
+//                                        return "gfx/icon_woman"+Theme.invertedString;
+//                                    }
+//                                } else {
+//                                    return "";
+//                                }
+//                            }
+//                        }
                     }
                     Text {
                         width: parent.width;
@@ -94,69 +102,12 @@ Page{
                         wrapMode: Text.Wrap;
                         maximumLineCount: 1;
                         textFormat: Text.PlainText;
-                        font.pixelSize: constant.fontXSmall-4;
+                        font.pixelSize: Theme.fontXSmall-4;
                         color: "white";
-                        text: userData ? userData.intro : "";
+                        text: userData ? userData.aboutme : "";
                     }
                 }
 
-                Loader {
-                    anchors {
-                        left: avatar.right; leftMargin: constant.paddingMedium;
-                        verticalCenter: bottomBanner.verticalCenter;
-                    }
-                    sourceComponent: isMe ? editBtnComp : followBtnComp;
-                    Component {
-                        id: editBtnComp;
-                        MouseArea {
-                            property string pressString: pressed ? "s" : "n";
-                            width: editRow.width + 20;
-                            height: constant.graphicSizeMedium;
-                            // onClicked: pageStack.push(Qt.resolvedUrl("Profile/ProfileEditPage.qml"),
-                            //                           {userData: userData});
-                            Row {
-                                id: editRow;
-                                anchors.centerIn: parent;
-                                spacing: constant.paddingSmall;
-                                Image {
-                                    anchors.verticalCenter: parent.verticalCenter;
-                                    source: "gfx/btn_icon_edit"+constant.invertedString;
-                                }
-                                Text {
-                                    anchors.verticalCenter: parent.verticalCenter;
-                                    font.pixelSize: constant.fontXXSmall;
-                                    color: constant.colorLight;
-                                    text: qsTr("Edit profile");
-                                }
-                            }
-                        }
-                    }
-                    Component {
-                        id: followBtnComp;
-                        MouseArea {
-                            property string pressString: pressed ? "s" : "n";
-                            property string name: isLike ? "bg" : "like";
-                            width: 114;
-                            height: 46;
-                            enabled: userData != null && !loading;
-                            onClicked: follow();
-                            BorderImage {
-                                id: icon;
-                                anchors.fill: parent;
-                                border { left: 25; right: 25; top: 0; bottom: 0; }
-                                opacity: 0.6
-                                source: "gfx/btn_%1_%2%3".arg(parent.name).arg(parent.pressString).arg(constant.invertedString);
-                            }
-                            Text {
-                                visible: isLike;
-                                anchors.centerIn: parent;
-                                font.pixelSize: constant.fontXXSmall;
-                                color: constant.colorLight;
-                                text: qsTr("Unfollow");
-                            }
-                        }
-                    }
-                }
             }
             Grid {
                 id: grid;
@@ -166,7 +117,7 @@ Page{
                     visible: isMe;
                     iconName: "sc";
                     title: qsTr("Collections");
-                    markVisible: getUid() === tbsettings.currentUid && infoCenter.bookmark > 0;
+                    markVisible: getUid() === userinfo.uid;
                     onClicked: {
 //                        var prop = { title: title }
 //                        pageStack.push(Qt.resolvedUrl("Profile/BookmarkPage.qml"), prop);
@@ -174,8 +125,8 @@ Page{
                 }
                 ProfileCell {
                     iconName: "myba";
-                    title: qsTr("Tieba");
-                    subTitle: userData ? userData.my_like_num : "";
+                    title: qsTr("Reputation");
+                    subTitle: userData ? userData.reputation : "";
                     onClicked: {
 //                        var prop = { title: title, uid: getUid() }
 //                        pageStack.push(Qt.resolvedUrl("Profile/ProfileForumList.qml"), prop);
@@ -183,8 +134,8 @@ Page{
                 }
                 ProfileCell {
                     iconName: "gz";
-                    title: qsTr("Concerns");
-                    subTitle: userData ? userData.concern_num : "";
+                    title: qsTr("FollowingCount");
+                    subTitle: userData ? userData.followingCount : "";
                     onClicked: {
 //                        var prop = { title: title, type: "follow", uid: getUid() }
 //                        pageStack.push(Qt.resolvedUrl("Profile/FriendsPage.qml"), prop);
@@ -193,19 +144,20 @@ Page{
                 ProfileCell {
                     iconName: "fs";
                     title: qsTr("Fans")
-                    subTitle: userData ? userData.fans_num : "";
+                    subTitle: userData ? userData.followerCount : "";
                     onClicked: {
-                        if (getUid() === tbsettings.currentUid){
-                            infoCenter.clear("fans");
+                        if (getUid() === userinfo.uid){
+//                            infoCenter.clear("fans");
                         }
 //                        var prop = { title: title, type: "fans", uid: getUid() }
 //                        pageStack.push(Qt.resolvedUrl("Profile/FriendsPage.qml"), prop);
                     }
-                    markVisible: getUid() === tbsettings.currentUid && infoCenter.fans > 0;
+                    markVisible: getUid() === userinfo.uid;
                 }
                 ProfileCell {
                     iconName: "tiezi";
                     title: qsTr("Posts");
+                    subTitle: userData ? userData.postcount : "";
                     onClicked: {
 //                        var prop = { title: title, uid: getUid() };
 //                        pageStack.push(Qt.resolvedUrl("Profile/ProfilePost.qml"), prop);

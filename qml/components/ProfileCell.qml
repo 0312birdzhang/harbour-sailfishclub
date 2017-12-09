@@ -25,7 +25,7 @@ Item {
         anchors.centerIn: parent;
         Image {
             anchors.horizontalCenter: parent.horizontalCenter;
-            source: "../gfx/cent_icon_"+root.iconName+constant.invertedString;
+            source: "../gfx/cent_icon_"+root.iconName+".png";
             Image {
                 anchors { top: parent.top; right: parent.right; }
                 source: root.markVisible ? "../gfx/ico_mbar_news_point.png" : "";
@@ -33,16 +33,16 @@ Item {
         }
         Text {
             anchors.horizontalCenter: parent.horizontalCenter;
-            font.pixelSize: constant.fontXXSmall;
-            color: constant.colorLight;
+            font.pixelSize: Theme.fontSizeExtraSmall;
+            color: Theme.highlightColor;
             text: root.title;
         }
     }
     Text {
         anchors { top: logo.bottom; horizontalCenter: parent.horizontalCenter; }
         font.family: "Nokia Pure Text";
-        font.pixelSize: constant.fontXXSmall;
-        color: constant.colorMid;
+        font.pixelSize: Theme.fontSizeExtraSmall;
+        color: Theme.primaryColor;
         text: root.subTitle;
     }
 
