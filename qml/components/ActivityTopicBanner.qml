@@ -71,7 +71,7 @@ Item{
                     right: parent.right
                     margins: Theme.paddingMedium
                 }
-                text: model.latestpost
+                text: appwindow.formatFirstPagehtml(model.latestpost)
                 font.pixelSize: Theme.fontSizeTiny
                 maximumLineCount: 3
                 linkColor: Theme.highlightColor

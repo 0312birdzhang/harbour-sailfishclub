@@ -289,6 +289,7 @@ ApplicationWindow
 
         // 获取贴子内容
         function getTopic(tid,slug){
+//            console.log("tid:"+tid+",slug:"+slug);
             loading = true;
             if(userinfo.logined){
                 var token = settings.get_token();
@@ -601,7 +602,14 @@ ApplicationWindow
         return html;
     }
 
-
+    function formatFirstPagehtml(html){
+        if(html){
+            html = html.replace(/<img src=\"([^<>"]*)\".*?>/g,"");
+            return html;
+        }else{
+            return "";
+        }
+    }
 
     function openLink(link) {
         var linklist=link.split(".");
@@ -617,7 +625,7 @@ ApplicationWindow
             var topiclink = /https:\/\/sailfishos\.club\/topic\/[1-9]{1,}/.exec(link)
             var tid = /[1-9]{1,}/.exec(topiclink[0].split("/"))[0];
             //to topic page
-            pageStack.push(Qt.resolvedUrl("TopicPage.qml"),{
+            pageStack.push(Qt.resolvedUrl("pages/TopicPage.qml"),{
                                        "tid":tid
                                    });
         }else{

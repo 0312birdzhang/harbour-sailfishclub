@@ -200,7 +200,7 @@ Page{
         target: signalCenter
         onGetTopic:{
             var topicData = result;
-            console.log(result)
+//            console.log(result)
             if (topicData && topicData != "Forbidden"){
                 var posts = topicData.posts;
                 var pagination = topicData.pagination;
@@ -251,7 +251,7 @@ Page{
     }
 
     function load(){
-        py.getTopic(tid,slug+"?page="+current_page);
+        py.getTopic(tid,slug?slug+"?page="+current_page:undefined);
     }
 
     
