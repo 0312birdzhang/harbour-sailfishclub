@@ -57,7 +57,7 @@ Item {
                 focus: true;
                 label: qsTr("User Name");
                 placeholderText: label
-                RegExpValidator { regExp: /.{2,16}/ }
+                validator: RegExpValidator { regExp: /.{2,16}/ }
                 //echoMode: TextInput.text
                 EnterKey.enabled: text || inputMethodComposing
                 EnterKey.iconSource: "image://theme/icon-m-enter-next"
