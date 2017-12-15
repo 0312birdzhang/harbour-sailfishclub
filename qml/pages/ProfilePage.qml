@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import "../components"
+import "../js/fontawesome.js" as FontAwesome
 
 Page{
     property string uid;
@@ -34,13 +35,15 @@ Page{
 
     SilicaFlickable {
         id: view;
-        anchors { fill: parent; topMargin: 0; }
+        anchors {
+            fill: parent
+        }
         contentWidth: parent.width;
         contentHeight: contentCol.height;
         Column {
             id: contentCol;
             width: parent.width;
-            Item { width: 1; height: Theme.thumbnailSize; }
+            Item { width: 1; height: Theme.itemSizeSmall; }
             Item {
                 width: parent.width;
                 height: Theme.graphicSizeLarge*2;

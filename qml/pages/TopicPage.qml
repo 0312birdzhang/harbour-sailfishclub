@@ -39,7 +39,7 @@ Page{
             description: FONT.Icon[category_icon.replace(/-/g,"_")]  + category;
         }
         delegate: ListItem {
-            contentHeight: topicHeader.height +contentLabel.height + Theme.paddingMedium * 4
+            contentHeight: topicHeader.height +contentLabel.height + signatureLabel.height + Theme.paddingMedium * 4
             width: topicView.width
 
             TopicHeader{
@@ -75,6 +75,22 @@ Page{
                 onLinkActivated: {
                     appwindow.openLink(link);
                 }
+            }
+
+            Label{
+                id: signatureLabel
+                anchors{
+                    top: contentLabel.bottom
+                    right: parent.right
+                    rightMargin: Theme.paddingMedium
+                }
+                color: Theme.highlightColor
+                horizontalAlignment: Text.AlignRight
+                wrapMode: Text.WordWrap
+                textFormat: Text.RichText
+                font.pixelSize: Theme.fontSizeExtraSmall
+                text: signature
+                visible: text
             }
 
             OpacityRampEffect {
@@ -200,7 +216,6 @@ Page{
         target: signalCenter
         onGetTopic:{
             var topicData = result;
-//            console.log(result)
             if (topicData && topicData != "Forbidden"){
                 var posts = topicData.posts;
                 var pagination = topicData.pagination;
@@ -226,6 +241,7 @@ Page{
                     topicModel.append({
                                           "timestamp":posts[i].timestampISO,
                                           "content":posts[i].content,
+                                          "signature":posts[i].signature?posts[i].signature:"",
                                           "uid":posts[i].uid,
                                           "pid":posts[i].pid,
                                           "username":posts[i].user.username,
