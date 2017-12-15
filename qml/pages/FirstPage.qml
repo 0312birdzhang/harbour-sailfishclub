@@ -99,7 +99,7 @@ Page {
                 width: listView.width
                 Label{
                     id:titleid
-                    text:title
+                    text:JS.decodeHTMLEntities(title)
                     font.pixelSize: Theme.fontSizeSmall
                     truncationMode: TruncationMode.Fade
                     wrapMode: Text.WordWrap

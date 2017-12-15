@@ -37,6 +37,28 @@ function parse_url(_url){ //定义函数
      return parames;//返回这个数组.
 }
 
+
+// http:&#x2F;&#x2F;birdzhang.xyz to http://birdzhang.xyz
+function decodeHTMLEntities(text) {
+    var entities = [
+        ['amp', '&'],
+        ['apos', '\''],
+        ['#x27', '\''],
+        ['#x2F', '/'],
+        ['#39', '\''],
+        ['#47', '/'],
+        ['lt', '<'],
+        ['gt', '>'],
+        ['nbsp', ' '],
+        ['quot', '"']
+    ];
+
+    for (var i = 0, max = entities.length; i < max; ++i) 
+        text = text.replace(new RegExp('&'+entities[i][0]+';', 'g'), entities[i][1]);
+
+    return text;
+}
+
 var objs = new Object();
 
 objs._privs = {};

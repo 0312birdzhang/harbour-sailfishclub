@@ -56,7 +56,7 @@ Item{
                     right: parent.right
                     margins: Theme.paddingMedium
                 }
-                text: model.title
+                text: JS.decodeHTMLEntities(model.title)
                 font.pixelSize: Theme.fontSizeSmall;
                 maximumLineCount: 2
                 wrapMode: Text.WrapAnywhere;

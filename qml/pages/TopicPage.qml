@@ -34,7 +34,7 @@ Page{
         anchors.fill: parent
         enabled: PageStatus.Active
         header: PageHeader {
-            title: topic_title;
+            title: JS.decodeHTMLEntities(topic_title);
             _titleItem.font.pixelSize: Theme.fontSizeSmall
             description: FONT.Icon[category_icon.replace(/-/g,"_")]  + category;
         }
