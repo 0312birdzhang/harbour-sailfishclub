@@ -26,7 +26,7 @@ client.configure(**{
 #     return userInfo
 
 def login(user, password):
-    userinfo = getuserinfo(user, False if "@" in user else True) #Thanks fishegg find this bug
+    userinfo = getuserinfo(user)
     if not userinfo:
         return False
     uid = userinfo.get("uid")

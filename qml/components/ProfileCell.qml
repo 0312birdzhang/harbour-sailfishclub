@@ -12,7 +12,7 @@ Item {
     signal clicked;
 
     width: parent.width / 3;
-    height: 160;
+    height: Theme.itemSizeLarge;
     opacity: mouseArea.pressed ? 0.7 : 1;
 
     Rectangle{

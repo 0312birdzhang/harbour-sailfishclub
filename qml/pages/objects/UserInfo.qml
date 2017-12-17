@@ -19,4 +19,6 @@ QtObject{
     property string user_text;
     property string user_color;
     property string followerCount;
+    property int reputation;
+    property int followingCount;
 }

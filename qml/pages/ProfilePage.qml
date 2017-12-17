@@ -4,18 +4,23 @@ import "../components"
 import "../js/fontawesome.js" as FontAwesome
 
 Page{
+    id: profilePage
+    objectName: "profilePage"
+    allowedOrientations:Orientation.All
     property string uid;
     property variant userData: null;
-    property bool isMe: getUid() === userinfo.uid;
+    property bool isMe: uid === userinfo.uid;
 
     function getUid(){
-        return userData ? userData.id : uid;
+        return userData ? userData.uid : uid;
     }
 
     function getProfile(){
         if ( isMe ){
+            console.log("is me")
             userData = userinfo;
         }else{
+            console.log("not me")
             py.getUserInfo(uid);
         }
 
@@ -24,146 +29,152 @@ Page{
 
     onUidChanged: getProfile();
 
-    Image {
-        id: imageBg;
-        anchors { left: parent.left; right: parent.right; top: parent.top; }
-        height: Theme.graphicSizeLarge*2.7 - view.contentY;
-        clip: true;
-        source: "../gfx/background.png"
-        fillMode: Image.PreserveAspectCrop;
+    Connections{
+        target: signalCenter
+        onGetUserInfo:{
+            if(result && result != "" && result != "Forbidden"){
+//                console.log(JSON.stringify(result));
+                var tmpData = {};
+                tmpData.uid = result.uid;
+                tmpData.username = result.username;
+                tmpData.userslug = result.userslug;
+                tmpData.email = result.email;
+                tmpData.avatar = result.picture;
+                tmpData.aboutme = result.aboutme;
+                tmpData.postcount = result.postcount;
+                tmpData.topiccount = result.topiccount;
+                tmpData.website= result.website;
+                tmpData.signature= result.signature;
+                tmpData.groupTitle= result.groupTitle;
+                tmpData.groupIcon= result.groupIcon;
+                tmpData.status= result.status;
+                tmpData.user_text= result["icon:text"];
+                tmpData.user_color= result["icon:bgColor"];
+                tmpData.followerCount = result.followerCount;
+                tmpData.followingCount = result.followingCount;
+                tmpData.reputation = result.reputation;
+//                tmpData.groupTitle = result.selectedGroup ? result.selectedGroup.userTitle: "";
+//                tmpData.gtoupIcon = result.selectedGroup ? result.selectedGroup.icon: "";
+                userData = tmpData;
+
+            }
+        }
     }
+
+//    Image {
+//        id: imageBg;
+//        anchors { left: parent.left; right: parent.right; top: parent.top; }
+//        height: Theme.itemSizeExtraLarge * 4 - view.contentY;
+//        clip: true;
+//        source: "../gfx/background.png"
+//        fillMode: Image.PreserveAspectCrop;
+//    }
+
+
 
     SilicaFlickable {
         id: view;
-        anchors {
-            fill: parent
-        }
+        anchors.fill: parent
         contentWidth: parent.width;
-        contentHeight: contentCol.height;
+        contentHeight: contentCol.height + Theme.paddingLarge * 4;
+        VerticalScrollDecorator { flickable: view }
         Column {
             id: contentCol;
             width: parent.width;
-            Item { width: 1; height: Theme.itemSizeSmall; }
-            Item {
+            spacing: Theme.paddingSmall
+            Item{
                 width: parent.width;
-                height: Theme.graphicSizeLarge*2;
-
-                Rectangle {
-                    id: bottomBanner;
-                    anchors { fill: parent; topMargin: parent.height*3/5; }
-                    color: "#00ffffff";
+                height: Theme.itemSizeSmall;
+            }
+            Avatar {
+                id: avatar;
+                anchors {
+                    horizontalCenter: parent.horizontalCenter
                 }
-
-                Image {
-                    id: avatar;
-                    anchors {
-                        left: parent.left; leftMargin: Theme.paddingMedium;
-                        verticalCenter: parent.verticalCenter;
-                    }
-                    width: 100; height: 100;
-                    source: "../gfx/person_photo_bg.png"
-                    Avatar{
-                        id: profile
-                        anchors { fill: parent; margins: Theme.paddingMedium; }
-                        avatar: userData?("" !== userData.avatar?(siteUrl+userData.avatar):""):"image://theme/harbour-sailfishclub"
-                        color:  userData.user_color
-                        text:   userData.user_text
-                    }
-                }
-
-                Column {
-                    anchors {
-                        left: avatar.right; leftMargin: Theme.paddingMedium;
-                        right: parent.right; rightMargin: Theme.paddingMedium;
-                        bottom: bottomBanner.top;
-                    }
-                    Row {
-                        spacing: Theme.paddingSmall;
-                        Text {
-                            anchors.verticalCenter: parent.verticalCenter;
-                            font.pixelSize: Theme.fontXSmall;
-                            color: "white";
-                            text: userData ? userData.username : "";
-                        }
-//                        Image {
-//                            source: {
-//                                if (userData){
-//                                    if (userData.sex === "1"){
-//                                        return "gfx/icon_man"+Theme.invertedString;
-//                                    } else {
-//                                        return "gfx/icon_woman"+Theme.invertedString;
-//                                    }
-//                                } else {
-//                                    return "";
-//                                }
-//                            }
-//                        }
-                    }
-                    Text {
-                        width: parent.width;
-                        elide: Text.ElideRight;
-                        wrapMode: Text.Wrap;
-                        maximumLineCount: 1;
-                        textFormat: Text.PlainText;
-                        font.pixelSize: Theme.fontXSmall-4;
-                        color: "white";
-                        text: userData ? userData.aboutme : "";
-                    }
-                }
+                height: isLandscape?parent.width/9:parent.width/6;
+                width: height;
+                avatar: userData?("" !== userData.avatar?(siteUrl+userData.avatar):""):"image://theme/harbour-sailfishclub"
+                color:  userData?userData.user_color:""
+                text:   userData?userData.user_text:""
+                username: userData? userData.username:""
 
             }
-            Grid {
-                id: grid;
-                width: parent.width;
-                columns: 3;
-                ProfileCell {
-                    visible: isMe;
-                    iconName: "sc";
-                    title: qsTr("Collections");
-                    markVisible: getUid() === userinfo.uid;
-                    onClicked: {
-//                        var prop = { title: title }
-//                        pageStack.push(Qt.resolvedUrl("Profile/BookmarkPage.qml"), prop);
-                    }
+
+
+            Text {
+                anchors{
+                    horizontalCenter: parent.horizontalCenter;
                 }
-                ProfileCell {
-                    iconName: "myba";
-                    title: qsTr("Reputation");
-                    subTitle: userData ? userData.reputation : "";
-                    onClicked: {
-//                        var prop = { title: title, uid: getUid() }
-//                        pageStack.push(Qt.resolvedUrl("Profile/ProfileForumList.qml"), prop);
+                font.pixelSize: Theme.fontSizeMedium;
+                color: "white";
+                text: userData ? userData.username : "";
+            }
+
+//            Text {
+//                anchors{
+//                    horizontalCenter: parent.horizontalCenter;
+//                }
+//                font.pixelSize: Theme.fontSizeSmall;
+//                color: Theme.secondaryColor;
+//                text: userData ? userData.email : "";
+//                MouseArea{
+//                    anchors.fill: parent
+//                    onClicked: {
+//                        remorse.execute(qsTr("Starting open Email..."),function(){
+//                            Qt.openUrlExternally(userData.email);
+//                        },3000);
+//                    }
+//                }
+//            }
+
+//            Text{
+//                anchors{
+//                    horizontalCenter: parent.horizontalCenter;
+//                }
+//                color: "white";
+//                font.pixelSize: Theme.fontSizeSmall;
+//                text: userData ? ( userData.groupTitle ?
+//                                      (FontAwesome.Icon[userData.groupIcon.replace(/-/g,"_")] + userData.groupTitle ): "") : ""
+//            }
+
+            Text {
+                anchors.horizontalCenter: parent.horizontalCenter;
+                wrapMode: Text.Wrap;
+                maximumLineCount: 1;
+                textFormat: Text.PlainText;
+                font.pixelSize: Theme.fontSizeExtraSmall
+                color: "white";
+                text: userData ? userData.aboutme?userData.aboutme:"":"";
+            }
+
+            Column{
+                width: parent.width
+                Grid {
+                    id: grid;
+                    width: parent.width;
+                    columns: 3;
+                    spacing: Theme.paddingSmall
+                    ProfileCell {
+                        iconName: "sc";
+                        title: qsTr("Reputation");
+                        subTitle: userData ? userData.reputation : "";
+
                     }
-                }
-                ProfileCell {
-                    iconName: "gz";
-                    title: qsTr("FollowingCount");
-                    subTitle: userData ? userData.followingCount : "";
-                    onClicked: {
-//                        var prop = { title: title, type: "follow", uid: getUid() }
-//                        pageStack.push(Qt.resolvedUrl("Profile/FriendsPage.qml"), prop);
+                    ProfileCell {
+                        iconName: "gz";
+                        title: qsTr("FollowingCount");
+                        subTitle: userData ? userData.followingCount ? userData.followingCount:0 :0;
+
                     }
-                }
-                ProfileCell {
-                    iconName: "fs";
-                    title: qsTr("Fans")
-                    subTitle: userData ? userData.followerCount : "";
-                    onClicked: {
-                        if (getUid() === userinfo.uid){
-//                            infoCenter.clear("fans");
-                        }
-//                        var prop = { title: title, type: "fans", uid: getUid() }
-//                        pageStack.push(Qt.resolvedUrl("Profile/FriendsPage.qml"), prop);
+                    ProfileCell {
+                        iconName: "fs";
+                        title: qsTr("Fans")
+                        subTitle: userData ? userData.followerCount ? userData.followerCount:0 : 0;
                     }
-                    markVisible: getUid() === userinfo.uid;
-                }
-                ProfileCell {
-                    iconName: "tiezi";
-                    title: qsTr("Posts");
-                    subTitle: userData ? userData.postcount : "";
-                    onClicked: {
-//                        var prop = { title: title, uid: getUid() };
-//                        pageStack.push(Qt.resolvedUrl("Profile/ProfilePost.qml"), prop);
+                    ProfileCell {
+                        iconName: "tiezi";
+                        title: qsTr("Posts");
+                        subTitle: userData ? userData.postcount : "";
                     }
                 }
             }

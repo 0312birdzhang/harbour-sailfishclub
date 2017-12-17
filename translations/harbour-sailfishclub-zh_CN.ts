@@ -70,7 +70,7 @@
     <message>
         <source>update</source>
         <extracomment>Update a comment</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>更新回复</translation>
     </message>
     <message>
         <source>reply</source>
@@ -177,10 +177,6 @@
         <translation>密码</translation>
     </message>
     <message>
-        <source>Show Password</source>
-        <translation>显示密码</translation>
-    </message>
-    <message>
         <source>Don&apos;t have accounts?</source>
         <translation>还没有账号？</translation>
     </message>
@@ -242,24 +238,20 @@
 <context>
     <name>ProfilePage</name>
     <message>
-        <source>Collections</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Fans</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Posts</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Reputation</source>
-        <translation type="unfinished"></translation>
+        <translation>声誉值</translation>
     </message>
     <message>
         <source>FollowingCount</source>
-        <translation type="unfinished"></translation>
+        <translation>关注数</translation>
+    </message>
+    <message>
+        <source>Fans</source>
+        <translation>粉丝数</translation>
+    </message>
+    <message>
+        <source>Posts</source>
+        <translation>回复数</translation>
     </message>
 </context>
 <context>
@@ -397,7 +389,7 @@
     <name>harbour-sailfishclub</name>
     <message>
         <source>请求超时</source>
-        <translation type="unfinished"></translation>
+        <translation>请求超时</translation>
     </message>
     <message>
         <source>Login failed,try again later</source>

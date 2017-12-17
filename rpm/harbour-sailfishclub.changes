@@ -5,8 +5,11 @@
 # Add newest entries to the top of the list.
 # Separate entries from eachother with a blank line.
 
-# * date Author's Name <author's email> version-release
-# - Summary of changes
+
+* Sun Dec 17 2017 BirdZhang <0312birdzhang@gmail.com> 0.1.6
+- fix login via email
+- add parse link in posts
+- add user profile page
 
 * Thu Nov 23 2017 BirdZhang <0312birdzhang@gmail.com> 0.1.5
 - add categories page and preview markdown when landscape

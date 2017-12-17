@@ -119,7 +119,7 @@ class User(Resource):
 
         """
         return self.client.get(
-            ('/api/user/%s' if is_username else '/api/user/uid/%s') % id_
+            ('/api/user/email/%s' if "@" in str(id_) else '/api/user/%s' if is_username else '/api/user/uid/%s') % id_
         ) if id_ else (404, 'Not Found')
 
     def grant_token(self, id_, password ):

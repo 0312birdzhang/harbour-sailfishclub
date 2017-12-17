@@ -21,7 +21,7 @@ Item{
         MouseArea{
             anchors.fill: parent
                 onClicked: {
-                    toUserInfoPage(user_id);
+                    appwindow.toUserInfoPage(user_id);
             }
         }
     }

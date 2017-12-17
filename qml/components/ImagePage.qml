@@ -152,6 +152,7 @@ Page {
     VerticalScrollDecorator { flickable: imageFlickable }
     IconButton {
        enabled: imagePreview.status == Image.Ready
+       visible: false
        anchors{
            right: imagePage.right;
            rightMargin: Theme.paddingLarge;

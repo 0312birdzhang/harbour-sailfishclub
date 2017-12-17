@@ -66,11 +66,10 @@ Item {
                     }
 
 
-                    TextField {
+                    PasswordField {
                         id:password
                         width:loginComponent.width - Theme.paddingLarge*4
                         height:implicitHeight
-                        echoMode: TextInput.Password
                         font.pixelSize: Theme.fontSizeMedium
                         placeholderText: qsTr("Enter Password")
                         label: qsTr("Password")
@@ -86,13 +85,13 @@ Item {
                     }
                 }
             }
-            TextSwitch {
-                 text: qsTr("Show Password")
-                 onCheckedChanged: {
-                     checked ? password.echoMode = TextInput.Normal
-                             : password.echoMode = TextInput.Password
-                 }
-             }
+//            TextSwitch {
+//                 text: qsTr("Show Password")
+//                 onCheckedChanged: {
+//                     checked ? password.echoMode = TextInput.Normal
+//                             : password.echoMode = TextInput.Password
+//                 }
+//             }
             Button {
                 id:submitButton
                 anchors.horizontalCenter: parent.horizontalCenter

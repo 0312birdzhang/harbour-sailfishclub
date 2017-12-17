@@ -173,10 +173,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Show Password</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Don&apos;t have accounts?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -242,7 +238,11 @@
 <context>
     <name>ProfilePage</name>
     <message>
-        <source>Collections</source>
+        <source>Reputation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>FollowingCount</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -251,14 +251,6 @@
     </message>
     <message>
         <source>Posts</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Reputation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>FollowingCount</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

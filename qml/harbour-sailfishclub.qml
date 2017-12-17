@@ -148,7 +148,7 @@ ApplicationWindow
                     var password = settings.get_password();
                     var uid = settings.get_uid();
                     var token = settings.get_token();
-                    console.log("uid:"+uid+",token:"+token+",username:"+username+",password:"+password);
+//                    console.log("uid:"+uid+",token:"+token+",username:"+username+",password:"+password);
                     if(uid && token){
                         console.log("logined via token")
                         py.validate(uid, token)
@@ -187,6 +187,10 @@ ApplicationWindow
                     userinfo.aboutme = result.aboutme?result.aboutme:"";
                     userinfo.user_text = result["icon:text"];
                     userinfo.user_color = result["icon:bgColor"];
+                    userinfo.reputation = result.reputation;
+                    userinfo.followerCount = result.followerCount?result.followerCount:0;
+                    userinfo.followingCount = result.followingCount?result.followingCount:0;
+
                     userinfo.logined = true;
                     signalCenter.loginSucceed();
                     saveData(uid, token,userinfo.username,"");
@@ -213,9 +217,12 @@ ApplicationWindow
                     userinfo.aboutme = result.aboutme?result.aboutme:"";
                     userinfo.user_text = result["icon:text"];
                     userinfo.user_color = result["icon:bgColor"];
+                    userinfo.reputation = result.reputation;
+                    userinfo.followerCount = result.followerCount?result.followerCount:0;
+                    userinfo.followingCount = result.followingCount?result.followingCount:0;
                     userinfo.logined = true;
                     signalCenter.loginSucceed();
-                    saveData(result.uid, result.token, username,password);
+                    saveData(result.uid, result.token, userinfo.username,password);
                 }else if(result == "Forbidden"){
                     notification.show(qsTr("Login failed,try again later"),
                                       "image://theme/icon-s-high-importance"
@@ -293,7 +300,7 @@ ApplicationWindow
             loading = true;
             if(userinfo.logined){
                 var token = settings.get_token();
-                console.log("token:"+token)
+//                console.log("token:"+token)
                 call('main.getTopic',[tid,slug,token],function(result){
                     loading = false;
                     signalCenter.getTopic(result);
@@ -570,9 +577,9 @@ ApplicationWindow
     }
 
     function toUserInfoPage(uid){
-        pageStack.push(Qt.resolvedUrl("pages/ProfilePage.qml",{
+        pageStack.push(Qt.resolvedUrl("pages/ProfilePage.qml"),{
                 "uid":uid
-            }));
+            });
     }
 
     function popAttachedPages() {
@@ -589,10 +596,13 @@ ApplicationWindow
     }
 
     function formathtml(html){
+        html=html.replace(/<a\shref=\"\/post\//g, "<a href=\""+siteUrl+"/post/");
+        html=html.replace(/<a\shref=\"\/topic\//g, "<a href=\""+siteUrl+"/topic/");
+        html=html.replace(/<a\shref=\"\/uid\//g, "<a href=\""+siteUrl+"/uid/");
         html=html.replace(/<a href=/g,"<a style='color:"+Theme.highlightColor+"' target='_blank' href=");
         html=html.replace(/<a class=/g,"<a style='color:"+Theme.highlightColor+"' target='_blank' class=");
         html=html.replace(/<p>/g,"<p style='text-indent:24px'>");
-        html=html.replace(/<img\ssrc=\"\/assets\//g, "<img src=\"https://sailfishos.club/assets/");
+        html=html.replace(/<img\ssrc=\"\/assets\//g, "<img src=\""+siteUrl+"/assets/");
         html=html.replace(/<p style='text-indent:24px'><img/g,"<p><img");
         html=html.replace(/<p style='text-indent:24px'><a [^<>]*href=\"([^<>"]*)\".*?><img/g,"<p><a href='$1'><img");
         html=html.replace(/&#x2F;/g,"/");
@@ -612,6 +622,7 @@ ApplicationWindow
     }
 
     function openLink(link) {
+        console.log("link:"+link);
         var linklist=link.split(".");
         var linktype=linklist[linklist.length -1];
         if(linktype =="png" ||linktype =="jpg"||linktype =="jpeg"||linktype =="gif"||linktype =="ico"||linktype =="svg"){
@@ -628,6 +639,13 @@ ApplicationWindow
             pageStack.push(Qt.resolvedUrl("pages/TopicPage.qml"),{
                                        "tid":tid
                                    });
+        }else if (/https:\/\/sailfishos\.club\/post\/[1-9]{1,}/.exec(link)) {
+            var postlink = /https:\/\/sailfishos\.club\/post\/[1-9]{1,}/.exec(link)
+            var pid = /[1-9]{1,}/.exec(postlink[0].split("/"))[0];
+            console.log("pid:"+pid); //TODO
+            //ddd
+//            pageStack.currentPage.children[0];
+
         }else{
             remorse.execute(qsTr("Starting open link..."),function(){
                 Qt.openUrlExternally(link);

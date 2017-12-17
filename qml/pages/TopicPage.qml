@@ -57,6 +57,7 @@ Page{
             }
 
             Label{
+//            TextCollapsible{
                 id:contentLabel
                 text:formathtml(content)
                 textFormat: Text.RichText
@@ -73,6 +74,7 @@ Page{
                     rightMargin: Theme.paddingSmall
                 }
                 onLinkActivated: {
+//                    console.log("height:"+height)
                     appwindow.openLink(link);
                 }
             }
@@ -88,18 +90,19 @@ Page{
                 horizontalAlignment: Text.AlignRight
                 wrapMode: Text.WordWrap
                 textFormat: Text.RichText
-                font.pixelSize: Theme.fontSizeExtraSmall
+                font.pixelSize: Theme.fontSizeExtraSmall * 0.8
+                font.italic: true
                 text: signature
-                visible: text
+                visible: signature
             }
 
-            OpacityRampEffect {
-                id: effect
-                slope: 0.60
-                offset: 0.10
-                direction: OpacityRamp.TopToBottom
-                sourceItem: contentLabel
-            }
+//            OpacityRampEffect {
+//                id: effect
+//                slope: 0.60
+//                offset: 0.10
+//                direction: OpacityRamp.TopToBottom
+//                sourceItem: contentLabel
+//            }
 
             Separator {
                 visible:(index > 0?true:false)
@@ -241,8 +244,8 @@ Page{
                     topicModel.append({
                                           "timestamp":posts[i].timestampISO,
                                           "content":posts[i].content,
-                                          "signature":posts[i].signature?posts[i].signature:"",
-                                          "uid":posts[i].uid,
+                                          "signature":posts[i].user.signature?posts[i].user.signature:"",
+                                          "uid":posts[i].uid.toString(),
                                           "pid":posts[i].pid,
                                           "username":posts[i].user.username,
                                           "userslug":posts[i].user.userslug,
