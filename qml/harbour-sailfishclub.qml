@@ -603,12 +603,14 @@ ApplicationWindow
         html=html.replace(/<a class=/g,"<a style='color:"+Theme.highlightColor+"' target='_blank' class=");
         html=html.replace(/<p>/g,"<p style='text-indent:24px'>");
         html=html.replace(/<img\ssrc=\"\/assets\//g, "<img src=\""+siteUrl+"/assets/");
+        html=html.replace(/<img\ssrc=\"https:\/\/sailfishos.club\/plugins\/nodebb-plugin-emoji/g,"<emoji src=\"https:\/\/sailfishos.club\/plugins\/nodebb-plugin-emoji"); // emoji
+        html=html.replace(/<emoji src=\"([^<>"]*)\".*?>/g,"$1");
         html=html.replace(/<p style='text-indent:24px'><img/g,"<p><img");
         html=html.replace(/<p style='text-indent:24px'><a [^<>]*href=\"([^<>"]*)\".*?><img/g,"<p><a href='$1'><img");
         html=html.replace(/&#x2F;/g,"/");
         html=html.replace(/<img src=\"([^<>"]*)\".*?>/g,"<a href='$1'><img src=\"$1\" width="+(Screen.width-Theme.paddingMedium*2)+"/></a>");
         html = "<style>pre {display: flex;white-space: normal;word-break: break-word;}</style>" + html;
-
+        html=html.replace(/<emoji src/g,"<img src"); // emoji
         return html;
     }
 
