@@ -167,3 +167,30 @@ class User(Resource):
             Failure login returns result message
         """
         return self.client.post('api/ns/login', **{'username': username, 'password': password})
+
+    def send_chat(self, id_, message, **kwargs):
+        """Sends a chat message to another user
+
+        Args:
+            message (str)
+
+        """
+        import time
+        timestamp = int(time.time())
+        kwargs["message"] = message
+        kwargs["timestamp"] = timestamp
+        return self.client.post(
+                '/api/v2/users/%s/chats' % (id_, ), 
+                **kwargs 
+        )
+
+    def get_chat(self, userslug, **kwargs):
+        """Get chat message
+
+        Args:
+            userslug (str) : username
+        """
+        return self.client.get(
+                '/api/user/%s/chats' % (userslug, ),
+                **kwargs
+        )

@@ -609,10 +609,12 @@ ApplicationWindow
         html=html.replace(/&#x2F;/g,"/");
         html=html.replace(/<img src=\"([^<>"]*)\".*?>/g,"<a href='$1'><img src=\"$1\" width="+(Screen.width-Theme.paddingMedium*2)+"/></a>");
         html=html.replace(/<emoji src/g,"<img src"); // emoji
-        html = "<style>pre {display: flex;white-space: normal;word-break: break-word;}</style>" + html;
+        // html = "<style>pre {display: flex;white-space: normal;word-break: break-word;} img{max-width:"+(Screen.width-Theme.paddingMedium*2)+"px;}</style>" + html;
+        html = "<style>img{max-width:"+(Screen.width-Theme.paddingMedium*2)+"px;}</style>" + html;
         return html;
     }
 
+    //首页不显示图片
     function formatFirstPagehtml(html){
         if(html){
             html = html.replace(/<img src=\"([^<>"]*)\".*?>/g,"");
