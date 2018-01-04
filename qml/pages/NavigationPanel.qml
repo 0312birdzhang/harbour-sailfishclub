@@ -225,6 +225,36 @@ Panel {
             height: Theme.itemSizeExtraSmall
         }
 
+        Item {
+            width: column.width
+            height: Theme.itemSizeExtraSmall
+            enabled: userinfo.logined
+            visible: enabled
+            HorizontalFontAwesomeTextButton {
+                anchors {
+                    left: parent.left
+                    leftMargin: Theme.paddingLarge
+                    right: parent.right
+                }
+                icon: FontAwesome.Icon.fa_sign_out
+                text:  qsTr("Logout")
+                color: Theme.secondaryColor
+                spacing: Theme.paddingMedium
+                onClicked: {
+                    remorse.execute(qsTr("Start logout..."), function() {
+                        userinfo.logined = false;
+                        userinfo.uid = "";
+                        userinfo.userslug = "";
+                        userinfo.username = "";
+                        userinfo.avatar = "";
+                        userinfo.user_text = "";
+                        py.logout();
+                        toIndexPage();
+                    },3000)
+                }
+            }
+        }
+
 
     }
 

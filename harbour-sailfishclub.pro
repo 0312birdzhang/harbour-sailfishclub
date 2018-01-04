@@ -16,7 +16,7 @@ CONFIG += sailfishapp
 
 SOURCES += src/harbour-sailfishclub.cpp \
             src/settings.cpp \
-    src/cache.cpp
+            src/cache.cpp
 
 DEFINES += Q_OS_SAILFISH
 
@@ -47,6 +47,7 @@ OTHER_FILES += qml/harbour-sailfishclub.qml \
     qml/components/TabButton.qml \
     qml/components/TopicToolBar.qml \
     qml/pages/CategoriesPage.qml \
+    qml/pages/NotificationsPage.qml \
     qml/components/ActivityTopicBanner.qml \
     qml/js/ApiCore.js \
     qml/js/ApiMain.js \
@@ -92,7 +93,8 @@ DISTFILES += \
 
 dbus.files = rpm/harbour.sailfishclub.service
 dbus.path = $$INSTALL_ROOT/usr/share/dbus-1/services
-INSTALL += dbus
+
+INSTALLS += dbus
 
 
 

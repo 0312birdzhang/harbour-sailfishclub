@@ -13,6 +13,41 @@
     </message>
 </context>
 <context>
+    <name>AboutPage</name>
+    <message>
+        <source>About</source>
+        <translation type="unfinished">关于</translation>
+    </message>
+    <message>
+        <source>Version</source>
+        <translation type="unfinished">版本</translation>
+    </message>
+    <message>
+        <source>Thanks</source>
+        <translation type="unfinished">感谢</translation>
+    </message>
+    <message>
+        <source>and other projects</source>
+        <translation type="unfinished">和其他项目</translation>
+    </message>
+    <message>
+        <source>About this app</source>
+        <translation type="unfinished">关于这个软件</translation>
+    </message>
+    <message>
+        <source>This app is a client for https://sailfishos.club ,an unofficial Chinese community.</source>
+        <translation type="unfinished">这个软件是https://sailfishos.club（旗鱼俱乐部）的客户端，旗鱼俱乐部是一个非官方中文社区</translation>
+    </message>
+    <message>
+        <source>Logout</source>
+        <translation type="unfinished">退出</translation>
+    </message>
+    <message>
+        <source>Start logout...</source>
+        <translation type="unfinished">即将退出...</translation>
+    </message>
+</context>
+<context>
     <name>ActivityTopicBanner</name>
     <message>
         <source>comments: </source>
@@ -208,8 +243,20 @@
         <translation>最新</translation>
     </message>
     <message>
-        <source>Settings&amp;About</source>
-        <translation>设置&amp;关于</translation>
+        <source>About</source>
+        <translation type="unfinished">关于</translation>
+    </message>
+    <message>
+        <source>Notifications</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logout</source>
+        <translation type="unfinished">退出</translation>
+    </message>
+    <message>
+        <source>Start logout...</source>
+        <translation type="unfinished">即将退出...</translation>
     </message>
 </context>
 <context>
@@ -287,41 +334,6 @@
     <message>
         <source>Please try again.</source>
         <translation>请重试</translation>
-    </message>
-</context>
-<context>
-    <name>SettingPage</name>
-    <message>
-        <source>About</source>
-        <translation>关于</translation>
-    </message>
-    <message>
-        <source>Thanks</source>
-        <translation>感谢</translation>
-    </message>
-    <message>
-        <source>About this app</source>
-        <translation>关于这个软件</translation>
-    </message>
-    <message>
-        <source>This app is a client for https://sailfishos.club ,an unofficial Chinese community.</source>
-        <translation>这个软件是https://sailfishos.club（旗鱼俱乐部）的客户端，旗鱼俱乐部是一个非官方中文社区</translation>
-    </message>
-    <message>
-        <source>Version</source>
-        <translation>版本</translation>
-    </message>
-    <message>
-        <source>Logout</source>
-        <translation>退出</translation>
-    </message>
-    <message>
-        <source>Start logout...</source>
-        <translation>即将退出...</translation>
-    </message>
-    <message>
-        <source>and other projects</source>
-        <translation>和其他项目</translation>
     </message>
 </context>
 <context>
@@ -405,6 +417,14 @@
     </message>
     <message>
         <source>Starting open link...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>new replay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>preview replay</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

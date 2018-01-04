@@ -8,7 +8,7 @@ Page{
     id:topicPage
 
     property int tid;
-    property string topic_title;
+    property string topic_title:"";
     property string slug;
     property string user;
     property string category_icon;

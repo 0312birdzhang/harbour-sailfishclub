@@ -38,8 +38,10 @@ import "js/ApiCore.js" as Api
 import "js/ApiMain.js" as Main
 import "js/fontawesome.js" as FontAwesome
 import io.thp.pyotherside 1.4
-import org.nemomobile.notifications 1.0
+import Nemo.Notifications 1.0
+import Nemo.DBus 2.0
 import harbour.sailfishclub.settings 1.0
+
 
 ApplicationWindow
 {
@@ -151,7 +153,8 @@ ApplicationWindow
     Timer{
         id: getNotifytimer;
         interval: 60000;
-        triggeredOnStart: true
+        running: true;
+        repeat: true
         onTriggered: {
             py.getNotifications();
         }
@@ -475,7 +478,7 @@ ApplicationWindow
 
         leftPanel: NavigationPanel {
             id: leftPanel
-            busy: false
+            busy: loading
             onClicked: {
                 panelView.hidePanel();
             }
@@ -666,7 +669,7 @@ ApplicationWindow
         html=html.replace(/<p style='text-indent:24px'><img/g,"<p><img");
         html=html.replace(/<p style='text-indent:24px'><a [^<>]*href=\"([^<>"]*)\".*?><img/g,"<p><a href='$1'><img");
         html=html.replace(/&#x2F;/g,"/");
-        html=html.replace(/<img src=\"([^<>"]*)\".*?>/g,"<a href='$1'><img src=\"$1\" width="+(Screen.width-Theme.paddingMedium*2)+"/></a>");
+        html=html.replace(/<img src=\"([^<>"]*)\".*?>/g,"<a href='$1'><img src=\"$1\"/></a>");
         html=html.replace(/<emoji src/g,"<img src"); // emoji
         // html = "<style>pre {display: flex;white-space: normal;word-break: break-word;} img{max-width:"+(Screen.width-Theme.paddingMedium*2)+"px;}</style>" + html;
         html = "<style>img{max-width:"+(Screen.width-Theme.paddingMedium*2)+"px;}</style>" + html;
@@ -751,7 +754,9 @@ ApplicationWindow
 
     Component.onCompleted: {
         Main.signalcenter = signalCenter;
-        page_size = settings.get_pagesize();
+//        page_size = settings.get_pagesize();
+        replaiesNotification.body = "测试通知";
+        replaiesNotification.publish();
     }
 
 }

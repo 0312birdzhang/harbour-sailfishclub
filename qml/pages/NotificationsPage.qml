@@ -24,7 +24,23 @@ Page{
                     var bodyLong = nos[i].bodyLong;
                     var user = nos[i].user.username;
                     var avatar = nos[i].user.picture;
+                    ListModel.append({
+                                         "path": path,
+                                         "from": from,
+                                         "pid": pid,
+                                         "datetime": datetime,
+                                         "tid": tid,
+                                         "bodyLong": bodyLong,
+                                         "user": user,
+                                         "avatar": avatar
+                                     });
+
                 }
+                if(nos /*&& !nos[0].read*/){
+                    replaiesNotification.body = nos[0].bodyLong;
+                    replaiesNotification.publish();
+                }
+
             }
         }
     }

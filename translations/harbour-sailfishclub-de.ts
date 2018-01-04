@@ -13,6 +13,41 @@
     </message>
 </context>
 <context>
+    <name>AboutPage</name>
+    <message>
+        <source>About</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Thanks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>and other projects</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>About this app</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This app is a client for https://sailfishos.club ,an unofficial Chinese community.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start logout...</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ActivityTopicBanner</name>
     <message>
         <source>comments: </source>
@@ -208,7 +243,19 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Settings&amp;About</source>
+        <source>About</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Notifications</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start logout...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -286,41 +333,6 @@
     </message>
     <message>
         <source>Please try again.</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>SettingPage</name>
-    <message>
-        <source>About</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Thanks</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>About this app</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>This app is a client for https://sailfishos.club ,an unofficial Chinese community.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Version</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Logout</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Start logout...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>and other projects</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -405,6 +417,14 @@
     </message>
     <message>
         <source>Starting open link...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>new replay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>preview replay</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
