@@ -5,6 +5,8 @@
 # Add newest entries to the top of the list.
 # Separate entries from eachother with a blank line.
 
+* Tue Jan 2 2018 BirdZhang <0312birdzhang@gmail.com> 0.1.6-2
+- fix emoji image bug
 
 * Sun Dec 17 2017 BirdZhang <0312birdzhang@gmail.com> 0.1.6
 - fix login via email
