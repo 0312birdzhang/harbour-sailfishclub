@@ -433,7 +433,7 @@ ApplicationWindow
 
         // 获取贴子回复通知
         function getNotifications(){
-            call('main.getNotifications', [], function(result){
+            call('main.getNotifications', [settings.get_token()], function(result){
                 signalCenter.getNotifications(result);
             });
         }
