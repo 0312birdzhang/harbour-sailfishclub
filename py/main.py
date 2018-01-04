@@ -122,6 +122,12 @@ def getTopic(tid, slug, token = access_token ):
         return False
     return topic
 
+def getNotifications():
+    status_code, notices = client.topics.get_notification(**{"_token" : token})
+    if not status_code or status_code != 200:
+        return False
+    return notices
+
 
 
 def uploadImgSm(path):
