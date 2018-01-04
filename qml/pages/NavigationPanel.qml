@@ -192,14 +192,40 @@ Panel {
                     right: parent.right
                 }
                 icon: FontAwesome.Icon.fa_cogs
-                text:  qsTr("Settings&About")
+                text:  qsTr("About")
                 color: Theme.secondaryColor
                 spacing: Theme.paddingMedium
                 onClicked: {
-                   pageStack.push(Qt.resolvedUrl("SettingPage.qml"));
+                   pageStack.push(Qt.resolvedUrl("AboutPage.qml"));
                 }
             }
         }
+
+        Item {
+            width: column.width
+            height: Theme.itemSizeExtraSmall
+            HorizontalFontAwesomeTextButton {
+                anchors {
+                    left: parent.left
+                    leftMargin: Theme.paddingLarge
+                    right: parent.right
+                }
+                icon: FontAwesome.Icon.fa_inbox
+                text:  qsTr("Notifications")
+                color: Theme.secondaryColor
+                spacing: Theme.paddingMedium
+                onClicked: {
+                   pageStack.push(Qt.resolvedUrl("NotificationsPage.qml"));
+                }
+            }
+        }
+
+        Item{
+            width: column.width
+            height: Theme.itemSizeExtraSmall
+        }
+
+
     }
 
 

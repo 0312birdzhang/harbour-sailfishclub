@@ -25,6 +25,8 @@ QtObject{
 
     signal loadImage(var result);
     signal getUserInfo(var result);
+
+    signal getNotifications(var result);
 }
 
 

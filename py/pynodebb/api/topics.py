@@ -104,3 +104,12 @@ class Topic(Resource,
 
         """
         return self._extract_topics(self.client.get('/api/popular?%s' % (slug, )))
+
+    def get_notification(self, **kwargs):
+        """Fetches topic notications like vote and new post
+
+        Args:
+            usertoken
+
+        """
+        return self.client.get("/api/notifications", **kwargs)

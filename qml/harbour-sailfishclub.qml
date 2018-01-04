@@ -63,6 +63,24 @@ ApplicationWindow
 
     }
 
+
+    DBusAdaptor {
+        service: "harbour.sailfishclub.service"
+        iface: "harbour.sailfishclub.service"
+        path: "/harbour/sailfishclub/service"
+        xml: "  <interface name=\"harbour.sailfishclub.service\">\n" +
+             "    <method name=\"openPage\"/>\n" +
+             "  </interface>\n"
+
+        function openPage(page, arguments) {
+            if (page === "pages/NotificationsPage.qml") {
+                // _showUpdatesNotification = false
+            }
+            __silica_applicationwindow_instance.activate()
+            pageStack.push(Qt.resolvedUrl(page), arguments)
+        }
+    }
+    
     Notification{
         id:notification
         function show(message, icn) {
@@ -84,6 +102,30 @@ ApplicationWindow
         expireTimeout: 3000
     }
 
+    Notification {
+        id: replaiesNotification
+        appIcon: "image://theme/icon-lock-chat"
+        previewSummary: qsTr("new replay")
+        previewBody: qsTr("preview replay")
+        body: ""
+        expireTimeout: 60000
+        remoteActions: [ {
+                name: "default",
+                service: "harbour.sailfishclub.service",
+                path: "/harbour/sailfishclub/service",
+                iface: "harbour.sailfishclub.service",
+                method: "openPage",
+                arguments: [ "pages/NotificationsPage.qml", {} ]
+            } ]
+
+        Component.onCompleted: {
+  
+        }
+
+        onClosed: {
+            
+        }
+    }
 
     BusyIndicator {
         id: busyIndicator
@@ -104,6 +146,15 @@ ApplicationWindow
         id:processingtimer;
         interval: 60000;
         onTriggered: signalCenter.loadFailed(qsTr("请求超时"));
+    }
+
+    Timer{
+        id: getNotifytimer;
+        interval: 60000;
+        triggeredOnStart: true
+        onTriggered: {
+            py.getNotifications();
+        }
     }
 
     FontLoader {
@@ -368,11 +419,19 @@ ApplicationWindow
              });
         }
 
+        // 获取用户信息
         function getUserInfo(uid){
             loading = true;
             call('main.getuserinfo',[uid,false],function(result){
                 loading = false;
                 signalCenter.getUserInfo(result);
+            });
+        }
+
+        // 获取贴子回复通知
+        function getNotifications(){
+            call('main.getNotifications', [], function(result){
+                signalCenter.getNotifications(result);
             });
         }
 
@@ -609,10 +668,12 @@ ApplicationWindow
         html=html.replace(/&#x2F;/g,"/");
         html=html.replace(/<img src=\"([^<>"]*)\".*?>/g,"<a href='$1'><img src=\"$1\" width="+(Screen.width-Theme.paddingMedium*2)+"/></a>");
         html=html.replace(/<emoji src/g,"<img src"); // emoji
-        html = "<style>pre {display: flex;white-space: normal;word-break: break-word;}</style>" + html;
+        // html = "<style>pre {display: flex;white-space: normal;word-break: break-word;} img{max-width:"+(Screen.width-Theme.paddingMedium*2)+"px;}</style>" + html;
+        html = "<style>img{max-width:"+(Screen.width-Theme.paddingMedium*2)+"px;}</style>" + html;
         return html;
     }
 
+    //首页不显示图片
     function formatFirstPagehtml(html){
         if(html){
             html = html.replace(/<img src=\"([^<>"]*)\".*?>/g,"");

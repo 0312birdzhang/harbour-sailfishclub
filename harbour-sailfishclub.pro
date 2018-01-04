@@ -43,7 +43,7 @@ OTHER_FILES += qml/harbour-sailfishclub.qml \
     qml/components/Avatar.qml \
     qml/components/MaskImage.qml \
     qml/components/CommentField.qml \
-    qml/pages/SettingPage.qml \
+    qml/pages/AboutPage.qml \
     qml/components/TabButton.qml \
     qml/components/TopicToolBar.qml \
     qml/pages/CategoriesPage.qml \
@@ -90,6 +90,9 @@ DISTFILES += \
     rpm/harbour-sailfishclub.changes \
     qml/components/ImageHandle.qml
 
+dbus.files = rpm/harbour.sailfishclub.service
+dbus.path = $$INSTALL_ROOT/usr/share/dbus-1/services
+INSTALL += dbus
 
 
 
