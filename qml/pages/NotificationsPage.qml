@@ -25,23 +25,28 @@ Page{
                     var user = nos[i].user.username;
                     var avatar = nos[i].user.picture;
                     ListModel.append({
-                                         "path": path,
-                                         "from": from,
-                                         "pid": pid,
-                                         "datetime": datetime,
-                                         "tid": tid,
-                                         "bodyLong": bodyLong,
-                                         "user": user,
-                                         "avatar": avatar
-                                     });
+                                "path": path,
+                                "from": from,
+                                "pid": pid,
+                                "datetime": datetime,
+                                "tid": tid,
+                                "bodyLong": bodyLong,
+                                "user": user,
+                                "avatar": avatar
+                            });
 
                 }
-                if(nos /*&& !nos[0].read*/){
+                if(nos && _showReplayNotification /*&& !nos[0].read*/){
                     replaiesNotification.body = nos[0].bodyLong;
                     replaiesNotification.publish();
                 }
 
             }
         }
+    }
+
+
+    components.onCompleted:{
+        py.getNotifications();
     }
 }

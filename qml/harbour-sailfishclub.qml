@@ -56,6 +56,7 @@ ApplicationWindow
     property string current_router: "recent"
     property string siteUrl: "https://sailfishos.club"
     property alias  userinfo: userinfo
+    property bool _showReplayNotification: true
 
     cover: Qt.resolvedUrl("cover/CoverPage.qml")
     allowedOrientations:Orientation.All
@@ -76,7 +77,7 @@ ApplicationWindow
 
         function openPage(page, arguments) {
             if (page === "pages/NotificationsPage.qml") {
-                // _showUpdatesNotification = false
+                _showReplayNotification = false
             }
             __silica_applicationwindow_instance.activate()
             pageStack.push(Qt.resolvedUrl(page), arguments)
@@ -146,7 +147,7 @@ ApplicationWindow
 
     Timer{
         id:processingtimer;
-        interval: 60000;
+        interval: 40000;
         onTriggered: signalCenter.loadFailed(qsTr("请求超时"));
     }
 
@@ -183,6 +184,15 @@ ApplicationWindow
 
     Signalcenter{
         id: signalCenter;
+        onGetNotifications:{
+            if (result && result != "Forbidden"){
+                var nos = result.notifications;
+                if(nos && _showReplayNotification && !nos[0].read){
+                    replaiesNotification.body = nos[0].bodyLong;
+                    replaiesNotification.publish();
+                }
+            }
+        }
     }
 
     UserInfo{
