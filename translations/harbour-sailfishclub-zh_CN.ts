@@ -16,35 +16,35 @@
     <name>AboutPage</name>
     <message>
         <source>About</source>
-        <translation type="unfinished">关于</translation>
+        <translation>关于</translation>
     </message>
     <message>
         <source>Version</source>
-        <translation type="unfinished">版本</translation>
+        <translation>版本</translation>
     </message>
     <message>
         <source>Thanks</source>
-        <translation type="unfinished">感谢</translation>
+        <translation>感谢</translation>
     </message>
     <message>
         <source>and other projects</source>
-        <translation type="unfinished">和其他项目</translation>
+        <translation>和其他项目</translation>
     </message>
     <message>
         <source>About this app</source>
-        <translation type="unfinished">关于这个软件</translation>
+        <translation>关于这个软件</translation>
     </message>
     <message>
         <source>This app is a client for https://sailfishos.club ,an unofficial Chinese community.</source>
-        <translation type="unfinished">这个软件是https://sailfishos.club（旗鱼俱乐部）的客户端，旗鱼俱乐部是一个非官方中文社区</translation>
+        <translation>这个软件是https://sailfishos.club（旗鱼俱乐部）的客户端，旗鱼俱乐部是一个非官方中文社区</translation>
     </message>
     <message>
         <source>Logout</source>
-        <translation type="unfinished">退出</translation>
+        <translation>登出</translation>
     </message>
     <message>
         <source>Start logout...</source>
-        <translation type="unfinished">即将退出...</translation>
+        <translation>即将登出...</translation>
     </message>
 </context>
 <context>
@@ -244,19 +244,19 @@
     </message>
     <message>
         <source>About</source>
-        <translation type="unfinished">关于</translation>
+        <translation>关于</translation>
     </message>
     <message>
         <source>Notifications</source>
-        <translation type="unfinished"></translation>
+        <translatio>通知</translation>
     </message>
     <message>
         <source>Logout</source>
-        <translation type="unfinished">退出</translation>
+        <translation>登出</translation>
     </message>
     <message>
         <source>Start logout...</source>
-        <translation type="unfinished">即将退出...</translation>
+        <translation>即将登出...</translation>
     </message>
 </context>
 <context>
@@ -400,10 +400,6 @@
 <context>
     <name>harbour-sailfishclub</name>
     <message>
-        <source>请求超时</source>
-        <translation>请求超时</translation>
-    </message>
-    <message>
         <source>Login failed,try again later</source>
         <translation>登录失败，请稍后再试</translation>
     </message>
@@ -417,15 +413,19 @@
     </message>
     <message>
         <source>Starting open link...</source>
-        <translation type="unfinished"></translation>
+        <translation>即将用浏览器打开链接...</translation>
     </message>
     <message>
         <source>new replay</source>
-        <translation type="unfinished"></translation>
+        <translation>新的回复</translation>
     </message>
     <message>
         <source>preview replay</source>
-        <translation type="unfinished"></translation>
+        <translation>预览回复</translation>
+    </message>
+    <message>
+        <source>Request timeout</source>
+        <translation>请求超时</translation>
     </message>
 </context>
 </TS>

@@ -400,10 +400,6 @@
 <context>
     <name>harbour-sailfishclub</name>
     <message>
-        <source>请求超时</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Login failed,try again later</source>
         <translation type="unfinished"></translation>
     </message>
@@ -425,6 +421,10 @@
     </message>
     <message>
         <source>preview replay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Request timeout</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -7,7 +7,6 @@ QtObject{
     signal loadStarted;
     signal loadFinished;
     signal loadFailed(string errorstring);
-    signal loginSucceed;
     signal loginSuccessed;
     signal loginFailed(string fail);
     signal registerSucceed;

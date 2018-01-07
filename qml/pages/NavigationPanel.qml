@@ -39,7 +39,7 @@ Panel {
 
     Connections{
         target: signalCenter;
-        onLoginSucceed:{
+        onLoginSuccessed:{
             console.log("logined!!!")
         }
     }
@@ -222,7 +222,7 @@ Panel {
 
         Item{
             width: column.width
-            height: Theme.itemSizeExtraSmall
+            height: Theme.iconSizeSmall
         }
 
         Item {

@@ -24,7 +24,7 @@ Page{
                     var bodyLong = nos[i].bodyLong;
                     var user = nos[i].user.username;
                     var avatar = nos[i].user.picture;
-                    ListModel.append({
+                    notificationsModel.append({
                                 "path": path,
                                 "from": from,
                                 "pid": pid,
@@ -36,7 +36,7 @@ Page{
                             });
 
                 }
-                if(nos && _showReplayNotification /*&& !nos[0].read*/){
+                if(nos && _showReplayNotification && !nos[0].read ){
                     replaiesNotification.body = nos[0].bodyLong;
                     replaiesNotification.publish();
                 }
@@ -46,7 +46,8 @@ Page{
     }
 
 
-    components.onCompleted:{
+    Component.onCompleted:{
         py.getNotifications();
     }
+
 }

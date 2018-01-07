@@ -122,11 +122,11 @@ ApplicationWindow
             } ]
 
         Component.onCompleted: {
-  
+            _showReplayNotification = false
         }
 
         onClosed: {
-            
+            _showReplayNotification = true
         }
     }
 
@@ -148,16 +148,19 @@ ApplicationWindow
     Timer{
         id:processingtimer;
         interval: 40000;
-        onTriggered: signalCenter.loadFailed(qsTr("请求超时"));
+        onTriggered: signalCenter.loadFailed(qsTr("Request timeout"));
     }
 
+    // 定时获取通知
     Timer{
         id: getNotifytimer;
         interval: 60000;
-        running: true;
+        running: false;
         repeat: true
         onTriggered: {
-            py.getNotifications();
+            if(userinfo.logined){
+                py.getNotifications();
+            }
         }
     }
 
@@ -185,13 +188,17 @@ ApplicationWindow
     Signalcenter{
         id: signalCenter;
         onGetNotifications:{
-            if (result && result != "Forbidden"){
+//            console.log("result:"+ JSON.stringify(result));
+            if (result && result !== "Forbidden"){
                 var nos = result.notifications;
-                if(nos && _showReplayNotification && !nos[0].read){
+                if(nos && _showReplayNotification /*&& !nos[0].read*/){
                     replaiesNotification.body = nos[0].bodyLong;
                     replaiesNotification.publish();
                 }
             }
+        }
+        onLoginSuccessed: {
+            getNotifytimer.start()
         }
     }
 
@@ -232,12 +239,12 @@ ApplicationWindow
         }
 
         function validate(uid, token){
-            if(!uid||!token || uid == 0 || token == "undefined"){
+            if(!uid||!token || uid === 0 || token === "undefined"){
                 return;
             }
             call('main.validate',[uid, token],function(result){
 //                console.log(JSON.stringify(result))
-                if(result && result != "Forbidden" && result != "False"){
+                if(result && result !== "Forbidden" && result !== "False"){
                     userinfo.uid = uid.toString();
                     userinfo.username = result.username;
                     userinfo.email = result.email?result.email:"";
@@ -256,14 +263,14 @@ ApplicationWindow
                     userinfo.followingCount = result.followingCount?result.followingCount:0;
 
                     userinfo.logined = true;
-                    signalCenter.loginSucceed();
+                    signalCenter.loginSuccessed();
                     saveData(uid, token,userinfo.username,"");
 
                 }
             })
         }
         function login(username, password){
-            if(!username||!password || username == "undefined" || password == "undefined"){
+            if(!username||!password || username === "undefined" || password === "undefined"){
                 return;
             }
             call('main.login',[username,password],function(result){
@@ -285,7 +292,7 @@ ApplicationWindow
                     userinfo.followerCount = result.followerCount?result.followerCount:0;
                     userinfo.followingCount = result.followingCount?result.followingCount:0;
                     userinfo.logined = true;
-                    signalCenter.loginSucceed();
+                    signalCenter.loginSuccessed();
                     saveData(result.uid, result.token, userinfo.username,password);
                 }else if(result == "Forbidden"){
                     notification.show(qsTr("Login failed,try again later"),
@@ -765,8 +772,6 @@ ApplicationWindow
     Component.onCompleted: {
         Main.signalcenter = signalCenter;
 //        page_size = settings.get_pagesize();
-        replaiesNotification.body = "测试通知";
-        replaiesNotification.publish();
     }
 
 }
