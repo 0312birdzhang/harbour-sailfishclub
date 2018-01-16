@@ -91,7 +91,7 @@ DISTFILES += \
     rpm/harbour-sailfishclub.changes \
     qml/components/ImageHandle.qml
 
-dbus.files = rpm/harbour.sailfishclub.service
+dbus.files = dbus/harbour.sailfishclub.service
 dbus.path = $$INSTALL_ROOT/usr/share/dbus-1/services
 
 INSTALLS += dbus
