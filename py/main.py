@@ -128,6 +128,11 @@ def getNotifications(token):
         return False
     return notices
 
+def getUnread(token):
+    status_code, notices = client.topics.get_unread(**{"_token" : token})
+    if not status_code or status_code != 200:
+        return False
+    return notices
 
 
 def uploadImgSm(path):

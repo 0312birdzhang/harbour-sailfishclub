@@ -113,3 +113,12 @@ class Topic(Resource,
 
         """
         return self.client.get("/api/notifications", **kwargs)
+
+    def get_unread(self, **kwargs):
+        """Fetches unread topic like vote and new post
+
+        Args:
+            usertoken
+
+        """
+        return self.client.get("/api/unread", **kwargs)
