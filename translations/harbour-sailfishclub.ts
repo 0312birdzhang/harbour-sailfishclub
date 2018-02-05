@@ -38,14 +38,6 @@
         <source>This app is a client for https://sailfishos.club ,an unofficial Chinese community.</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Logout</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Start logout...</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>ActivityTopicBanner</name>

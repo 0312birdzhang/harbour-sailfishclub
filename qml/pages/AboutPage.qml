@@ -71,25 +71,25 @@ Page{
 //                label: qsTr("Every page size")
 //            }
 
-            Button{
-                text:qsTr("Logout")
-                enabled: userinfo.logined
-                visible: enabled
-                anchors.horizontalCenter: parent.horizontalCenter
-                onClicked: {
-                    remorse.execute(qsTr("Start logout..."), function() {
-                        userinfo.logined = false;
-                        userinfo.uid = "";
-                        userinfo.userslug = "";
-                        userinfo.username = "";
-                        userinfo.avatar = "";
-                        userinfo.user_text = "";
-                        py.logout();
-                        toIndexPage();
-                    },3000)
+//            Button{
+//                text:qsTr("Logout")
+//                enabled: userinfo.logined
+//                visible: enabled
+//                anchors.horizontalCenter: parent.horizontalCenter
+//                onClicked: {
+//                    remorse.execute(qsTr("Start logout..."), function() {
+//                        userinfo.logined = false;
+//                        userinfo.uid = "";
+//                        userinfo.userslug = "";
+//                        userinfo.username = "";
+//                        userinfo.avatar = "";
+//                        userinfo.user_text = "";
+//                        py.logout();
+//                        toIndexPage();
+//                    },3000)
 
-                }
-            }
+//                }
+//            }
 
         }
 

@@ -191,7 +191,7 @@ Panel {
                     leftMargin: Theme.paddingLarge
                     right: parent.right
                 }
-                icon: FontAwesome.Icon.fa_cogs
+                icon: FontAwesome.Icon.fa_info
                 text:  qsTr("About")
                 color: Theme.secondaryColor
                 spacing: Theme.paddingMedium
