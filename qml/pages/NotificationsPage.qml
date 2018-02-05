@@ -13,29 +13,30 @@ Page{
 
     Connections{
         target: signalCenter
-        onGetNotifications:{
+        onGetUnread:{
             if (result && result != "Forbidden"){
                 var posts = result.topics;
-                for(var i = 0; i < nos.length; i++){
-                unreadModel.append({
-                   "timestamp":posts[i].timestampISO,
-                   "content":posts[i].teaser.content,
-                   "signature":posts[i].user.signature?posts[i].user.signature:"",
-                   "uid":posts[i].uid.toString(),
-                   "pid":posts[i].pid,
-                   "username":posts[i].user.username,
-                   "userslug":posts[i].user.userslug,
-                   "picture":posts[i].user.picture,
-                   "floor":posts[i].index,
-                   "user_group_icon":posts[i].user.selectedGroup?posts[i].user.selectedGroup.icon:"",
-                   "user_group_name":posts[i].user.selectedGroup?posts[i].user.selectedGroup.userTitle:"",
-                   "user_text":posts[i].user["icon:text"],
-                   "user_color":posts[i].user["icon:bgColor"]
-                  });
+                for(var i = 0; i < posts.length; i++){
+                    unreadModel.append({
+                       "timestamp":posts[i].timestampISO,
+                       "content":posts[i].teaser.content,
+                       "signature":posts[i].user.signature?posts[i].user.signature:"",
+                       "uid":posts[i].uid.toString(),
+                       "pid":posts[i].pid,
+                       "username":posts[i].user.username,
+                       "userslug":posts[i].user.userslug,
+                       "picture":posts[i].user.picture,
+                       "floor":posts[i].index,
+                       "user_group_icon":posts[i].user.selectedGroup?posts[i].user.selectedGroup.icon:"",
+                       "user_group_name":posts[i].user.selectedGroup?posts[i].user.selectedGroup.userTitle:"",
+                       "user_text":posts[i].user["icon:text"],
+                       "user_color":posts[i].user["icon:bgColor"]
+                      });
 
                 }
-                if(nos && _showReplayNotification && !nos[0].read ){
-                    replaiesNotification.body = nos[0].bodyLong;
+                view.model = unreadModel;
+                if(posts && _showReplayNotification && !posts[0].read ){
+                    replaiesNotification.body = posts[0].bodyLong;
                     replaiesNotification.publish();
                 }
 
@@ -110,6 +111,11 @@ Page{
                 color: Theme.secondaryHighlightColor
             }
 
+        }
+
+        ViewPlaceholder {
+            enabled: unreadModel.count == 0
+            text: qsTr("No unread news")
         }
     }
 

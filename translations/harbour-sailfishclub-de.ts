@@ -252,6 +252,17 @@
     </message>
 </context>
 <context>
+    <name>NotificationsPage</name>
+    <message>
+        <source>Notifications</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No unread news</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>PostPage</name>
     <message>
         <source>Error</source>

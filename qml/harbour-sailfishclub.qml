@@ -159,7 +159,7 @@ ApplicationWindow
         repeat: true
         onTriggered: {
             if(userinfo.logined){
-                py.getNotifications();
+                py.getUnread();
             }
         }
     }
@@ -187,7 +187,7 @@ ApplicationWindow
 
     Signalcenter{
         id: signalCenter;
-        onGetNotifications:{
+        onGetUnread:{
 //            console.log("result:"+ JSON.stringify(result));
             if (result && result !== "Forbidden"){
                 var nos = result.notifications;

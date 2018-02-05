@@ -32,20 +32,15 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 
 CoverBackground {
-
-//    Label{
-//        text: "🦈"
-//        font.family: Theme.fontFamilyHeading
-//        anchors.horizontalCenter: parent.horizontalCenter
-//        anchors.top: logo.top
-//    }
-
     Image{
         id: logo
+        opacity: 0.2
         anchors.centerIn: parent
-        source: "image://theme/harbour-sailfishclub"
-        width: parent.width/2
-        height: width
+        source: "../gfx/cover.png"
+        fillMode: Image.PreserveAspectCrop
+        anchors.horizontalCenter: parent.horizontalCenter
+        width: parent.width
+        height: sourceSize.height * width / sourceSize.width
     }
 }
 
