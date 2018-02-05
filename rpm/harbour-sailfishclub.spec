@@ -14,8 +14,8 @@ Name:       harbour-sailfishclub
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    SailfishClub client for Sailfish OS
-Version:    0.1.6
-Release:    2
+Version:    0.1.7
+Release:    1
 Group:      Qt/Qt
 License:    LICENSE
 URL:        https://sailfishos.club/
@@ -23,7 +23,6 @@ Source0:    %{name}-%{version}.tar.bz2
 Source100:  harbour-sailfishclub.yaml
 Requires:   sailfishsilica-qt5 >= 0.10.9
 Requires:   pyotherside-qml-plugin-python3-qt5 >= 1.3.0
-#Requires:   python3-pynodebb >= 0.0.14
 Requires:   python3-requests
 Requires:   python3-crypto
 Requires:   mapplauncherd-booster-silica-qt5
