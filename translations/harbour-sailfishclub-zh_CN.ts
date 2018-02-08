@@ -38,14 +38,6 @@
         <source>This app is a client for https://sailfishos.club ,an unofficial Chinese community.</source>
         <translation>这个软件是https://sailfishos.club（旗鱼俱乐部）的客户端，旗鱼俱乐部是一个非官方中文社区</translation>
     </message>
-    <message>
-        <source>Logout</source>
-        <translation>登出</translation>
-    </message>
-    <message>
-        <source>Start logout...</source>
-        <translation>即将登出...</translation>
-    </message>
 </context>
 <context>
     <name>ActivityTopicBanner</name>
@@ -104,7 +96,6 @@
     </message>
     <message>
         <source>update</source>
-        <extracomment>Update a comment</extracomment>
         <translation>更新回复</translation>
     </message>
     <message>
@@ -248,7 +239,7 @@
     </message>
     <message>
         <source>Notifications</source>
-        <translatio>通知</translation>
+        <translation>通知</translation>
     </message>
     <message>
         <source>Logout</source>
@@ -257,6 +248,17 @@
     <message>
         <source>Start logout...</source>
         <translation>即将登出...</translation>
+    </message>
+</context>
+<context>
+    <name>NotificationsPage</name>
+    <message>
+        <source>Notifications</source>
+        <translation>通知</translation>
+    </message>
+    <message>
+        <source>No unread news</source>
+        <translation>没有未读的消息</translation>
     </message>
 </context>
 <context>

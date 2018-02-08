@@ -96,7 +96,6 @@
     </message>
     <message>
         <source>update</source>
-        <extracomment>Update a comment</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>

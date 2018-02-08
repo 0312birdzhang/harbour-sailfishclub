@@ -132,24 +132,21 @@ Column {
             spacing: Theme.paddingSmall
 
             HtmlTagButton {
-                //: Tag strong
-                //% "B"
+
                 text: "<b>B</b>"
                 tag: "**"
                 attrs: tag
             }
 
             HtmlTagButton {
-                //: Tag emphasize
-                //% "I"
+
                 text: "<i>I</i>"
                 tag: "*"
                 attrs: tag
             }
 
            HtmlTagButton {
-               //: Tag underscore
-               //% "H"
+
                text: "<b>H</b>"
                tag: "### "
                attrs: '    '
@@ -208,7 +205,7 @@ Column {
             width: parent.width - Theme.horizontalPageMargin
 //            width: isLandscape?(parent.width / 2 - Theme.horizontalPageMargin - Theme.paddingMedium)
 //                              :(parent.width - Theme.horizontalPageMargin)
-            //% "Your comment"
+
             label: qsTr("Your comment")
             placeholderText: label
             font.pixelSize: Theme.fontSizeSmall
@@ -250,14 +247,11 @@ Column {
                 return ""
             }
             if (_editId) {
-                //: Update a comment
-                //% "Update"
                 return qsTr("update")
             }
             if (_replyToId) {
                 return qsTr("reply")
             }
-            //% "Send"
             return qsTr("send")
         }
         anchors.horizontalCenter: parent.horizontalCenter
@@ -280,7 +274,7 @@ Column {
         id:selectImageComponent
         ImagePreviewGrid{
             onSelectImage: {
-                console.log("image path:"+url);
+//                console.log("image path:"+url);
                 remorse.execute(qsTr("Start upload image..."),function(){
                     signalCenter.loadStarted();
                     var smurl = py.uploadImage(url);
