@@ -16,6 +16,7 @@ Page{
         onGetUnread:{
             if (result && result != "Forbidden"){
                 var posts = result.topics;
+                unreadModel.clear();
                 for(var i = 0; i < posts.length; i++){
                     unreadModel.append({
                        "timestamp":posts[i].timestampISO,
@@ -51,8 +52,9 @@ Page{
         header: PageHeader{
             title: qsTr("Notifications")
         }
-        delegate: BackgroundItem{
+        delegate: ListItem{
             width: view.width
+            contentHeight: topicHeader.height +contentLabel.height + signatureLabel.height + Theme.paddingMedium * 4
             TopicHeader{
                 id: topicHeader
                 avatar: picture?(siteUrl+picture):""
