@@ -59,7 +59,7 @@ Page{
             Label{
 //            TextCollapsible{
                 id:contentLabel
-                text:formathtml(content)
+                text: formathtml(content)
                 textFormat: Text.RichText
                 font.pixelSize: Theme.fontSizeExtraSmall
                 wrapMode: Text.WordWrap
@@ -124,6 +124,13 @@ Page{
                                                "replaysTmpModel":topicModel
                                            });
                             toolbar.hideExbar();
+                        }
+                    }
+                    MenuItem{
+                        text: qsTr("Copy")
+                        onClicked: {
+                            Clipboard.text = contentLabel.text;
+                            notification.show(qsTr("Copied!"))
                         }
                     }
                 }
