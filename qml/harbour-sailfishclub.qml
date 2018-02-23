@@ -496,6 +496,7 @@ ApplicationWindow
         leftPanel: NavigationPanel {
             id: leftPanel
             busy: loading
+            enabled: !busy
             onClicked: {
                 panelView.hidePanel();
             }
@@ -674,22 +675,22 @@ ApplicationWindow
         pageStack.pop(firstPage);
     }
 
-    function formathtml(html){
-        html=html.replace(/<a\shref=\"\/post\//g, "<a href=\""+siteUrl+"/post/");
-        html=html.replace(/<a\shref=\"\/topic\//g, "<a href=\""+siteUrl+"/topic/");
-        html=html.replace(/<a\shref=\"\/uid\//g, "<a href=\""+siteUrl+"/uid/");
-        html=html.replace(/<a href=/g,"<a style='color:"+Theme.highlightColor+"' target='_blank' href=");
-        html=html.replace(/<a class=/g,"<a style='color:"+Theme.highlightColor+"' target='_blank' class=");
-        html=html.replace(/<p>/g,"<p style='text-indent:24px'>");
-        html=html.replace(/<img\ssrc=\"\/assets\//g, "<img src=\""+siteUrl+"/assets/");
-        html=html.replace(/<img\ssrc=\"https:\/\/sailfishos.club\/plugins\/nodebb-plugin-emoji/g,"<emoji src=\"https:\/\/sailfishos.club\/plugins\/nodebb-plugin-emoji"); // emoji
-        html=html.replace(/<p style='text-indent:24px'><img/g,"<p><img");
-        html=html.replace(/<p style='text-indent:24px'><a [^<>]*href=\"([^<>"]*)\".*?><img/g,"<p><a href='$1'><img");
-        html=html.replace(/&#x2F;/g,"/");
-        html=html.replace(/<img src=\"([^<>"]*)\".*?>/g,"<a href='$1'><img src=\"$1\"/></a>");
-        html=html.replace(/<emoji src/g,"<img src"); // emoji
+    function formathtml(html) {
+        html = html.replace(/<a\shref=\"\/post\//g, "<a href=\""+siteUrl+"/post/");
+        html = html.replace(/<a\shref=\"\/topic\//g, "<a href=\""+siteUrl+"/topic/");
+        html = html.replace(/<a\shref=\"\/uid\//g, "<a href=\""+siteUrl+"/uid/");
+        html = html.replace(/<a href=/g,"<a style='color:"+Theme.highlightColor+"' target='_blank' href=");
+        html = html.replace(/<a class=/g,"<a style='color:"+Theme.highlightColor+"' target='_blank' class=");
+        html = html.replace(/<p>/g,"<p style='text-indent:24px'>");
+        html = html.replace(/<img\ssrc=\"\/assets\//g, "<img src=\""+siteUrl+"/assets/");
+        html = html.replace(/<img\ssrc=\"https:\/\/sailfishos.club\/plugins\/nodebb-plugin-emoji/g,"<emoji src=\"https:\/\/sailfishos.club\/plugins\/nodebb-plugin-emoji"); // emoji
+        html = html.replace(/<p style='text-indent:24px'><img/g,"<p><img");
+        html = html.replace(/<p style='text-indent:24px'><a [^<>]*href=\"([^<>"]*)\".*?><img/g,"<p><a href='$1'><img");
+        html = html.replace(/&#x2F;/g,"/");
+        html = html.replace(/<img src=\"([^<>"]*)\".*?>/g,"<a href='$1'><img src=\"$1\"/></a>");
+        html = html.replace(/<emoji src/g,"<img src"); // emoji
         // html = "<style>pre {display: flex;white-space: normal;word-break: break-word;} img{max-width:"+(Screen.width-Theme.paddingMedium*2)+"px;}</style>" + html;
-        html = "<style>img{max-width:"+(Screen.width-Theme.paddingMedium*2)+"px;}</style>" + html;
+        html = "<style>img.img-responsive{max-width:"+(Screen.width-Theme.paddingSmall*2)+"px; display:block;}</style>" + html;
         return html;
     }
 
