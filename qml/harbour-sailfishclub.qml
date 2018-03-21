@@ -698,7 +698,7 @@ ApplicationWindow
 
 
     function splitContent(html, parent) {
-        var model = Qt.createQmlObject('import QtQuick 2.0; ListElement {}', parent);
+        var model = Qt.createQmlObject('import QtQuick 2.0; ListModel {}', parent);
         html = formathtml(html);
         html = html.replace(/<a [^<>]*href=\"([^<>"]*)\".*?>*?src=\"([^<>"]*)\".*?>.*?a>/g,"<img src=\"$1\"/>"); //去掉图片上的超链接             
         var img_model = [];

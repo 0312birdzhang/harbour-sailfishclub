@@ -60,7 +60,8 @@ Page{
                 id: contentLabel
                 width: parent.width;
                 spacing: Theme.paddingSmall
-                anchors.top: topicHeader.bottom
+                anchors.top: topicHeader.bottom;
+                anchors.topMargin: Theme.paddingMedium;
                 Repeater {
                     model: splitContent(content, topicView)
                     Loader {
