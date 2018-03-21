@@ -110,10 +110,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>last post by</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Popular</source>
         <translation type="unfinished"></translation>
     </message>
@@ -151,6 +147,14 @@
     </message>
     <message>
         <source>views: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>author:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>latest reply:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -114,10 +114,6 @@
         <translation>热门</translation>
     </message>
     <message>
-        <source>last post by</source>
-        <translation>最新回复</translation>
-    </message>
-    <message>
         <source>Load Failed,Click to retry</source>
         <translation>加载失败，点击重试</translation>
     </message>
@@ -152,6 +148,14 @@
     <message>
         <source>views: </source>
         <translation>查看：</translation>
+    </message>
+    <message>
+        <source>author:</source>
+        <translation>作者:</translation>
+    </message>
+    <message>
+        <source>latest reply:</source>
+        <translation>最新回复:</translation>
     </message>
 </context>
 <context>

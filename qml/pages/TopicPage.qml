@@ -25,7 +25,7 @@ Page{
     allowedOrientations:Orientation.All
 
     ListModel{
-        id:topicModel
+        id: topicModel
     }
 
 
@@ -39,7 +39,7 @@ Page{
             description: FONT.Icon[category_icon.replace(/-/g,"_")]  + category;
         }
         delegate: ListItem {
-            contentHeight: topicHeader.height +contentLabel.height + signatureLabel.height + Theme.paddingMedium * 4
+            contentHeight: topicHeader.height + contentLabel.height + signatureLabel.height + Theme.paddingMedium * 4
             width: topicView.width
 
             TopicHeader{
@@ -51,34 +51,27 @@ Page{
                 index: floor+"#"
                 text: user_text
                 color: user_color
-                time:JS.humanedate(timestamp)
+                time: JS.humanedate(timestamp)
                 width: parent.width
                 height: isLandscape?parent.width/12:parent.width/8
             }
 
-            Label{
-//            TextCollapsible{
-                id:contentLabel
-                text: formathtml(content)
-                textFormat: Text.RichText
-                font.pixelSize: Theme.fontSizeExtraSmall
-                wrapMode: Text.WordWrap
-                linkColor:Theme.primaryColor
-                font.letterSpacing: 2;
-                anchors{
-                    top:topicHeader.bottom
-                    left:parent.left
-                    right:parent.right
-                    topMargin: Theme.paddingMedium
-                    leftMargin: Theme.paddingMedium
-                    rightMargin: Theme.paddingSmall
-                }
-                onLinkActivated: {
-//                    console.log("height:"+height)
-                    appwindow.openLink(link);
+            Column{
+                id: contentLabel
+                width: parent.width;
+                spacing: Theme.paddingSmall
+                anchors.top: topicHeader.bottom
+                Repeater {
+                    model: splitContent(content, topicView)
+                    Loader {
+                        anchors {
+                            left: parent.left; right: parent.right;
+                            margins: Theme.paddingSmall;
+                        }
+                        source: Qt.resolvedUrl("../components/" +type + "Delegate.qml");
+                    }
                 }
             }
-
             Label{
                 id: signatureLabel
                 anchors{
@@ -96,13 +89,6 @@ Page{
                 visible: signature
             }
 
-//            OpacityRampEffect {
-//                id: effect
-//                slope: 0.60
-//                offset: 0.10
-//                direction: OpacityRamp.TopToBottom
-//                sourceItem: contentLabel
-//            }
 
             Separator {
                 visible:(index > 0?true:false)
@@ -126,13 +112,13 @@ Page{
                             toolbar.hideExbar();
                         }
                     }
-                    MenuItem{
-                        text: qsTr("Copy")
-                        onClicked: {
-                            Clipboard.text = contentLabel.text;
-                            notification.show(qsTr("Copied!"))
-                        }
-                    }
+                    // MenuItem{
+                    //     text: qsTr("Copy")
+                    //     onClicked: {
+                    //         Clipboard.text = contentLabel.text;
+                    //         notification.show(qsTr("Copied!"))
+                    //     }
+                    // }
                 }
             }
 
@@ -248,6 +234,7 @@ Page{
                     if(posts[i].deleted){
                         continue;
                     }
+                    console.log("avatar:"+posts[i].user.picture)
                     topicModel.append({
                                           "timestamp":posts[i].timestampISO,
                                           "content":posts[i].content,

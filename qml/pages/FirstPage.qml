@@ -118,7 +118,9 @@ Page {
 
                 Label{
                     id:latestPost
-                    text: latestpost?(qsTr("last post by") + " " + latestuser +":"+ appwindow.formatFirstPagehtml(latestpost)):""
+                    text: qsTr("author:") + user + (latestpost?(qsTr("latest reply:") +
+                                                                " " + latestuser + ":"
+                                                                + appwindow.formatFirstPagehtml(latestpost)):"")
                     textFormat: Text.StyledText
                     font.pixelSize: Theme.fontSizeExtraSmall
                     wrapMode: Text.WordWrap

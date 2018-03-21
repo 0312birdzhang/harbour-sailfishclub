@@ -298,8 +298,10 @@ ApplicationWindow
                     notification.show(qsTr("Login failed,try again later"),
                                       "image://theme/icon-s-high-importance"
                                       );
+                    loading = false;
                 }else{
                     signalCenter.loginFailed(result);
+                    loading = false;
                 }
             })
         }
@@ -481,7 +483,7 @@ ApplicationWindow
 
         rotation: pageStack.currentPage.rotation
 
-
+        enabled: !loading
         anchors.centerIn: parent
         anchors.verticalCenterOffset: ori === Orientation.Portrait ? -(panelHeight - height) / 2 :
                                              ori === Orientation.PortraitInverted ? (panelHeight - height) / 2 : 0
@@ -683,15 +685,61 @@ ApplicationWindow
         html = html.replace(/<a class=/g,"<a style='color:"+Theme.highlightColor+"' target='_blank' class=");
         html = html.replace(/<p>/g,"<p style='text-indent:24px'>");
         html = html.replace(/<img\ssrc=\"\/assets\//g, "<img src=\""+siteUrl+"/assets/");
-        html = html.replace(/<img\ssrc=\"https:\/\/sailfishos.club\/plugins\/nodebb-plugin-emoji/g,"<emoji src=\"https:\/\/sailfishos.club\/plugins\/nodebb-plugin-emoji"); // emoji
+        // html = html.replace(/<img\ssrc=\"https:\/\/sailfishos.club\/plugins\/nodebb-plugin-emoji/g,"<emoji src=\"https:\/\/sailfishos.club\/plugins\/nodebb-plugin-emoji"); // emoji
         html = html.replace(/<p style='text-indent:24px'><img/g,"<p><img");
         html = html.replace(/<p style='text-indent:24px'><a [^<>]*href=\"([^<>"]*)\".*?><img/g,"<p><a href='$1'><img");
         html = html.replace(/&#x2F;/g,"/");
-        html = html.replace(/<img src=\"([^<>"]*)\".*?>/g,"<a href='$1'><img src=\"$1\"/></a>");
-        html = html.replace(/<emoji src/g,"<img src"); // emoji
+        // html = html.replace(/<img src=\"([^<>"]*)\".*?>/g,"<a href='$1'><img src=\"$1\"/></a>");
+        // html = html.replace(/<emoji src/g,"<img src"); // emoji
         // html = "<style>pre {display: flex;white-space: normal;word-break: break-word;} img{max-width:"+(Screen.width-Theme.paddingMedium*2)+"px;}</style>" + html;
-        html = "<style>img.img-responsive{max-width:"+(Screen.width-Theme.paddingSmall*2)+"px; display:block;}</style>" + html;
+        // html = "<style>img.img-responsive{max-width:"+(Screen.width-Theme.paddingSmall*2)+"px; display:block;}</style>" + html;
         return html;
+    }
+
+
+    function splitContent(html, parent) {
+        var model = Qt.createQmlObject('import QtQuick 2.0; ListElement {}', parent);
+        html = formathtml(html);
+        html = html.replace(/<a [^<>]*href=\"([^<>"]*)\".*?>*?src=\"([^<>"]*)\".*?>.*?a>/g,"<img src=\"$1\"/>"); //去掉图片上的超链接             
+        var img_model = [];
+        var _replace_img_ = "__REPLACE_IMG__";
+        var imgReg = /<img.*?src=\"(.*?)\"/gi;
+        var srcReg = /src=[\'\"]?([^\'\"]*)[\'\"]?/i;
+        var arr = html.match(imgReg);
+        if(!arr) {
+            model.append({
+                "type": "Text",
+                "content": html
+            });
+            return model;
+        }
+
+        for (var i = 0; i < arr.length; i++) {
+            var src = arr[i].match(srcReg);
+            if(src){
+                if(src[1]){
+                    // console.log('src:'+ src[1]);
+                    img_model.push(src[1]);
+                }
+            }
+        }
+
+        html = html.replace(/<img.*?src=\"([^<>"]*)\".*?>/g,_replace_img_);
+
+        var contents = html.split(_replace_img_);
+        for(var i = 0 ; i < contents.length; i++ ){
+            model.append({
+                "type": "Text",
+                "content": contents[i]
+            });
+            if ( i < contents.length - 1){
+                model.append({
+                    "type": "Image",
+                    "content": img_model[i]
+                })
+            }
+        }
+        return model;
     }
 
     //首页不显示图片

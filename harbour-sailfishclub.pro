@@ -89,7 +89,9 @@ DISTFILES += \
     qml/components/ImagePreviewGrid.qml \
     qml/components/ShareToPage.qml \
     rpm/harbour-sailfishclub.changes \
-    qml/components/ImageHandle.qml
+    qml/components/ImageHandle.qml \
+    qml/components/TextDelegate.qml \
+    qml/components/ImageDelegate.qml
 
 dbus.files = dbus/harbour.sailfishclub.service
 dbus.path = $$INSTALL_ROOT/usr/share/dbus-1/services
