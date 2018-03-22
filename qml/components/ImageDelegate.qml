@@ -4,8 +4,8 @@ import Sailfish.Silica 1.0
 Item {
     id: root;
 
-    property int bh: Math.min(800, Screen.height);
-    property int bw: Math.min(500, Screen.width);
+    property int bh: Math.min(400, Screen.height);
+    property int bw: Math.min(540, Screen.width);
     implicitHeight: bh;
 
     //var ww = Math.min(200, w), hh = Math.min(h * ww/w, 200);
@@ -13,8 +13,7 @@ Item {
     MouseArea {
         anchors.fill: img;
         onClicked: {
-            // TODO 不需要缓存
-            pageStack.push(Qt.resolvedUrl("ImagePage.qml"),{"localUrl":content});
+            pageStack.push(Qt.resolvedUrl("ImageHandle.qml"),{"localUrl":img.source});
         }
     }
 
@@ -23,6 +22,7 @@ Item {
         anchors.horizontalCenter: root.horizontalCenter;
         //width: Screen.width*3/4;
         width: bw;
+        cache: true;
         height: parent.height;
         fillMode: Image.PreserveAspectFit;
         sourceSize.width: bw;

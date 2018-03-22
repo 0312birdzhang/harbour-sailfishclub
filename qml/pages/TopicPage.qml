@@ -6,13 +6,13 @@ import "../js/ApiCore.js" as JS
 import "../js/fontawesome.js" as FONT
 Page{
     id:topicPage
-
+    objectName: "TopicPage"
     property int tid;
-    property string topic_title:"";
+    property string topic_title: "";
     property string slug;
     property string user;
     property string category_icon;
-    property string category;
+    property string category: "";
 
     property int current_page:1;
     property int pageCount:1;
@@ -34,9 +34,9 @@ Page{
         anchors.fill: parent
         enabled: PageStatus.Active
         header: PageHeader {
-            title: JS.decodeHTMLEntities(topic_title);
+            title: topic_title?JS.decodeHTMLEntities(topic_title):"";
             _titleItem.font.pixelSize: Theme.fontSizeSmall
-            description: FONT.Icon[category_icon.replace(/-/g,"_")]  + category;
+            description: category? (FONT.Icon[category_icon.replace(/-/g,"_")]  + category) : "";
         }
         delegate: ListItem {
             contentHeight: topicHeader.height + contentLabel.height + signatureLabel.height + Theme.paddingMedium * 4
@@ -235,7 +235,7 @@ Page{
                     if(posts[i].deleted){
                         continue;
                     }
-                    console.log("avatar:"+posts[i].user.picture)
+//                    console.log("avatar:"+posts[i].user.picture)
                     topicModel.append({
                                           "timestamp":posts[i].timestampISO,
                                           "content":posts[i].content,

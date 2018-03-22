@@ -697,55 +697,85 @@ ApplicationWindow
     }
 
 
-    function splitContent(html, parent) {
+    function splitContent(topic_content, parent) {
         var model = Qt.createQmlObject('import QtQuick 2.0; ListModel {}', parent);
-        html = formathtml(html);
-        html = html.replace(/<a [^<>]*href=\"([^<>"]*)\".*?>*?src=\"([^<>"]*)\".*?>.*?a>/g,"<img src=\"$1\"/>"); //去掉图片上的超链接             
+        topic_content = formathtml(topic_content);
+        topic_content = topic_content.replace(/<a [^<>]*href=\"([^<>"]*)\".*?>*?src=\"([^<>"]*)\".*?>.*?a>/g,"<img src=\"$2\"/>"); //去掉图片上的超链接
         var img_model = [];
+        var iframe_model = [];
         var _replace_img_ = "__REPLACE_IMG__";
+        var _replace_iframe_ = "__REPLACE_IFRAME__";
         var imgReg = /<img.*?src=\"(.*?)\"/gi;
+        var iframeReg = /<iframe.*?src=\"(.*?)\"/gi;
+
         var srcReg = /src=[\'\"]?([^\'\"]*)[\'\"]?/i;
-        var arr = html.match(imgReg);
-        if(!arr) {
+        var arr_img = topic_content.match(imgReg);
+        var arr_iframe = topic_content.match(iframeReg);
+        if(!arr_img && !arr_iframe){
             model.append({
                 "type": "Text",
-                "content": html
-            });
+                "content": topic_content
+            })
             return model;
         }
-
-        for (var i = 0; i < arr.length; i++) {
-            var src = arr[i].match(srcReg);
+        for (var i = 0; arr_img && i < arr_img.length; i++) {
+            var src = arr_img[i].match(srcReg);
             if(src){
                 if(src[1]){
-                    // console.log('src:'+ src[1]);
                     img_model.push(src[1]);
                 }
             }
         }
 
-        html = html.replace(/<img.*?src=\"([^<>"]*)\".*?>/g,_replace_img_);
-
-        var contents = html.split(_replace_img_);
-        for(var i = 0 ; i < contents.length; i++ ){
-            model.append({
-                "type": "Text",
-                "content": contents[i]
-            });
-            if ( i < contents.length - 1){
-
-                var imgsrc = img_model[i];
-                if(imgsrc.lastIndexOf("gif") > 0){
-                    model.push({
-                                   "type": "AnimatedImage",
-                                   "content": imgsrc
-                               })
-                }else{
-                    model.push({
-                                   "type": "Image",
-                                   "content": imgsrc
-                               })
+        for (var i = 0; arr_iframe && i < arr_iframe.length; i++) {
+            var src = arr_iframe[i].match(srcReg);
+            if(src){
+                if(src[1]){
+                    iframe_model.push(src[1]);
                 }
+            }
+        }
+
+        topic_content = topic_content.replace(/<img.*?src=\"([^<>"]*)\".*?>/g,_replace_img_);
+                                    
+        var contents = topic_content.split(_replace_img_);
+        for(var i = 0 ; i < contents.length; i++ ){
+            // text 中处理iframe
+            var text_content = contents[i];
+            // console.log("+++++"+text_content)
+            var text_contents = text_content.replace(/<iframe.*?src=\"([^<>"]*)\".*?iframe>/g,_replace_iframe_).split(_replace_iframe_);
+            for(var j = 0; j < text_contents.length; j++){
+                // console.log("i:"+i+",j:"+j+":"+text_contents[j])
+                // console.log("========"+text_contents[j])
+                model.append({
+                    "type": "Text",
+                    "content": text_contents[j]
+                })
+                if(text_contents[j].indexOf("embed-responsive") > -1 || text_contents[j].indexOf("video-container") > -1){
+                    model.append({
+                        "type": "Webview",
+                        "content": iframe_model[j]
+                    })
+                }else{
+                
+                }
+
+            }
+            
+            if ( i < contents.length - 1){
+                var src = img_model[i];
+                if(src.lastIndexOf("gif") > 0){
+                    model.append({
+                        "type": "AnimatedImage",
+                        "content": src
+                    })
+                }else{
+                    model.append({
+                        "type": "Image",
+                        "content": src
+                    })
+                }
+                
             }
         }
         return model;
@@ -767,21 +797,22 @@ ApplicationWindow
         var linktype=linklist[linklist.length -1];
         if(linktype =="png" ||linktype =="jpg"||linktype =="jpeg"||linktype =="gif"||linktype =="ico"||linktype =="svg"){
             pageStack.push(Qt.resolvedUrl("./components/ImagePage.qml"),{"localUrl":link});
-        }else if (/https:\/\/sailfishos\.club\/uid\/[1-9]{1,}/.exec(link)) {
-            var uidlink = /https:\/\/sailfishos\.club\/uid\/[1-9]{1,}/.exec(link)
-            var uid = /[1-9]{1,}/.exec(uidlink[0].split("/"))[0];
+        }else if (/https:\/\/sailfishos\.club\/uid\/[0-9]{1,}/.exec(link)) {
+            var uidlink = /https:\/\/sailfishos\.club\/uid\/[0-9]{1,}/.exec(link)
+            var uid = /[0-9]{1,}/.exec(uidlink[0].split("/"))[0];
             //to user profile page
             toUserInfoPage(uid);
-        }else if (/https:\/\/sailfishos\.club\/topic\/[1-9]{1,}/.exec(link)) {
-            var topiclink = /https:\/\/sailfishos\.club\/topic\/[1-9]{1,}/.exec(link)
-            var tid = /[1-9]{1,}/.exec(topiclink[0].split("/"))[0];
+        }else if (/https:\/\/sailfishos\.club\/topic\/[0-9]{1,}/.exec(link)) {
+            var topiclink = /https:\/\/sailfishos\.club\/topic\/[0-9]{1,}/.exec(link)
+            var tid = /[0-9]{1,}/.exec(topiclink[0].split("/"))[0];
             //to topic page
+            console.log("to topic page, tid:"+ tid)
             pageStack.push(Qt.resolvedUrl("pages/TopicPage.qml"),{
-                                       "tid":tid
+                                       "tid": tid
                                    });
-        }else if (/https:\/\/sailfishos\.club\/post\/[1-9]{1,}/.exec(link)) {
-            var postlink = /https:\/\/sailfishos\.club\/post\/[1-9]{1,}/.exec(link)
-            var pid = /[1-9]{1,}/.exec(postlink[0].split("/"))[0];
+        }else if (/https:\/\/sailfishos\.club\/post\/[0-9]{1,}/.exec(link)) {
+            var postlink = /https:\/\/sailfishos\.club\/post\/[0-9]{1,}/.exec(link)
+            var pid = /[0-9]{1,}/.exec(postlink[0].split("/"))[0];
             console.log("pid:"+pid); //TODO
             //ddd
 //            pageStack.currentPage.children[0];

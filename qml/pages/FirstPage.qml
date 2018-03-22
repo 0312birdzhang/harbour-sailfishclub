@@ -118,7 +118,7 @@ Page {
 
                 Label{
                     id:latestPost
-                    text: qsTr("author:") + user + (latestpost?(qsTr("latest reply:") +
+                    text: qsTr("author:") + user + " / " + (latestpost?(qsTr("latest reply") +
                                                                 " " + latestuser + ":"
                                                                 + appwindow.formatFirstPagehtml(latestpost)):"")
                     textFormat: Text.StyledText

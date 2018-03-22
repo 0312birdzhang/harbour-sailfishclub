@@ -154,8 +154,19 @@
         <translation>作者:</translation>
     </message>
     <message>
-        <source>latest reply:</source>
-        <translation>最新回复:</translation>
+        <source>latest reply</source>
+        <translation>最后回复</translation>
+    </message>
+</context>
+<context>
+    <name>ImageHandle</name>
+    <message>
+        <source>Loading image...%1</source>
+        <translation>加载图片...%1</translation>
+    </message>
+    <message>
+        <source>Error loading image</source>
+        <translation>加载图片失败</translation>
     </message>
 </context>
 <context>

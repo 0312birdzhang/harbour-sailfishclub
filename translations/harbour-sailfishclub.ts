@@ -154,7 +154,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>latest reply:</source>
+        <source>latest reply</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ImageHandle</name>
+    <message>
+        <source>Loading image...%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error loading image</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
