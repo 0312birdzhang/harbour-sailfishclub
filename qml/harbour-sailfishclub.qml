@@ -733,10 +733,19 @@ ApplicationWindow
                 "content": contents[i]
             });
             if ( i < contents.length - 1){
-                model.append({
-                    "type": "Image",
-                    "content": img_model[i]
-                })
+
+                var imgsrc = img_model[i];
+                if(imgsrc.lastIndexOf("gif") > 0){
+                    model.push({
+                                   "type": "AnimatedImage",
+                                   "content": imgsrc
+                               })
+                }else{
+                    model.push({
+                                   "type": "Image",
+                                   "content": imgsrc
+                               })
+                }
             }
         }
         return model;
