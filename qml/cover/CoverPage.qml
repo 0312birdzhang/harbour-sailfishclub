@@ -34,7 +34,7 @@ import Sailfish.Silica 1.0
 CoverBackground {
     Image{
         id: logo
-        opacity: 0.3
+        opacity: 0.5
         anchors.centerIn: parent
         source: "../gfx/cover.png"
         fillMode: Image.PreserveAspectCrop

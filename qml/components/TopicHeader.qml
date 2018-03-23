@@ -18,6 +18,11 @@ Item{
         width: parent.height;
         height: parent.height;
         username: username.text
+        anchors{
+            left: parent.left
+            leftMargin: Theme.paddingSmall
+        }
+
         MouseArea{
             anchors.fill: parent
                 onClicked: {

@@ -678,6 +678,7 @@ ApplicationWindow
     }
 
     function formathtml(html) {
+        html = html.replace(/[.\n]/gi,""); //替换掉html中的换行
         html = html.replace(/<a\shref=\"\/post\//g, "<a href=\""+siteUrl+"/post/");
         html = html.replace(/<a\shref=\"\/topic\//g, "<a href=\""+siteUrl+"/topic/");
         html = html.replace(/<a\shref=\"\/uid\//g, "<a href=\""+siteUrl+"/uid/");
@@ -700,7 +701,7 @@ ApplicationWindow
     function splitContent(topic_content, parent) {
         var model = Qt.createQmlObject('import QtQuick 2.0; ListModel {}', parent);
         topic_content = formathtml(topic_content);
-        topic_content = topic_content.replace(/<a [^<>]*href=\"([^<>"]*)\".*?>*?src=\"([^<>"]*)\".*?>.*?a>/g,"<img src=\"$2\"/>"); //去掉图片上的超链接
+        topic_content = topic_content.replace(/<a[^<>]*href=\"([^<>"]*)\"\s+rel=\"nofollow\"><img\s+src=\"([^<>"]*)\".*?a>/g,"<img src=\"$2\" />"); //去掉图片上的超链接
         var img_model = [];
         var iframe_model = [];
         var _replace_img_ = "__REPLACE_IMG__";

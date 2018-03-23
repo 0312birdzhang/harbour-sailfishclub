@@ -11,14 +11,10 @@ SilicaWebView {
         left: parent.left
         right: parent.right
     }
-
-    FadeAnimation on opacity {}
-
     Component.onCompleted: {
         if (content.substring(0,4) !== "http"){
             content = "http"+content;
         }
-
         webView.url = content;
     }
 }

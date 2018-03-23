@@ -212,6 +212,8 @@ Panel {
                 }
                 icon: FontAwesome.Icon.fa_inbox
                 text:  qsTr("Notifications")
+                enabled: userinfo.logined
+                visible: enabled
                 color: Theme.secondaryColor
                 spacing: Theme.paddingMedium
                 onClicked: {
