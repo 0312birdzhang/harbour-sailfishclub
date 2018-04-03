@@ -781,7 +781,7 @@ ApplicationWindow
 
     Component.onCompleted: {
         Main.signalcenter = signalCenter;
-//        page_size = settings.get_pagesize();
+        JS.app = appwindow;
     }
 
 }
