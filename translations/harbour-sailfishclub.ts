@@ -279,6 +279,10 @@
         <source>No unread news</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Unsupport redirect currently!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PostPage</name>

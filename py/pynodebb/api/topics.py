@@ -12,6 +12,14 @@ from pynodebb.api.mixins import ResourceListMixin
 from pynodebb.api.mixins import ResourceRetrieveMixin
 from pynodebb.iterables import TopicIterable
 
+import logging
+import sys
+logger = logging.getLogger("sfcpython")
+formatter = logging.Formatter('%(asctime)s %(levelname)-8s: %(message)s')
+console_handler = logging.StreamHandler(sys.stdout)
+console_handler.formatter = formatter
+logger.addHandler(console_handler)
+logger.setLevel(logging.DEBUG)
 
 class Topic(Resource,
             ResourceListMixin,
@@ -123,14 +131,13 @@ class Topic(Resource,
         """
         return self.client.get("/api/unread", **kwargs)
 
-    def search(self, term, slug):
-        """Search topics, via solr.
-
-        When there aren't any recent topics, an empty array list is returned
-        in place of the `json_response`.
+    def search(self, term, slug, **kwargs):
+        """Search topics.
 
         Returns:
             tuple: Tuple in the form (response_code, json_response)
 
         """
-        return self._extract_topics(self.client.get('/api/search?term=%s&in=titlesposts&%s' % (term, slug)))
+        logger.debug(term)
+        logger.debug(kwargs.get("_token"))
+        return self.client.get('/api/search?term=%s&in=titlesposts&%s' % (term, slug), **kwargs)

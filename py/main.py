@@ -1,6 +1,5 @@
 from __future__ import print_function
 from pynodebb import Client
-import pyotherside
 from sfctoken import access_token
 import logging
 import sys
@@ -28,12 +27,15 @@ client.configure(**{
 def login(user, password):
     userinfo = getuserinfo(user)
     if not userinfo:
+        logger.error("no such user:", user)
         return False
     uid = userinfo.get("uid")
     if not uid:
+        logger.error("get uid failed:", user)
         return False
     token = createToken(uid, password)
     if not token:
+        logger.error("create token failed")
         return False
     logger.debug(token)
     userinfo["token"] = token
@@ -166,16 +168,12 @@ def previewMd(text):
     return mistune.markdown(text)
 
 
-def search(term, slug):
-    status_code, posts = client.topics.search(term, slug)
+def search(term, slug, token):
+    status_code, posts = client.topics.search(term, slug, **{"_token" : access_token})
+    logger.debug(status_code)
+    logger.debug(str(posts))
     if not status_code or status_code != 200:
         return False
     return posts
 
 
-def image_provider(image_id, requested_size):
-    
-    return None
-
-
-# pyotherside.set_image_provider(image_provider)

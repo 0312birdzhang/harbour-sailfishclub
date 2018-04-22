@@ -344,8 +344,9 @@ ApplicationWindow
 
         // 搜索贴子
         function search(term, slug){
+            console.log("slug:"+slug)
             loading = true;
-            call('main.search',[term, slug],function(result){
+            call('main.search',[term, slug, settings.get_token()],function(result){
                 loading = false;
                 signalCenter.getSearch(result);
             });

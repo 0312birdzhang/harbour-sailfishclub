@@ -113,6 +113,10 @@ Page{
                 color: Theme.secondaryHighlightColor
             }
 
+            onClicked: {
+                notification.show(qsTr("Unsupport redirect currently!"))
+            }
+
         }
 
         ViewPlaceholder {

@@ -4,11 +4,17 @@ import Sailfish.Silica 1.0
 Page {
     id: searchPage
     property alias contentItem:column
+    property int current_page:1;
+    property int pageCount:1;
+    property string next_page;
+    property bool next_active:false;
+    property string prev_page;
+    property bool prev_active:false;
+
     allowedOrientations:Orientation.All
 
     property string initialSearch
     function _reset() {
-        searchModel.searchKey = ""
         viewPlaceholder.text = qsTr("Search results will be shown here")
         viewPlaceholder.hintText = qsTr("Type some keywords in the field above")
     }
@@ -29,11 +35,14 @@ Page {
     Column{
         id:column
         z: -2
-        width: page.width
-        height: page.height
+        width: searchPage.width
+        height: searchPage.height
+
         SilicaListView{
             id: searchView
-            anchors.fill: parent
+            width: parent.width
+            height: parent.height
+
             header: Column {
                 width: parent.width
 
@@ -194,18 +203,12 @@ Page {
                     NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
                 }
             }
-
-            BusyIndicator {
-                id: busyIndicator
-                size: BusyIndicatorSize.Large
-                anchors.centerIn: parent
-                running: parent.count === 0 && !viewPlaceholder.enabled
-            }
         }
 
         Connections{
             target: signalCenter
             onGetSearch:{
+                console.log("result:"+ result);
                 if (result && result != "Forbidden"){
                     var posts = result.posts;
                     var pagination = result.pagination;
@@ -244,6 +247,7 @@ Page {
                     }
                     searchView.model = searchModel;
                 }else{
+                    appwindow.loading = false;
                     console.log("load failed!!!");
                     notification.show(qsTr("Load failed,try again later"),
                                       "image://theme/icon-lock-warning"
