@@ -166,6 +166,12 @@ def previewMd(text):
     return mistune.markdown(text)
 
 
+def search(term, slug):
+    status_code, posts = client.topics.search(term, slug)
+    if not status_code or status_code != 200:
+        return False
+    return posts
+
 
 def image_provider(image_id, requested_size):
     

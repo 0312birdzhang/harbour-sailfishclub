@@ -122,3 +122,15 @@ class Topic(Resource,
 
         """
         return self.client.get("/api/unread", **kwargs)
+
+    def search(self, term, slug):
+        """Search topics, via solr.
+
+        When there aren't any recent topics, an empty array list is returned
+        in place of the `json_response`.
+
+        Returns:
+            tuple: Tuple in the form (response_code, json_response)
+
+        """
+        return self._extract_topics(self.client.get('/api/search?term=%s&in=titlesposts&%s' % (term, slug)))

@@ -44,7 +44,7 @@ class HttpClient(object):
         # Query the NodeBB instance, extracting the status code and fail reason.
         response = requests.request(
             method, urljoin(self.endpoint, path),
-            headers=self.headers, data=kwargs
+            headers=self.headers, data=kwargs, timeout = 20
         )
         code, reason = response.status_code, response.reason
 

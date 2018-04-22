@@ -264,6 +264,10 @@
         <source>Start logout...</source>
         <translation>即将登出...</translation>
     </message>
+    <message>
+        <source>search</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NotificationsPage</name>
@@ -351,6 +355,53 @@
     <message>
         <source>Please try again.</source>
         <translation>请重试</translation>
+    </message>
+</context>
+<context>
+    <name>SearchPage</name>
+    <message>
+        <source>Search results will be shown here</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type some keywords in the field above</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SearchPlaceholder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>author:</source>
+        <translation type="unfinished">作者:</translation>
+    </message>
+    <message>
+        <source>latest reply</source>
+        <translation type="unfinished">最后回复</translation>
+    </message>
+    <message>
+        <source>comments: </source>
+        <translation type="unfinished">评论：</translation>
+    </message>
+    <message>
+        <source>views: </source>
+        <translation type="unfinished">查看：</translation>
+    </message>
+    <message>
+        <source>Prev Page</source>
+        <translation type="unfinished">上一页</translation>
+    </message>
+    <message>
+        <source>Next Page</source>
+        <translation type="unfinished">下一页</translation>
+    </message>
+    <message>
+        <source>Load failed,try again later</source>
+        <translation type="unfinished">加载失败，请稍后重试</translation>
     </message>
 </context>
 <context>

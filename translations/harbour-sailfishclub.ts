@@ -264,6 +264,10 @@
         <source>Start logout...</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>search</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NotificationsPage</name>
@@ -350,6 +354,53 @@
     </message>
     <message>
         <source>Please try again.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SearchPage</name>
+    <message>
+        <source>Search results will be shown here</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type some keywords in the field above</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SearchPlaceholder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>author:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>latest reply</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>comments: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>views: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Prev Page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Next Page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load failed,try again later</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -93,7 +93,8 @@ DISTFILES += \
     qml/components/TextDelegate.qml \
     qml/components/ImageDelegate.qml \
     qml/components/AnimatedImageDelegate.qml \
-    qml/components/WebviewDelegate.qml
+    qml/components/WebviewDelegate.qml \
+    qml/pages/SearchPage.qml
 
 dbus.files = dbus/harbour.sailfishclub.service
 dbus.path = $$INSTALL_ROOT/usr/share/dbus-1/services
