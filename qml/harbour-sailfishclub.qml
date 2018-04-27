@@ -341,6 +341,17 @@ ApplicationWindow
                 signalCenter.getRecent(result);
             });
         }
+
+        // 搜索贴子
+        function search(term, slug){
+            console.log("slug:"+slug)
+            loading = true;
+            call('main.search',[term, slug, settings.get_token()],function(result){
+                loading = false;
+                signalCenter.getSearch(result);
+            });
+        }
+
         //获取热门贴子
         function getPopular(slug){
             loading = true;
@@ -543,6 +554,22 @@ ApplicationWindow
     }
 
 
+    Component{
+        id: searchPageComponent
+        SearchPage{
+            id: searchPage
+            property bool __withPanelView: true
+            Binding {
+                target: searchPage.contentItem
+                property: "parent"
+                value: searchPage.status === PageStatus.Active
+                       ? (panelView.closed ? panelView : searchPage)
+                       : searchPage
+            }
+        }
+    }
+
+
     initialPage: Component {
         Page{
             id:splashPage
@@ -656,6 +683,11 @@ ApplicationWindow
     function toCategoriesPage(){
         popAttachedPages();
         pageStack.replace(categoriesPageComponent)
+    }
+
+    function toSearchPage(){
+        popAttachedPages();
+        pageStack.replace(searchPageComponent)
     }
 
     function toUserInfoPage(uid){

@@ -257,6 +257,7 @@ Page{
                 topicView.scrollToTop();
             }else{
                 console.log("load failed!!!");
+                loading = false;
                 notification.show(qsTr("Load failed,try again later"),
                                   "image://theme/icon-lock-warning"
                                   )

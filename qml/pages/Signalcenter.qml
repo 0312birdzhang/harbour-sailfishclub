@@ -26,6 +26,8 @@ QtObject{
     signal getUserInfo(var result);
 
     signal getUnread(var result);
+
+    signal getSearch(var result);
 }
 
 

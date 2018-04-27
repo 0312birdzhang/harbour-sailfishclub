@@ -140,7 +140,7 @@ Item {
 
         Connections {
             target: signalCenter
-            onLoginSucceed: {
+            onLoginSuccessed: {
                 errorLabel.visible = false;
                 busyIndicator.running = false;
                 loginComponent.loginSucceed();

@@ -223,12 +223,6 @@ Page {
                 }
 
             }
-
-            BusyIndicator {
-                size: BusyIndicatorSize.Large
-                anchors.centerIn: parent
-                running: listView.count === 0
-            }
         }
     }
 
@@ -293,6 +287,7 @@ Page {
                 listView.scrollToTop();
             }else{
                 console.log("load failed!!!");
+                loading = false;
                 notification.show(qsTr("Load failed,try again later"),
                                   "image://theme/icon-lock-warning"
                                   )
