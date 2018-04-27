@@ -22,8 +22,6 @@ Panel {
                 toIndexPage();
             }else if(router == "categories"){
                 toCategoriesPage();
-            }else if(router == "search" ) {
-                toSearchPage();
             }else{
 
             }
@@ -117,7 +115,7 @@ Panel {
                     right: parent.right
                 }
                 icon:FontAwesome.Icon.fa_list
-                text:  qsTr("categories")
+                text:  qsTr("Categories")
                 color: Theme.secondaryColor
                 spacing: Theme.paddingMedium
                 onClicked: {
@@ -156,7 +154,7 @@ Panel {
                     right: parent.right
                 }
                 icon:FontAwesome.Icon.fa_fire
-                text:  qsTr("popular")
+                text:  qsTr("Popular")
                 color: Theme.secondaryColor
                 spacing: Theme.paddingMedium
                 onClicked: {
@@ -175,7 +173,7 @@ Panel {
                     right: parent.right
                 }
                 icon:FontAwesome.Icon.fa_clock_o
-                text:  qsTr("recent")
+                text:  qsTr("Recent")
                 color: Theme.secondaryColor
                 spacing: Theme.paddingMedium
                 onClicked: {
@@ -196,11 +194,11 @@ Panel {
                     right: parent.right
                 }
                 icon:FontAwesome.Icon.fa_search
-                text:  qsTr("search")
+                text:  qsTr("Search")
                 color: Theme.secondaryColor
                 spacing: Theme.paddingMedium
                 onClicked: {
-                     goRouter("search");
+                     pageStack.push(Qt.resolvedUrl("SearchPage.qml"));
                 }
             }
         }

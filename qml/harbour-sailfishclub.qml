@@ -677,8 +677,8 @@ ApplicationWindow
     }
 
     function toLoginPage(){
-        popAttachedPages();
-        pageStack.replace(Qt.resolvedUrl("pages/LoginDialog.qml"));
+//        popAttachedPages();
+        pageStack.push(Qt.resolvedUrl("pages/LoginDialog.qml"));
     }
 
     function toCategoriesPage(){
@@ -686,10 +686,6 @@ ApplicationWindow
         pageStack.replace(categoriesPageComponent)
     }
 
-    function toSearchPage(){
-        popAttachedPages();
-        pageStack.replace(searchPageComponent)
-    }
 
     function toUserInfoPage(uid){
         pageStack.push(Qt.resolvedUrl("pages/ProfilePage.qml"),{

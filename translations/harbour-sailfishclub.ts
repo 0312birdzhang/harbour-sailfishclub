@@ -233,19 +233,7 @@
 <context>
     <name>NavigationPanel</name>
     <message>
-        <source>categories</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Guest</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>popular</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>recent</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -265,7 +253,19 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>search</source>
+        <source>Categories</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Popular</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Recent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

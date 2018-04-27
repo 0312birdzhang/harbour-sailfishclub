@@ -237,18 +237,6 @@
         <translation>游客</translation>
     </message>
     <message>
-        <source>categories</source>
-        <translation>板块</translation>
-    </message>
-    <message>
-        <source>popular</source>
-        <translation>热门</translation>
-    </message>
-    <message>
-        <source>recent</source>
-        <translation>最新</translation>
-    </message>
-    <message>
         <source>About</source>
         <translation>关于</translation>
     </message>
@@ -265,7 +253,19 @@
         <translation>即将登出...</translation>
     </message>
     <message>
-        <source>search</source>
+        <source>Categories</source>
+        <translation type="unfinished">板块</translation>
+    </message>
+    <message>
+        <source>Popular</source>
+        <translation type="unfinished">热门</translation>
+    </message>
+    <message>
+        <source>Recent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
