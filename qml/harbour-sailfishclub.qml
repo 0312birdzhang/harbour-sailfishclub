@@ -346,6 +346,7 @@ ApplicationWindow
         function search(term, slug){
             console.log("slug:"+slug)
             loading = true;
+            term = encodeURI(term);
             call('main.search',[term, slug, settings.get_token()],function(result){
                 loading = false;
                 signalCenter.getSearch(result);

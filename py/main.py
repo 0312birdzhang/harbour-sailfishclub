@@ -169,9 +169,9 @@ def previewMd(text):
 
 
 def search(term, slug, token):
-    status_code, posts = client.topics.search(term, slug, **{"_token" : access_token})
-    logger.debug(status_code)
-    logger.debug(str(posts))
+    status_code, posts = client.topics.search(term, slug, **{"_token" : token})
+    # logger.debug(status_code)
+    # logger.debug(str(posts))
     if not status_code or status_code != 200:
         return False
     return posts

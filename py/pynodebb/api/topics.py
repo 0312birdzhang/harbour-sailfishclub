@@ -12,15 +12,6 @@ from pynodebb.api.mixins import ResourceListMixin
 from pynodebb.api.mixins import ResourceRetrieveMixin
 from pynodebb.iterables import TopicIterable
 
-import logging
-import sys
-logger = logging.getLogger("sfcpython")
-formatter = logging.Formatter('%(asctime)s %(levelname)-8s: %(message)s')
-console_handler = logging.StreamHandler(sys.stdout)
-console_handler.formatter = formatter
-logger.addHandler(console_handler)
-logger.setLevel(logging.DEBUG)
-
 class Topic(Resource,
             ResourceListMixin,
             ResourceRetrieveMixin):
@@ -138,6 +129,4 @@ class Topic(Resource,
             tuple: Tuple in the form (response_code, json_response)
 
         """
-        logger.debug(term)
-        logger.debug(kwargs.get("_token"))
         return self.client.get('/api/search?term=%s&in=titlesposts&%s' % (term, slug), **kwargs)
