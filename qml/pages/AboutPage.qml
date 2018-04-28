@@ -34,9 +34,16 @@ Page{
             Label{
                 id:version
                 anchors.horizontalCenter: parent.horizontalCenter
-                text:qsTr("Version")+" 0.1.8"
+                text:qsTr("Version")+" 0.2.0"
 
             }
+            Item{width: 1;height: Theme.paddingMedium}
+
+            LabelText{
+                label: qsTr("ArtWork")
+                text: "Cover跟图标均有设计师<b>蔡司</b>重新制作，👍"
+            }
+
             Item { width: 1; height: Theme.paddingMedium }
             LabelText{
                 label: qsTr("Thanks")
@@ -48,6 +55,7 @@ Page{
                         "<a href=\"https://sm.ms/\" >sm.ms</a><br/>" +
                         "<a href=\"https://github.com/communi/communi-sailfish\" >communi-sailfish</a><br/>";
 
+
             }
             Item{width: 1;height: Theme.paddingMedium}
 
@@ -56,48 +64,9 @@ Page{
                 text: qsTr("This app is a client for https://sailfishos.club ,an unofficial Chinese community.")
             }
             Item{width: 1;height: Theme.paddingMedium}
-//            SectionHeader {
-//                text: qsTr("Settings")
-//            }
-
-//            Slider {
-//                id:slider
-//                value:settings.get_pagesize()
-//                minimumValue:10
-//                maximumValue:50
-//                stepSize: 5
-//                width: parent.width
-//                valueText: value
-//                label: qsTr("Every page size")
-//            }
-
-//            Button{
-//                text:qsTr("Logout")
-//                enabled: userinfo.logined
-//                visible: enabled
-//                anchors.horizontalCenter: parent.horizontalCenter
-//                onClicked: {
-//                    remorse.execute(qsTr("Start logout..."), function() {
-//                        userinfo.logined = false;
-//                        userinfo.uid = "";
-//                        userinfo.userslug = "";
-//                        userinfo.username = "";
-//                        userinfo.avatar = "";
-//                        userinfo.user_text = "";
-//                        py.logout();
-//                        toIndexPage();
-//                    },3000)
-
-//                }
-//            }
 
         }
 
-
-        Component.onDestruction: {
-//            settings.set_pagesize(slider.value);
-//            py.initPagesize();
-        }
     }
 
     

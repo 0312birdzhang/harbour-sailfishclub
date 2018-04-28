@@ -38,6 +38,10 @@
         <source>This app is a client for https://sailfishos.club ,an unofficial Chinese community.</source>
         <translation>这个软件是https://sailfishos.club（旗鱼俱乐部）的客户端，旗鱼俱乐部是一个非官方中文社区</translation>
     </message>
+    <message>
+        <source>ArtWork</source>
+        <translation>设计</translation>
+    </message>
 </context>
 <context>
     <name>ActivityTopicBanner</name>
@@ -254,19 +258,19 @@
     </message>
     <message>
         <source>Categories</source>
-        <translation type="unfinished">板块</translation>
+        <translation>板块</translation>
     </message>
     <message>
         <source>Popular</source>
-        <translation type="unfinished">热门</translation>
+        <translation>热门</translation>
     </message>
     <message>
         <source>Recent</source>
-        <translation type="unfinished"></translation>
+        <translation>最新</translation>
     </message>
     <message>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>搜索</translation>
     </message>
 </context>
 <context>
@@ -365,47 +369,35 @@
     <name>SearchPage</name>
     <message>
         <source>Search results will be shown here</source>
-        <translation type="unfinished"></translation>
+        <translation>搜索结果会在此显示</translation>
     </message>
     <message>
         <source>Type some keywords in the field above</source>
-        <translation type="unfinished"></translation>
+        <translation>在上面输入要搜索的内容</translation>
     </message>
     <message>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>搜索</translation>
     </message>
     <message>
         <source>SearchPlaceholder</source>
-        <translation type="unfinished"></translation>
+        <translation>搜索</translation>
     </message>
     <message>
         <source>author:</source>
-        <translation type="unfinished">作者:</translation>
-    </message>
-    <message>
-        <source>latest reply</source>
-        <translation type="unfinished">最后回复</translation>
-    </message>
-    <message>
-        <source>comments: </source>
-        <translation type="unfinished">评论：</translation>
-    </message>
-    <message>
-        <source>views: </source>
-        <translation type="unfinished">查看：</translation>
+        <translation>作者:</translation>
     </message>
     <message>
         <source>Prev Page</source>
-        <translation type="unfinished">上一页</translation>
+        <translation>上一页</translation>
     </message>
     <message>
         <source>Next Page</source>
-        <translation type="unfinished">下一页</translation>
+        <translation>下一页</translation>
     </message>
     <message>
         <source>Load failed,try again later</source>
-        <translation type="unfinished">加载失败，请稍后重试</translation>
+        <translation>加载失败，请稍后重试</translation>
     </message>
 </context>
 <context>

@@ -38,6 +38,10 @@
         <source>This app is a client for https://sailfishos.club ,an unofficial Chinese community.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>ArtWork</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ActivityTopicBanner</name>
@@ -381,18 +385,6 @@
     </message>
     <message>
         <source>author:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>latest reply</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>comments: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>views: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>

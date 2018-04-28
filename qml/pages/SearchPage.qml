@@ -1,5 +1,8 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import io.thp.pyotherside 1.3
+import "../js/ApiCore.js" as JS
+import "../js/fontawesome.js" as FONT
 
 Page {
     id: searchPage
@@ -36,6 +39,7 @@ Page {
         id: searchView
         width: parent.width
         height: parent.height
+        anchors.fill: parent
 
         header: Column {
             width: parent.width
@@ -67,7 +71,7 @@ Page {
         delegate: BackgroundItem {
             id:showlist
             height:titleid.height+latestPost.height+timeid.height+Theme.paddingMedium*4
-            width: listView.width
+            width: searchView.width
             Label{
                 id:titleid
                 text:JS.decodeHTMLEntities(title)
@@ -89,9 +93,7 @@ Page {
 
             Label{
                 id:latestPost
-                text: qsTr("author:") + user + " / " + (latestpost?(qsTr("latest reply") +
-                                                                    " " + latestuser + ":"
-                                                                    + appwindow.formatFirstPagehtml(latestpost)):"")
+                text: qsTr("author:") + user
                 textFormat: Text.StyledText
                 font.pixelSize: Theme.fontSizeExtraSmall
                 wrapMode: Text.WordWrap
@@ -119,21 +121,6 @@ Page {
                     left: parent.left
                     topMargin: Theme.paddingMedium
                     leftMargin: Theme.paddingMedium
-                }
-            }
-            Label{
-                id:viewinfo
-                text:qsTr("comments: ") +postcount+" / " + qsTr("views: ") +viewcount
-                //opacity: 0.7
-                font.pixelSize: Theme.fontSizeTiny
-                //font.italic: true
-                color: Theme.secondaryColor
-                //horizontalAlignment: Text.AlignRight
-                anchors {
-                    top:latestPost.bottom
-                    right: parent.right
-                    topMargin: Theme.paddingMedium
-                    rightMargin: Theme.paddingMedium
                 }
             }
             Separator {
@@ -167,7 +154,7 @@ Page {
                         visible: prev_active
                         onClicked: {
                             current_page--;
-                            load();
+                            _search(initialSearch);
                         }
                     }
                     Button{
@@ -175,7 +162,7 @@ Page {
                         visible: next_active
                         onClicked: {
                             current_page++;
-                            load();
+                            _search(initialSearch);
                         }
                     }
                 }
@@ -222,14 +209,9 @@ Page {
 
                 searchModel.clear();
                 for(var i = 0;i<posts.length;i++){
-                    if(topics[i].deleted)continue;
                     searchModel.append({
-                                       "title":posts[i].title,
+                                       "title":posts[i].topic.title,
                                        "user":posts[i].user.username,
-                                       "viewcount":posts[i].viewcount,
-                                       "postcount":posts[i].postcount,
-                                       "latestpost":posts[i].teaser?topics[i].teaser.content:"",
-                                       "latestuser":posts[i].teaser?topics[i].teaser.user.username:"",
                                        "tid":posts[i].tid,
                                        "timestamp":posts[i].timestampISO,
                                        "slug":posts[i].slug,
@@ -239,6 +221,7 @@ Page {
                                        });
                 }
                 searchView.model = searchModel;
+                console.log("searchModel count:"+searchModel.count)
             }else{
                 appwindow.loading = false;
                 console.log("load failed!!!");
