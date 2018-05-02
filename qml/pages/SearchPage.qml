@@ -23,6 +23,7 @@ Page {
 
     function _search(text) {
         if(!text) return;
+        searchModel.clear();
         py.search(text, "page=" + current_page);
         viewPlaceholder.text = ""
         viewPlaceholder.hintText = ""
@@ -70,16 +71,19 @@ Page {
 
         delegate: BackgroundItem {
             id:showlist
-            height:titleid.height+latestPost.height+timeid.height+Theme.paddingMedium*4
+            height:titleid.height + latestPost.height+timeid.height+Theme.paddingMedium*4
             width: searchView.width
             Label{
                 id:titleid
-                text:JS.decodeHTMLEntities(title)
                 font.pixelSize: Theme.fontSizeSmall
                 truncationMode: TruncationMode.Fade
                 wrapMode: Text.WordWrap
                 color: Theme.highlightColor
                 font.bold:true;
+                color: initialSearch.length > 0 ? (highlighted ? Theme.secondaryHighlightColor : Theme.secondaryColor)
+                                                   : (highlighted ? Theme.highlightColor : Theme.primaryColor)
+                textFormat: Text.StyledText
+                text: Theme.highlightText(JS.decodeHTMLEntities(model.title), initialSearch, Theme.highlightColor)
                 anchors {
                     top:parent.top;
                     left: parent.left
@@ -93,11 +97,13 @@ Page {
 
             Label{
                 id:latestPost
-                text: qsTr("author:") + user
                 textFormat: Text.StyledText
                 font.pixelSize: Theme.fontSizeExtraSmall
                 wrapMode: Text.WordWrap
                 linkColor:Theme.primaryColor
+                color: initialSearch.length > 0 ? (highlighted ? Theme.secondaryHighlightColor : Theme.secondaryColor)
+                                                   : (highlighted ? Theme.highlightColor : Theme.primaryColor)
+                text: Theme.highlightText(content, initialSearch, Theme.highlightColor)
                 maximumLineCount: 3
                 anchors {
                     top: titleid.bottom
@@ -189,7 +195,7 @@ Page {
     Connections{
         target: signalCenter
         onGetSearch:{
-            console.log("result:"+ result);
+            // console.log("result:"+ result);
             if (result && result != "Forbidden"){
                 var posts = result.posts;
                 var pagination = result.pagination;
@@ -207,12 +213,12 @@ Page {
                     prev_active = false;
                 }
 
-                searchModel.clear();
                 for(var i = 0;i<posts.length;i++){
                     searchModel.append({
                                        "title":posts[i].topic.title,
                                        "user":posts[i].user.username,
                                        "tid":posts[i].tid,
+                                       "content": posts[i].content,
                                        "timestamp":posts[i].timestampISO,
                                        "slug":posts[i].slug,
                                        "mainPid":posts[i].mainPid,
@@ -221,13 +227,14 @@ Page {
                                        });
                 }
                 searchView.model = searchModel;
-                console.log("searchModel count:"+searchModel.count)
+                // console.log("searchModel count:"+searchModel.count)
             }else{
                 appwindow.loading = false;
                 console.log("load failed!!!");
-                notification.show(qsTr("Load failed,try again later"),
-                                  "image://theme/icon-lock-warning"
-                                  )
+                // notification.show(qsTr("Load failed,try again later"),
+                //                   "image://theme/icon-lock-warning"
+                //                   );
+                viewPlaceholder.hintText = qsTr("Load failed,try again later");                                 
             }
         }
     }
