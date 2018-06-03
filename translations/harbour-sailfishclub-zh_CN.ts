@@ -384,10 +384,6 @@
         <translation>搜索</translation>
     </message>
     <message>
-        <source>author:</source>
-        <translation>作者:</translation>
-    </message>
-    <message>
         <source>Prev Page</source>
         <translation>上一页</translation>
     </message>

@@ -78,7 +78,6 @@ Page {
                 font.pixelSize: Theme.fontSizeSmall
                 truncationMode: TruncationMode.Fade
                 wrapMode: Text.WordWrap
-                color: Theme.highlightColor
                 font.bold:true;
                 color: initialSearch.length > 0 ? (highlighted ? Theme.secondaryHighlightColor : Theme.secondaryColor)
                                                    : (highlighted ? Theme.highlightColor : Theme.primaryColor)

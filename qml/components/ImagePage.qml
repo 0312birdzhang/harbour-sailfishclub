@@ -5,7 +5,7 @@ Page {
     id: imagePage
 
     property string localUrl: ""
-    allowedOrientations:Orientation.All
+    allowedOrientations: Orientation.All
 
     Flickable {
         id: imageFlickable

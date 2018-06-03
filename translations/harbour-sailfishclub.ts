@@ -384,10 +384,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>author:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Prev Page</source>
         <translation type="unfinished"></translation>
     </message>
