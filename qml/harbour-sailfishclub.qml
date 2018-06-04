@@ -41,6 +41,7 @@ import io.thp.pyotherside 1.4
 import Nemo.Notifications 1.0
 import Nemo.DBus 2.0
 import harbour.sailfishclub.settings 1.0
+import QtSystemInfo 5.0
 
 
 ApplicationWindow
@@ -206,7 +207,18 @@ ApplicationWindow
         id:userinfo
     }
 
-
+    NetworkInfo {
+        id: networkInfo
+        //NetworkStatus
+        // "UnknownStatus": 0,
+        // "NoNetworkAvailable": 1,
+        // "EmergencyOnly": 2,
+        // "Searching": 3,
+        // "Busy": 4,
+        // "Denied": 5,
+        // "HomeNetwork": 6,
+        // "Roaming": 7
+    }
 
     Python{
         id:py
