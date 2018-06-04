@@ -41,7 +41,7 @@ Page{
 
             LabelText{
                 label: qsTr("ArtWork")
-                text: "Cover跟图标均有设计师<b>蔡司</b>重新制作，👍"
+                text: "Cover跟图标均有设计师<b>蔡司</b>重新制作, 👍"
             }
 
             Item { width: 1; height: Theme.paddingMedium }

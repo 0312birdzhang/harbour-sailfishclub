@@ -40,6 +40,7 @@ import "js/fontawesome.js" as FontAwesome
 import io.thp.pyotherside 1.4
 import Nemo.Notifications 1.0
 import Nemo.DBus 2.0
+import Nemo.Configuration 1.0
 import harbour.sailfishclub.settings 1.0
 import QtSystemInfo 5.0
 

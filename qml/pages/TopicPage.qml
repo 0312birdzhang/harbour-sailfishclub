@@ -102,6 +102,7 @@ Page{
                 ContextMenu {
                     MenuItem {
                         text: qsTr("Replay")
+                        visible: userinfo.logined
                         onClicked:{
                             pageStack.push(postComponent, {
                                                "tid":tid,

@@ -4,7 +4,7 @@ import Sailfish.Silica 1.0
 Page {
     id: imagePage
 
-    property string localUrl: ""
+    property string localUrl
     allowedOrientations:Orientation.All
 
     Flickable {
@@ -161,9 +161,12 @@ Page {
            bottomMargin: Theme.paddingLarge;
        }
        width: Theme.iconSizeMedium+Theme.paddingMedium*2
-       icon.source: "image://theme/icon-m-cloud-download"
+       icon.source: "image://theme/icon-m-share"
        onClicked: {
-            //TODO
+           pageStack.push(Qt.resolvedUrl("ShareToPage.qml"),{
+               "link": "",
+               "linkTitle": ""
+           })
        }
     }
 }
