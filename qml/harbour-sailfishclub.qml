@@ -42,7 +42,6 @@ import Nemo.Notifications 1.0
 import Nemo.DBus 2.0
 import Nemo.Configuration 1.0
 import harbour.sailfishclub.settings 1.0
-import QtSystemInfo 5.0
 
 
 ApplicationWindow
@@ -59,13 +58,18 @@ ApplicationWindow
     property string siteUrl: "https://sailfishos.club"
     property alias  userinfo: userinfo
     property bool _showReplayNotification: true
+    property bool networkStatus
 
     cover: Qt.resolvedUrl("cover/CoverPage.qml")
     allowedOrientations:Orientation.All
 
 
-    onCurrentPageChanged: {
-
+    onNetworkStatusChanged: {
+        if(networkStatus == false) {
+            //% "Network connection failure"
+            notification.showPopup(qsTr("Network not connected"), qsTr("Try again later please"), "icon-s-high-importance");
+            loading = false;
+        }
     }
 
 
@@ -83,6 +87,43 @@ ApplicationWindow
             }
             __silica_applicationwindow_instance.activate()
             pageStack.push(Qt.resolvedUrl(page), arguments)
+        }
+    }
+
+    // from https://github.com/DylanVanAssche/harbour-sailfinder/blob/develop/qml/harbour-sailfinder.qml
+    DBusInterface {
+        bus: DBus.SystemBus
+        service: "net.connman"
+        path: "/"
+        iface: "net.connman.Manager"
+        signalsEnabled: true
+        Component.onCompleted: getStatus() // Init
+
+        // Methods
+        function getStatus() {
+            typedCall("GetProperties", [], function(properties) {
+                if(properties["State"] == "online") {
+                    networkStatus = true
+                }
+                else {
+                    networkStatus = false
+                }
+            },
+            function(trace) {
+                console.error("Network state couldn't be retrieved: " + trace)
+            })
+        }
+
+        // Signals
+        function propertyChanged(name, value) {
+            if(name == "State") {
+                if(value == "online") {
+                    networkStatus = true
+                }
+                else {
+                    networkStatus = false
+                }
+            }
         }
     }
     
@@ -183,7 +224,7 @@ ApplicationWindow
         onLoadFailed:{
             appwindow.loading=false;
             processingtimer.stop();
-            signalCenter.showMessage(errorstring);
+            notification.show(errorstring);
         }
     }
 
@@ -206,19 +247,6 @@ ApplicationWindow
 
     UserInfo{
         id:userinfo
-    }
-
-    NetworkInfo {
-        id: networkInfo
-        //NetworkStatus
-        // "UnknownStatus": 0,
-        // "NoNetworkAvailable": 1,
-        // "EmergencyOnly": 2,
-        // "Searching": 3,
-        // "Busy": 4,
-        // "Denied": 5,
-        // "HomeNetwork": 6,
-        // "Roaming": 7
     }
 
     Python{
