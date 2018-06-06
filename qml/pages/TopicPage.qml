@@ -87,6 +87,7 @@ Page{
                 font.pixelSize: Theme.fontSizeExtraSmall * 0.8
                 font.italic: true
                 text: signature
+                linkColor: Theme.highlightColor
                 visible: signature
             }
 

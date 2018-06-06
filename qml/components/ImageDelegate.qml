@@ -13,7 +13,7 @@ Item {
     MouseArea {
         anchors.fill: img;
         onClicked: {
-            pageStack.push(Qt.resolvedUrl("ImageHandle.qml"),{"localUrl":content});
+            pageStack.push(Qt.resolvedUrl("ImageHandle.qml"),{"localUrl": img.source});
         }
     }
 

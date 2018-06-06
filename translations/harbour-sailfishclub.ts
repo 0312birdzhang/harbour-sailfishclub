@@ -487,5 +487,13 @@
         <source>Request timeout</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Network not connected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Try again later please</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

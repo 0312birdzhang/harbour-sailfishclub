@@ -285,7 +285,7 @@
     </message>
     <message>
         <source>Unsupport redirect currently!</source>
-        <translation type="unfinished"></translation>
+        <translation>暂不支持跳转</translation>
     </message>
 </context>
 <context>
@@ -486,6 +486,14 @@
     <message>
         <source>Request timeout</source>
         <translation>请求超时</translation>
+    </message>
+    <message>
+        <source>Network not connected</source>
+        <translation>未连接到互联网</translation>
+    </message>
+    <message>
+        <source>Try again later please</source>
+        <translation>请稍后再试</translation>
     </message>
 </context>
 </TS>

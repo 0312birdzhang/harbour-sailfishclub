@@ -4,7 +4,7 @@ import Sailfish.Silica 1.0
 Page {
     id: imagePage
 
-    property string localUrl
+    property string localUrl: ""
     allowedOrientations:Orientation.All
 
     Flickable {
