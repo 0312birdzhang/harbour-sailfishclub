@@ -21,17 +21,17 @@ Page{
                     unreadModel.append({
                        "timestamp":posts[i].timestampISO,
                        "content":posts[i].teaser.content,
-                       "signature":posts[i].user.signature?posts[i].user.signature:"",
-                       "uid":posts[i].uid.toString(),
+                       "signature":posts[i].signature.user.signature?posts[i].signature.user.signature:"",
+                       "uid":posts[i].teaser.uid.toString(),
                        "pid":posts[i].pid,
-                       "username":posts[i].user.username,
-                       "userslug":posts[i].user.userslug,
-                       "picture":posts[i].user.picture,
+                       "username":posts[i].teaser.user.username,
+                       "userslug":posts[i].teaser.user.userslug,
+                       "picture":posts[i].teaser.user.picture,
                        "floor":posts[i].index,
-                       "user_group_icon":posts[i].user.selectedGroup?posts[i].user.selectedGroup.icon:"",
-                       "user_group_name":posts[i].user.selectedGroup?posts[i].user.selectedGroup.userTitle:"",
-                       "user_text":posts[i].user["icon:text"],
-                       "user_color":posts[i].user["icon:bgColor"]
+                       "user_group_icon":posts[i].teaser.user.selectedGroup?posts[i].teaser.user.selectedGroup.icon:"",
+                       "user_group_name":posts[i].teaser.user.selectedGroup?posts[i].teaser.user.selectedGroup.userTitle:"",
+                       "user_text":posts[i].teaser.user["icon:text"],
+                       "user_color":posts[i].teaser.user["icon:bgColor"]
                       });
 
                 }
