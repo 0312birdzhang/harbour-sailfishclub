@@ -103,7 +103,7 @@ Page {
                 color: initialSearch.length > 0 ? (highlighted ? Theme.secondaryHighlightColor : Theme.secondaryColor)
                                                    : (highlighted ? Theme.highlightColor : Theme.primaryColor)
                 text: Theme.highlightText(content, initialSearch, Theme.highlightColor)
-                maximumLineCount: 3
+                maximumLineCount: 2
                 anchors {
                     top: titleid.bottom
                     left: parent.left

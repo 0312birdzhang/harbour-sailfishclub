@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
+
 Item {
     property alias avatar: avatar.msource
     property alias color: fontAvatar.color

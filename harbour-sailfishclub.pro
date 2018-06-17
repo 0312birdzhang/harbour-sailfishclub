@@ -12,7 +12,12 @@
 # The name of your application
 TARGET = harbour-sailfishclub
 
+QT += dbus
 CONFIG += sailfishapp
+
+CONFIG += link_pkgconfig
+
+PKGCONFIG += qt5embedwidget
 
 SOURCES += src/harbour-sailfishclub.cpp \
             src/settings.cpp \

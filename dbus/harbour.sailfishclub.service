@@ -1,4 +1,4 @@
 [D-BUS Service]
 Name=harbour.sailfishclub.service
-Exec=/usr/bin/harbour-sailfishclub
+Exec=/usr/bin/invoker --type=silica-qt5 -s /usr/bin/harbour-sailfishclub
 User=nemo

@@ -128,7 +128,7 @@ ApplicationWindow
     }
     
     Notification{
-        id:notification
+        id: notification
         function show(message, icn) {
             replacesId = 0
             previewSummary = ""
@@ -748,7 +748,7 @@ ApplicationWindow
     }
 
     function formathtml(html) {
-        html = html.replace(/[\n]/gi,""); //替换掉html中的换行
+        //html = html.replace(/[\n]/gi,""); //替换掉html中的换行
         html = html.replace(/<a\shref=\"\/post\//g, "<a href=\""+siteUrl+"/post/");
         html = html.replace(/<a\shref=\"\/topic\//g, "<a href=\""+siteUrl+"/topic/");
         html = html.replace(/<a\shref=\"\/uid\//g, "<a href=\""+siteUrl+"/uid/");

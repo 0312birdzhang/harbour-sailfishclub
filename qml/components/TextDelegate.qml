@@ -17,4 +17,18 @@ import Sailfish.Silica 1.0
      onLinkActivated: {
          appwindow.openLink(link);
      }
+     MouseArea{
+         anchors.fill: parent
+         onClicked: {
+             if(content && content.indexOf("<code>") > 0 ){
+                notification.show(qsTr("Long press to copy"))
+             }
+         }
+         onPressAndHold: {
+             if(content && content.indexOf("<code>") > 0){
+                 Clipboard.text = content;
+                 notification.show(qsTr("Copied to clipboard"));
+             }
+         }
+     }
  }

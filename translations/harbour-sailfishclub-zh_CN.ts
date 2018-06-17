@@ -408,6 +408,17 @@
     </message>
 </context>
 <context>
+    <name>TextDelegate</name>
+    <message>
+        <source>Long press to copy</source>
+        <translation>长按复制</translation>
+    </message>
+    <message>
+        <source>Copied to clipboard</source>
+        <translation>已复制到剪切板</translation>
+    </message>
+</context>
+<context>
     <name>TopicPage</name>
     <message>
         <source>Replay</source>
@@ -432,6 +443,10 @@
     <message>
         <source>Load failed,try again later</source>
         <translation>加载失败，请稍后重试</translation>
+    </message>
+    <message>
+        <source>Login to replay</source>
+        <translation>登录后回复</translation>
     </message>
 </context>
 <context>
@@ -465,11 +480,11 @@
     </message>
     <message>
         <source>Welcome to</source>
-        <translation type="unfinished"></translation>
+        <translation>Welcome to</translation>
     </message>
     <message>
         <source>SailfishClub</source>
-        <translation type="unfinished"></translation>
+        <translation>SailfishClub</translation>
     </message>
     <message>
         <source>Starting open link...</source>

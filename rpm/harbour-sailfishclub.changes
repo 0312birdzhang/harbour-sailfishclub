@@ -5,6 +5,10 @@
 # Add newest entries to the top of the list.
 # Separate entries from eachother with a blank line.
 
+* Sun Jun 10 2018 BirdZhang <0312birdzhang@gmail.com> 0.2.1
+- add webview video preview support
+- fix notification page bug
+
 * Sat Apr 28 2018 BirdZhang <0312birdzhang@gmail.com> 0.2.0
 - new icon from 蔡司
 - add search

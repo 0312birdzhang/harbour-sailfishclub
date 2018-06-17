@@ -27,6 +27,8 @@ Page{
                 id:logo
                 fillMode: Image.Stretch;
                 source:"image://theme/harbour-sailfishclub"
+                sourceSize.width: Theme.itemSizeLarge
+                sourceSize.height: sourceSize.width
                 anchors.horizontalCenter: parent.horizontalCenter;
             }
 
@@ -34,7 +36,7 @@ Page{
             Label{
                 id:version
                 anchors.horizontalCenter: parent.horizontalCenter
-                text:qsTr("Version")+" 0.2.0"
+                text:qsTr("Version")+" 0.2.1"
 
             }
             Item{width: 1;height: Theme.paddingMedium}

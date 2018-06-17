@@ -62,7 +62,7 @@ function splitContent(topic_content, parent) {
         for(var j = 0; j < text_contents.length; j++){
             model.append({
                 "type": "Text",
-                "content": text_contents[j]
+                "content": text_contents[j].replace("\\n","<br/>")
             })
             if(text_contents[j].indexOf("embed-responsive") > -1 || text_contents[j].indexOf("video-container") > -1){
                 model.append({

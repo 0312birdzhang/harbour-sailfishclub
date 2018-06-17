@@ -80,14 +80,13 @@ Page{
                     right: parent.right
                     rightMargin: Theme.paddingMedium
                 }
-                color: Theme.highlightColor
+                color: parent.highlighted ? Theme.secondaryColor : Theme.highlightColor
                 horizontalAlignment: Text.AlignRight
                 wrapMode: Text.WordWrap
                 textFormat: Text.RichText
                 font.pixelSize: Theme.fontSizeExtraSmall * 0.8
                 font.italic: true
                 text: signature
-                linkColor: Theme.highlightColor
                 visible: signature
             }
 
@@ -102,16 +101,20 @@ Page{
                 id: contextMenu
                 ContextMenu {
                     MenuItem {
-                        text: qsTr("Replay")
-                        visible: userinfo.logined
+                        text: userinfo.logined ? qsTr("Replay") :qsTr("Login to replay")
                         onClicked:{
-                            pageStack.push(postComponent, {
+                            if(userinfo.logined){
+                                pageStack.push(postComponent, {
                                                "tid":tid,
                                                "replayTo":"@"+userslug+" ",
                                                "pid":pid,
                                                "parentpage":topicPage,
                                                "replaysTmpModel":topicModel
                                            });
+                            }else{
+                                toLoginPage();
+                            }
+
                             toolbar.hideExbar();
                         }
                     }
