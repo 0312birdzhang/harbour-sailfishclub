@@ -411,17 +411,6 @@
     </message>
 </context>
 <context>
-    <name>TextDelegate</name>
-    <message>
-        <source>Long press to copy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Copied to clipboard</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>TopicPage</name>
     <message>
         <source>Empty,Click to retry</source>

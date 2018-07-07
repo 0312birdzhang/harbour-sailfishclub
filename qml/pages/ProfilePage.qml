@@ -48,9 +48,10 @@ Page{
                 tmpData.groupTitle= result.groupTitle;
                 tmpData.groupIcon= result.groupIcon;
                 tmpData.status= result.status;
-                tmpData.user_text= result["icon:text"];
-                tmpData.user_color= result["icon:bgColor"];
-                tmpData.user_cover= appwindow.siteUrl + result["cover:url"];
+                tmpData.user_text = result["icon:text"];
+                tmpData.user_color = result["icon:bgColor"];
+                tmpData.user_cover = appwindow.siteUrl + result["cover:url"];
+//                console.log(appwindow.siteUrl + result["cover:url"])
                 tmpData.followerCount = result.followerCount;
                 tmpData.followingCount = result.followingCount;
                 tmpData.reputation = result.reputation;
@@ -87,7 +88,7 @@ Page{
                 id: userCover
                 asynchronous: true
                 smooth: true
-                sourceUncached: user_cover
+                sourceUncached: /*userData?userData.user_cover:*/"../gfx/background.png"
                 width: parent.width
                 height: isLandscape?parent.width/3:parent.width/2;
                 sourceSize.width: width
@@ -99,8 +100,8 @@ Page{
                 Avatar {
                     id: avatar;
                     anchors {
-                        horizontalCenter: parent.horizontalCenter
-                        verticalCenter: parent.verticalCenter
+                        horizontalCenter: parent.horizontalCenter;
+                        verticalCenter: parent.verticalCenter;
                     }
                     height: isLandscape?parent.width/9:parent.width/6;
                     width: height;
@@ -109,18 +110,36 @@ Page{
                     text:   userData?userData.user_text:""
                     username: userData? userData.username:""
                 }
+
+                Column{
+                    width: parent.width;
+                    spacing: Theme.paddingSmall
+                    anchors.top: avatar.bottom
+                    Text {
+                        anchors{
+                            horizontalCenter: parent.horizontalCenter;
+                        }
+                        font.pixelSize: Theme.fontSizeMedium;
+                        color: "white";
+                        text: userData ? userData.username : "";
+                    }
+
+                    Text {
+                        anchors.horizontalCenter: parent.horizontalCenter;
+                        wrapMode: Text.Wrap;
+                        maximumLineCount: 1;
+                        textFormat: Text.PlainText;
+                        font.pixelSize: Theme.fontSizeExtraSmall
+                        color: "white";
+                        text: userData ? userData.aboutme?userData.aboutme:"":"";
+                    }
+                }
+
             }
             
 
 
-            Text {
-                anchors{
-                    horizontalCenter: parent.horizontalCenter;
-                }
-                font.pixelSize: Theme.fontSizeMedium;
-                color: "white";
-                text: userData ? userData.username : "";
-            }
+
 
 //            Text {
 //                anchors{
@@ -149,15 +168,7 @@ Page{
 //                                      (FontAwesome.Icon[userData.groupIcon.replace(/-/g,"_")] + userData.groupTitle ): "") : ""
 //            }
 
-            Text {
-                anchors.horizontalCenter: parent.horizontalCenter;
-                wrapMode: Text.Wrap;
-                maximumLineCount: 1;
-                textFormat: Text.PlainText;
-                font.pixelSize: Theme.fontSizeExtraSmall
-                color: "white";
-                text: userData ? userData.aboutme?userData.aboutme:"":"";
-            }
+
 
             Column{
                 width: parent.width

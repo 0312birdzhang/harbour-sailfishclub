@@ -308,6 +308,7 @@ ApplicationWindow
                     userinfo.aboutme = result.aboutme?result.aboutme:"";
                     userinfo.user_text = result["icon:text"];
                     userinfo.user_color = result["icon:bgColor"];
+                    userinfo.user_cover = appwindow.siteUrl + result["cover:url"];
                     userinfo.reputation = result.reputation;
                     userinfo.followerCount = result.followerCount?result.followerCount:0;
                     userinfo.followingCount = result.followingCount?result.followingCount:0;
@@ -338,6 +339,7 @@ ApplicationWindow
                     userinfo.aboutme = result.aboutme?result.aboutme:"";
                     userinfo.user_text = result["icon:text"];
                     userinfo.user_color = result["icon:bgColor"];
+                    userinfo.user_cover = appwindow.siteUrl + result["cover:url"];
                     userinfo.reputation = result.reputation;
                     userinfo.followerCount = result.followerCount?result.followerCount:0;
                     userinfo.followingCount = result.followingCount?result.followingCount:0;

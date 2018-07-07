@@ -411,17 +411,6 @@
     </message>
 </context>
 <context>
-    <name>TextDelegate</name>
-    <message>
-        <source>Long press to copy</source>
-        <translation>长按复制</translation>
-    </message>
-    <message>
-        <source>Copied to clipboard</source>
-        <translation>已复制到剪切板</translation>
-    </message>
-</context>
-<context>
     <name>TopicPage</name>
     <message>
         <source>Replay</source>
