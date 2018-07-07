@@ -21,9 +21,10 @@ Page{
                     unreadModel.append({
                        "timestamp":posts[i].timestampISO,
                        "content":posts[i].teaser.content,
-                       "signature":posts[i].signature.user.signature?posts[i].signature.user.signature:"",
-                       "uid":posts[i].teaser.uid.toString(),
-                       "pid":posts[i].pid,
+                       "signature":posts[i].teaser.signature?posts[i].teaser.signature:"",
+                       "tid": posts[i].tid,
+                       "uid": posts[i].teaser.uid.toString(),
+                       "pid": posts[i].pid,
                        "username":posts[i].teaser.user.username,
                        "userslug":posts[i].teaser.user.userslug,
                        "picture":posts[i].teaser.user.picture,
@@ -114,7 +115,10 @@ Page{
             }
 
             onClicked: {
-                notification.show(qsTr("Unsupport redirect currently!"))
+                appwindow.unreadSize--;
+                pageStack.push(Qt.resolvedUrl("TopicPage.qml"),{
+                                   "tid":tid
+                               });
             }
 
         }

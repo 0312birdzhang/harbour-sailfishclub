@@ -14,8 +14,8 @@ Name:       harbour-sailfishclub
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    SailfishClub client for Sailfish OS
-Version:    0.2.1
-Release:    1
+Version:    0.2.2
+Release:    2
 Group:      Qt/Qt
 License:    LICENSE
 URL:        https://sailfishos.club/

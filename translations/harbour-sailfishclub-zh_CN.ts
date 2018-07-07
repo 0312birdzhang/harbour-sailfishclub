@@ -108,6 +108,13 @@
     </message>
 </context>
 <context>
+    <name>CoverPage</name>
+    <message>
+        <source>Unread</source>
+        <translation>未读通知</translation>
+    </message>
+</context>
+<context>
     <name>FirstPage</name>
     <message>
         <source>Recent Page</source>
@@ -282,10 +289,6 @@
     <message>
         <source>No unread news</source>
         <translation>没有未读的消息</translation>
-    </message>
-    <message>
-        <source>Unsupport redirect currently!</source>
-        <translation>暂不支持跳转</translation>
     </message>
 </context>
 <context>

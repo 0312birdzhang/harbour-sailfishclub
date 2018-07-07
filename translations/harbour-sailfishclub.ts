@@ -108,6 +108,13 @@
     </message>
 </context>
 <context>
+    <name>CoverPage</name>
+    <message>
+        <source>Unread</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>FirstPage</name>
     <message>
         <source>Recent Page</source>
@@ -281,10 +288,6 @@
     </message>
     <message>
         <source>No unread news</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unsupport redirect currently!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

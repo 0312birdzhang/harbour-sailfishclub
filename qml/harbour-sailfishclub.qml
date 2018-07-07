@@ -46,7 +46,7 @@ import harbour.sailfishclub.settings 1.0
 
 ApplicationWindow
 {
-    id:appwindow
+    id: appwindow
 
     property Page currentPage: pageStack.currentPage
 
@@ -59,6 +59,7 @@ ApplicationWindow
     property alias  userinfo: userinfo
     property bool _showReplayNotification: true
     property bool networkStatus
+    property int unreadSize: 0
 
     cover: Qt.resolvedUrl("cover/CoverPage.qml")
     allowedOrientations:Orientation.All
@@ -72,6 +73,13 @@ ApplicationWindow
         }
     }
 
+    onApplicationActiveChanged: {
+        if (applicationActive){
+            _showReplayNotification = false
+        }else{
+            _showReplayNotification = true
+        }
+    }
 
     DBusAdaptor {
         service: "harbour.sailfishclub.service"
@@ -202,6 +210,7 @@ ApplicationWindow
         repeat: true
         onTriggered: {
             if(userinfo.logined){
+                console.log("start to get notification...")
                 py.getUnread();
             }
         }
@@ -231,11 +240,11 @@ ApplicationWindow
     Signalcenter{
         id: signalCenter;
         onGetUnread:{
-//            console.log("result:"+ JSON.stringify(result));
             if (result && result !== "Forbidden"){
-                var nos = result.notifications;
-                if(nos && _showReplayNotification /*&& !nos[0].read*/){
-                    replaiesNotification.body = nos[0].bodyLong;
+                var nos = result.topics;
+                if(nos.topicCount > 0 && _showReplayNotification){
+                    console.log("push notification")
+                    replaiesNotification.body = nos[0].teaser.content;
                     replaiesNotification.publish();
                 }
             }
@@ -355,7 +364,8 @@ ApplicationWindow
                 settings.set_password("");
                 settings.set_uid(0);
                 settings.set_token("");
-            })
+            });
+            getNotifytimer.stop();
         }
 
         function saveData(uid, token, username, password){
@@ -507,6 +517,9 @@ ApplicationWindow
         function getUnread(){
             call('main.getUnread', [settings.get_token()], function(result){
                 signalCenter.getUnread(result);
+                if(result && result != "Forbidden"){
+                    unreadSize = result.topicCount;
+                }
             });
         }
 

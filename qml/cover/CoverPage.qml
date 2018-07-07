@@ -31,6 +31,7 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
+
 CoverBackground {
     Image{
         id: logo
@@ -41,6 +42,37 @@ CoverBackground {
         anchors.horizontalCenter: parent.horizontalCenter
         width: parent.width
         height: sourceSize.height * width / sourceSize.width
+    }
+
+    Label {
+        id: unreadCount
+        text: appwindow.unreadSize
+        x: Theme.paddingLarge
+        y: Theme.paddingMedium
+        font.pixelSize: Theme.fontSizeHuge
+        font.family: Theme.fontFamilyHeading
+        visible: networkStatus && appwindow.unreadSize > 0
+    }
+    Label {
+        id: unreadLabel
+        text: qsTr("Unread")
+        font.pixelSize: Theme.fontSizeExtraSmall
+        font.family: Theme.fontFamilyHeading
+        font.weight: Font.Light
+        lineHeight: 0.8
+        height: implicitHeight + Theme.paddingLarge
+        anchors {
+            right: parent.right
+            left: unreadCount.right
+            leftMargin: Theme.paddingMedium
+            rightMargin: Theme.paddingLarge
+            baseline: unreadCount.baseline
+            baselineOffset: -implicitHeight/2
+        }
+        visible: networkStatus && appwindow.unreadSize > 0
+    }
+    OpacityRampEffect {
+        sourceItem: unreadLabel
     }
 }
 
