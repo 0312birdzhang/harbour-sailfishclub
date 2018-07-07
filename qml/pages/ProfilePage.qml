@@ -50,6 +50,7 @@ Page{
                 tmpData.status= result.status;
                 tmpData.user_text= result["icon:text"];
                 tmpData.user_color= result["icon:bgColor"];
+                tmpData.user_cover= appwindow.siteUrl + result["cover:url"];
                 tmpData.followerCount = result.followerCount;
                 tmpData.followingCount = result.followingCount;
                 tmpData.reputation = result.reputation;
@@ -82,23 +83,34 @@ Page{
             id: contentCol;
             width: parent.width;
             spacing: Theme.paddingSmall
-            Item{
-                width: parent.width;
-                height: Theme.itemSizeSmall;
-            }
-            Avatar {
-                id: avatar;
+            CacheImage{
+                id: userCover
+                asynchronous: true
+                smooth: true
+                sourceUncached: user_cover
+                width: parent.width
+                height: isLandscape?parent.width/3:parent.width/2;
+                sourceSize.width: width
+                clip: true
                 anchors {
                     horizontalCenter: parent.horizontalCenter
                 }
-                height: isLandscape?parent.width/9:parent.width/6;
-                width: height;
-                avatar: userData?("" !== userData.avatar?(siteUrl+userData.avatar):""):"image://theme/harbour-sailfishclub"
-                color:  userData?userData.user_color:""
-                text:   userData?userData.user_text:""
-                username: userData? userData.username:""
 
+                Avatar {
+                    id: avatar;
+                    anchors {
+                        horizontalCenter: parent.horizontalCenter
+                        verticalCenter: parent.verticalCenter
+                    }
+                    height: isLandscape?parent.width/9:parent.width/6;
+                    width: height;
+                    avatar: userData?("" !== userData.avatar?(siteUrl+userData.avatar):""):"image://theme/harbour-sailfishclub"
+                    color:  userData?userData.user_color:""
+                    text:   userData?userData.user_text:""
+                    username: userData? userData.username:""
+                }
             }
+            
 
 
             Text {

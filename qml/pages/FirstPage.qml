@@ -301,6 +301,10 @@ Page {
             load();
         }
 
+        onNewTopic:{
+            load();
+        }
+
     }
 
     Component.onCompleted: {
