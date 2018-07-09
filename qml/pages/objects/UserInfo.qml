@@ -14,6 +14,7 @@ QtObject{
     property string groupTitle;
     property string groupIcon;
     property string avatar;
+    property string fullname;
     property string username;
     property string status;
     property string user_text;

@@ -16,14 +16,14 @@ Page{
     }
 
     function getProfile(){
-        if ( isMe ){
-            console.log("is me")
-            userData = userinfo;
-        }else{
-            console.log("not me")
-            py.getUserInfo(uid);
-        }
-
+//        if ( isMe ){
+//            console.log("is me")
+//            userData = userinfo;
+//        }else{
+//            console.log("not me")
+//            py.getUserInfo(uid);
+//        }
+        py.getUserInfo(uid);
 
     }
 
@@ -37,6 +37,7 @@ Page{
                 var tmpData = {};
                 tmpData.uid = result.uid;
                 tmpData.username = result.username;
+                tmpData.fullname = result.fullname;
                 tmpData.userslug = result.userslug;
                 tmpData.email = result.email;
                 tmpData.avatar = result.picture;
@@ -51,7 +52,7 @@ Page{
                 tmpData.user_text = result["icon:text"];
                 tmpData.user_color = result["icon:bgColor"];
                 tmpData.user_cover = appwindow.siteUrl + result["cover:url"];
-//                console.log(appwindow.siteUrl + result["cover:url"])
+                console.log(appwindow.siteUrl + result["cover:url"])
                 tmpData.followerCount = result.followerCount;
                 tmpData.followingCount = result.followingCount;
                 tmpData.reputation = result.reputation;
@@ -115,6 +116,14 @@ Page{
                     width: parent.width;
                     spacing: Theme.paddingSmall
                     anchors.top: avatar.bottom
+//                    Text {
+//                        anchors{
+//                            horizontalCenter: parent.horizontalCenter;
+//                        }
+//                        font.pixelSize: Theme.fontSizeLarge;
+//                        color: "white";
+//                        text: userData ? userData.fullname : "";
+//                    }
                     Text {
                         anchors{
                             horizontalCenter: parent.horizontalCenter;

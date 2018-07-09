@@ -17,7 +17,7 @@ Summary:    SailfishClub client for Sailfish OS
 Version:    0.2.2
 Release:    2
 Group:      Qt/Qt
-License:    LICENSE
+License:    GPLv3
 URL:        https://sailfishos.club/
 Source0:    %{name}-%{version}.tar.bz2
 Source100:  harbour-sailfishclub.yaml

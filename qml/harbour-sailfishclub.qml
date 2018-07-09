@@ -293,10 +293,11 @@ ApplicationWindow
                 return;
             }
             call('main.validate',[uid, token],function(result){
-//                console.log(JSON.stringify(result))
+                console.log(JSON.stringify(result))
                 if(result && result !== "Forbidden" && result !== "False"){
                     userinfo.uid = uid.toString();
                     userinfo.username = result.username;
+//                    userinfo.fullname = result.fullname;
                     userinfo.email = result.email?result.email:"";
                     userinfo.website = result.website;
                     userinfo.avatar = result.picture?result.picture:"";
@@ -309,6 +310,7 @@ ApplicationWindow
                     userinfo.user_text = result["icon:text"];
                     userinfo.user_color = result["icon:bgColor"];
                     userinfo.user_cover = appwindow.siteUrl + result["cover:url"];
+                    console.log(appwindow.siteUrl + result["cover:url"]);
                     userinfo.reputation = result.reputation;
                     userinfo.followerCount = result.followerCount?result.followerCount:0;
                     userinfo.followingCount = result.followingCount?result.followingCount:0;
@@ -328,6 +330,7 @@ ApplicationWindow
                 if(result && result != "Forbidden" && result != "False"){
                     userinfo.uid = result.uid.toString();
                     userinfo.username = result.username;
+//                    userinfo.fullname = result.fullname;
                     userinfo.email = result.email?result.email:"";
                     userinfo.website = result.website;
                     userinfo.avatar = result.picture?result.picture:"";
@@ -340,6 +343,7 @@ ApplicationWindow
                     userinfo.user_text = result["icon:text"];
                     userinfo.user_color = result["icon:bgColor"];
                     userinfo.user_cover = appwindow.siteUrl + result["cover:url"];
+                    console.log(appwindow.siteUrl + result["cover:url"]);
                     userinfo.reputation = result.reputation;
                     userinfo.followerCount = result.followerCount?result.followerCount:0;
                     userinfo.followingCount = result.followingCount?result.followingCount:0;
