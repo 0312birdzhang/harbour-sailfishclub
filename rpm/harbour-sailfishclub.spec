@@ -27,11 +27,12 @@ Requires:   python3-requests
 Requires:   python3-crypto
 Requires:   mapplauncherd-booster-silica-qt5
 Requires:   nemo-qml-plugin-thumbnailer-qt5
+Requires:   qtmozembed-qt5
 BuildRequires:  pkgconfig(sailfishapp) >= 1.0.2
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5Qml)
 BuildRequires:  pkgconfig(Qt5Quick)
-BuildRequires:  pkgconfig(qt5embedwidget)
+#BuildRequires:  pkgconfig(qt5embedwidget)
 BuildRequires:  desktop-file-utils
 
 %description

@@ -28,7 +28,7 @@ Page{
                 fillMode: Image.Stretch;
                 source:"image://theme/harbour-sailfishclub"
                 sourceSize.width: Theme.itemSizeLarge
-                sourceSize.height: sourceSize.width
+                sourceSize.height: Theme.itemSizeLarge
                 anchors.horizontalCenter: parent.horizontalCenter;
             }
 
