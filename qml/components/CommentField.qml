@@ -258,15 +258,15 @@ Column {
         opacity: body.text && body.text.length > 2
         Behavior on opacity { FadeAnimation { } }
         onClicked: {
-            if (_editId) {
-                // OrnClient.editComment(_editId, body.text)
-            } else if (_replyToId) {
-                // OrnClient.comment(appId, body.text, _replyToId)
-                sendButtonClicked();
-            } else {
-                // OrnClient.comment(appId, body.text)
-            }
-//                    _reset()
+            sendButtonClicked();
+//        if (_editId) {
+//            // OrnClient.editComment(_editId, body.text)
+//        } else if (_replyToId) {
+//            // OrnClient.comment(appId, body.text, _replyToId)
+//            sendButtonClicked();
+//        } else {
+//            // OrnClient.comment(appId, body.text)
+//        }
         }
         
     }
