@@ -43,15 +43,15 @@ Dialog  {
         id:filckable
         anchors.fill: parent
         contentHeight: column.height + Theme.paddingLarge * 4
-//        PullDownMenu {
-//            MenuItem {
-//                text: qsTr("Post")
-//                onClicked: {
-//                    send();
-                    
-//                }
-//            }
-//        }
+        PullDownMenu {
+            MenuItem {
+                text: qsTr("Post")
+                onClicked: {
+                    send();
+                  
+                }
+            }
+        }
         VerticalScrollDecorator {}
         Column{
             id:column
