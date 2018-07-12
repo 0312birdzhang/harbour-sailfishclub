@@ -313,6 +313,10 @@
         <source>Field not completed</source>
         <translation>还有未填写的</translation>
     </message>
+    <message>
+        <source>Post</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ProfilePage</name>

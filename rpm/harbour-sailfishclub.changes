@@ -5,6 +5,9 @@
 # Add newest entries to the top of the list.
 # Separate entries from eachother with a blank line.
 
+* Thu Jul 12 2018 BirdZhang <0312birdzhang@gmail.com> 0.2.2-3
+- fix can't post bug
+
 * Sun Jun 10 2018 BirdZhang <0312birdzhang@gmail.com> 0.2.1
 - add webview video preview support
 - fix notification page bug
