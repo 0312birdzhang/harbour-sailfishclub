@@ -146,7 +146,7 @@ def getUnOfficalBlog(page):
         "offset": page * 20
     }
     try:
-        r = requests.get(UnOfficalBlogURL, params = params)
+        r = requests.get(UnOfficalBlogURL, params = params, timeout = 5.0)
         json = r.text
         return json
     except Exception as e:
@@ -156,7 +156,7 @@ def getUnOfficalBlog(page):
 def getUnOfficalBlogContent(slug):
     url = "{}/{}".format(UnOfficalBlogURL, slug)
     try:
-        r = requests.get(url)
+        r = requests.get(url, timeout = 5.0)
         json = r.text
         return json
     except Exception as e:
@@ -172,20 +172,19 @@ def uploadImgSm(path):
     url = 'https://sm.ms/api/upload'
     try:
         files = {'smfile' : open(path.encode("utf-8"), 'rb')}
-        r = requests.post(url, files = files, timeout=5000)
+        r = requests.post(url, files = files, timeout=5.0)
         data1 = eval(r.text.encode('utf-8'))
         smurl = data1['data']['url']
         logger.info(smurl)
         return smurl
     except Exception as e:
-        uploadVimCN(path)
-        return None
+        return uploadVimCN(path)
 
 def uploadVimCN(file):
     url = 'http://img.vim-cn.com/'
     try:
         files = {'file' : open(file.encode("utf-8"), 'rb')}
-        r = requests.post(url, files = files, timeout=5000)
+        r = requests.post(url, files = files, timeout=5.0)
         return r.text
     except Exception as e:
         
