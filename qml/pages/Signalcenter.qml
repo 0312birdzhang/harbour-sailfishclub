@@ -28,6 +28,9 @@ QtObject{
     signal getUnread(var result);
 
     signal getSearch(var result);
+
+    signal getUnOfficalList(var result);
+    signal getUnOfficalContent(var result);
 }
 
 

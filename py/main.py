@@ -137,6 +137,35 @@ def getUnread(token):
     return notices
 
 
+UnOfficalBlogURL = "https://notexists.top/api/post"
+def getUnOfficalBlog(page):
+    if not page:
+        page = 0
+    params = {
+        "limit": 20,
+        "offset": page * 20
+    }
+    try:
+        r = requests.get(UnOfficalBlogURL, params = params)
+        json = r.text
+        return json
+    except Exception as e:
+        print(str(e))
+    return False
+
+def getUnOfficalBlogContent(slug):
+    url = "{}/{}".format(UnOfficalBlogURL, slug)
+    try:
+        r = requests.get(url)
+        json = r.text
+        return json
+    except Exception as e:
+        print(str(e))
+    return False
+
+
+
+
 def uploadImgSm(path):
     if path.startswith("file:"):
         path = path.replace("file://","")

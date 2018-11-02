@@ -529,6 +529,24 @@ ApplicationWindow
             });
         }
 
+
+        function getUnOfficalList(page){
+            loading = true;
+            call('main.getUnOfficalBlog',[page], function(result){
+                loading = false;
+                signalCenter.getUnOfficalList(result);
+            })
+        }
+
+
+        function getUnOfficalContent(slug){
+            loading = true;
+            call('main.getUnOfficalBlogContent',[slug], function(result){
+                loading = false;
+                signalCenter.getUnOfficalContent(result);
+            })
+        }
+
         // 弃用
         function loadImage(username,image_id){
             call('myprovider.load',[username,image_id],function(result){

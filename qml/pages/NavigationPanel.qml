@@ -244,6 +244,33 @@ Panel {
             }
         }
 
+
+        Item{
+            width: column.width
+            height: Theme.iconSizeSmall
+        }
+
+        Item {
+            width: column.width
+            height: Theme.itemSizeExtraSmall
+            HorizontalFontAwesomeTextButton {
+                anchors {
+                    left: parent.left
+                    leftMargin: Theme.paddingLarge
+                    right: parent.right
+                }
+                icon: FontAwesome.Icon.fa_newspaper
+                text:  qsTr("UnOfficalCNBlog")
+                enabled: true
+                visible: enabled
+                color: Theme.secondaryColor
+                spacing: Theme.paddingMedium
+                onClicked: {
+                   pageStack.push(Qt.resolvedUrl("UnOfficalCNBlog.qml"));
+                }
+            }
+        }
+
         Item{
             width: column.width
             height: Theme.iconSizeSmall
