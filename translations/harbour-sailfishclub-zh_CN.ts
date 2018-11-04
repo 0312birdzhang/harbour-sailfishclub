@@ -279,6 +279,10 @@
         <source>Search</source>
         <translation>搜索</translation>
     </message>
+    <message>
+        <source>UnOfficalCNBlog</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NotificationsPage</name>
@@ -466,6 +470,29 @@
     <message>
         <source>Share</source>
         <translation>分享</translation>
+    </message>
+</context>
+<context>
+    <name>UnOfficalCNBlog</name>
+    <message>
+        <source>Blog posts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load Failed,Click to retry</source>
+        <translation type="unfinished">加载失败，点击重试</translation>
+    </message>
+    <message>
+        <source>Prev Page</source>
+        <translation type="unfinished">上一页</translation>
+    </message>
+    <message>
+        <source>Next Page</source>
+        <translation type="unfinished">下一页</translation>
+    </message>
+    <message>
+        <source>Load failed,try again later</source>
+        <translation type="unfinished">加载失败，请稍后重试</translation>
     </message>
 </context>
 <context>

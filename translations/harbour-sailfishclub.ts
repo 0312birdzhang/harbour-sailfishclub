@@ -279,6 +279,10 @@
         <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>UnOfficalCNBlog</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NotificationsPage</name>
@@ -465,6 +469,29 @@
     </message>
     <message>
         <source>Share</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>UnOfficalCNBlog</name>
+    <message>
+        <source>Blog posts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load Failed,Click to retry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Prev Page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Next Page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load failed,try again later</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

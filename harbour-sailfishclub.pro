@@ -100,6 +100,7 @@ DISTFILES += \
     qml/components/AnimatedImageDelegate.qml \
     qml/components/WebviewDelegate.qml \
     qml/pages/SearchPage.qml \
+    qml/components/UnOfficalBlogListComponent.qml \
     qml/pages/UnOfficalCNBlog.qml
 
 dbus.files = dbus/harbour.sailfishclub.service

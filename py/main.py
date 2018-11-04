@@ -147,20 +147,18 @@ def getUnOfficalBlog(page):
     }
     try:
         r = requests.get(UnOfficalBlogURL, params = params, timeout = 5.0)
-        json = r.text
-        return json
+        return r.json()
     except Exception as e:
-        print(str(e))
+        logger.debug(str(e))
     return False
 
 def getUnOfficalBlogContent(slug):
     url = "{}/{}".format(UnOfficalBlogURL, slug)
     try:
         r = requests.get(url, timeout = 5.0)
-        json = r.text
-        return json
+        return r.json()
     except Exception as e:
-        print(str(e))
+        logger.debug(str(e))
     return False
 
 

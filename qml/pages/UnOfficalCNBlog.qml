@@ -1,9 +1,9 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import io.thp.pyotherside 1.5
+import "../components"
 
 Page {
-    id: unofficalPage
-    objectName: "UnOfficalCNBlogPage"
     property int current_page:0;
     property int pageCount:1;
     property string next_page;
@@ -24,7 +24,7 @@ Page {
         header: PageHeader{
             title: qsTr("Blog posts")
         }
-        delegate: BackgroundItem{
+        delegate: UnOfficalBlogListComponent{
             width: listView.width
         }
         VerticalScrollDecorator {}
@@ -81,12 +81,23 @@ Page {
     }
 
 
-
     Connections{
         target: signalCenter
         onGetUnOfficalList:{
-            if(result){
+            if(result && result !== "False"){
                 pageCount = result.total;
+                if(current_page < 1){
+                    prev_active = false;
+                    next_active = true;
+                }else{
+                    prev_active = true;
+                }
+
+                if(current_page*20 > pageCount){
+                    next_active = false;
+                }else{
+                    next_active = true;
+                }
 
                 listModel.clear();
                 var posts = result.post_infos;

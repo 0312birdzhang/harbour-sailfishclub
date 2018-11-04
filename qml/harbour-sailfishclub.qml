@@ -37,7 +37,7 @@ import "js/main.js" as JS
 import "js/ApiCore.js" as Api
 import "js/ApiMain.js" as Main
 import "js/fontawesome.js" as FontAwesome
-import io.thp.pyotherside 1.4
+import io.thp.pyotherside 1.5
 import Nemo.Notifications 1.0
 import Nemo.DBus 2.0
 import Nemo.Configuration 1.0

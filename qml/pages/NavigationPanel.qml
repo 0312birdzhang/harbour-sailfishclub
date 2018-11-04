@@ -259,7 +259,7 @@ Panel {
                     leftMargin: Theme.paddingLarge
                     right: parent.right
                 }
-                icon: FontAwesome.Icon.fa_newspaper
+                icon: FontAwesome.Icon.fa_newspaper_o
                 text:  qsTr("UnOfficalCNBlog")
                 enabled: true
                 visible: enabled
