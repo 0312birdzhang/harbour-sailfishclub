@@ -60,9 +60,17 @@ BackgroundItem {
        smooth: true
        opacity: 0.2
        width: parent.width
-//       height: width * 3/5
+    //    height: width * 3/5
        sourceSize.width: width // photoSourceSize
-       //sourceSize.height: height //photoSourceSize
+       sourceSize.height: width/16*9   //photoSourceSize
        clip: true
    }
+
+   onClicked: {
+        pageStack.push(Qt.resolvedUrl("../pages/UnOfficalBlogContent.qml"),{
+                            "slug":slug,
+                            "cover": cover,
+                            "title": title
+                        });
+    }
 }

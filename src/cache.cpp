@@ -118,7 +118,7 @@ QString Cache::makeCachedURL(QString url)
     url = uri.toString(QUrl::RemoveQuery);
     QString ext = url.right(url.size() - url.lastIndexOf("."));
     ext = ext.left(ext.indexOf("/"));
-    return m_path + "/" + md5(url) + ext;
+    return m_path + md5(url) + ext;
 }
 
 QVariant Cache::removeUrl(QVariant dataurl)

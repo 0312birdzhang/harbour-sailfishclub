@@ -225,24 +225,7 @@ Panel {
             }
         }
 
-        Item {
-            width: column.width
-            height: Theme.itemSizeExtraSmall
-            HorizontalFontAwesomeTextButton {
-                anchors {
-                    left: parent.left
-                    leftMargin: Theme.paddingLarge
-                    right: parent.right
-                }
-                icon: FontAwesome.Icon.fa_info
-                text:  qsTr("About")
-                color: Theme.secondaryColor
-                spacing: Theme.paddingMedium
-                onClicked: {
-                   pageStack.push(Qt.resolvedUrl("AboutPage.qml"));
-                }
-            }
-        }
+        
 
 
         Item{
@@ -275,6 +258,26 @@ Panel {
             width: column.width
             height: Theme.iconSizeSmall
         }
+
+        Item {
+            width: column.width
+            height: Theme.itemSizeExtraSmall
+            HorizontalFontAwesomeTextButton {
+                anchors {
+                    left: parent.left
+                    leftMargin: Theme.paddingLarge
+                    right: parent.right
+                }
+                icon: FontAwesome.Icon.fa_info
+                text:  qsTr("About")
+                color: Theme.secondaryColor
+                spacing: Theme.paddingMedium
+                onClicked: {
+                   pageStack.push(Qt.resolvedUrl("AboutPage.qml"));
+                }
+            }
+        }
+        
 
         Item {
             width: column.width
