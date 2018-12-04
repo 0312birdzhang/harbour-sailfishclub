@@ -6,13 +6,15 @@ Page{
 
     property string slug;
     property string cover;
-    property string title;
+    property string _title;
     property string content;
 
     SilicaFlickable {
         id: flickable
-        contentHeight: column.height
+        anchors.fill: parent
+        width: parent.width
         clip: true
+        contentHeight: column.height + Theme.paddingMedium * 4
         Column{
             id: column
             spacing: Theme.paddingMedium
@@ -20,7 +22,7 @@ Page{
 
             PageHeader {
                 id:header
-                title: title
+                title: _title
                 _titleItem.font.pixelSize: Theme.fontSizeSmall
             }
             
@@ -38,10 +40,11 @@ Page{
                 id:contentbody
                 opacity: 0.8
                 textFormat: Text.RichText
-                text: content
+                text: '<style>a:link { color: ' + Theme.highlightColor + '; }</style>' +
+                      content + "<br/><br/><br/>"
                 font.pixelSize: Theme.fontSizeExtraSmall
                 wrapMode: Text.WordWrap
-                linkColor:Theme.primaryColor
+                linkColor: Theme.primaryColor
                 font.letterSpacing: 2;
                 anchors{
                     left:parent.left
@@ -59,7 +62,6 @@ Page{
         target: signalCenter
         onGetUnOfficalContent:{
             if(result){
-                console.log(result)
                 content = result.content;
             }
         }

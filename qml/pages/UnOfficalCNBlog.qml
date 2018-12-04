@@ -11,7 +11,7 @@ Page {
     property string prev_page;
     property bool prev_active:false;
 
-    allowedOrientations:Orientation.All
+    allowedOrientations:Orientation.Portrait
 
     ListModel{
         id: listModel
@@ -47,6 +47,7 @@ Page {
                     anchors {
                         left: parent.left;
                         right: parent.right;
+                        topMargin: Theme.paddingSmall
                     }
                     height: Theme.itemSizeMedium
                     Row {

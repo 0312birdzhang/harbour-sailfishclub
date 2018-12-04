@@ -70,7 +70,7 @@ BackgroundItem {
         pageStack.push(Qt.resolvedUrl("../pages/UnOfficalBlogContent.qml"),{
                             "slug":slug,
                             "cover": cover,
-                            "title": title
+                            "_title": title
                         });
     }
 }

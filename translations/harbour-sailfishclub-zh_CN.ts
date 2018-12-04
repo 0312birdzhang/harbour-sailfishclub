@@ -281,7 +281,7 @@
     </message>
     <message>
         <source>UnOfficalCNBlog</source>
-        <translation type="unfinished"></translation>
+        <translation>非官方中文博客</translation>
     </message>
 </context>
 <context>
@@ -319,7 +319,7 @@
     </message>
     <message>
         <source>Post</source>
-        <translation type="unfinished"></translation>
+        <translation>发送</translation>
     </message>
 </context>
 <context>
@@ -476,23 +476,23 @@
     <name>UnOfficalCNBlog</name>
     <message>
         <source>Blog posts</source>
-        <translation type="unfinished"></translation>
+        <translation>文章</translation>
     </message>
     <message>
         <source>Load Failed,Click to retry</source>
-        <translation type="unfinished">加载失败，点击重试</translation>
+        <translation>加载失败，点击重试</translation>
     </message>
     <message>
         <source>Prev Page</source>
-        <translation type="unfinished">上一页</translation>
+        <translation>上一页</translation>
     </message>
     <message>
         <source>Next Page</source>
-        <translation type="unfinished">下一页</translation>
+        <translation>下一页</translation>
     </message>
     <message>
         <source>Load failed,try again later</source>
-        <translation type="unfinished">加载失败，请稍后重试</translation>
+        <translation>加载失败，请稍后重试</translation>
     </message>
 </context>
 <context>

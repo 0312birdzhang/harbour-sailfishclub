@@ -44,6 +44,9 @@ Item {
         textFormat: Text.StyledText
         linkColor:Theme.primaryColor
         width: parent.width - (2 * Theme.paddingLarge)
+        onLinkActivated: {
+            appwindow.openLink(link);
+        }
     }
 
 }
