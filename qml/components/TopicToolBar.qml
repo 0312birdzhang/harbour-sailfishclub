@@ -26,8 +26,7 @@ Item{
     Rectangle{
         id:exbar
         anchors.bottom: iconbar.top;
-        color: "#08202c"
-//            height: (Theme.iconSizeMedium+Theme.paddingMedium*2)*4+4;
+        color: Theme.colorScheme?Theme.lightSecondaryColor:Theme.darkSecondaryColor
         height: (Theme.iconSizeMedium+Theme.paddingMedium *2) * 2 + 4;
         width: topicPage.width;
         Column{
@@ -95,7 +94,7 @@ Item{
     Rectangle{
         id:iconbar
         anchors.bottom: parent.bottom
-        color: "#08202c"
+        color: Theme.colorScheme?Theme.lightSecondaryColor:Theme.darkSecondaryColor
         height: Theme.iconSizeMedium+Theme.paddingMedium*2;
         width: topicPage.width;
         Row{
