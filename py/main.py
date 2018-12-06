@@ -4,6 +4,9 @@ from sfctoken import access_token
 import logging
 import sys
 import requests
+from cache import *
+import _thread
+
 
 logger = logging.getLogger("sfcpython")
 formatter = logging.Formatter('%(asctime)s %(levelname)-8s: %(message)s')
@@ -103,7 +106,14 @@ def replayTo(tid, uid, toPid, content):
 def getrecent(slug):
     status_code, topics = client.topics.get_recent(slug=slug)
     if not status_code or status_code != 200:
-        return False
+        # return False
+        return getRecentDatas("recent")
+    #TODO
+    #insertDatas
+    # try:
+    #     _thread.start_new_thread( insertDatas, ("recent", topics ))
+    # except:
+    #     pass
     return topics
 
 def getpopular(slug):
