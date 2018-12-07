@@ -113,7 +113,7 @@ def getrecent(slug):
     # try:
     #     _thread.start_new_thread( insertDatas, ("recent", topics ))
     # except:
-    #     pass
+    #     pass.
     return topics
 
 def getpopular(slug):
