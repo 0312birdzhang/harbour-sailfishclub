@@ -34,23 +34,44 @@ Page{
                 clip: true
             }
 
-            Label{
-                id:contentbody
-                opacity: 0.8
-                textFormat: Text.RichText
-                text: content
-                font.pixelSize: Theme.fontSizeExtraSmall
-                wrapMode: Text.WordWrap
-                linkColor:Theme.primaryColor
-                font.letterSpacing: 2;
+            // Label{
+            //     id:contentbody
+            //     opacity: 0.8
+            //     textFormat: Text.RichText
+            //     text: content
+            //     font.pixelSize: Theme.fontSizeExtraSmall
+            //     wrapMode: Text.WordWrap
+            //     linkColor:Theme.primaryColor
+            //     font.letterSpacing: 2;
+            //     anchors{
+            //         left:parent.left
+            //         right:parent.right
+            //         leftMargin: Theme.paddingMedium
+            //         rightMargin: Theme.paddingMedium
+            //     }
+            //     onLinkActivated: {
+            //         appwindow.openLink(link);
+            //     }
+            // }
+            Column{
+                id: contentLabel
+                width: parent.width;
+                spacing: Theme.paddingSmall
                 anchors{
                     left:parent.left
                     right:parent.right
                     leftMargin: Theme.paddingMedium
                     rightMargin: Theme.paddingMedium
                 }
-                onLinkActivated: {
-                    appwindow.openLink(link);
+                Repeater {
+                    model: splitContent(content.replace(/<img/g, '<img width="'+ (parent.width - Theme.paddingLarge)+'"'), listView)
+                    Loader {
+                        anchors {
+                            left: parent.left; right: parent.right;
+                            margins: Theme.paddingSmall;
+                        }
+                        source: Qt.resolvedUrl("../components/" +type + "Delegate.qml");
+                    }
                 }
             }
         }
