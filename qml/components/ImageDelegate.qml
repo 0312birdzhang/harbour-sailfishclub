@@ -6,7 +6,8 @@ Item {
 
     property int bh: Math.min(400, Screen.height);
     property int bw: Math.min(540, Screen.width);
-    implicitHeight: bh;
+    // implicitHeight: bh;
+    height: img.height
 
     //var ww = Math.min(200, w), hh = Math.min(h * ww/w, 200);
 
@@ -20,12 +21,12 @@ Item {
     Image {
         id: img;
         anchors.horizontalCenter: root.horizontalCenter;
-        //width: Screen.width*3/4;
-        width: bw;
+        width: Screen.width * 3/4;
+        // width: bw;
         cache: true;
-        height: parent.height;
+        // height: parent.height;
         fillMode: Image.PreserveAspectFit;
-        sourceSize.width: bw;
+        // sourceSize.width: bw;
         source: content;
         asynchronous: true;
     }
