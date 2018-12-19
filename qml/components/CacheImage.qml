@@ -12,6 +12,8 @@ Image {
         id: loader
         anchors.centerIn: root
         source: "image://theme/icon-m-refresh"
+        sourceSize.width: parent.width
+        sourceSize.height: parent.height
         visible: (root.status != Image.Ready && sourceUncached != "")
     }
 

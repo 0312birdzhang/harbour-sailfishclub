@@ -5,6 +5,7 @@ from basedir import *
 import hashlib
 import logging
 import traceback
+import os
 try:
     import pyotherside
 except:

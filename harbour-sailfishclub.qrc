@@ -20,5 +20,6 @@
         <file>py/pynodebb/api/posts.py</file>
         <file>py/pynodebb/api/topics.py</file>
         <file>py/pynodebb/api/users.py</file>
+        <file>py/cache.py</file>
     </qresource>
 </RCC>

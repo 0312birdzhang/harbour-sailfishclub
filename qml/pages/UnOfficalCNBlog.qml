@@ -20,6 +20,7 @@ Page {
     SilicaListView{
         id: listView
         anchors.fill: parent
+        visible: PageStatus.Active
         enabled: PageStatus.Active
         header: PageHeader{
             title: qsTr("Blog posts")

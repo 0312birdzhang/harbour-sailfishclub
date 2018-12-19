@@ -66,7 +66,7 @@ Page{
                     rightMargin: Theme.paddingMedium
                 }
                 Repeater {
-                    model: splitContent(content.replace(/<img/g, '<img width="'+ (parent.width - Theme.paddingLarge)+'"'), listView)
+                    model: splitContent(content.replace(/<img/g, '<img width="'+ (parent.width - Theme.paddingLarge)+'"'), contentLabel)
                     Loader {
                         anchors {
                             left: parent.left; right: parent.right;
