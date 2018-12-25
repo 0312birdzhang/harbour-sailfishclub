@@ -321,6 +321,10 @@
         <source>Post</source>
         <translation>发送</translation>
     </message>
+    <message>
+        <source>Recovery from draft</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ProfilePage</name>

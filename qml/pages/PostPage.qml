@@ -51,6 +51,14 @@ Dialog  {
                   
                 }
             }
+            MenuItem {
+                text: qsTr("Recovery from draft")
+                visible: appwindow.postdraft
+                onClicked: {
+                    commentfield.children[3].text = appwindow.postdraft;
+                    appwindow.postdraft = "";
+                }
+            }
         }
         VerticalScrollDecorator {}
         Column{

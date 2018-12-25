@@ -60,6 +60,7 @@ ApplicationWindow
     property bool _showReplayNotification: true
     property bool networkStatus
     property int unreadSize: 0
+    property string postdraft //发帖草稿
 
     cover: Qt.resolvedUrl("cover/CoverPage.qml")
     allowedOrientations:Orientation.All
