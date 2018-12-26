@@ -210,7 +210,7 @@ Column {
             placeholderText: label
             font.pixelSize: Theme.fontSizeSmall
             focusOutBehavior: FocusBehavior.KeepFocus
-            text: replayUser
+            text: replayUser + (appwindow.topicdraft?appwindow.topicdraft:"")
             Component.onCompleted: _editor.textFormat = TextEdit.PlainText
 //            onTextChanged: {
 //                if(isLandscape){

@@ -323,7 +323,7 @@
     </message>
     <message>
         <source>Recovery from draft</source>
-        <translation type="unfinished"></translation>
+        <translation>从草稿箱恢复</translation>
     </message>
 </context>
 <context>

@@ -305,6 +305,10 @@ Page{
             acceptDestinationAction: PageStackAction.Pop
             acceptDestinationProperties:replaysTmpModel
 
+            onRejected: {
+                appwindow.topicdraft = commentField.children[3].text;
+            }
+
             SilicaFlickable {
                 // ComboBox requires a flickable ancestor
                 width: parent.width
@@ -393,6 +397,6 @@ Page{
         load();
     }
     Component.onDestruction: {
-
+        appwindow.topicdraft = "";
     }
 }

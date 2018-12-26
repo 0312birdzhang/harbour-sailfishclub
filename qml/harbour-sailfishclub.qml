@@ -61,6 +61,7 @@ ApplicationWindow
     property bool networkStatus
     property int unreadSize: 0
     property string postdraft //发帖草稿
+    property string topicdraft // 回贴草稿
 
     cover: Qt.resolvedUrl("cover/CoverPage.qml")
     allowedOrientations:Orientation.All
@@ -206,7 +207,7 @@ ApplicationWindow
     // 定时获取通知
     Timer{
         id: getNotifytimer;
-        interval: 60000;
+        interval: 120000;
         running: false;
         repeat: true
         onTriggered: {
