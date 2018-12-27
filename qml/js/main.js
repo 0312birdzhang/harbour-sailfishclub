@@ -19,14 +19,18 @@ function splitContent(topic_content, parent) {
     topic_content = topic_content.replace(/<img[^<>]*class=\"[^<>]*emoji-emoji-one[^<>]*\"[^<>]*alt=\"([^<>"]*)\"[^<>]*\/>/g,"$1"); // emoji 直接用图片alt中的
     var img_model = [];
     var iframe_model = [];
+    
     var _replace_img_ = "__REPLACE_IMG__";
     var _replace_iframe_ = "__REPLACE_IFRAME__";
+    var _replace_code_ = "__REPLACE_CODE__";
     var imgReg = /<img.*?src=\"(.*?)\"/gi;
     var iframeReg = /<iframe.*?src=\"(.*?)\"/gi;
+    var codeReg = /<pre><code>.*?<\/code><\/pre>/gi;
 
     var srcReg = /src=[\'\"]?([^\'\"]*)[\'\"]?/i;
     var arr_img = topic_content.match(imgReg);
     var arr_iframe = topic_content.match(iframeReg);
+    
     if(!arr_img && !arr_iframe){
         model.append({
             "type": "Text",
@@ -52,6 +56,8 @@ function splitContent(topic_content, parent) {
         }
     }
 
+    
+
     topic_content = topic_content.replace(/<img.*?src=\"([^<>"]*)\".*?>/g,_replace_img_);
 
     var contents = topic_content.split(_replace_img_);
@@ -60,11 +66,40 @@ function splitContent(topic_content, parent) {
         var text_content = contents[i];
         var text_contents = text_content.replace(/<iframe.*?src=\"([^<>"]*)\".*?iframe>/g,_replace_iframe_).split(_replace_iframe_);
         for(var j = 0; j < text_contents.length; j++){
-            model.append({
-                "type": "Text",
-                "content": text_contents[j].replace("\\n","<br/>")
-            })
-            if(text_contents[j].indexOf("embed-responsive") > -1 || text_contents[j].indexOf("video-container") > -1){
+            var text_contents_tmp = text_contents[j];
+            // 处理代码块
+            if(text_contents_tmp.indexOf("<pre><code>") > -1 ){
+                var codes_model = [];
+                var arr_codes = text_contents_tmp.match(codeReg);
+                for (var i = 0; arr_codes && i < arr_codes.length; i++) {
+                    var codecontent = arr_codes[i];
+                    codecontent = codecontent.replace("<pre>","").replace("<code>","").replace("<\/pre>","").replace("<\/code>","");
+                    codes_model.push(codecontent);
+                }
+                var code_contents = text_contents_tmp.replace(/<pre><code>([^<>"]*)<\/pre><\/code>/g,_replace_code_).split(_replace_code_);
+                for(var k = 0; k < code_contents.length; k++){
+                    model.append({
+                        "type": "Text",
+                        "content": code_contents[k].replace("\\n","<br/>")
+                    })
+                    if(k < codes_model.length - 1){
+                        model.append({
+                            "type": "CodeBlock",
+                            "content": codes_model[k]
+                        })
+                    }
+                    
+                }
+
+                
+            }else{
+                model.append({
+                    "type": "Text",
+                    "content": text_contents_tmp.replace("\\n","<br/>")
+                })
+            }
+            
+            if(text_contents_tmp.indexOf("embed-responsive") > -1 || text_contents_tmp.indexOf("video-container") > -1){
                 model.append({
                     "type": "Webview",
                     "content": iframe_model[j]
