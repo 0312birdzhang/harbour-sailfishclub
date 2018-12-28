@@ -62,6 +62,7 @@ ApplicationWindow
     property int unreadSize: 0
     property string postdraft //发帖草稿
     property string topicdraft // 回贴草稿
+    property int loginRetry: 3
 
     cover: Qt.resolvedUrl("cover/CoverPage.qml")
     allowedOrientations:Orientation.All
@@ -254,6 +255,12 @@ ApplicationWindow
         onLoginSuccessed: {
             getNotifytimer.start()
         }
+        onLoginFailed: {
+            if(loginRetry>0){
+                py.initLogin();
+                loginRetry--;
+            }
+        }
     }
 
     UserInfo{
@@ -266,28 +273,25 @@ ApplicationWindow
             addImportPath('qrc:/py/')
             py.importModule('main', function () {
                 py.importModule('secret', function () {
-                    // 登录
-                    var username = settings.get_username();
-                    var password = settings.get_password();
-                    var uid = settings.get_uid();
-                    var token = settings.get_token();
-//                    console.log("uid:"+uid+",token:"+token+",username:"+username+",password:"+password);
-                    if(uid && token){
-                        console.log("logined via token")
-                        py.validate(uid, token)
-                    }else if(username && password){
-                        var derpass = py.decryPass(password);
-                        if(derpass)py.login(username,derpass);
-                        console.log("logined via password")
-                    }
+                    initLogin();
                 });
             });
+        }
 
-//            py.importModule('myprovider', function () {
-                //console.log("app window import module");
-//            });
-            
-
+        function initLogin(){
+            // 登录
+            var username = settings.get_username();
+            var password = settings.get_password();
+            var uid = settings.get_uid();
+            var token = settings.get_token();
+            if(uid && token){
+                console.log("logined via token")
+                py.validate(uid, token)
+            }else if(username && password){
+                var derpass = py.decryPass(password);
+                if(derpass)py.login(username,derpass);
+                console.log("logined via password")
+            }
         }
 
         function validate(uid, token){
@@ -312,7 +316,6 @@ ApplicationWindow
                     userinfo.user_text = result["icon:text"];
                     userinfo.user_color = result["icon:bgColor"];
                     userinfo.user_cover = appwindow.siteUrl + result["cover:url"];
-                    // console.log(appwindow.siteUrl + result["cover:url"]);
                     userinfo.reputation = result.reputation;
                     userinfo.followerCount = result.followerCount?result.followerCount:0;
                     userinfo.followingCount = result.followingCount?result.followingCount:0;
