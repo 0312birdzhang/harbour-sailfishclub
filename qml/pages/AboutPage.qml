@@ -49,13 +49,14 @@ Page{
             Item { width: 1; height: Theme.paddingMedium }
             LabelText{
                 label: qsTr("Thanks")
-                text: qsTr("Thanks")+ " nodebb,pynodebb,harbour-storeman,orn-warehouse,sm.ms "+qsTr("and other projects") +
+                text: qsTr("Thanks")+
                         "<br/><a href=\"https://community.nodebb.org/\" >nodebb</a><br/>" +
                         "<a href=\"https://github.com/davidvuong/pynodebb\" >pynodebb</a><br/>" +
                         "<a href=\"https://github.com/mentaljam/harbour-storeman\" >harbour-storeman</a><br/>" +
                         "<a href=\"https://github.com/custodian/orn-warehouse\" >orn-warehouse</a><br/>" +
                         "<a href=\"https://sm.ms/\" >sm.ms</a><br/>" +
-                        "<a href=\"https://github.com/communi/communi-sailfish\" >communi-sailfish</a><br/>";
+                        "<a href=\"https://github.com/communi/communi-sailfish\" >communi-sailfish</a><br/>"
+                        + qsTr("and other projects");
 
 
             }

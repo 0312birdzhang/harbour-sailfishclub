@@ -32,7 +32,10 @@ Column{
 
         Image{
             source: "image://theme/icon-m-redirect"
-            anchors.right: parent.right
+            anchors{
+                leftMargin: - Theme.paddingSmall
+                right:parent.right
+            }
             MouseArea{
                 anchors.fill: parent
                 onClicked:{

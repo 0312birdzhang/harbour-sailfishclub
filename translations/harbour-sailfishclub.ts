@@ -79,11 +79,7 @@
 <context>
     <name>CodeBlockDelegate</name>
     <message>
-        <source>Long press to copy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Copied to clipboard</source>
+        <source>CodeBlock</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

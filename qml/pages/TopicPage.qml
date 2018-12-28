@@ -49,7 +49,7 @@ Page{
             description: category? (FONT.Icon[category_icon.replace(/-/g,"_")]  + category) : "";
         }
         delegate: ListItem {
-            implicitHeight: topicHeader.height + contentLabel.height
+            contentHeight: topicHeader.height + contentLabel.height
                         + signatureLabel.height + Theme.paddingMedium * 4
                         + (contextMenu.active?contextMenu.height:0)
 
