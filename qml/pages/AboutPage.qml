@@ -36,7 +36,7 @@ Page{
             Label{
                 id:version
                 anchors.horizontalCenter: parent.horizontalCenter
-                text:qsTr("Version")+" 0.2.3-1"
+                text:qsTr("Version")+" 0.3.0"
 
             }
             Item{width: 1;height: Theme.paddingMedium}
@@ -64,7 +64,8 @@ Page{
 
             LabelText{
                 label: qsTr("About this app")
-                text: qsTr("This app is a client for https://sailfishos.club ,an unofficial Chinese community.")
+                text: qsTr("This app is a client for ") + "<a href=\"https://sailfishos.club/\">sailfishos.club</a>, "
+                           +qsTr("an unofficial Chinese Sailfish community.")
             }
             Item{width: 1;height: Theme.paddingMedium}
 

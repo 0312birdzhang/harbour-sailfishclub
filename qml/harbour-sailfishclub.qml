@@ -498,11 +498,13 @@ ApplicationWindow
         }
 
         //上传图片到sm.ms
-        function uploadImage(path){
+        function uploadImage(path,desc){
             loading = true;
             call('main.uploadImgSm',[path],function(ret){
                 loading = false;
-                signalCenter.uploadImage(ret);
+                //替换反斜线
+                if(ret)ret = ret.replace(/\\/g,"");
+                signalCenter.uploadImage(ret,desc);
             });
         }
 

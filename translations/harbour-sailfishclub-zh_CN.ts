@@ -35,12 +35,16 @@
         <translation>关于这个软件</translation>
     </message>
     <message>
-        <source>This app is a client for https://sailfishos.club ,an unofficial Chinese community.</source>
-        <translation>这个软件是https://sailfishos.club（旗鱼俱乐部）的客户端，旗鱼俱乐部是一个非官方中文社区</translation>
-    </message>
-    <message>
         <source>ArtWork</source>
         <translation>设计</translation>
+    </message>
+    <message>
+        <source>This app is a client for </source>
+        <translation>这个软件是旗鱼俱乐部的客户端 </translation>
+    </message>
+    <message>
+        <source>an unofficial Chinese Sailfish community.</source>
+        <translation>旗鱼俱乐部是一个非官方旗鱼中文社区</translation>
     </message>
 </context>
 <context>
@@ -83,10 +87,6 @@
         <translation>写下你的评论</translation>
     </message>
     <message>
-        <source>send</source>
-        <translation>发送</translation>
-    </message>
-    <message>
         <source>Error</source>
         <translation>错误</translation>
     </message>
@@ -99,12 +99,12 @@
         <translation>开始上传图片...</translation>
     </message>
     <message>
-        <source>update</source>
-        <translation>更新回复</translation>
+        <source>send</source>
+        <translation>发送</translation>
     </message>
     <message>
-        <source>reply</source>
-        <translation>回复</translation>
+        <source>preview</source>
+        <translation>预览</translation>
     </message>
 </context>
 <context>
@@ -324,6 +324,13 @@
     <message>
         <source>Recovery from draft</source>
         <translation>从草稿箱恢复</translation>
+    </message>
+</context>
+<context>
+    <name>PreviewPage</name>
+    <message>
+        <source>preview</source>
+        <translation>预览</translation>
     </message>
 </context>
 <context>

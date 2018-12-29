@@ -4,7 +4,7 @@ import QtDocGallery 5.0
 import org.nemomobile.thumbnailer 1.0
 
 Page {
-    signal selectImage(string url,string title)
+    signal selectImage(string url,string desc)
     allowedOrientations:Orientation.All
     
     DocumentGalleryModel {

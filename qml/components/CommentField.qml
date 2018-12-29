@@ -190,8 +190,8 @@ Column {
 
            HtmlTagButton {
                text: FONT.Icon.fa_list_ol
-               tag: "-"
-               attrs: ' '
+               tag: "- "
+               attrs: '\n '
            }
 
 
@@ -242,43 +242,47 @@ Column {
 //    }
 
 
-//    Button{
-//        id: sendButton
-//        text: {
-//            if (opacity < 1.0) {
-//                return ""
-//            }
-//            if (_editId) {
-//                return qsTr("update")
-//            }
-//            if (_replyToId) {
-//                return qsTr("reply")
-//            }
-//            return qsTr("send")
-//        }
-//        anchors.horizontalCenter: parent.horizontalCenter
-//        opacity: (body.text && body.text.length > 2)?1:0
-//        Behavior on opacity { FadeAnimation { } }
-//        onClicked: {
-//            sendButtonClicked();
-//        if (_editId) {
-//            // OrnClient.editComment(_editId, body.text)
-//        } else if (_replyToId) {
-//            // OrnClient.comment(appId, body.text, _replyToId)
-//            sendButtonClicked();
-//        } else {
-//            // OrnClient.comment(appId, body.text)
-//        }
-//        }
-        
-//    }
-    Button{
-        id: previewButton
-        text: qsTr("Preview")
+    Row{
+        spacing: Theme.paddingLarge
         anchors.horizontalCenter: parent.horizontalCenter
-        onClicked: {
+        Button{
+            id: sendButton
+            text: qsTr("send")
+//            text: {
+//                if (opacity < 1.0) {
+//                    return ""
+//                }
+//                if (_editId) {
+//                    return qsTr("update")
+//                }
+//                if (_replyToId) {
+//                    return qsTr("reply")
+//                }
+//                return qsTr("send")
+//            }
+//            anchors.horizontalCenter: parent.horizontalCenter
+            opacity: (body.text && body.text.length > 2)?1:0.5
+            Behavior on opacity { FadeAnimation { } }
+            onClicked: {
+                sendButtonClicked();
+                if (_editId) {
+                    // OrnClient.editComment(_editId, body.text)
+                } else if (_replyToId) {
+                    // OrnClient.comment(appId, body.text, _replyToId)
+                } else {
+                    // OrnClient.comment(appId, body.text)
+                }
+            }
 
-            pageStack.push(Qt.resolvedUrl("../page/PreviewPage.qml"), {"mdtext":body.text});
+        }
+        Button{
+            id: previewButton
+            text: qsTr("preview")
+            opacity: (body.text && body.text.length > 2)?1:0.5
+            Behavior on opacity { FadeAnimation { } }
+            onClicked: {
+                pageStack.push(Qt.resolvedUrl("../pages/PreviewPage.qml"), {"mdtext":body.text});
+            }
         }
     }
 
@@ -287,7 +291,7 @@ Column {
         ImagePreviewGrid{
             onSelectImage: {
                 remorse.execute(qsTr("Start upload image..."),function(){
-                    py.uploadImage(url);
+                    py.uploadImage(url,desc);
                     pageStack.pop();
                 },3000);
             }
@@ -305,7 +309,7 @@ Column {
                         );
             }else{
                 var editor = body._editor;
-                var mdurl = "\n![%0](%1)".arg(title).arg(result)
+                var mdurl = "\n![%0](%1)".arg(desc).arg(result)
                 editor.insert(editor.cursorPosition,mdurl);
             }
         }

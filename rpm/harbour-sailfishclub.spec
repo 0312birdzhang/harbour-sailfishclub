@@ -14,7 +14,7 @@ Name:       harbour-sailfishclub
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    SailfishClub client for Sailfish OS
-Version:    0.2.3
+Version:    0.3.0
 Release:    1
 Group:      Qt/Qt
 License:    GPLv3
@@ -72,9 +72,6 @@ desktop-file-install --delete-original       \
    %{buildroot}%{_datadir}/applications/*.desktop
 
 
-%pre
-rm -rf /usr/lib/python3.4/site-packages/pynodebb
-rm -rf /usr/lib/python3.4/site-packages/pynodebb-0.0.13-py3.4.egg-info
 %files
 
 %defattr(-,root,root,-)

@@ -20,7 +20,7 @@ QtObject{
     signal replayFloor(var result);
     signal newTopic(var result);
     signal previewMd(var result);
-    signal uploadImage(var result);
+    signal uploadImage(var result, var desc);
 
     signal loadImage(var result);
     signal getUserInfo(var result);

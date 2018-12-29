@@ -35,11 +35,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>This app is a client for https://sailfishos.club ,an unofficial Chinese community.</source>
+        <source>ArtWork</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>ArtWork</source>
+        <source>This app is a client for </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>an unofficial Chinese Sailfish community.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -83,10 +87,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>send</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
@@ -99,11 +99,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>update</source>
+        <source>send</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>reply</source>
+        <source>preview</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -323,6 +323,13 @@
     </message>
     <message>
         <source>Recovery from draft</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PreviewPage</name>
+    <message>
+        <source>preview</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
