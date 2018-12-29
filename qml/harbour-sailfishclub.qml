@@ -499,7 +499,11 @@ ApplicationWindow
 
         //上传图片到sm.ms
         function uploadImage(path){
-            return call_sync('main.uploadImgSm',[path]);
+            loading = true;
+            call('main.uploadImgSm',[path],function(ret){
+                loading = false;
+                signalCenter.uploadImage(ret);
+            });
         }
 
         // 新用户注册

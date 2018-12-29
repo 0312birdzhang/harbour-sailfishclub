@@ -211,7 +211,9 @@ Column {
             font.pixelSize: Theme.fontSizeSmall
             focusOutBehavior: FocusBehavior.KeepFocus
             text: replayUser + (appwindow.topicdraft?appwindow.topicdraft:"")
-            Component.onCompleted: _editor.textFormat = TextEdit.PlainText
+            Component.onCompleted: {
+                _editor.textFormat = TextEdit.PlainText
+              }
 //            onTextChanged: {
 //                if(isLandscape){
 //                    py.previewMd(text);
@@ -274,24 +276,27 @@ Column {
         id:selectImageComponent
         ImagePreviewGrid{
             onSelectImage: {
-//                console.log("image path:"+url);
                 remorse.execute(qsTr("Start upload image..."),function(){
-                    signalCenter.loadStarted();
-                    var smurl = py.uploadImage(url);
-                    signalCenter.loadFinished();
-                    if(!smurl){
-                        notification.showPopup(
-                                qsTr("Error"),
-                                qsTr("Image upload failed"),
-                                "image://theme/icon-lock-warning"
-                                );
-                    }else{
-                        var editor = body._editor;
-                        var mdurl = "![%0](%1)".arg(title).arg(smurl)
-                        editor.insert(editor.cursorPosition,mdurl);
-                        pageStack.pop();
-                    }
+                    py.uploadImage(url);
+                    pageStack.pop();
                 },3000);
+            }
+        }
+
+        Connections{
+            target: signalCenter
+            onUploadImage:{
+                if(!result){
+                    notification.showPopup(
+                            qsTr("Error"),
+                            qsTr("Image upload failed"),
+                            "image://theme/icon-lock-warning"
+                            );
+                }else{
+                    var editor = body._editor;
+                    var mdurl = "\n![%0](%1)".arg(title).arg(result)
+                    editor.insert(editor.cursorPosition,mdurl);
+                }
             }
         }
     }
