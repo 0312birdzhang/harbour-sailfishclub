@@ -173,7 +173,8 @@ Page {
                 }
                 onClicked: {
                     pageStack.push(Qt.resolvedUrl("TopicPage.qml"),{
-                                       "tid":tid
+                                        "tid":tid
+//                                    "tid": 105
                                    });
                 }
             }

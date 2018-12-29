@@ -77,13 +77,6 @@
     </message>
 </context>
 <context>
-    <name>CodeBlockDelegate</name>
-    <message>
-        <source>CodeBlock</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>CommentField</name>
     <message>
         <source>Your comment</source>

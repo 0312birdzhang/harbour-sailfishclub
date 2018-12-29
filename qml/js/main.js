@@ -1,5 +1,5 @@
 .pragma library
-
+Qt.include("ApiCore.js")
 var py;
 var app;
 // login function
@@ -15,6 +15,7 @@ function login(uid, token, username, password){
 function splitContent(topic_content, parent) {
     var model = Qt.createQmlObject('import QtQuick 2.0; ListModel {}', parent);
     topic_content = app.formathtml(topic_content);
+    topic_content = decodeHTMLEntities(topic_content);
     topic_content = topic_content.replace(/<a[^<>]*href=\"([^<>"]*)\"\s+rel=\"nofollow\"><img\s+src=\"([^<>"]*)\".*?a>/g,"<img src=\"$2\" />"); //去掉图片上的超链接
     topic_content = topic_content.replace(/<img[^<>]*class=\"[^<>]*emoji-emoji-one[^<>]*\"[^<>]*alt=\"([^<>"]*)\"[^<>]*\/>/g,"$1"); // emoji 直接用图片alt中的
     var img_model = [];
@@ -25,7 +26,7 @@ function splitContent(topic_content, parent) {
 
     var imgReg = /<img.*?src=\"(.*?)\"/gi;
     var iframeReg = /<iframe.*?src=\"(.*?)\"/gi;
-    var codeReg = /<pre><code>(.*?)<\/code><\/pre>/gi;
+    // var codeReg = /<pre><code>(.*?)<\/code><\/pre>/gi;
 
     var srcReg = /src=[\'\"]?([^\'\"]*)[\'\"]?/i;
     var arr_img = topic_content.match(imgReg);
@@ -100,28 +101,28 @@ function splitContent(topic_content, parent) {
 
 function parseCode(model, topic_content){
 //    console.log("content:",topic_content)
-    var codeReg = /<pre><code>.*?[\s]+[\d\D]*<\/code><\/pre>/gi;
+    var codeReg = /<code>.*?[\d\D]*?<\/code>/g;
     var _replace_code_ = "__REPLACE_CODE__";
-    if(topic_content.indexOf("<pre><code>") > -1 ){
+    if(topic_content.indexOf("<code>") > -1 ){
         var codes_model = [];
         var arr_codes = topic_content.match(codeReg);
-        console.log("arr_code length",arr_codes?arr_codes.length:0)
         for (var ii = 0; arr_codes && ii < arr_codes.length; ii++) {
             var codecontent = arr_codes[ii];
             codecontent = codecontent.replace("<pre>","").replace("<code>","").replace("<\/pre>","").replace("<\/code>","");
             codes_model.push(codecontent);
         }
-        var code_contents = topic_content.replace(/<pre><code>.*?[\s]+[\d\D]*<\/code><\/pre>/g,_replace_code_).split(_replace_code_);
-        console.log("code_contents length",arr_codes?arr_codes.length:0)
+        var code_contents = topic_content.replace(/<code>.*?[\d\D]*?<\/code>/g,_replace_code_).split(_replace_code_);
+//        console.log("code_contents length",arr_codes?arr_codes.length:0)
         for(var k = 0; k < code_contents.length; k++){
             model.append({
                              "type": "Text",
                              "content": code_contents[k].replace("\\n","<br/>")
                          })
             if(k <= codes_model.length - 1){
+                var codeline = codes_model[k];
                 model.append({
                                  "type": "CodeBlock",
-                                 "content": codes_model[k]
+                                 "content": codeline
                              })
             }
         }

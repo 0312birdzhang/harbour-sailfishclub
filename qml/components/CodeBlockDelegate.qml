@@ -6,9 +6,9 @@ TextArea{
     text: content
     width: parent.width
     focusOnClick: true
+    font.pixelSize: Theme.fontSizeSmall
     font.weight: Font.Light
     color: Theme.secondaryHighlightColor
-    label: qsTr("CodeBlock")
     horizontalAlignment: TextInput.AlignLeft
     EnterKey.onClicked: parent.focus = true
     anchors{

@@ -304,21 +304,21 @@ ApplicationWindow
                     userinfo.uid = uid.toString();
                     userinfo.username = result.username;
 //                    userinfo.fullname = result.fullname;
-                    userinfo.email = result.email?result.email:"";
+                    userinfo.email = result.email|| "";
                     userinfo.website = result.website;
-                    userinfo.avatar = result.picture?result.picture:"";
-                    userinfo.groupTitle = result.groupTitle?result.groupTitle:"";
-                    userinfo.groupIcon = result.groupIcon?result.groupIcon:"";
-                    userinfo.signature = result.signature?result.signature:"";
+                    userinfo.avatar = result.picture|| "";
+                    userinfo.groupTitle = result.groupTitle|| "";
+                    userinfo.groupIcon = result.groupIcon|| "";
+                    userinfo.signature = result.signature|| "";
                     userinfo.topiccount = result.topiccount.toString();
                     userinfo.postcount = result.postcount.toString();
-                    userinfo.aboutme = result.aboutme?result.aboutme:"";
+                    userinfo.aboutme = result.aboutme|| "";
                     userinfo.user_text = result["icon:text"];
                     userinfo.user_color = result["icon:bgColor"];
                     userinfo.user_cover = appwindow.siteUrl + result["cover:url"];
                     userinfo.reputation = result.reputation;
-                    userinfo.followerCount = result.followerCount?result.followerCount:0;
-                    userinfo.followingCount = result.followingCount?result.followingCount:0;
+                    userinfo.followerCount = result.followerCount|| 0;
+                    userinfo.followingCount = result.followingCount|| 0;
 
                     userinfo.logined = true;
                     signalCenter.loginSuccessed();
@@ -336,15 +336,15 @@ ApplicationWindow
                     userinfo.uid = result.uid.toString();
                     userinfo.username = result.username;
 //                    userinfo.fullname = result.fullname;
-                    userinfo.email = result.email?result.email:"";
+                    userinfo.email = result.email|| "";
                     userinfo.website = result.website;
-                    userinfo.avatar = result.picture?result.picture:"";
-                    userinfo.groupTitle = result.groupTitle?result.groupTitle:"";
-                    userinfo.groupIcon = result.groupIcon?result.groupIcon:"";
-                    userinfo.signature = result.signature?result.signature:"";
+                    userinfo.avatar = result.picture|| "";
+                    userinfo.groupTitle = result.groupTitle|| "";
+                    userinfo.groupIcon = result.groupIcon|| "";
+                    userinfo.signature = result.signature|| "";
                     userinfo.topiccount = result.topiccount.toString();
                     userinfo.postcount = result.postcount.toString();
-                    userinfo.aboutme = result.aboutme?result.aboutme:"";
+                    userinfo.aboutme = result.aboutme|| "";
                     userinfo.user_text = result["icon:text"];
                     userinfo.user_color = result["icon:bgColor"];
                     userinfo.user_cover = appwindow.siteUrl + result["cover:url"];
@@ -796,11 +796,11 @@ ApplicationWindow
         html = html.replace(/<a\shref=\"\/uid\//g, "<a href=\""+siteUrl+"/uid/");
         html = html.replace(/<a href=/g,"<a style='color:" + Theme.highlightColor + "' target='_blank' href=");
         html = html.replace(/<a class=/g,"<a style='color:" + Theme.highlightColor + "' target='_blank' class=");
-        html = html.replace(/<p>/g,"<p style='text-indent:24px'>");
+//        html = html.replace(/<p>/g,"<p style=\"text-indent:24px\">");
         html = html.replace(/<img\ssrc=\"\/assets\//g, "<img src=\""+siteUrl+"/assets/");
         // html = html.replace(/<img\ssrc=\"https:\/\/sailfishos.club\/plugins\/nodebb-plugin-emoji/g,"<emoji src=\"https:\/\/sailfishos.club\/plugins\/nodebb-plugin-emoji"); // emoji
-        html = html.replace(/<p style='text-indent:24px'><img/g,"<p><img");
-        html = html.replace(/<p style='text-indent:24px'><a [^<>]*href=\"([^<>"]*)\".*?><img/g,"<p><a href='$1'><img");
+        html = html.replace(/<p><img/g,"<p><img");
+        html = html.replace(/<p><a [^<>]*href=\"([^<>"]*)\".*?><img/g,"<p><a href='$1'><img");
         html = html.replace(/&#x2F;/g,"/");
         // html = html.replace(/<img src=\"([^<>"]*)\".*?>/g,"<a href='$1'><img src=\"$1\"/></a>");
         // html = html.replace(/<emoji src/g,"<img src"); // emoji
