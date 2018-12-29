@@ -242,25 +242,25 @@ Column {
 //    }
 
 
-    Button{
-        id: sendButton
-        text: {
-            if (opacity < 1.0) {
-                return ""
-            }
-            if (_editId) {
-                return qsTr("update")
-            }
-            if (_replyToId) {
-                return qsTr("reply")
-            }
-            return qsTr("send")
-        }
-        anchors.horizontalCenter: parent.horizontalCenter
-        opacity: body.text && body.text.length > 2
-        Behavior on opacity { FadeAnimation { } }
-        onClicked: {
-            sendButtonClicked();
+//    Button{
+//        id: sendButton
+//        text: {
+//            if (opacity < 1.0) {
+//                return ""
+//            }
+//            if (_editId) {
+//                return qsTr("update")
+//            }
+//            if (_replyToId) {
+//                return qsTr("reply")
+//            }
+//            return qsTr("send")
+//        }
+//        anchors.horizontalCenter: parent.horizontalCenter
+//        opacity: (body.text && body.text.length > 2)?1:0
+//        Behavior on opacity { FadeAnimation { } }
+//        onClicked: {
+//            sendButtonClicked();
 //        if (_editId) {
 //            // OrnClient.editComment(_editId, body.text)
 //        } else if (_replyToId) {
@@ -269,9 +269,19 @@ Column {
 //        } else {
 //            // OrnClient.comment(appId, body.text)
 //        }
-        }
+//        }
         
+//    }
+    Button{
+        id: previewButton
+        text: qsTr("Preview")
+        anchors.horizontalCenter: parent.horizontalCenter
+        onClicked: {
+
+            pageStack.push(Qt.resolvedUrl("../page/PreviewPage.qml"), {"mdtext":body.text});
+        }
     }
+
     Component{
         id:selectImageComponent
         ImagePreviewGrid{
@@ -282,21 +292,21 @@ Column {
                 },3000);
             }
         }
+    }
 
-        Connections{
-            target: signalCenter
-            onUploadImage:{
-                if(!result){
-                    notification.showPopup(
-                            qsTr("Error"),
-                            qsTr("Image upload failed"),
-                            "image://theme/icon-lock-warning"
-                            );
-                }else{
-                    var editor = body._editor;
-                    var mdurl = "\n![%0](%1)".arg(title).arg(result)
-                    editor.insert(editor.cursorPosition,mdurl);
-                }
+    Connections{
+        target: signalCenter
+        onUploadImage:{
+            if(!result){
+                notification.showPopup(
+                        qsTr("Error"),
+                        qsTr("Image upload failed"),
+                        "image://theme/icon-lock-warning"
+                        );
+            }else{
+                var editor = body._editor;
+                var mdurl = "\n![%0](%1)".arg(title).arg(result)
+                editor.insert(editor.cursorPosition,mdurl);
             }
         }
     }

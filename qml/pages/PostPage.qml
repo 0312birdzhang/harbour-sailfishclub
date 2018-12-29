@@ -120,7 +120,7 @@ Dialog  {
         }
 
         onNewTopic:{
-            if(result && (result != "false" || result != "Forbidden") ){
+            if(result && (result !== "false" || result !== "Forbidden") ){
                 var topicData = result.topicData;
                 listModel.insert(0,{
                                      "title":topicData.title,
@@ -149,15 +149,15 @@ Dialog  {
 
     function fillModel(result){
         var categories = result.categories;
-        if(!categories || categories == "Forbidden" || categories == "false"){
+        if(!categories || categories === "Forbidden" || categories === "false"){
             return;
         }
 
         for(var i=0;i<categories.length;i++){
-            if(categories[i].parentCid != "0"){
+            if(categories[i].parentCid !== "0"){
                 categories[i].name = "  - " + categories[i].name;
             }
-            if(categories[i].name == "公告"||categories[i].name == "新闻"){
+            if(categories[i].name === "公告"||categories[i].name === "新闻"){
                 continue;
             }
 
