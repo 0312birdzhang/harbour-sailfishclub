@@ -152,7 +152,6 @@ Page {
     VerticalScrollDecorator { flickable: imageFlickable }
     IconButton {
        enabled: imagePreview.status == Image.Ready
-       visible: false
        anchors{
            right: imagePage.right;
            rightMargin: Theme.paddingLarge;
@@ -163,6 +162,7 @@ Page {
        icon.source: "image://theme/icon-m-cloud-download"
        onClicked: {
            console.log(imagePreview.source);
+//           py.sav
        }
     }
 }

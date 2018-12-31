@@ -22,7 +22,7 @@ Page{
     property bool prev_active:false;
 
 
-    allowedOrientations:Orientation.All
+    allowedOrientations: Orientation.Portrait
 
     ListModel{
         id: topicModel

@@ -13,7 +13,7 @@ Page {
     property string prev_page;
     property bool prev_active:false;
 
-    allowedOrientations:Orientation.All
+    allowedOrientations: Orientation.Portrait
 
     property string initialSearch
     function _reset() {

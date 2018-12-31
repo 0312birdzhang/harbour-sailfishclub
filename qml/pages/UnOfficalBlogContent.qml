@@ -31,30 +31,14 @@ Page{
                 asynchronous: true
                 sourceUncached: cover
                 smooth: true
-                width: parent.width
+                width: parent.width - Theme.paddingMedium
                 sourceSize.width: width
                 clip: true
+                anchors{
+                    margins: Theme.paddingMedium
+                }
             }
 
-            // Label{
-            //     id:contentbody
-            //     opacity: 0.8
-            //     textFormat: Text.RichText
-            //     text: content
-            //     font.pixelSize: Theme.fontSizeExtraSmall
-            //     wrapMode: Text.WordWrap
-            //     linkColor:Theme.primaryColor
-            //     font.letterSpacing: 2;
-            //     anchors{
-            //         left:parent.left
-            //         right:parent.right
-            //         leftMargin: Theme.paddingMedium
-            //         rightMargin: Theme.paddingMedium
-            //     }
-            //     onLinkActivated: {
-            //         appwindow.openLink(link);
-            //     }
-            // }
             Column{
                 id: contentLabel
                 width: parent.width;

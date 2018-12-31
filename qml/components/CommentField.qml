@@ -261,8 +261,9 @@ Column {
 //                return qsTr("send")
 //            }
 //            anchors.horizontalCenter: parent.horizontalCenter
-            opacity: (body.text && body.text.length > 2)?1:0.5
+            opacity: (body.text && body.text.length > 2)?1:0.3
             Behavior on opacity { FadeAnimation { } }
+            enabled: opacity == 1
             onClicked: {
                 sendButtonClicked();
                 if (_editId) {
@@ -278,7 +279,8 @@ Column {
         Button{
             id: previewButton
             text: qsTr("preview")
-            opacity: (body.text && body.text.length > 2)?1:0.5
+            opacity: (body.text && body.text.length > 2)?1:0.3
+            enabled: opacity == 1
             Behavior on opacity { FadeAnimation { } }
             onClicked: {
                 pageStack.push(Qt.resolvedUrl("../pages/PreviewPage.qml"), {"mdtext":body.text});

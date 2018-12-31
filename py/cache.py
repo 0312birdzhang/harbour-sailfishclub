@@ -6,6 +6,8 @@ import hashlib
 import logging
 import traceback
 import os
+import imghdr
+import shutil
 try:
     import pyotherside
 except:
@@ -16,6 +18,7 @@ __appname__ = "harbour-sailfishclub"
 dbPath = os.path.join(XDG_DATA_HOME, __appname__,
                       __appname__, "QML", "OfflineStorage", "Databases")
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
+savePath = os.path.join(HOME, "Pictures", "save", "SailfishClub")
 
 
 def sumMd5(str):
@@ -72,3 +75,17 @@ def getRecentDatas(router):
         return False
     finally:
         conn.close()
+
+def findImgType(cachedFile):
+    imgType = imghdr.what(cachedFile)
+    return imgType
+
+def saveImg(realpath, savename):
+    md5name = sumMd5(imgurl)
+    try:
+        tmppath = "%s/%s.%s" % (savePath,savename,findImgType(realpath))
+        shutil.copy(realpath, tmppath.encode("utf-8"))
+        return True
+    except Exception as e:
+        logging.debug(str(e))
+    return False

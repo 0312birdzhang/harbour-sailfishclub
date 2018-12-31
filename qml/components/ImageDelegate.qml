@@ -21,7 +21,7 @@ Item {
     Image {
         id: img;
         anchors.horizontalCenter: root.horizontalCenter;
-        width: Screen.width * 3/4;
+        width: Screen.width - Theme.paddingMedium;
         // width: bw;
         cache: true;
         // height: parent.height;
@@ -29,12 +29,12 @@ Item {
         // sourceSize.width: bw;
         source: content;
         asynchronous: true;
+        Image {
+            anchors.fill: parent
+            visible: img.status !== Image.Ready
+            source: "image://theme/icon-m-refresh";
+        }
     }
 
-    Image {
-        anchors.centerIn: img;
-        sourceSize.width: Theme.fontSizeMedium * 2
-        source: img.status === Image.Ready ? "" : "image://theme/icon-m-refresh";
-        asynchronous: true;
-    }
+
 }

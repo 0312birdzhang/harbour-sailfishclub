@@ -8,7 +8,7 @@ TextArea{
     focusOnClick: true
     font.pixelSize: Theme.fontSizeSmall
     font.weight: Font.Light
-    color: Theme.secondaryHighlightColor
+    color: Theme.secondaryColor
     horizontalAlignment: TextInput.AlignLeft
     EnterKey.onClicked: parent.focus = true
     anchors{

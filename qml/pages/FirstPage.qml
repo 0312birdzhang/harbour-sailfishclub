@@ -36,7 +36,7 @@ import "../js/fontawesome.js" as FONT
 Page {
     id: page
     property alias contentItem:column
-    allowedOrientations:Orientation.All
+    allowedOrientations: Orientation.Portrait
 
     property string cid;
     property string cname;

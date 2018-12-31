@@ -60,7 +60,6 @@ BackgroundItem {
        smooth: true
        opacity: 0.2
        width: parent.width
-    //    height: width * 3/5
        sourceSize.width: width // photoSourceSize
        sourceSize.height: width/16*9   //photoSourceSize
        clip: true

@@ -65,7 +65,7 @@ ApplicationWindow
     property int loginRetry: 3
 
     cover: Qt.resolvedUrl("cover/CoverPage.qml")
-    allowedOrientations:Orientation.All
+    allowedOrientations: Orientation.Portrait
 
 
     onNetworkStatusChanged: {

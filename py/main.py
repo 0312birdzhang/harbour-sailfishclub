@@ -8,6 +8,8 @@ from cache import *
 import _thread
 
 
+
+
 logger = logging.getLogger("sfcpython")
 formatter = logging.Formatter('%(asctime)s %(levelname)-8s: %(message)s')
 console_handler = logging.StreamHandler(sys.stdout)
@@ -211,5 +213,6 @@ def search(term, slug, token):
     if not status_code or status_code != 200:
         return False
     return posts
+
 
 

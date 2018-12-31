@@ -6,7 +6,7 @@ import "../components"
 Dialog  {
     id:postPage
 
-    allowedOrientations:Orientation.All
+    allowedOrientations: Orientation.Portrait
 
     property ListModel listModel;
     property Page parentpage;
