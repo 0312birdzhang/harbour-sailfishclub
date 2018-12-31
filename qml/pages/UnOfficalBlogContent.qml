@@ -31,11 +31,13 @@ Page{
                 asynchronous: true
                 sourceUncached: cover
                 smooth: true
-                width: parent.width - Theme.paddingMedium
+                width: parent.width - Theme.paddingLarge
                 sourceSize.width: width
                 clip: true
                 anchors{
-                    margins: Theme.paddingMedium
+                    horizontalCenter: parent.horizontalCenter
+                    leftMargin: Theme.paddingMedium
+                    rightMargin: Theme.paddingMedium
                 }
             }
 

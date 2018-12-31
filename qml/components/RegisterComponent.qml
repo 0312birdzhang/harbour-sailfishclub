@@ -90,8 +90,11 @@ Item {
                 EnterKey.onClicked: {
                    confirmPassword.focus = false;
                 }
-
             }
+
+//            TextSwitch{
+//                text: qsTr("Declaration")
+//            }
 
         }
 
