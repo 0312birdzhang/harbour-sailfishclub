@@ -23,7 +23,7 @@ Source0:    %{name}-%{version}.tar.bz2
 Source100:  harbour-sailfishclub.yaml
 Requires:   sailfishsilica-qt5 >= 0.10.9
 Requires:   pyotherside-qml-plugin-python3-qt5 >= 1.3.0
-Requires:   python3-requests
+#Requires:   python3-requests
 Requires:   python3-crypto
 Requires:   mapplauncherd-booster-silica-qt5
 Requires:   nemo-qml-plugin-thumbnailer-qt5
