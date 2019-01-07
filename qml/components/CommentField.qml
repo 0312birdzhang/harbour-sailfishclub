@@ -198,50 +198,21 @@ Column {
         }
     }
 
-//    Row{
-//        spacing: Theme.paddingMedium
+
         TextArea {
             id: body
             width: parent.width - Theme.horizontalPageMargin
-//            width: isLandscape?(parent.width / 2 - Theme.horizontalPageMargin - Theme.paddingMedium)
-//                              :(parent.width - Theme.horizontalPageMargin)
-
             label: qsTr("Your comment")
             placeholderText: label
             font.pixelSize: Theme.fontSizeSmall
             focusOutBehavior: FocusBehavior.KeepFocus
+            EnterKey.iconSource: "image://theme/icon-m-enter-close"
+            EnterKey.onClicked: parent.focus = true
             text: replayUser + (appwindow.topicdraft?appwindow.topicdraft:"")
             Component.onCompleted: {
                 _editor.textFormat = TextEdit.PlainText
               }
-//            onTextChanged: {
-//                if(isLandscape){
-//                    py.previewMd(text);
-//                }
-//            }
         }
-
-//        TextArea{
-//            id: previewBody
-//            visible: isLandscape
-//            width: isLandscape? (parent.width / 2 - Theme.horizontalPageMargin - Theme.paddingMedium):0
-//            font.pixelSize: Theme.fontSizeSmall
-//            label: qsTr("Markdown preview")
-//            placeholderText: label
-//            readOnly: true
-
-//        }
-
-//    }
-
-//    Connections{
-//        target: signalCenter
-//        onPreviewMd:{
-//            previewBody.text = result;
-//        }
-//    }
-
-
     Row{
         spacing: Theme.paddingLarge
         anchors.horizontalCenter: parent.horizontalCenter
