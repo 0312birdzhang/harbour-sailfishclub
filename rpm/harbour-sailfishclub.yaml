@@ -38,8 +38,6 @@ Requires:
   - libsailfishapp-launcher
   - mapplauncherd-booster-silica-qt5
   - nemo-qml-plugin-thumbnailer-qt5
-  - python3-requests
-  - python3-crypto
 # All installed files
 Files:
   - '%{_bindir}'

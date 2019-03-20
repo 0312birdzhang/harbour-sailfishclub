@@ -288,7 +288,7 @@ ApplicationWindow
                 console.log("logined via token")
                 py.validate(uid, token)
             }else if(username && password){
-                var derpass = py.decryPass(password);
+                var derpass = API.decrypt(password, py.getSecretKey());
                 if(derpass)py.login(username,derpass);
                 console.log("logined via password")
             }
@@ -386,7 +386,8 @@ ApplicationWindow
             }
             settings.set_username(username);
             if(password && password !== ""){
-                var pass_encrypted = encryPass(password);
+                // var pass_encrypted = encryPass(password);
+                var pass_encrypted = API.encrypt(password, py.getSecretKey());
                 if(pass_encrypted){
                     settings.set_password(pass_encrypted);
                 }
@@ -433,12 +434,16 @@ ApplicationWindow
             });
         }
         //加密
-        function encryPass(password){
-            return call_sync('secret.encrypt',[password]);
-        }
+        // function encryPass(password){
+        //     return call_sync('secret.encrypt',[password]);
+        // }
         //解密
-        function decryPass(password){
-            return call_sync('secret.decrypt',[password]);
+        // function decryPass(password){
+        //     return call_sync('secret.decrypt',[password]);
+        // }
+
+        function getSecretKey(){
+            return call_sync('main.getSecretKey',[]);
         }
 
         // 获取贴子内容

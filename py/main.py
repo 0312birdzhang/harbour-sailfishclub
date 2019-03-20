@@ -215,4 +215,5 @@ def search(term, slug, token):
     return posts
 
 
-
+def getSecretKey():
+    return secret_key
