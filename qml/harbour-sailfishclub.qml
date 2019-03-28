@@ -84,22 +84,22 @@ ApplicationWindow
         }
     }
 
-    DBusAdaptor {
-        service: "harbour.sailfishclub.service"
-        iface: "harbour.sailfishclub.service"
-        path: "/harbour/sailfishclub/service"
-        xml: "  <interface name=\"harbour.sailfishclub.service\">\n" +
-             "    <method name=\"openPage\"/>\n" +
-             "  </interface>\n"
+//    DBusAdaptor {
+//        service: "harbour.sailfishclub.service"
+//        iface: "harbour.sailfishclub.service"
+//        path: "/harbour/sailfishclub/service"
+//        xml: "  <interface name=\"harbour.sailfishclub.service\">\n" +
+//             "    <method name=\"openPage\"/>\n" +
+//             "  </interface>\n"
 
-        function openPage(page, arguments) {
-            if (page === "pages/NotificationsPage.qml") {
-                _showReplayNotification = false
-            }
-            __silica_applicationwindow_instance.activate()
-            pageStack.push(Qt.resolvedUrl(page), arguments)
-        }
-    }
+//        function openPage(page, arguments) {
+//            if (page === "pages/NotificationsPage.qml") {
+//                _showReplayNotification = false
+//            }
+//            __silica_applicationwindow_instance.activate()
+//            pageStack.push(Qt.resolvedUrl(page), arguments)
+//        }
+//    }
 
     // from https://github.com/DylanVanAssche/harbour-sailfinder/blob/develop/qml/harbour-sailfinder.qml
     DBusInterface {
@@ -208,7 +208,7 @@ ApplicationWindow
     // 定时获取通知
     Timer{
         id: getNotifytimer;
-        interval: 120000;
+        interval: 240000;
         running: false;
         repeat: true
         onTriggered: {
@@ -279,6 +279,9 @@ ApplicationWindow
         }
 
         function initLogin(){
+            if(!networkStatus){
+                return;
+            }
             // 登录
             var username = settings.get_username();
             var password = settings.get_password();
@@ -537,6 +540,7 @@ ApplicationWindow
 
         // 获取贴子回复通知
         function getUnread(){
+            if(!networkStatus)return;
             call('main.getUnread', [settings.get_token()], function(result){
                 signalCenter.getUnread(result);
                 if(result && result != "Forbidden"){

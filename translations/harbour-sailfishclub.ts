@@ -419,13 +419,21 @@
     </message>
 </context>
 <context>
+    <name>ShareMethodList</name>
+    <message>
+        <source>Add account</source>
+        <extracomment>Share list item</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ShareToPage</name>
     <message>
         <source>Share this topic!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>No sharing plugins installed, try to install Aliendalvik Control or others from warehouse!</source>
+        <source>No sharing plugins installed, try to install Aliendalvik Control or others from StoreMan!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

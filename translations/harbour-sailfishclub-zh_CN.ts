@@ -419,14 +419,22 @@
     </message>
 </context>
 <context>
+    <name>ShareMethodList</name>
+    <message>
+        <source>Add account</source>
+        <extracomment>Share list item</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ShareToPage</name>
     <message>
         <source>Share this topic!</source>
         <translation>分享贴子</translation>
     </message>
     <message>
-        <source>No sharing plugins installed, try to install Aliendalvik Control or others from warehouse!</source>
-        <translation>没有发现分享插件，请从warehouse安装Aliendalvik Control或其他分享插件</translation>
+        <source>No sharing plugins installed, try to install Aliendalvik Control or others from StoreMan!</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

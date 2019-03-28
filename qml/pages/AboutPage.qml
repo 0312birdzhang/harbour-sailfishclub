@@ -55,7 +55,8 @@ Page{
                         "<a href=\"https://github.com/mentaljam/harbour-storeman\" >harbour-storeman</a><br/>" +
                         "<a href=\"https://github.com/custodian/orn-warehouse\" >orn-warehouse</a><br/>" +
                         "<a href=\"https://sm.ms/\" >sm.ms</a><br/>" +
-                        "<a href=\"https://github.com/communi/communi-sailfish\" >communi-sailfish</a><br/>"
+                        "<a href=\"https://github.com/communi/communi-sailfish\" >communi-sailfish</a><br/>" +
+                        "<a href=\"https://github.com/monich/harbour-foilpics\" >harbour-foilpics</a><br/>"
                         + qsTr("and other projects");
 
 

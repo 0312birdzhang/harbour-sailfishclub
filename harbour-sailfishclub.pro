@@ -12,16 +12,32 @@
 # The name of your application
 TARGET = harbour-sailfishclub
 
-QT += dbus
-CONFIG += sailfishapp
+QT += dbus quick
 
-#CONFIG += link_pkgconfig
+CONFIG += sailfishapp link_pkgconfig
 
-#PKGCONFIG += qt5embedwidget
+PKGCONFIG += sailfishapp
+
+QMAKE_CXXFLAGS += -Wno-unused-parameter -Wno-psabi
+QMAKE_CFLAGS += -Wno-unused-parameter
+
+LIBS += -ldl
+
+# Directories
+HARBOUR_LIB_REL = harbour-lib
+HARBOUR_LIB_DIR = $${_PRO_FILE_PWD_}/$${HARBOUR_LIB_REL}
+HARBOUR_LIB_INCLUDE = $${HARBOUR_LIB_DIR}/include
+HARBOUR_LIB_SRC = $${HARBOUR_LIB_DIR}/src
+
+
+INCLUDEPATH += \
+    src \
+    $${HARBOUR_LIB_INCLUDE}
 
 SOURCES += src/harbour-sailfishclub.cpp \
             src/settings.cpp \
-            src/cache.cpp
+            src/cache.cpp \
+            src/FoilPicsGalleryPlugin.cpp
 
 DEFINES += Q_OS_SAILFISH
 
@@ -64,7 +80,7 @@ OTHER_FILES += qml/harbour-sailfishclub.qml \
     translations/harbour-sailfishclub-zh_CN.ts \
     harbour-sailfishclub.desktop
 
-SAILFISHAPP_ICONS = 86x86 108x108 128x128 256x256
+SAILFISHAPP_ICONS = 86x86 108x108 128x128 172x172 256x256
 
 # to disable building translations every time, comment out the
 # following CONFIG line
@@ -87,7 +103,30 @@ RESOURCES += \
 
 HEADERS += \
     src/settings.h \
-    src/cache.h
+    src/cache.h \
+    src/FoilPicsGalleryPlugin.h
+
+# harbour-lib
+HEADERS += \
+    $${HARBOUR_LIB_INCLUDE}/HarbourDebug.h \
+    $${HARBOUR_LIB_INCLUDE}/HarbourImageProvider.h \
+    $${HARBOUR_LIB_INCLUDE}/HarbourPluginLoader.h \
+    $${HARBOUR_LIB_INCLUDE}/HarbourSystemState.h \
+    $${HARBOUR_LIB_INCLUDE}/HarbourTask.h \
+    $${HARBOUR_LIB_INCLUDE}/HarbourTheme.h \
+    $${HARBOUR_LIB_INCLUDE}/HarbourTransferMethodInfo.h \
+    $${HARBOUR_LIB_INCLUDE}/HarbourTransferMethodsModel.h \
+    $${HARBOUR_LIB_SRC}/HarbourMce.h
+
+SOURCES += \
+    $${HARBOUR_LIB_SRC}/HarbourImageProvider.cpp \
+    $${HARBOUR_LIB_SRC}/HarbourMce.cpp \
+    $${HARBOUR_LIB_SRC}/HarbourPluginLoader.cpp \
+    $${HARBOUR_LIB_SRC}/HarbourSystemState.cpp \
+    $${HARBOUR_LIB_SRC}/HarbourTask.cpp \
+    $${HARBOUR_LIB_SRC}/HarbourTheme.cpp \
+    $${HARBOUR_LIB_SRC}/HarbourTransferMethodInfo.cpp \
+    $${HARBOUR_LIB_SRC}/HarbourTransferMethodsModel.cpp
 
 DISTFILES += \
     qml/pages/PostPage.qml \
@@ -104,12 +143,13 @@ DISTFILES += \
     qml/components/UnOfficalBlogListComponent.qml \
     qml/pages/UnOfficalCNBlog.qml \
     qml/pages/UnOfficalBlogContent.qml \
-    qml/pages/PreviewPage.qml
+    qml/pages/PreviewPage.qml \
+    qml/components/ShareMethodList.qml
 
-dbus.files = dbus/harbour.sailfishclub.service
-dbus.path = $$INSTALL_ROOT/usr/share/dbus-1/services
+#dbus.files = dbus/harbour.sailfishclub.service
+#dbus.path = $$INSTALL_ROOT/usr/share/dbus-1/services
 
-INSTALLS += dbus
+#INSTALLS += dbus
 
 
 

@@ -53,3 +53,5 @@
 * sm.ms
 
 * vim-cn
+
+* harbour-foilpics

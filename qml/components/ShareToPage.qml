@@ -1,6 +1,6 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import Sailfish.TransferEngine 1.0
+//import Sailfish.TransferEngine 1.0
 
 Page {
     id: page
@@ -25,7 +25,7 @@ Page {
 
         ViewPlaceholder {
             enabled: methodlist.count == 0
-            text: qsTr("No sharing plugins installed, try to install Aliendalvik Control or others from warehouse!")
+            text: qsTr("No sharing plugins installed, try to install Aliendalvik Control or others from StoreMan!")
         }
     }
 }

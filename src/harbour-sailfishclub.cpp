@@ -34,18 +34,52 @@
 #include <sailfishapp.h>
 #include "settings.h"
 #include "cache.h"
+#include "FoilPicsGalleryPlugin.h"
+#include "FoilPicsThumbnailerPlugin.h"
+
+#include "HarbourDebug.h"
+#include "HarbourImageProvider.h"
+#include "HarbourSystemState.h"
+#include "HarbourTheme.h"
+#include "HarbourTransferMethodsModel.h"
+
+#define SAILFISHCLUB_QML_IMPORT "harbour.sailfishclub"
+#define SAILFISHCLUB_GALLERY_QML_IMPORT     SAILFISHCLUB_QML_IMPORT ".QtDocGallery"
+
+static void register_types(const char* uri, int v1 = 1, int v2 = 0)
+{
+    qmlRegisterType<HarbourSystemState>(uri, v1, v2, "SystemState");
+    qmlRegisterType<HarbourTransferMethodsModel>(uri, v1, v2, "TransferMethodsModel");
+    qmlRegisterType<SettingsObject>(SAILFISHCLUB_QML_IMPORT ".settings",v1, v2, "SettingsObject");
+}
 
 int main(int argc, char *argv[])
 {
-   qmlRegisterType<SettingsObject>("harbour.sailfishclub.settings",1,0,"SettingsObject");
+
    QGuiApplication *app = SailfishApp::application(argc, argv);
    Cache *imageCache = new Cache("sailfishclub",app);
-//   QScopedPointer<QQuickView> view(SailfishApp::createView());
+
+   register_types(SAILFISHCLUB_QML_IMPORT, 1, 0);
+   HarbourTransferMethodInfo2::registerTypes();
+
    QQuickView* view = SailfishApp::createView();
+   QQmlContext* context = view->rootContext();
+
+   // Re-register some types
+   FoilPicsGalleryPlugin::registerTypes(context->engine(),
+       SAILFISHCLUB_GALLERY_QML_IMPORT, 1, 0);
+
    view->setSource(SailfishApp::pathTo("qml/harbour-sailfishclub.qml"));
-   view->rootContext()->setContextProperty("imageCache", imageCache);
-   view->show();
-   // QObject::connect((QObject*)view->engine(), SIGNAL(quit()), app, SLOT(quit()));
-   QObject::connect(view->engine(), SIGNAL(quit()), QCoreApplication::instance(), SLOT(quit()));
-   return app->exec();
+   context->setContextProperty("imageCache", imageCache);
+//   view->show();
+
+//   QObject::connect(view->engine(), SIGNAL(quit()), QCoreApplication::instance(), SLOT(quit()));
+//   return app->exec();
+   view->showFullScreen();
+
+   int ret = app->exec();
+
+   delete view;
+   delete app;
+   return ret;
 }

@@ -6,7 +6,7 @@
 Name:       harbour-sailfishclub
 
 # >> macros
-%define __requires_exclude ^libc.so.6(GLIBC_2.11)|libjpeg.so.62|libjpeg.so.62(LIBJPEG_6.2)|libpython3.4m.so.1.0|libtiff.so.5.*$
+%define __requires_exclude ^libc.so.6(GLIBC_2.11)|libjpeg.so.62|libjpeg.so.62(LIBJPEG_6.2)|libtiff.so.5.*|libQt5Qml.so.*$
 # << macros
 
 %{!?qtc_qmake:%define qtc_qmake %qmake}
@@ -25,12 +25,13 @@ Requires:   sailfishsilica-qt5 >= 0.10.9
 Requires:   pyotherside-qml-plugin-python3-qt5 >= 1.3.0
 Requires:   mapplauncherd-booster-silica-qt5
 Requires:   nemo-qml-plugin-thumbnailer-qt5
-#Requires:   qtmozembed-qt5
+Requires:   qt5-qtsvg-plugin-imageformat-svg
 BuildRequires:  pkgconfig(sailfishapp) >= 1.0.2
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5Qml)
 BuildRequires:  pkgconfig(Qt5Quick)
-#BuildRequires:  pkgconfig(qt5embedwidget)
+BuildRequires:  pkgconfig(Qt5Svg)
+
 BuildRequires:  desktop-file-utils
 
 %description
@@ -77,6 +78,6 @@ desktop-file-install --delete-original       \
 %{_datadir}/%{name}
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
-%{_datadir}/dbus-1/services/harbour.sailfishclub.service
+# %{_datadir}/dbus-1/services/harbour.sailfishclub.service
 # >> files
 # << files
