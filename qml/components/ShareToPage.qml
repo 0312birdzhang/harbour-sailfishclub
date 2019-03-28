@@ -16,12 +16,13 @@ Page {
         header: PageHeader {
             title: qsTr("Share this topic!")
         }
-        content: {
-            "type": "text/x-url",
-            "status": page.link,
-            "linkTitle": page.linkTitle
-        }
-        filter: "text/x-url"
+        source: link
+//        content: {
+//            "type": "text/x-url",
+//            "status": page.link,
+//            "linkTitle": page.linkTitle
+//        }
+//        filter: "text/x-url"
 
         ViewPlaceholder {
             enabled: methodlist.count == 0
