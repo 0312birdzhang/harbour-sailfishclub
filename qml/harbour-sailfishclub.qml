@@ -270,11 +270,11 @@ ApplicationWindow
     Python{
         id:py
         Component.onCompleted: {
-            addImportPath('qrc:/py/')
+            addImportPath('qrc:/py')
             py.importModule('main', function () {
-                py.importModule('secret', function () {
+//                py.importModule('secret', function () {
                     initLogin();
-                });
+//                });
             });
         }
 
@@ -288,7 +288,7 @@ ApplicationWindow
                 console.log("logined via token")
                 py.validate(uid, token)
             }else if(username && password){
-                var derpass = API.decrypt(password, py.getSecretKey());
+                var derpass = Api.decrypt(password, py.getSecretKey());
                 if(derpass)py.login(username,derpass);
                 console.log("logined via password")
             }
@@ -387,7 +387,7 @@ ApplicationWindow
             settings.set_username(username);
             if(password && password !== ""){
                 // var pass_encrypted = encryPass(password);
-                var pass_encrypted = API.encrypt(password, py.getSecretKey());
+                var pass_encrypted = Api.encrypt(password, py.getSecretKey());
                 if(pass_encrypted){
                     settings.set_password(pass_encrypted);
                 }

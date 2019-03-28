@@ -1,6 +1,6 @@
 .pragma library
 
-Qt.include("crypto-js/crypto-js.js") as CryptoJSLib
+Qt.include("crypto-js/crypto-js.js")
 
 function humanedate(datestr){
     var _dateline = new Date(datestr).getTime();
