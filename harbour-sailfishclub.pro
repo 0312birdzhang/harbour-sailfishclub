@@ -77,6 +77,7 @@ OTHER_FILES += qml/harbour-sailfishclub.qml \
     qml/components/HorizontalFontAwesomeTextButton.qml \
     rpm/harbour-sailfishclub.spec \
     rpm/harbour-sailfishclub.yaml \
+    translations/harbour-sailfishclub.ts \
     translations/harbour-sailfishclub-zh_CN.ts \
     harbour-sailfishclub.desktop
 

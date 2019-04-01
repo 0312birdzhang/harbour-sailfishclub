@@ -18,6 +18,7 @@ class HttpClient(object):
         self.endpoint = settings['api_endpoint']
         self.admin_uid = settings['admin_uid']
         self.headers = {'Authorization': 'Bearer %s' % settings['master_token']}
+        self.cookies = dict()
 
     def _request(self, method, path, **kwargs):
         """Simple wrapper over `requests.request`.
@@ -41,10 +42,18 @@ class HttpClient(object):
             self.headers = {'Authorization': 'Bearer %s' % kwargs['_token']}
             kwargs.pop("_token", None)
 
+        if '_cookies' in kwargs:
+            self.cookies = {
+                'express.sid': kwargs['_cookies']
+            }
+            kwargs.pop("_cookies", None)
+
         # Query the NodeBB instance, extracting the status code and fail reason.
         response = requests.request(
             method, urljoin(self.endpoint, path),
-            headers=self.headers, data=kwargs, timeout = 20
+            headers=self.headers, data=kwargs, 
+            cookies=self.cookies,
+            timeout = 20
         )
         code, reason = response.status_code, response.reason
 

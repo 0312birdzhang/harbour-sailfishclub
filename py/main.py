@@ -34,11 +34,11 @@ client.configure(**{
 def login(user, password):
     userinfo = getuserinfo(user)
     if not userinfo:
-        logger.error("no such user:", user)
+        logger.error("no such user: %s", user)
         return False
     uid = userinfo.get("uid")
     if not uid:
-        logger.error("get uid failed:", user)
+        logger.error("get uid failed: %s", user)
         return False
     token = createToken(uid, password)
     if not token:

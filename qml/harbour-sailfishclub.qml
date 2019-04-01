@@ -52,7 +52,7 @@ ApplicationWindow
 
     property string appname: "旗鱼俱乐部"
     property bool loading: false
-    property bool pymodelLoaded: false
+    // property bool pymodelLoaded: false
     property int page_size: 20
     property string current_router: "recent"
     property string siteUrl: "https://sailfishos.club"
@@ -73,6 +73,10 @@ ApplicationWindow
             //% "Network connection failure"
             notification.showPopup(qsTr("Network not connected"), qsTr("Try again later please"), "icon-s-high-importance");
             loading = false;
+        }else{
+            if(!userinfo.logined){
+                py.initLogin();
+            }
         }
     }
 
@@ -272,9 +276,9 @@ ApplicationWindow
         Component.onCompleted: {
             addImportPath('qrc:/py')
             py.importModule('main', function () {
-//                py.importModule('secret', function () {
-                    initLogin();
-//                });
+                initLogin();
+            });
+            py.importModule('app', function(){
             });
         }
 
@@ -576,7 +580,7 @@ ApplicationWindow
                 }else{
                     source = result;
                 }
-                pymodelLoaded = true;
+                // pymodelLoaded = true;
                 signalCenter.loadImage(source);
             });
         }
