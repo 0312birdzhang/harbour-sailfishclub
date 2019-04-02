@@ -11,6 +11,7 @@ SilicaListView {
     width: parent.width
     height: Theme.itemSizeSmall * model.count
 
+    model: appTransferMethodsModel
     DBusInterface {
         id: settings
         service: "com.jolla.settings"
@@ -87,8 +88,6 @@ SilicaListView {
         }
 
         Label {
-            //: Share list item
-            //% "Add account"
             text: qsTr("Add account")
             x: Theme.horizontalPageMargin
             anchors {

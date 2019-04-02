@@ -422,7 +422,6 @@
     <name>ShareMethodList</name>
     <message>
         <source>Add account</source>
-        <extracomment>Share list item</extracomment>
         <translation type="unfinished"></translation>
     </message>
 </context>

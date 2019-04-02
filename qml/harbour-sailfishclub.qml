@@ -271,6 +271,11 @@ ApplicationWindow
         id:userinfo
     }
 
+    TransferMethodsModel {
+        id: appTransferMethodsModel
+        filter: "text/x-url"
+    }
+
     Python{
         id:py
         Component.onCompleted: {
@@ -278,8 +283,8 @@ ApplicationWindow
             py.importModule('main', function () {
                 initLogin();
             });
-            py.importModule('app', function(){
-            });
+//            py.importModule('app', function(){
+//            });
         }
 
         function initLogin(){
