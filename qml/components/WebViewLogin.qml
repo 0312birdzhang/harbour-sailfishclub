@@ -3,8 +3,13 @@ import Sailfish.Silica 1.0
 import QtWebKit 3.0
 import QtWebKit.experimental 1.0
 
-Page {
-    id: root
+Item {
+    id: webloginComponent
+    width: parent.width
+    height: parent.height
+
+    signal loginSucceed()
+    signal loginFailed(string fail)
 
     // The effective value will be restricted by ApplicationWindow.allowedOrientations
     allowedOrientations: Orientation.All
@@ -29,10 +34,12 @@ Page {
                                   userinfo.username = rs.username;
                                   userinfo.avatar = ret.avatar
                                   signalCenter.loginSuccessed();
-                                  py.saveData(ret.uid, ret.bduss, 
+                                  py.saveData(ret.uid, 
+                                    ret.bduss, 
                                     rs.username,""
                                     );
-                                  pageStack.pop()
+                                //   pageStack.pop();
+                                  webloginComponent.loginSucceed();
                               }
                           })
                       }

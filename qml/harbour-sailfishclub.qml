@@ -779,7 +779,6 @@ ApplicationWindow
     }
 
     function toLoginPage(){
-//        popAttachedPages();
         pageStack.push(Qt.resolvedUrl("pages/LoginDialog.qml"));
     }
 
