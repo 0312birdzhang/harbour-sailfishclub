@@ -50,7 +50,7 @@ static void register_types(const char* uri, int v1 = 1, int v2 = 0)
 {
     qmlRegisterType<HarbourSystemState>(uri, v1, v2, "SystemState");
     qmlRegisterType<HarbourTransferMethodsModel>(uri, v1, v2, "TransferMethodsModel");
-    qmlRegisterType<SettingsObject>(SAILFISHCLUB_QML_IMPORT ".settings",v1, v2, "SettingsObject");
+    qmlRegisterType<SettingsObject>(uri, v1, v2, "SettingsObject");
 }
 
 int main(int argc, char *argv[])

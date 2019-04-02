@@ -41,7 +41,7 @@ import io.thp.pyotherside 1.5
 import Nemo.Notifications 1.0
 import Nemo.DBus 2.0
 import Nemo.Configuration 1.0
-import harbour.sailfishclub.settings 1.0
+import harbour.sailfishclub 1.0
 
 
 ApplicationWindow
