@@ -4,7 +4,7 @@ import "../components"
 
 Dialog {
     id: dialog
-
+    objectName: "registerPage"
     readonly property bool registerSucced: _registerSucceed
     property bool _registerSucceed: false
     property bool _canAccept: false

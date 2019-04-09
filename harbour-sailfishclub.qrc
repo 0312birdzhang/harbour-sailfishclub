@@ -131,5 +131,23 @@
         <file>py/urllib3/util/timeout.py</file>
         <file>py/urllib3/util/url.py</file>
         <file>py/urllib3/util/wait.py</file>
+        <file>py/diskcache/__init__.py</file>
+        <file>py/diskcache/cli.py</file>
+        <file>py/diskcache/core.py</file>
+        <file>py/diskcache/djangocache.py</file>
+        <file>py/diskcache/fanout.py</file>
+        <file>py/diskcache/LICENSE</file>
+        <file>py/diskcache/memo.py</file>
+        <file>py/diskcache/persistent.py</file>
+        <file>py/diskcache/stampede.py</file>
+        <file>py/wrapcache/adapter/__init__.py</file>
+        <file>py/wrapcache/adapter/BaseAdapter.py</file>
+        <file>py/wrapcache/adapter/CacheException.py</file>
+        <file>py/wrapcache/adapter/MemcachedAdapter.py</file>
+        <file>py/wrapcache/adapter/MemoryAdapter.py</file>
+        <file>py/wrapcache/adapter/RedisAdapter.py</file>
+        <file>py/wrapcache/database/__init__.py</file>
+        <file>py/wrapcache/__init__.py</file>
+        <file>py/app.py</file>
     </qresource>
 </RCC>

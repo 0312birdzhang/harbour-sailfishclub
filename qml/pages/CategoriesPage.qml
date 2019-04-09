@@ -7,7 +7,7 @@ Page{
     id: page
     property alias contentItem:column
     allowedOrientations:Orientation.All
-
+    objectName: "cateogriesPage"
     ListModel{
         id: bannerModel
     }

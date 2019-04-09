@@ -8,7 +8,7 @@ Page{
     property string cover;
     property string _title;
     property string content;
-
+    objectName: "uobcontentPage"
     SilicaFlickable {
         id: flickable
         anchors.fill: parent

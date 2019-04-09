@@ -223,6 +223,19 @@ ApplicationWindow
         }
     }
 
+    Timer{
+        id: loginTimer
+        interval: 15;
+        running: false;
+        repeat: false
+        onTriggered: {
+            if(userinfo.logined){
+                py.initLogin();
+            }
+        }
+
+    }
+
     FontLoader {
         source: "js/fontawesome-webfont.ttf"
     }
@@ -261,7 +274,7 @@ ApplicationWindow
         }
         onLoginFailed: {
             if(loginRetry>0){
-                py.initLogin();
+                loginTimer.start();
                 loginRetry--;
             }
         }
@@ -283,8 +296,8 @@ ApplicationWindow
             py.importModule('main', function () {
                 initLogin();
             });
-//            py.importModule('app', function(){
-//            });
+            py.importModule('app', function(){
+            });
         }
 
         function initLogin(){
@@ -414,6 +427,10 @@ ApplicationWindow
             call('main.getrecent',[slug],function(result){
                 loading = false;
                 signalCenter.getRecent(result);
+                // 缓存首页
+                if(slug == "page=1" ){
+                    py.set_recent_to_cache(result)
+                }
             });
         }
 
@@ -445,14 +462,6 @@ ApplicationWindow
                 signalCenter.getCategories(result);
             });
         }
-        //加密
-        // function encryPass(password){
-        //     return call_sync('secret.encrypt',[password]);
-        // }
-        //解密
-        // function decryPass(password){
-        //     return call_sync('secret.decrypt',[password]);
-        // }
 
         function getSecretKey(){
             return call_sync('main.getSecretKey',[]);
@@ -576,19 +585,20 @@ ApplicationWindow
             })
         }
 
-        // 弃用
-        function loadImage(username,image_id){
-            call('myprovider.load',[username,image_id],function(result){
-                var source;
-                if(!result){
-                    source = "image://theme/harbour-sailfishclub"
-                }else{
-                    source = result;
+        function get_recent_from_cache(){
+            call('app.api.get_recent_list_data',[],function(result){
+                if(result){
+                    signalCenter.getRecent(result);
+                    toIndexPage();
                 }
-                // pymodelLoaded = true;
-                signalCenter.loadImage(source);
             });
         }
+
+        function set_recent_to_cache(topic){
+            call('app.api.set_recent_list_data',['recent',topic],function(result){
+            });
+        }
+
     }
 
     PanelView {
@@ -685,8 +695,7 @@ ApplicationWindow
             Component.onCompleted: {
                 splash.visible = true;
                 timerDisplay.running = true;
-
-
+                py.get_recent_from_cache();
             }
 
             SilicaFlickable {
@@ -772,6 +781,9 @@ ApplicationWindow
 
 
     function toIndexPage() {
+        if(currentPage.objectName && currentPage.objectName == 'firstPage'){
+            return;
+        }
         popAttachedPages();
         pageStack.replace(indexPageComponent)
 

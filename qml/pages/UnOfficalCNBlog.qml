@@ -10,7 +10,7 @@ Page {
     property bool next_active:false;
     property string prev_page;
     property bool prev_active:false;
-
+    objectName: "uocnblogPage"
     allowedOrientations:Orientation.Portrait
 
     ListModel{

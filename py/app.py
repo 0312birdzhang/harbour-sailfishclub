@@ -25,23 +25,15 @@ import os
 import traceback
 import urllib.parse
 import json
-import re
-import sqlite3
 import pprint
 import pyotherside
-import requests
-import markdown
-import timeago
-from http.cookies import SimpleCookie
 from datetime import datetime, timezone, timedelta
-from bs4 import BeautifulSoup
 from diskcache import Cache
 
-#DOMAIN_NAME = 'forums.ubports.com'
 DOMAIN_NAME = 'sailfishos.club'
 BASE_URL = 'https://%s' % (DOMAIN_NAME, )
 TIMEZONE = timezone(timedelta(hours=2), 'Europe/Helsinki')
-HARBOUR_APP_NAME = 'harbour-weblogin-demo'
+HARBOUR_APP_NAME = 'harbour-sailfishclub'
 HOME = os.path.expanduser('~')
 XDG_DATA_HOME = os.environ.get('XDG_DATA_HOME', os.path.join(HOME, '.local', 'share'))
 XDG_CONFIG_HOME = os.environ.get('XDG_CONFIG_HOME', os.path.join(HOME, '.config'))
@@ -59,116 +51,28 @@ class Api:
         except:
             Utils.log(traceback.format_exc())
             self.cache = None
-
-    def get_other_param(self, username):
+    def set_recent_list_data(self, router='recent', topic={}):
         """
-        Get BDUSS and uid
-        """
-        bduss = self.get_session_id_from_cookie()
-        uid, avatarUrl = self.get_user_id_from_username(username)
-        user = {}
-        if bduss and uid:
-            user['uid'] = uid
-            user['bduss'] = bduss
-            user['username'] = username
-            user['avatarUrl'] = avatarUrl
-            self.set_logged_in_user(user)
-            return {
-                "bduss": bduss,
-                "uid": uid,
-                "avatar": avatarUrl
-            }
-        else:
-            return None
-
-
-    def get_session_id_from_cookie(self):
-        """
-        Try get session Id from WebKit cookies DB
-        """
-
-        conn = sqlite3.connect(COOKIE_PATH)
-        cursor = conn.cursor()
-        params = ('%sexpress.sid' % (DOMAIN_NAME, ),)
-        cursor.execute('SELECT * FROM cookies WHERE cookieId = ?', params)
-        row = cursor.fetchone()
-        if row is not None:
-            cookie = SimpleCookie()
-            cookie.load(row[1].decode('utf-8'))
-            for cookie_name, morsel in cookie.items():
-                if cookie_name == 'express.sid':
-                    return morsel.value
-    
-    def get_user_id_from_username(self, username):
-        Utils.log(username)
-        """
-        Get user_id from username
-        """
-        user_home_url = "%s/api/user/%s" % (BASE_URL, username )
-        try:
-            r = requests.get(user_home_url, timeout = 10)
-            user_info = r.json()
-            uid = user_info.get("uid")
-            avatarUrl = user_info.get("cover:url")
-            if not avatarUrl.startswith("http"):
-                avatarUrl = "%s%s" % (BASE_URL, avatarUrl)
-            return uid, avatarUrl
-        except:
-            Utils.log(traceback.format_exc())
-            utils.error('Could not login. Please try again.')
-
-    def set_logged_in_user(self, user={}):
-        """
-        Set logged in user to cache
+        Set recent,popular,etc json string to cache
         """
         try:
             if type(self.cache) is Cache:
-                if 'uid' in user:
-                    self.cache.set('user.uid', user['uid'])
-                if 'username' in user:
-                    self.cache.set('user.username', user['username'])
-                if 'avatarUrl' in user:
-                    self.cache.set('user.avatarUrl', user['avatarUrl'])
-                if 'bduss' in user:
-                    self.cache.set('user.bduss', user['bduss'])
-                return True
-            else:
-                raise Exception('Could not save data.')
+                self.cache.set(router, json.dumps(topic))
+            return True
         except:
             Utils.log(traceback.format_exc())
-            utils.error('Could not login. Please try again.')
+            # utils.error('Could not save to cache. Please try again.')
 
-    def get_logged_in_user(self):
+    def get_recent_list_data(self, router='recent'):
         """
-        Get logged in user from cache
+        Get recent,popular,etc json string in cache
         """
-
         if type(self.cache) is Cache:
-            userId = self.cache.get('user.uid')
-            if userId:
-                self.userId = userId
-                user = {}
-                user['uid'] = userId
-                user['username'] = self.cache.get('user.username')
-                user['bduss'] = self.cache.get('user.bduss')
-                user['avatarUrl'] = self.cache.get('user.avatarUrl')
-                return user
-
-    def do_logout(self):
-        """
-        Logout by clear cookie
-        """
-
-        self.sessionId = ''
-        self.userId = 0
-
-        # Clear WebKit cookies DB
-        if os.path.exists(COOKIE_PATH):
-            os.remove(COOKIE_PATH)
-
-        # Clear cache
-        if type(self.cache) is Cache:
-            self.cache.clear()
+            try:
+                return json.loads(self.cache.get(router))
+            except:
+                Utils.log(traceback.format_exc())
+        return {}
 
 class Utils:
     def __init__(self):

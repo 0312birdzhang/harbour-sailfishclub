@@ -3,7 +3,8 @@ import Sailfish.Silica 1.0
 
 BackgroundItem {
    width: parent.width
-   height: img.height
+//    height: img.height
+   height: parent.width/16*9
    Label{
        id: titleid
        text: title

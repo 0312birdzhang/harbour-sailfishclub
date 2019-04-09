@@ -6,10 +6,7 @@ import logging
 import sys
 import requests
 from cache import *
-import _thread
-
-
-
+import wrapcache
 
 
 logger = logging.getLogger("sfcpython")
@@ -72,6 +69,7 @@ def createToken(uid, password):
         return False
     return playload.get("token")
 
+@wrapcache.wrapcache(timeout = 600)
 def getuserinfo(user,is_username = True):
     status_code, userinfo = client.users.get(user, is_username)
     if not status_code or status_code != 200:
@@ -93,6 +91,11 @@ def post(title, content, uid, cid):
     status_code, response = client.topics.create(uid, cid, title, content)
     if not status_code or status_code != 200:
         return False
+    else:
+        pass
+        # clean wrapcache
+        # cache_key = wrapcache.keyof(getrecent, slug) TODO
+        # wrapcache.remove(cache_key, adapter = wrapcache.MemoryAdapter)
     return response
 
 def replay(tid,uid,content):
@@ -107,43 +110,42 @@ def replayTo(tid, uid, toPid, content):
         return False
     return response
 
+@wrapcache.wrapcache(timeout = 60)
 def getrecent(slug):
     status_code, topics = client.topics.get_recent(slug=slug)
     if not status_code or status_code != 200:
-        # return False
-        return getRecentDatas("recent")
-    #TODO
-    #insertDatas
-    # try:
-    #     _thread.start_new_thread( insertDatas, ("recent", topics ))
-    # except:
-    #     pass.
+        return False
     return topics
 
+@wrapcache.wrapcache(timeout = 600)
 def getpopular(slug):
     status_code, topics = client.topics.get_popular(slug=slug)
     if not status_code or status_code != 200:
         return False
     return topics
 
+@wrapcache.wrapcache(timeout = 60)
 def listcategory():
     status_code, categories = client.categories.list()
     if not status_code or status_code != 200:
         return False
     return categories
 
+@wrapcache.wrapcache(timeout = 60)
 def getTopic(tid, slug, token = access_token ):
     status_code, topic = client.topics.get(tid, slug=slug, **{"_token" : token})
     if not status_code or status_code != 200:
         return False
     return topic
 
+@wrapcache.wrapcache(timeout = 60)
 def getNotifications(token):
     status_code, notices = client.topics.get_notification(**{"_token" : token})
     if not status_code or status_code != 200:
         return False
     return notices
 
+@wrapcache.wrapcache(timeout = 60)
 def getUnread(token):
     status_code, notices = client.topics.get_unread(**{"_token" : token})
     if not status_code or status_code != 200:
@@ -152,6 +154,8 @@ def getUnread(token):
 
 
 UnOfficalBlogURL = "https://notexists.top/api/post"
+
+@wrapcache.wrapcache(timeout = 600)
 def getUnOfficalBlog(page):
     if not page:
         page = 0
@@ -166,6 +170,7 @@ def getUnOfficalBlog(page):
         logger.debug(str(e))
     return False
 
+@wrapcache.wrapcache(timeout = 600)
 def getUnOfficalBlogContent(slug):
     url = "{}/{}".format(UnOfficalBlogURL, slug)
     try:
@@ -208,6 +213,7 @@ def previewMd(text):
     return mistune.markdown(text)
 
 
+@wrapcache.wrapcache(timeout = 1200)
 def search(term, slug, token):
     status_code, posts = client.topics.search(term, slug, **{"_token" : token})
     # logger.debug(status_code)
@@ -219,3 +225,6 @@ def search(term, slug, token):
 
 def getSecretKey():
     return secret_key
+
+def resizeImg():
+    pass

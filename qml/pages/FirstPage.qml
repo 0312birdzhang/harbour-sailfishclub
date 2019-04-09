@@ -37,7 +37,7 @@ Page {
     id: page
     property alias contentItem:column
     allowedOrientations: Orientation.Portrait
-
+    objectName: "firstPage"
     property string cid;
     property string cname;
     property int current_page:1;

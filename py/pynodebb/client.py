@@ -18,7 +18,7 @@ from pynodebb.api.categories import Category
 
 
 class Client(object):
-    def __init__(self, endpoint, token, admin_uid=None):
+    def __init__(self, endpoint, token=None, admin_uid=None):
         """Instantiates the NodeBB API Client.
 
         Args:

@@ -6,6 +6,7 @@ import "../js/fontawesome.js" as FONT
 
 Page {
     id: searchPage
+    objectName: "searchPage"
     property int current_page:1;
     property int pageCount:1;
     property string next_page;
