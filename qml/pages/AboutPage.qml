@@ -43,7 +43,7 @@ Page{
 
             LabelText{
                 label: qsTr("ArtWork")
-                text: "Cover跟图标均有设计师<b>蔡司</b>重新制作, 👍"
+                text: "Cover跟图标均由设计师<b>蔡司</b>制作"
             }
 
             Item { width: 1; height: Theme.paddingMedium }
@@ -56,7 +56,8 @@ Page{
                         "<a href=\"https://github.com/custodian/orn-warehouse\" >orn-warehouse</a><br/>" +
                         "<a href=\"https://sm.ms/\" >sm.ms</a><br/>" +
                         "<a href=\"https://github.com/communi/communi-sailfish\" >communi-sailfish</a><br/>" +
-                        "<a href=\"https://github.com/monich/harbour-foilpics\" >harbour-foilpics</a><br/>"
+                        "<a href=\"https://github.com/monich/harbour-foilpics\" >harbour-foilpics</a><br/>" +
+                        "<a href=\"https://github.com/hustcc/wrapcache\" >wrapcache</a><br/>" +
                         + qsTr("and other projects");
 
 

@@ -422,7 +422,7 @@
     <name>ShareMethodList</name>
     <message>
         <source>Add account</source>
-        <translation type="unfinished"></translation>
+        <translation>添加账号</translation>
     </message>
 </context>
 <context>
@@ -433,7 +433,7 @@
     </message>
     <message>
         <source>No sharing plugins installed, try to install Aliendalvik Control or others from StoreMan!</source>
-        <translation type="unfinished"></translation>
+        <translation>没有安装分享插件，请从StoreMan安装Aliendalvik Control或其他分享插件</translation>
     </message>
 </context>
 <context>
