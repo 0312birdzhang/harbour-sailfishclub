@@ -171,4 +171,7 @@ Page{
     Component.onCompleted: {
         py.getCategories();
     }
+    Component.onDestruction: {
+        appwindow.loading = false;
+    }
 }

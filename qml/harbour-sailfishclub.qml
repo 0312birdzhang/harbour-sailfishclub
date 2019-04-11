@@ -60,6 +60,7 @@ ApplicationWindow
     property bool networkStatus
     property int unreadSize: 0
     property string postdraft //发帖草稿
+    property string post_title_draft //发帖标题草稿
     property string topicdraft // 回贴草稿
     property int loginRetry: 3
     readonly property string slug_first_page: "page=1"

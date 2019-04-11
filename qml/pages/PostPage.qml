@@ -31,6 +31,7 @@ Dialog  {
             // console.log(JSON.stringify(ret));
 
         }else{
+            appwindow.postdraft = comments;
             notification.showPopup(
                         qsTr("Error"),
                         qsTr("Field not completed"),
@@ -56,7 +57,9 @@ Dialog  {
                 text: qsTr("Recovery from draft")
                 visible: appwindow.postdraft
                 onClicked: {
+                    title.text = appwindows.post_title_draft
                     commentfield.children[3].text = appwindow.postdraft;
+                    appwindows.post_title_draft = "";
                     appwindow.postdraft = "";
                 }
             }
@@ -137,6 +140,7 @@ Dialog  {
                                      "category":topicData.category.name,
                                      "category_icon":topicData.category.icon
                                  });
+                commentfield.children[3].text = "";
                 pageStack.pop();
             }else{
                 notification.showPopup(
@@ -158,6 +162,7 @@ Dialog  {
             if(categories[i].parentCid !== "0"){
                 categories[i].name = "  - " + categories[i].name;
             }
+            // Hardcode, because no api
             if(categories[i].name === "公告"||categories[i].name === "新闻"){
                 continue;
             }
@@ -175,5 +180,12 @@ Dialog  {
             }
 
         }
+    }
+
+    Component.onDestruction: {
+        appwindow.loading = false;
+        console.log(commentfield.children.length)
+        appwindow.postdraft = commentField.children[3].text;
+        appwindow.post_title_draft = title.text;
     }
 }

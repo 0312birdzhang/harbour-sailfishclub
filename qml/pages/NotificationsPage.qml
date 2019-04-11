@@ -134,4 +134,7 @@ Page{
         py.getUnread();
     }
 
+    Component.onDestruction: {
+        appwindow.loading = false;
+    }
 }

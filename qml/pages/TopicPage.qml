@@ -306,7 +306,14 @@ Page{
             acceptDestinationProperties:replaysTmpModel
 
             onRejected: {
-                appwindow.topicdraft = commentField.children[3].text;
+                var tmpdraft = commentField.children[3].text;
+                // @birdzhang test to test
+                if(tmpdraft){
+                    tmpdraft = tmpdraft.replace(/\@\w+\s/m,"");
+                }else{
+                    tmpdraft = "";
+                }
+                appwindow.topicdraft = tmpdraft;
             }
 
             SilicaFlickable {
@@ -398,5 +405,6 @@ Page{
     }
     Component.onDestruction: {
         appwindow.topicdraft = "";
+        appwindow.loading = false;
     }
 }
