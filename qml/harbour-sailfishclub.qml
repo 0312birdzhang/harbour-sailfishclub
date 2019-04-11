@@ -450,6 +450,19 @@ ApplicationWindow
             });
         }
 
+        //获取热门贴子
+        function getPopular(slug){
+            loading = true;
+            call('main.getpopular',[slug],function(result){
+                loading = false;
+                signalCenter.getRecent(result);
+                // 缓存首页
+                if(slug == slug_first_page ){
+                    py.set_query_to_cache("popular", result, 86400.00)
+                }
+            });
+        }
+
         // 搜索贴子
         function search(term, slug){
             // console.log("slug:"+slug)
@@ -465,18 +478,7 @@ ApplicationWindow
             });
         }
 
-        //获取热门贴子
-        function getPopular(slug){
-            loading = true;
-            call('main.getpopular',[slug],function(result){
-                loading = false;
-                signalCenter.getRecent(result);
-                // 缓存首页
-                if(slug == slug_first_page ){
-                    py.set_query_to_cache("popular", result, 86400.00)
-                }
-            });
-        }
+
 
         // 获取分类
         function getCategories(){
@@ -484,6 +486,7 @@ ApplicationWindow
             call('main.listcategory',[],function(result){
                 loading = false;
                 signalCenter.getCategories(result);
+                py.set_query_to_cache("ctegories",result, 86400.00)
             });
         }
 
@@ -613,7 +616,9 @@ ApplicationWindow
                 if(result){
                     signalCenter.getRecent(result);
                 }else{
-                    getrecent(slug)
+                    if(router === "recent")py.getRecent(slug);
+                    if(router === "popular")py.getPopular(slug);
+                    if(router === "categories")py.getCategories();
                 }
             });
         }
@@ -653,7 +658,6 @@ ApplicationWindow
         leftPanel: NavigationPanel {
             id: leftPanel
             busy: loading
-            enabled: !busy
             onClicked: {
                 panelView.hidePanel();
             }
@@ -806,9 +810,9 @@ ApplicationWindow
 
 
     function toIndexPage() {
-        if(currentPage.objectName && currentPage.objectName == 'firstPage'){
-            return;
-        }
+//        if(currentPage.objectName && currentPage.objectName == 'firstPage'){
+//            return;
+//        }
         popAttachedPages();
         pageStack.replace(indexPageComponent)
 

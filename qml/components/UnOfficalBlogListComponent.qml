@@ -62,7 +62,7 @@ BackgroundItem {
        opacity: 0.2
        width: parent.width
        sourceSize.width: width // photoSourceSize
-       sourceSize.height: width/16*9   //photoSourceSize
+       sourceSize.height: parent.height
        clip: true
    }
 

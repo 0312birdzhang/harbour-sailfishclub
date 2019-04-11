@@ -15,6 +15,8 @@ console_handler = logging.StreamHandler(sys.stdout)
 console_handler.formatter = formatter
 logger.addHandler(console_handler)
 logger.setLevel(logging.DEBUG)
+UnOfficalBlogURL = "https://notexists.top/api/post"
+
 
 client = Client('https://sailfishos.club', access_token)
 client.configure(**{
@@ -63,9 +65,11 @@ def createToken(uid, password):
         return False
     return playload.get("token")
 
-@wrapcache.wrapcache(timeout = 600)
+#@wrapcache.wrapcache(timeout = 600)
 def getuserinfo(user,is_username = True):
+    logger.debug("user: %s" % (str(user),))
     status_code, userinfo = client.users.get(user, is_username)
+    logger.debug(str(status_code))
     if not status_code or status_code != 200:
         return False
     return userinfo
@@ -104,14 +108,12 @@ def replayTo(tid, uid, toPid, content):
         return False
     return response
 
-@wrapcache.wrapcache(timeout = 120)
 def getrecent(slug):
     status_code, topics = client.topics.get_recent(slug=slug)
     if not status_code or status_code != 200:
         return False
     return topics
 
-@wrapcache.wrapcache(timeout = 600)
 def getpopular(slug):
     status_code, topics = client.topics.get_popular(slug=slug)
     if not status_code or status_code != 200:
@@ -125,21 +127,21 @@ def listcategory():
         return False
     return categories
 
-@wrapcache.wrapcache(timeout = 60)
+@wrapcache.wrapcache(timeout = 120)
 def getTopic(tid, slug, token = access_token ):
     status_code, topic = client.topics.get(tid, slug=slug, **{"_token" : token})
     if not status_code or status_code != 200:
         return False
     return topic
 
-@wrapcache.wrapcache(timeout = 120)
+@wrapcache.wrapcache(timeout = 240)
 def getNotifications(token):
     status_code, notices = client.topics.get_notification(**{"_token" : token})
     if not status_code or status_code != 200:
         return False
     return notices
 
-@wrapcache.wrapcache(timeout = 120)
+@wrapcache.wrapcache(timeout = 240)
 def getUnread(token):
     status_code, notices = client.topics.get_unread(**{"_token" : token})
     if not status_code or status_code != 200:
@@ -147,7 +149,7 @@ def getUnread(token):
     return notices
 
 
-UnOfficalBlogURL = "https://notexists.top/api/post"
+
 
 @wrapcache.wrapcache(timeout = 600)
 def getUnOfficalBlog(page):

@@ -6,3 +6,4 @@
 *.qm
 .vscode
 py/sfctoken.py
+*.jsc

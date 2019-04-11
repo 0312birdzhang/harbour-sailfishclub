@@ -169,7 +169,8 @@ Page{
     }
 
     Component.onCompleted: {
-        py.getCategories();
+//        py.getCategories();
+        py.get_query_from_cache("","categories")
     }
     Component.onDestruction: {
         appwindow.loading = false;

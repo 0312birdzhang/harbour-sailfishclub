@@ -89,7 +89,7 @@ Page {
                 MenuItem{
                     text:qsTr("Refresh")
                     onClicked: {
-                        load();
+                        load(true);
                     }
                 }
             }
@@ -227,9 +227,9 @@ Page {
         }
     }
 
-    function load(){
+    function load(via_pulley){
         console.log("current router:"+current_router);
-        if(current_page == 1){
+        if(current_page == 1 && !via_pulley){
             py.get_query_from_cache(appwindow.slug_first_page, current_router);
             return;
         }

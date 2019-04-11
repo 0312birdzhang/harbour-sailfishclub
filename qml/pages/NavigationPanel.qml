@@ -14,13 +14,15 @@ Panel {
     signal userAvatarClicked
 
     function goRouter(router){
-        if(current_router == router){
+        if(current_router === router){
             clicked();
         }else{
             current_router = router;
-            if(router == "recent" || router == "popular"){
+            if(router === "recent" ){
                 toIndexPage();
-            }else if(router == "categories"){
+            }else if(router === "popular"){
+                toPopularPage();
+            }else if(router === "categories"){
                 toCategoriesPage();
             }else{
 
@@ -62,7 +64,7 @@ Panel {
                 parent: userAvatar
                 size: BusyIndicatorSize.Small
                 opacity: avatarLoading.running ? 1 : 0
-                running: cover.status != Image.Ready && profile.status != Image.Ready
+                running: cover.status != Image.Ready && profile.status !== Image.Ready
             }
             Image {
                 id: cover
