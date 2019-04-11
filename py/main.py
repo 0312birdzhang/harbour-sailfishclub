@@ -22,12 +22,6 @@ client.configure(**{
 })
 
 
-# def login(user, password):
-#     status_code, userInfo = client.users.login(user, password)
-#     if not status_code or status_code != 200:
-#         return False
-#     return userInfo
-
 def login(user, password):
     userinfo = getuserinfo(user)
     if not userinfo:
@@ -110,7 +104,7 @@ def replayTo(tid, uid, toPid, content):
         return False
     return response
 
-@wrapcache.wrapcache(timeout = 60)
+@wrapcache.wrapcache(timeout = 120)
 def getrecent(slug):
     status_code, topics = client.topics.get_recent(slug=slug)
     if not status_code or status_code != 200:
@@ -124,7 +118,7 @@ def getpopular(slug):
         return False
     return topics
 
-@wrapcache.wrapcache(timeout = 60)
+@wrapcache.wrapcache(timeout = 1200)
 def listcategory():
     status_code, categories = client.categories.list()
     if not status_code or status_code != 200:
@@ -138,14 +132,14 @@ def getTopic(tid, slug, token = access_token ):
         return False
     return topic
 
-@wrapcache.wrapcache(timeout = 60)
+@wrapcache.wrapcache(timeout = 120)
 def getNotifications(token):
     status_code, notices = client.topics.get_notification(**{"_token" : token})
     if not status_code or status_code != 200:
         return False
     return notices
 
-@wrapcache.wrapcache(timeout = 60)
+@wrapcache.wrapcache(timeout = 120)
 def getUnread(token):
     status_code, notices = client.topics.get_unread(**{"_token" : token})
     if not status_code or status_code != 200:

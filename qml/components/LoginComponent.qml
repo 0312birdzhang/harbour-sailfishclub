@@ -72,6 +72,10 @@ Item {
                         height:implicitHeight
                         font.pixelSize: Theme.fontSizeMedium
                         placeholderText: qsTr("Enter Password")
+                        text: {
+                            var password = settings.get_password();
+                            return Api.decrypt(password, py.getSecretKey());
+                        }
                         label: qsTr("Password")
                         EnterKey.iconSource: "image://theme/icon-m-enter-next"
                         EnterKey.onClicked: {
@@ -85,13 +89,7 @@ Item {
                     }
                 }
             }
-//            TextSwitch {
-//                 text: qsTr("Show Password")
-//                 onCheckedChanged: {
-//                     checked ? password.echoMode = TextInput.Normal
-//                             : password.echoMode = TextInput.Password
-//                 }
-//             }
+
             Button {
                 id:submitButton
                 anchors.horizontalCenter: parent.horizontalCenter

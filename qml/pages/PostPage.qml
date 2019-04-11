@@ -7,6 +7,7 @@ Dialog  {
     id:postPage
 
     allowedOrientations: Orientation.Portrait
+    objectName: "postPage"
 
     property ListModel listModel;
     property Page parentpage;

@@ -6,6 +6,7 @@ Page {
     id: previewPage
     property string mdtext
     property string parsedText
+    objectName: "previewPage"
 
     SilicaFlickable{
         id: flickable

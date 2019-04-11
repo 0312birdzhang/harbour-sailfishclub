@@ -51,19 +51,19 @@ class Api:
         except:
             Utils.log(traceback.format_exc())
             self.cache = None
-    def set_recent_list_data(self, router='recent', topic={}):
+    def set_query_list_data(self, router='recent', topic={}, expire=3600.00):
         """
         Set recent,popular,etc json string to cache
         """
         try:
             if type(self.cache) is Cache:
-                self.cache.set(router, json.dumps(topic))
+                self.cache.set(router, json.dumps(topic), expire = expire)
             return True
         except:
             Utils.log(traceback.format_exc())
             # utils.error('Could not save to cache. Please try again.')
 
-    def get_recent_list_data(self, router='recent'):
+    def get_query_list_data(self, router='recent'):
         """
         Get recent,popular,etc json string in cache
         """
@@ -72,7 +72,7 @@ class Api:
                 return json.loads(self.cache.get(router))
             except:
                 Utils.log(traceback.format_exc())
-        return {}
+        return None
 
 class Utils:
     def __init__(self):

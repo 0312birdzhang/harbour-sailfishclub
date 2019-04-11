@@ -229,7 +229,10 @@ Page {
 
     function load(){
         console.log("current router:"+current_router);
-
+        if(current_page == 1){
+            py.get_query_from_cache(appwindow.slug_first_page, current_router);
+            return;
+        }
         switch(current_router){
         case "recent":
             py.getRecent("page=" + current_page );

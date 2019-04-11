@@ -516,19 +516,11 @@
 <context>
     <name>harbour-sailfishclub</name>
     <message>
-        <source>Login failed,try again later</source>
+        <source>Network not connected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Welcome to</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>SailfishClub</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Starting open link...</source>
+        <source>Try again later please</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -544,11 +536,19 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Network not connected</source>
+        <source>Login failed,try again later</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Try again later please</source>
+        <source>Welcome to</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SailfishClub</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Starting open link...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

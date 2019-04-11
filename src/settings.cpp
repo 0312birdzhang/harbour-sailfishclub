@@ -47,3 +47,20 @@ void SettingsObject::set_pagesize(const int &pagesize) {
 int SettingsObject::get_pagesize() {
     return settings->value(QString("settings/pagesize"),20).toInt();
 }
+
+
+void SettingsObject::set_logined(const QString &logined) {
+    settings->setValue(QString("logindata/logined"),logined);
+}
+
+QString SettingsObject::get_logined() {
+    return settings->value(QString("logindata/logined"),QString("false")).toString();
+}
+
+void SettingsObject::set_avatar(const QString &avatar) {
+    settings->setValue(QString("logindata/avatar"),avatar);
+}
+
+QString SettingsObject::get_avatar() {
+    return settings->value(QString("logindata/avatar"),QString("")).toString();
+}

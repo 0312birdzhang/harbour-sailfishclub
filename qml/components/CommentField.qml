@@ -211,6 +211,7 @@ Column {
             text: replayUser + (appwindow.topicdraft?appwindow.topicdraft:"")
             Component.onCompleted: {
                 _editor.textFormat = TextEdit.PlainText
+                body.focus = true
               }
         }
     Row{

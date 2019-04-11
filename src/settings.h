@@ -20,7 +20,10 @@ public:
     Q_INVOKABLE void set_token(const QString &token);
     Q_INVOKABLE void set_pagesize(const int &pagesize);
     Q_INVOKABLE int get_pagesize();
-
+    Q_INVOKABLE QString get_logined();
+    Q_INVOKABLE void set_logined(const QString &logined);
+    Q_INVOKABLE QString get_avatar();
+    Q_INVOKABLE void set_avatar(const QString &avatar);
 
 };
 

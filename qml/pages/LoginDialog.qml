@@ -4,7 +4,7 @@ import "../components"
 
 Dialog {
     id: dialog
-
+    objectName: "loginDialog"
     readonly property bool loginSucced: _loginSucceed
     property string token: ""
     readonly property alias _token: dialog.token

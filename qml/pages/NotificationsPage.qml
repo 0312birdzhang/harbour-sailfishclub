@@ -6,6 +6,7 @@ import "../components"
 
 Page{
     id: notificationPage
+    objectName: "notificationPage"
 
     ListModel{
         id: unreadModel

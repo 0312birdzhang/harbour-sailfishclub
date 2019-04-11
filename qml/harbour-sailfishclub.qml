@@ -52,7 +52,6 @@ ApplicationWindow
 
     property string appname: "旗鱼俱乐部"
     property bool loading: false
-    // property bool pymodelLoaded: false
     property int page_size: 20
     property string current_router: "recent"
     property string siteUrl: "https://sailfishos.club"
@@ -63,6 +62,7 @@ ApplicationWindow
     property string postdraft //发帖草稿
     property string topicdraft // 回贴草稿
     property int loginRetry: 3
+    readonly property string slug_first_page: "page=1"
 
     cover: Qt.resolvedUrl("cover/CoverPage.qml")
     allowedOrientations: Orientation.Portrait
@@ -229,7 +229,7 @@ ApplicationWindow
         running: false;
         repeat: false
         onTriggered: {
-            if(userinfo.logined){
+            if(!userinfo.logined){
                 py.initLogin();
             }
         }
@@ -301,22 +301,33 @@ ApplicationWindow
         }
 
         function initLogin(){
-            if(!networkStatus){
-                return;
-            }
+            // if(!networkStatus){
+            //     return;
+            // }
             // 登录
             var username = settings.get_username();
             var password = settings.get_password();
             var uid = settings.get_uid();
             var token = settings.get_token();
-            if(uid && token){
-                console.log("logined via token")
-                py.validate(uid, token)
-            }else if(username && password){
-                var derpass = Api.decrypt(password, py.getSecretKey());
-                if(derpass)py.login(username,derpass);
-                console.log("logined via password")
+            var logined = settings.get_logined();
+            var avatar = settings.get_avatar();
+            if(logined == "true" && token && uid && username){
+                userinfo.uid = uid.toString();
+                userinfo.username = username;
+                userinfo.avatar = avatar;
+                userinfo.logined = true;
+                signalCenter.loginSuccessed();
+            }else{
+                if(uid && token){
+                    console.log("logined via token")
+                    py.validate(uid, token)
+                }else if(username && password){
+                    var derpass = Api.decrypt(password, py.getSecretKey());
+                    if(derpass)py.login(username,derpass);
+                    console.log("logined via password")
+                }
             }
+            
         }
 
         function validate(uid, token){
@@ -347,7 +358,7 @@ ApplicationWindow
 
                     userinfo.logined = true;
                     signalCenter.loginSuccessed();
-                    saveData(uid, token,userinfo.username,"");
+                    saveData(uid, token,userinfo.username,"", "true", userinfo.avatar);
 
                 }
             })
@@ -379,7 +390,7 @@ ApplicationWindow
                     userinfo.followingCount = result.followingCount?result.followingCount:0;
                     userinfo.logined = true;
                     signalCenter.loginSuccessed();
-                    saveData(result.uid, result.token, userinfo.username,password);
+                    saveData(result.uid, result.token, userinfo.username, password, "true", userinfo.avatar);
                 }else if(result == "Forbidden"){
                     notification.show(qsTr("Login failed,try again later"),
                                       "image://theme/icon-s-high-importance"
@@ -400,11 +411,13 @@ ApplicationWindow
                 settings.set_password("");
                 settings.set_uid(0);
                 settings.set_token("");
+                settings.set_logined("false");
+                settings.set_avatar("");
             });
             getNotifytimer.stop();
         }
 
-        function saveData(uid, token, username, password){
+        function saveData(uid, token, username, password, logined, avatar){
             if(!userinfo.logined){
                 console.log("not logined")
                 return;
@@ -419,6 +432,8 @@ ApplicationWindow
             }
             settings.set_uid(parseInt(uid));
             settings.set_token(token);
+            settings.set_logined(logined);
+            settings.set_avatar(avatar);
         }
 
         // 获取最新帖子
@@ -428,20 +443,24 @@ ApplicationWindow
                 loading = false;
                 signalCenter.getRecent(result);
                 // 缓存首页
-                if(slug == "page=1" ){
-                    py.set_recent_to_cache(result)
+                if(slug == slug_first_page ){
+                    py.set_query_to_cache("recent", result, 86400.00)
                 }
             });
         }
 
         // 搜索贴子
         function search(term, slug){
-            console.log("slug:"+slug)
+            // console.log("slug:"+slug)
             loading = true;
             term = encodeURI(term);
             call('main.search',[term, slug, settings.get_token()],function(result){
                 loading = false;
                 signalCenter.getSearch(result);
+                // 缓存首页
+                if(slug == slug_first_page ){
+                    py.set_query_to_cache("search", result, 3600.00)
+                }
             });
         }
 
@@ -451,6 +470,10 @@ ApplicationWindow
             call('main.getpopular',[slug],function(result){
                 loading = false;
                 signalCenter.getRecent(result);
+                // 缓存首页
+                if(slug == slug_first_page ){
+                    py.set_query_to_cache("popular", result, 86400.00)
+                }
             });
         }
 
@@ -469,11 +492,9 @@ ApplicationWindow
 
         // 获取贴子内容
         function getTopic(tid,slug){
-//            console.log("tid:"+tid+",slug:"+slug);
             loading = true;
             if(userinfo.logined){
                 var token = settings.get_token();
-//                console.log("token:"+token)
                 call('main.getTopic',[tid,slug,token],function(result){
                     loading = false;
                     signalCenter.getTopic(result);
@@ -553,6 +574,7 @@ ApplicationWindow
             call('main.getuserinfo',[uid,false],function(result){
                 loading = false;
                 signalCenter.getUserInfo(result);
+                
             });
         }
 
@@ -585,17 +607,20 @@ ApplicationWindow
             })
         }
 
-        function get_recent_from_cache(){
-            call('app.api.get_recent_list_data',[],function(result){
+        function get_query_from_cache(slug,router){
+            call('app.api.get_query_list_data',[router],function(result){
                 if(result){
                     signalCenter.getRecent(result);
-                    toIndexPage();
+                }else{
+                    getrecent(slug)
                 }
             });
         }
 
-        function set_recent_to_cache(topic){
-            call('app.api.set_recent_list_data',['recent',topic],function(result){
+        function set_query_to_cache(router,topic,expire){
+            if(!router)router='recent'
+            if(!expire)expire=600.00
+            call('app.api.set_query_list_data',[router,topic,expire],function(result){
             });
         }
 
@@ -612,7 +637,7 @@ ApplicationWindow
 
         rotation: pageStack.currentPage.rotation
 
-        enabled: !loading
+        // enabled: !loading
         anchors.centerIn: parent
         anchors.verticalCenterOffset: ori === Orientation.Portrait ? -(panelHeight - height) / 2 :
                                              ori === Orientation.PortraitInverted ? (panelHeight - height) / 2 : 0
@@ -695,7 +720,6 @@ ApplicationWindow
             Component.onCompleted: {
                 splash.visible = true;
                 timerDisplay.running = true;
-                py.get_recent_from_cache();
             }
 
             SilicaFlickable {

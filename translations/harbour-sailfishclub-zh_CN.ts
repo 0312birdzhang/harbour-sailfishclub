@@ -516,40 +516,40 @@
 <context>
     <name>harbour-sailfishclub</name>
     <message>
-        <source>Login failed,try again later</source>
-        <translation>登录失败，请稍后再试</translation>
-    </message>
-    <message>
-        <source>Welcome to</source>
-        <translation>Welcome to</translation>
-    </message>
-    <message>
-        <source>SailfishClub</source>
-        <translation>SailfishClub</translation>
-    </message>
-    <message>
-        <source>Starting open link...</source>
-        <translation>即将用浏览器打开链接...</translation>
-    </message>
-    <message>
-        <source>new replay</source>
-        <translation>新的回复</translation>
-    </message>
-    <message>
-        <source>preview replay</source>
-        <translation>预览回复</translation>
-    </message>
-    <message>
-        <source>Request timeout</source>
-        <translation>请求超时</translation>
-    </message>
-    <message>
         <source>Network not connected</source>
-        <translation>未连接到互联网</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Try again later please</source>
-        <translation>请稍后再试</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>new replay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>preview replay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Request timeout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Login failed,try again later</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Welcome to</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SailfishClub</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Starting open link...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

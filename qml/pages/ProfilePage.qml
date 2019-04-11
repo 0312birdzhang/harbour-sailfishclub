@@ -16,13 +16,14 @@ Page{
     }
 
     function getProfile(){
-//        if ( isMe ){
-//            console.log("is me")
-//            userData = userinfo;
-//        }else{
-//            console.log("not me")
-//            py.getUserInfo(uid);
-//        }
+    //    if ( isMe ){
+    //        console.log("is me")
+    //        userData = userinfo;
+    //    }else{
+    //        console.log("not me")
+    //        py.getUserInfo(uid);
+    //    }
+    // TODO
         py.getUserInfo(uid);
 
     }
@@ -52,7 +53,7 @@ Page{
                 tmpData.user_text = result["icon:text"];
                 tmpData.user_color = result["icon:bgColor"];
                 tmpData.user_cover = appwindow.siteUrl + result["cover:url"];
-                console.log(appwindow.siteUrl + result["cover:url"])
+                // console.log(appwindow.siteUrl + result["cover:url"])
                 tmpData.followerCount = result.followerCount;
                 tmpData.followingCount = result.followingCount;
                 tmpData.reputation = result.reputation;
