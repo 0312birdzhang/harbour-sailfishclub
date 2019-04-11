@@ -102,7 +102,7 @@ class User(Resource):
         payload = {'new': new, 'current': current, '_uid': uid}
         return self.client.put('/api/v1/users/%s/password' % uid, **payload)[0]
 
-    def get(self, id_, is_username=False):
+    def get(self, id_, is_username=False, **kwargs):
         """Retrieves the NodeBB user given the user's `id_`.
 
         Fetches for the entire NodeBB user object (only user properties) given the
@@ -120,7 +120,7 @@ class User(Resource):
         """
         return self.client.get(
             ('/api/user/email/%s' if "@" in str(id_) else '/api/user/%s' if is_username else '/api/user/uid/%s') % id_
-        ) if id_ else (404, 'Not Found')
+        , **kwargs) if id_ else (404, 'Not Found')
 
     def grant_token(self, id_, password ):
         """Creates a new user token for the passed in uid
