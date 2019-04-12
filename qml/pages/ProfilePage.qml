@@ -7,9 +7,9 @@ Page{
     id: profilePage
     objectName: "profilePage"
     allowedOrientations: Orientation.Portrait
-    property string uid;
+    property string username;
     property variant userData: null;
-    property bool isMe: uid === userinfo.uid;
+    property bool isMe: username === userinfo.username;
 
     function getUid(){
         return userData ? userData.uid : uid;
@@ -24,11 +24,11 @@ Page{
     //        py.getUserInfo(uid);
     //    }
     // TODO
-        py.getUserInfo(uid);
+        py.getUserInfo(username);
 
     }
 
-    onUidChanged: getProfile();
+    onUsernameChanged: getProfile();
 
     Connections{
         target: signalCenter

@@ -63,9 +63,9 @@ Page {
             width: parent.width
             height: parent.height
             header: PageHeader {
-                title: appwindow.current_router == "recent"?qsTr("Recent Page"):
-                       appwindow.current_router == "popular"?qsTr("Popular"):
-                       appwindow.current_router == "categories"?cname:appwindow.current_router
+                title: appwindow.current_router == router_recent?qsTr("Recent Page"):
+                       appwindow.current_router == router_popular?qsTr("Popular"):
+                       appwindow.current_router == router_categories?cname:appwindow.current_router
             }
             PullDownMenu{
                 id:pullDownMenu
@@ -234,13 +234,13 @@ Page {
             return;
         }
         switch(current_router){
-        case "recent":
+        case router_recent:
             py.getRecent("page=" + current_page );
             break;
-        case "popular":
+        case router_popular:
             py.getPopular("page=" + current_page);
             break;
-        case "categories":
+        case router_categories:
             py.getRecent("page=" + current_page + (cid?("&cid=" + cid ):""));
             break;
         default:

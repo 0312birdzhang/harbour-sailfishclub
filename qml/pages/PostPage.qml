@@ -46,13 +46,7 @@ Dialog  {
         anchors.fill: parent
         contentHeight: column.height + Theme.paddingLarge * 4
         PullDownMenu {
-            MenuItem {
-                text: qsTr("Post")
-                onClicked: {
-                    send();
-                  
-                }
-            }
+            
             MenuItem {
                 text: qsTr("Recovery from draft")
                 visible: appwindow.postdraft
@@ -61,6 +55,12 @@ Dialog  {
                     commentfield.children[3].text = appwindow.postdraft;
                     appwindows.post_title_draft = "";
                     appwindow.postdraft = "";
+                }
+            }
+            MenuItem {
+                text: qsTr("Post")
+                onClicked: {
+                    send();
                 }
             }
         }
@@ -112,9 +112,6 @@ Dialog  {
     }
 
 
-    Component.onCompleted: {
-        py.getCategories();
-    }
 
     Connections{
         target: signalCenter
@@ -180,6 +177,10 @@ Dialog  {
             }
 
         }
+    }
+
+    Component.onCompleted: {
+        py.get_query_from_cache("",router_categories)
     }
 
     Component.onDestruction: {

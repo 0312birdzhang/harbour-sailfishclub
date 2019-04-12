@@ -64,3 +64,11 @@ void SettingsObject::set_avatar(const QString &avatar) {
 QString SettingsObject::get_avatar() {
     return settings->value(QString("logindata/avatar"),QString("")).toString();
 }
+
+void SettingsObject::set_savetime(const QString &savetime) {
+    settings->setValue(QString("logindata/savetime"),savetime);
+}
+
+QString SettingsObject::get_savetime() {
+    return settings->value(QString("logindata/savetime"),QString("1548867120")).toString();
+}

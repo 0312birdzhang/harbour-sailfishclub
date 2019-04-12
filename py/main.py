@@ -49,7 +49,8 @@ def logout(uid, token):
 
 
 def validate(uid, token):
-    """validate user token
+    """
+    validate user token
     """
     status_code, tokens = client.users.get_tokens(uid)
     if not status_code or status_code != 200:
@@ -65,10 +66,10 @@ def createToken(uid, password):
         return False
     return playload.get("token")
 
-#@wrapcache.wrapcache(timeout = 600)
+@wrapcache.wrapcache(timeout = 600)
 def getuserinfo(user,is_username = True):
     logger.debug("user: %s" % (str(user),))
-    status_code, userinfo = client.users.get(user, is_username, **{"_token" : access_token})
+    status_code, userinfo = client.users.get(user, is_username)
     logger.debug(str(status_code))
     if not status_code or status_code != 200:
         return False

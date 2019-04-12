@@ -64,6 +64,10 @@ ApplicationWindow
     property string topicdraft // 回贴草稿
     property int loginRetry: 3
     readonly property string slug_first_page: "page=1"
+    readonly property string router_recent: "recent"
+    readonly property string router_popular: "popular"
+    readonly property string router_categories: "categories"
+    readonly property string router_search: "search"
 
     cover: Qt.resolvedUrl("cover/CoverPage.qml")
     allowedOrientations: Orientation.Portrait
@@ -234,7 +238,18 @@ ApplicationWindow
                 py.initLogin();
             }
         }
+    }
 
+    Timer{
+        id: validateTokenTimer
+        interval: 30;
+        running: false;
+        repeat: false
+        onTriggered: {
+            if(userinfo.logined){
+                py.validateToken();
+            }
+        }
     }
 
     FontLoader {
@@ -302,10 +317,6 @@ ApplicationWindow
         }
 
         function initLogin(){
-            // if(!networkStatus){
-            //     return;
-            // }
-            // 登录
             var username = settings.get_username();
             var password = settings.get_password();
             var uid = settings.get_uid();
@@ -318,6 +329,7 @@ ApplicationWindow
                 userinfo.avatar = avatar;
                 userinfo.logined = true;
                 signalCenter.loginSuccessed();
+                validateTokenTimer.start();
             }else{
                 if(uid && token){
                     console.log("logined via token")
@@ -329,6 +341,17 @@ ApplicationWindow
                 }
             }
             
+        }
+
+        // 超过15天校验token
+        function validateToken(){
+            var currnetUnix = parseInt(new Date().getTime()/1000)
+            var savedUnix = settings.get_savetime();
+            if(currnetUnix - parseInt(savedUnix) > 86400*15){
+                var uid = settings.get_uid();
+                var token = settings.get_token();
+                py.validate(uid, token);
+            }
         }
 
         function validate(uid, token){
@@ -414,6 +437,7 @@ ApplicationWindow
                 settings.set_token("");
                 settings.set_logined("false");
                 settings.set_avatar("");
+                settings.set_savetime("");
             });
             getNotifytimer.stop();
         }
@@ -435,6 +459,7 @@ ApplicationWindow
             settings.set_token(token);
             settings.set_logined(logined);
             settings.set_avatar(avatar);
+            settings.set_savetime(parseInt(new Date().getTime()/1000).toString());
         }
 
         // 获取最新帖子
@@ -445,7 +470,7 @@ ApplicationWindow
                 signalCenter.getRecent(result);
                 // 缓存首页
                 if(slug == slug_first_page ){
-                    py.set_query_to_cache("recent", result, 86400.00)
+                    py.set_query_to_cache(router_recent, result, 86400.00)
                 }
             });
         }
@@ -458,7 +483,7 @@ ApplicationWindow
                 signalCenter.getRecent(result);
                 // 缓存首页
                 if(slug == slug_first_page ){
-                    py.set_query_to_cache("popular", result, 86400.00)
+                    py.set_query_to_cache(router_popular, result, 86400.00)
                 }
             });
         }
@@ -473,7 +498,7 @@ ApplicationWindow
                 signalCenter.getSearch(result);
                 // 缓存首页
                 if(slug == slug_first_page ){
-                    py.set_query_to_cache("search", result, 3600.00)
+                    py.set_query_to_cache(router_search, result, 86400.00)
                 }
             });
         }
@@ -486,7 +511,7 @@ ApplicationWindow
             call('main.listcategory',[],function(result){
                 loading = false;
                 signalCenter.getCategories(result);
-                py.set_query_to_cache("ctegories",result, 86400.00)
+                py.set_query_to_cache(router_categories,result, 86400.00)
             });
         }
 
@@ -573,9 +598,9 @@ ApplicationWindow
         }
 
         // 获取用户信息
-        function getUserInfo(uid){
+        function getUserInfo(username){
             loading = true;
-            call('main.getuserinfo',[uid,false],function(result){
+            call('main.getuserinfo',[username,true],function(result){
                 loading = false;
                 signalCenter.getUserInfo(result);
                 
@@ -611,23 +636,26 @@ ApplicationWindow
             })
         }
 
-        function get_query_from_cache(slug,router){
+        function get_query_from_cache(slug,router,term){
             call('app.api.get_query_list_data',[router],function(result){
                 if(result){
                     signalCenter.getRecent(result);
                 }else{
-                    if(router === "recent")py.getRecent(slug);
-                    if(router === "popular")py.getPopular(slug);
-                    if(router === "categories")py.getCategories();
+                    if(router === router_recent)py.getRecent(slug);
+                    if(router === router_popular)py.getPopular(slug);
+                    if(router === router_categories)py.getCategories();
+                    if(router === router_search)py.search(term,slug);
                 }
             });
         }
 
         function set_query_to_cache(router,topic,expire){
-            if(!router)router='recent'
-            if(!expire)expire=600.00
-            call('app.api.set_query_list_data',[router,topic,expire],function(result){
-            });
+            if (result && result != "Forbidden"){
+                if(!router)router='recent'
+                if(!expire)expire=3600.00
+                call('app.api.set_query_list_data',[router,topic,expire],function(result){
+                });
+            }
         }
 
     }
@@ -958,6 +986,7 @@ ApplicationWindow
     Component.onCompleted: {
         Main.signalcenter = signalCenter;
         JS.app = appwindow;
+
     }
 
 }

@@ -18,11 +18,11 @@ Panel {
             clicked();
         }else{
             current_router = router;
-            if(router === "recent" ){
+            if(router === router_recent ){
                 toIndexPage();
-            }else if(router === "popular"){
+            }else if(router === router_popular){
                 toPopularPage();
-            }else if(router === "categories"){
+            }else if(router === router_categories){
                 toCategoriesPage();
             }else{
 
@@ -33,7 +33,7 @@ Panel {
     onUserAvatarClicked: {
         //to loginpage or userinfo page
         if(userinfo.logined){
-            toUserInfoPage(userinfo.uid);
+            toUserInfoPage(userinfo.username);
         }else{
             toLoginPage();
         }
@@ -311,7 +311,6 @@ Panel {
                 }
             }
         }
-
 
     }
 

@@ -24,6 +24,8 @@ public:
     Q_INVOKABLE void set_logined(const QString &logined);
     Q_INVOKABLE QString get_avatar();
     Q_INVOKABLE void set_avatar(const QString &avatar);
+    Q_INVOKABLE QString get_savetime();
+    Q_INVOKABLE void set_savetime(const QString &savetime);
 
 };
 

@@ -169,8 +169,7 @@ Page{
     }
 
     Component.onCompleted: {
-//        py.getCategories();
-        py.get_query_from_cache("","categories")
+        py.get_query_from_cache("",router_categories)
     }
     Component.onDestruction: {
         appwindow.loading = false;
