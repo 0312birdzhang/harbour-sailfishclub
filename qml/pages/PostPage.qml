@@ -17,11 +17,11 @@ Dialog  {
     acceptDestinationProperties:listModel
 
     ListModel{
-        id:categoryModel
+        id:categoriesModel
     }
 
     function send(){
-        var cid = categoryModel.get(categoryCombo.currentIndex).cid;
+        var cid = categoriesModel.get(categoryCombo.currentIndex).cid;
         // console.log(commentfield.children.length)
         var comments = commentfield.children[3].text;
 
@@ -49,12 +49,14 @@ Dialog  {
             
             MenuItem {
                 text: qsTr("Recovery from draft")
-                visible: appwindow.postdraft
+                visible: appwindow.postdraft || appwindow.post_title_draft
                 onClicked: {
-                    title.text = appwindows.post_title_draft
+                    title.text = appwindow.post_title_draft
                     commentfield.children[3].text = appwindow.postdraft;
-                    appwindows.post_title_draft = "";
+                    categoryCombo.currentIndex = appwindow.post_cateogry;
+                    appwindow.post_title_draft = "";
                     appwindow.postdraft = "";
+                    appwindow.post_category = 0;
                 }
             }
             MenuItem {
@@ -92,7 +94,7 @@ Dialog  {
                 label: qsTr("Categories")
                 menu: ContextMenu {
                     Repeater {
-                        model: categoryModel
+                        model: categoriesModel
                         MenuItem {
                             text: name + " "+ FONT.Icon[icon.replace(/-/g,"_")]
                         }
@@ -117,7 +119,12 @@ Dialog  {
         target: signalCenter
 
         onGetCategories:{
-           fillModel(result);
+            var categories = result.categories;
+            if(!categories || categories === "Forbidden" || categories === "false"){
+                return;
+            }
+
+            fillModel(categories);
         }
 
         onNewTopic:{
@@ -149,22 +156,20 @@ Dialog  {
         }
     }
 
-    function fillModel(result){
-        var categories = result.categories;
-        if(!categories || categories === "Forbidden" || categories === "false"){
-            return;
-        }
-
+    function fillModel(categories){
         for(var i=0;i<categories.length;i++){
-            if(categories[i].parentCid !== "0"){
+            if(categories[i].parentCid != "0"){
                 categories[i].name = "  - " + categories[i].name;
+                categories[i].description = "    " + categories[i].description;
             }
+
+            console.log("name:", categories[i].name)
             // Hardcode, because no api
             if(categories[i].name === "公告"||categories[i].name === "新闻"){
                 continue;
             }
 
-            categoryModel.append({
+            categoriesModel.append({
                 "cid":  categories[i].cid,
                 "name": categories[i].name,
                 "description":categories[i].description,
@@ -177,6 +182,7 @@ Dialog  {
             }
 
         }
+
     }
 
     Component.onCompleted: {
@@ -188,5 +194,6 @@ Dialog  {
         console.log(commentfield.children.length)
         appwindow.postdraft = commentfield.children[3].text;
         appwindow.post_title_draft = title.text;
+        appwindow.post_category = categoryCombo.currentIndex;
     }
 }

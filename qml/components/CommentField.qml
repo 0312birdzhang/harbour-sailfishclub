@@ -205,10 +205,7 @@ Column {
             label: qsTr("Your comment")
             placeholderText: label
             font.pixelSize: Theme.fontSizeSmall
-            focusOutBehavior: FocusBehavior.KeepFocus
-            EnterKey.iconSource: "image://theme/icon-m-enter-close"
-            EnterKey.onClicked: parent.focus = true
-            text: replayUser + (appwindow.topicdraft?appwindow.topicdraft:"")
+            text: replayUser? (replayUser + " "):""
             Component.onCompleted: {
                 _editor.textFormat = TextEdit.PlainText
                 body.focus = true
