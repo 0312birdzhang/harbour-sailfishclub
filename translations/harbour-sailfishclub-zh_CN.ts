@@ -517,39 +517,39 @@
     <name>harbour-sailfishclub</name>
     <message>
         <source>Network not connected</source>
-        <translation type="unfinished"></translation>
+        <translation>网络未连接</translation>
     </message>
     <message>
         <source>Try again later please</source>
-        <translation type="unfinished"></translation>
+        <translation>请稍后重试</translation>
     </message>
     <message>
         <source>new replay</source>
-        <translation type="unfinished"></translation>
+        <translation>新回复</translation>
     </message>
     <message>
         <source>preview replay</source>
-        <translation type="unfinished"></translation>
+        <translation>预览回复</translation>
     </message>
     <message>
         <source>Request timeout</source>
-        <translation type="unfinished"></translation>
+        <translation>请求超时</translation>
     </message>
     <message>
         <source>Login failed,try again later</source>
-        <translation type="unfinished"></translation>
+        <translation>登录失败，请稍后重试</translation>
     </message>
     <message>
         <source>Welcome to</source>
-        <translation type="unfinished"></translation>
+        <translation>Welcome to</translation>
     </message>
     <message>
         <source>SailfishClub</source>
-        <translation type="unfinished"></translation>
+        <translation>SailfishClub</translation>
     </message>
     <message>
         <source>Starting open link...</source>
-        <translation type="unfinished"></translation>
+        <translation>即将打开链接...</translation>
     </message>
 </context>
 </TS>

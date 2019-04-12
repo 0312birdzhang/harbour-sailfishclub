@@ -48,7 +48,7 @@ def logout(uid, token):
     return True
 
 
-def validate(uid, token):
+def validate(uid, token, username):
     """
     validate user token
     """
@@ -58,7 +58,7 @@ def validate(uid, token):
     if token not in tokens.get("tokens"):
         return False
     else:
-        return getuserinfo(uid,False)
+        return getuserinfo(username)
 
 def createToken(uid, password):
     status_code, playload = client.users.grant_token(uid, password)
@@ -68,9 +68,9 @@ def createToken(uid, password):
 
 @wrapcache.wrapcache(timeout = 600)
 def getuserinfo(user,is_username = True):
-    logger.debug("user: %s" % (str(user),))
+    # logger.debug("user: %s" % (str(user),))
     status_code, userinfo = client.users.get(user, is_username)
-    logger.debug(str(status_code))
+    # logger.debug(str(status_code))
     if not status_code or status_code != 200:
         return False
     return userinfo
@@ -90,11 +90,6 @@ def post(title, content, uid, cid):
     status_code, response = client.topics.create(uid, cid, title, content)
     if not status_code or status_code != 200:
         return False
-    else:
-        pass
-        # clean wrapcache
-        # cache_key = wrapcache.keyof(getrecent, slug) TODO
-        # wrapcache.remove(cache_key, adapter = wrapcache.MemoryAdapter)
     return response
 
 def replay(tid,uid,content):

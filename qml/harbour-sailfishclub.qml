@@ -333,7 +333,7 @@ ApplicationWindow
             }else{
                 if(uid && token){
                     console.log("logined via token")
-                    py.validate(uid, token)
+                    py.validate(uid, token, username)
                 }else if(username && password){
                     var derpass = Api.decrypt(password, py.getSecretKey());
                     if(derpass)py.login(username,derpass);
@@ -350,15 +350,17 @@ ApplicationWindow
             if(currnetUnix - parseInt(savedUnix) > 86400*15){
                 var uid = settings.get_uid();
                 var token = settings.get_token();
-                py.validate(uid, token);
+                var username = settings.get_username();
+                console.log("need validate token")
+                py.validate(uid, token, username);
             }
         }
 
-        function validate(uid, token){
+        function validate(uid, token, username){
             if(!uid||!token || uid === 0 || token === "undefined"){
                 return;
             }
-            call('main.validate',[uid, token],function(result){
+            call('main.validate',[uid, token, username],function(result){
                 // console.log(JSON.stringify(result))
                 if(result && result !== "Forbidden" && result !== "False"){
                     userinfo.uid = uid.toString();
@@ -600,7 +602,7 @@ ApplicationWindow
         // 获取用户信息
         function getUserInfo(username){
             loading = true;
-            call('main.getuserinfo',[username,true],function(result){
+            call('main.getuserinfo',[username],function(result){
                 loading = false;
                 signalCenter.getUserInfo(result);
                 
@@ -636,24 +638,26 @@ ApplicationWindow
             })
         }
 
-        function get_query_from_cache(slug,router,term){
+        function get_query_from_cache(slug,router){
             call('app.api.get_query_list_data',[router],function(result){
                 if(result){
-                    signalCenter.getRecent(result);
+                    if(router === router_recent)signalCenter.getRecent(result);
+                    if(router === router_popular)signalCenter.getRecent(result);
+                    if(router === router_categories)signalCenter.getCategories(result);
+                    
                 }else{
                     if(router === router_recent)py.getRecent(slug);
                     if(router === router_popular)py.getPopular(slug);
                     if(router === router_categories)py.getCategories();
-                    if(router === router_search)py.search(term,slug);
                 }
             });
         }
 
-        function set_query_to_cache(router,topic,expire){
+        function set_query_to_cache(router,result,expire){
             if (result && result != "Forbidden"){
-                if(!router)router='recent'
-                if(!expire)expire=3600.00
-                call('app.api.set_query_list_data',[router,topic,expire],function(result){
+                if(!router)router=router_recent;
+                if(!expire)expire=3600.00;
+                call('app.api.set_query_list_data',[router,result,expire],function(result){
                 });
             }
         }

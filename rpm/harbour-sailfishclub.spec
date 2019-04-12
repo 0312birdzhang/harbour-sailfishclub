@@ -14,7 +14,7 @@ Name:       harbour-sailfishclub
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    SailfishClub client for Sailfish OS
-Version:    0.3.1
+Version:    0.3.2
 Release:    1
 Group:      Qt/Qt
 License:    GPLv3
@@ -37,7 +37,7 @@ BuildRequires:  desktop-file-utils
 %description
 SailfishClub client for Sailfish OS
 SailfishClub is an unofficial Chinese community
-
+旗鱼俱乐部，一个非官方中文论坛
 
 %prep
 %setup -q -n %{name}-%{version}
@@ -78,6 +78,5 @@ desktop-file-install --delete-original       \
 %{_datadir}/%{name}
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
-# %{_datadir}/dbus-1/services/harbour.sailfishclub.service
 # >> files
 # << files

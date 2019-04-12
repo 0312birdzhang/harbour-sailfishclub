@@ -12,7 +12,7 @@ Dialog  {
     property ListModel listModel;
     property Page parentpage;
     canAccept: false
-    acceptDestination: parentpage
+    // acceptDestination: parentpage
     acceptDestinationAction: PageStackAction.Pop
     acceptDestinationProperties:listModel
 
@@ -186,7 +186,7 @@ Dialog  {
     Component.onDestruction: {
         appwindow.loading = false;
         console.log(commentfield.children.length)
-        appwindow.postdraft = commentField.children[3].text;
+        appwindow.postdraft = commentfield.children[3].text;
         appwindow.post_title_draft = title.text;
     }
 }
