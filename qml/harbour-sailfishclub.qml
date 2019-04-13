@@ -983,6 +983,18 @@ ApplicationWindow
             console.log("Cache callback error: " + err + " type: " + typeof(callbackObject) + " value: " + JSON.stringify(callbackObject) );
         }
     }
+
+    function getPicture(pic){
+        if(!pic){
+            return "";
+        }
+        if(pic.indexOf("http") > -1 ){
+            return pic;
+        }else{
+            return siteUrl+pic;
+        }
+    }
+
     Connections {
        target: imageCache
        onCacheUpdated: appwindow.onCacheUpdated(callback, status, url)

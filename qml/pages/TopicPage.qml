@@ -28,16 +28,7 @@ Page{
         id: topicModel
     }
 
-    function getPicture(pic){
-        if(!pic){
-            return "";
-        }
-        if(pic.indexOf("http") > -1 ){
-            return pic;
-        }else{
-            return siteUrl+pic;
-        }
-    }
+
 
     SilicaListView{
         id:topicView
@@ -57,11 +48,11 @@ Page{
 
             TopicHeader{
                 id: topicHeader
-                avatar: getPicture(picture)
+                avatar: appwindow.getPicture(picture)
                 user: username
                 user_id: uid
                 groupTitle:"" == user_group_name?"":("["+user_group_name+"]")
-                index: floor+"#"
+                index: (floor + 1 )+"#"
                 text: user_text
                 color: user_color
                 time: JS.humanedate(timestamp)

@@ -83,9 +83,12 @@ Panel {
                 width: userAvatar.width/4
                 height: width
                 anchors.centerIn: cover
-                avatar: userinfo.logined?("" != userinfo.avatar?(siteUrl+userinfo.avatar):""):"image://theme/harbour-sailfishclub"
+//                avatar: userinfo.logined?("" != userinfo.avatar?(siteUrl+userinfo.avatar):""):"image://theme/harbour-sailfishclub"
+                avatar: appwindow.getPicture(userinfo.avatar)
                 color:  userinfo.user_color
-                text:   userinfo.user_text
+                text:   userinfo.logined?
+                            (userinfo.user_text?userinfo.user_text:
+                            userinfo.username.substring(0,1)):"G"
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
