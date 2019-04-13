@@ -61,7 +61,7 @@ ApplicationWindow
     property int unreadSize: 0
     property string postdraft //发帖草稿
     property string post_title_draft //发帖标题草稿
-    property int post_category // 发贴分类
+    property int post_category: 0 // 发贴分类
     property string topicdraft // 回贴草稿
     property int loginRetry: 3
     readonly property string slug_first_page: "page=1"
@@ -378,7 +378,7 @@ ApplicationWindow
                     userinfo.aboutme = result.aboutme|| "";
                     userinfo.user_text = result["icon:text"];
                     userinfo.user_color = result["icon:bgColor"];
-                    userinfo.user_cover = appwindow.siteUrl + result["cover:url"];
+                    userinfo.user_cover = result["cover:url"];
                     userinfo.reputation = result.reputation;
                     userinfo.followerCount = result.followerCount|| 0;
                     userinfo.followingCount = result.followingCount|| 0;
@@ -410,7 +410,7 @@ ApplicationWindow
                     userinfo.aboutme = result.aboutme|| "";
                     userinfo.user_text = result["icon:text"];
                     userinfo.user_color = result["icon:bgColor"];
-                    userinfo.user_cover = appwindow.siteUrl + result["cover:url"];
+                    userinfo.user_cover = result["cover:url"];
                     // console.log(appwindow.siteUrl + result["cover:url"]);
                     userinfo.reputation = result.reputation;
                     userinfo.followerCount = result.followerCount?result.followerCount:0;
@@ -867,9 +867,9 @@ ApplicationWindow
     }
 
 
-    function toUserInfoPage(uid){
+    function toUserInfoPage(username){
         pageStack.push(Qt.resolvedUrl("pages/ProfilePage.qml"),{
-                "uid":uid
+                "username":username
             });
     }
 

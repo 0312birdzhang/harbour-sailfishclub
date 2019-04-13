@@ -7,28 +7,13 @@ Page{
     id: profilePage
     objectName: "profilePage"
     allowedOrientations: Orientation.Portrait
-    property string username;
+    property string username: "guest";
     property variant userData: null;
     property bool isMe: username === userinfo.username;
 
     function getUid(){
         return userData ? userData.uid : uid;
     }
-
-    function getProfile(){
-    //    if ( isMe ){
-    //        console.log("is me")
-    //        userData = userinfo;
-    //    }else{
-    //        console.log("not me")
-    //        py.getUserInfo(uid);
-    //    }
-    // TODO
-        py.getUserInfo(username);
-
-    }
-
-    onUsernameChanged: getProfile();
 
     Connections{
         target: signalCenter
@@ -52,7 +37,7 @@ Page{
                 tmpData.status= result.status;
                 tmpData.user_text = result["icon:text"];
                 tmpData.user_color = result["icon:bgColor"];
-                tmpData.user_cover = appwindow.siteUrl + result["cover:url"];
+                tmpData.user_cover = result["cover:url"];
                 // console.log(appwindow.siteUrl + result["cover:url"])
                 tmpData.followerCount = result.followerCount;
                 tmpData.followingCount = result.followingCount;
@@ -90,7 +75,7 @@ Page{
                 id: userCover
                 asynchronous: true
                 smooth: true
-                sourceUncached: /*userData?userData.user_cover:*/"../gfx/background.png"
+                sourceUncached: userData?(appwindow.siteUrl + userData.user_cover):"../gfx/background.png"
                 width: parent.width
                 height: isLandscape?parent.width/3:parent.width/2;
                 sourceSize.width: width
@@ -117,30 +102,22 @@ Page{
                     width: parent.width;
                     spacing: Theme.paddingSmall
                     anchors.top: avatar.bottom
-//                    Text {
-//                        anchors{
-//                            horizontalCenter: parent.horizontalCenter;
-//                        }
-//                        font.pixelSize: Theme.fontSizeLarge;
-//                        color: "white";
-//                        text: userData ? userData.fullname : "";
-//                    }
                     Text {
                         anchors{
                             horizontalCenter: parent.horizontalCenter;
                         }
                         font.pixelSize: Theme.fontSizeMedium;
-                        color: "white";
+                        color: Theme.secondaryColor
                         text: userData ? userData.username : "";
                     }
 
-                    Text {
+                    Label {
                         anchors.horizontalCenter: parent.horizontalCenter;
                         wrapMode: Text.Wrap;
                         maximumLineCount: 1;
-                        textFormat: Text.PlainText;
+                        textFormat: Text.RichText;
                         font.pixelSize: Theme.fontSizeExtraSmall
-                        color: "white";
+                        color: Theme.secondaryColor
                         text: userData ? userData.aboutme?userData.aboutme:"":"";
                     }
                 }
@@ -212,5 +189,9 @@ Page{
                 }
             }
         }
+    }
+
+    Component.onCompleted: {
+        py.getUserInfo(username);
     }
 }

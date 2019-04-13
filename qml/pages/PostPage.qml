@@ -53,7 +53,7 @@ Dialog  {
                 onClicked: {
                     title.text = appwindow.post_title_draft
                     commentfield.children[3].text = appwindow.postdraft;
-                    categoryCombo.currentIndex = appwindow.post_cateogry;
+                    categoryCombo.currentIndex = appwindow.post_category;
                     appwindow.post_title_draft = "";
                     appwindow.postdraft = "";
                     appwindow.post_category = 0;
@@ -195,5 +195,6 @@ Dialog  {
         appwindow.postdraft = commentfield.children[3].text;
         appwindow.post_title_draft = title.text;
         appwindow.post_category = categoryCombo.currentIndex;
+        console.log(categoryCombo.currentIndex)
     }
 }

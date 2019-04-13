@@ -38,10 +38,10 @@ CoverBackground {
         opacity: 0.5
         anchors.centerIn: parent
         source: "../gfx/cover.png"
-        fillMode: Image.PreserveAspectCrop
+//        fillMode: Image.PreserveAspectFit
         anchors.horizontalCenter: parent.horizontalCenter
         width: parent.width
-        height: sourceSize.height * width / sourceSize.width
+        height: parent.height//sourceSize.height * width / sourceSize.width
     }
 
     Label {
