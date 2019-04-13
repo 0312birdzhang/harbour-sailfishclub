@@ -1,7 +1,7 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import harbour.sailfishclub 1.0
-import "js/ApiCore.js" as Api
+import "../js/ApiCore.js" as Api
 
 Item {
     id:loginComponent

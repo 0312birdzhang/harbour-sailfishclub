@@ -3,34 +3,50 @@ import Sailfish.Silica 1.0
 
 
 Item {
-    property alias avatar: avatar.msource
-    property alias color: fontAvatar.color
-    property alias text: fontAvatar.text
+    id: avatarItem
+//    property alias avatar: avatar.msource
+//    property alias color: fontAvatar.color
+//    property alias text: fontAvatar.text
+    property string avatar
+    property string color
+    property string text
     property string username
 
-    MaskImage{
-        id:avatar
-        width: parent.height;
-        height: parent.height;
-        visible: msource != ""
-        name: username
-        anchors{
-            top:parent.top
-            topMargin: Theme.paddingSmall
-            left:parent.left
+    Loader{
+        sourceComponent: avatar? avatarComponent : fontAvatarComponent
+        anchors.fill: parent
+    }
+
+    Component{
+        id: avatarComponent
+        MaskImage{
+            width: parent.height;
+            height: parent.height;
+            msource: avatarItem.avatar
+            name: avatarItem.username
+            anchors{
+                top:parent.top
+                topMargin: Theme.paddingSmall
+                left:parent.left
+            }
         }
     }
 
-    FontAvatar{
-        id:fontAvatar
-        width: parent.height;
-        height: parent.height;
-        visible:avatar.msource == ""
-        anchors{
-            top:parent.top
-            topMargin: Theme.paddingSmall
-            left:parent.left
+    Component{
+        id: fontAvatarComponent
+        FontAvatar{
+            width: parent.height;
+            height: parent.height;
+            color: avatarItem.color
+            text: avatarItem.text
+            anchors{
+                top:parent.top
+                topMargin: Theme.paddingSmall
+                left:parent.left
+            }
         }
     }
+
+
 
 }
