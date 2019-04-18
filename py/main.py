@@ -1,10 +1,16 @@
 from __future__ import print_function
+import requests
 from pynodebb import Client
-from sfctoken import access_token
+from sfctoken import (
+    access_token, access_token0,
+    access_token1, access_token2,
+    access_token3, access_token4,
+    access_token5, access_token6,
+)
 from sfctoken import secret_key
 import logging
 import sys
-import requests
+import binascii
 from cache import *
 import wrapcache
 
@@ -17,6 +23,13 @@ logger.addHandler(console_handler)
 logger.setLevel(logging.DEBUG)
 UnOfficalBlogURL = "https://notexists.top/api/post"
 
+my_access_token = "".join((
+    access_token, access_token0,
+    access_token1, access_token2,
+    access_token3, access_token4,
+    access_token5, access_token6,
+))
+access_token = bytes.decode(binascii.unhexlify(my_access_token)).split("fvck")[-1]
 
 client = Client('https://sailfishos.club', access_token)
 client.configure(**{
