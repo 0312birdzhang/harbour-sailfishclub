@@ -208,7 +208,6 @@ Column {
             text: replayUser? (replayUser + " "):""
             Component.onCompleted: {
                 _editor.textFormat = TextEdit.PlainText
-                body.focus = true
               }
         }
     Row{
