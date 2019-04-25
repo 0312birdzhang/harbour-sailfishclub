@@ -299,14 +299,14 @@ Page {
         }
 
         onReplayFloor:{
-            load();
+            load(true);
         }
         onReplayTopic:{
-            load();
+            load(true);
         }
 
         onNewTopic:{
-            load();
+            load(true);
         }
 
     }
