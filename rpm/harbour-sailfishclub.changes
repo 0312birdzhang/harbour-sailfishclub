@@ -5,6 +5,13 @@
 # Add newest entries to the top of the list.
 # Separate entries from eachother with a blank line.
 
+* Mon Apr 29 2019 BirdZhang <0312birdzhang@gmail.com> 0.3.3
+- 更新 habour-lib submodule
+- 修复回复帖子没有正确@人的问题
+- 修复回复完没有自动刷新首页的问题
+- 修复缓存首页时间太长的问题
+
+
 * Sat Dec 29 2018 BirdZhang <0312birdzhang@gmail.com> 0.3.0
 - preview markdown
 - display code block
