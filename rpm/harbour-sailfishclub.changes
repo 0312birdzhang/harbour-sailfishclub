@@ -5,6 +5,9 @@
 # Add newest entries to the top of the list.
 # Separate entries from eachother with a blank line.
 
+* Mon May 13 2019 BirdZhang <0312birdzhang@gmail.com> 0.3.4
+- 添加显示twemoji和自定义表情
+
 * Mon Apr 29 2019 BirdZhang <0312birdzhang@gmail.com> 0.3.3
 - 更新 habour-lib submodule
 - 修复回复帖子没有正确@人的问题
