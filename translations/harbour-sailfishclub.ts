@@ -514,6 +514,49 @@
     </message>
 </context>
 <context>
+    <name>functions</name>
+    <message>
+        <source>@%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>#%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1M</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1K</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>the next %1 days</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>the next day</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>the next %1 hours</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>the next hour</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>the next %1 minutes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>the next minute</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>harbour-sailfishclub</name>
     <message>
         <source>Network not connected</source>

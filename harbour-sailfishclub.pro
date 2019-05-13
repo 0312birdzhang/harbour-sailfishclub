@@ -72,6 +72,8 @@ OTHER_FILES += qml/harbour-sailfishclub.qml \
     qml/components/ActivityTopicBanner.qml \
     qml/js/ApiCore.js \
     qml/js/ApiMain.js \
+    qml/js/twemoji.js \
+    qml/js/emoji/*.svg \
     qml/cacert.pem \
     qml/pages/TopicPage.qml \
     qml/components/HorizontalFontAwesomeTextButton.qml \

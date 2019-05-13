@@ -1,12 +1,15 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import "../js/functions.js" as Functions
+import "../js/twemoji.js" as Emoji
 
  Label{
-     text: content
-     textFormat: Text.RichText
+//     text: content
+     text: Emoji.emojify(content, Theme.fontSizeExtraSmall)
+     textFormat: Text.StyledText
      font.pixelSize: Theme.fontSizeExtraSmall
      wrapMode: Text.WordWrap
-     linkColor:Theme.primaryColor
+     linkColor: Theme.highlightColor
      font.letterSpacing: 2;
      anchors{
          left:parent.left
@@ -17,19 +20,4 @@ import Sailfish.Silica 1.0
      onLinkActivated: {
          appwindow.openLink(link);
      }
-     //暂时屏蔽掉
-//     MouseArea{
-//         anchors.fill: parent
-//         onClicked: {
-//             if(content && content.indexOf("<code>") > 0 ){
-//                notification.show(qsTr("Long press to copy"))
-//             }
-//         }
-//         onPressAndHold: {
-//             if(content && content.indexOf("<code>") > 0){
-//                 Clipboard.text = content;
-//                 notification.show(qsTr("Copied to clipboard"));
-//             }
-//         }
-//     }
  }

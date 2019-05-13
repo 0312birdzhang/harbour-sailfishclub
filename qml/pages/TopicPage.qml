@@ -86,12 +86,16 @@ Page{
                 }
                 color: parent.highlighted ? Theme.secondaryColor : Theme.highlightColor
                 horizontalAlignment: Text.AlignRight
+                textFormat: Text.StyledText
+                linkColor: Theme.highlightColor
                 wrapMode: Text.WordWrap
-                textFormat: Text.RichText
                 font.pixelSize: Theme.fontSizeExtraSmall * 0.8
                 font.italic: true
                 text: signature
                 visible: signature
+                onLinkActivated: {
+                    appwindow.openLink(link)
+                }
             }
 
 

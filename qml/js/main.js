@@ -15,9 +15,9 @@ function login(uid, token, username, password){
 function splitContent(topic_content, parent) {
     var model = Qt.createQmlObject('import QtQuick 2.0; ListModel {}', parent);
     topic_content = app.formathtml(topic_content);
-//    topic_content = decodeHTMLEntities(topic_content);
     topic_content = topic_content.replace(/<a[^<>]*href=\"([^<>"]*)\"\s+rel=\"nofollow\"><img\s+src=\"([^<>"]*)\".*?a>/g,"<img src=\"$2\" />"); //去掉图片上的超链接
     topic_content = topic_content.replace(/<img[^<>]*class=\"[^<>]*emoji-emoji-one[^<>]*\"[^<>]*alt=\"([^<>"]*)\"[^<>]*\/>/g,"$1"); // emoji 直接用图片alt中的
+    topic_content = topic_content.replace(/<img[^<>]*class=\"[^<>]*emoji-customizations[^<>]*\"[^<>]*alt=\"([^<>"]*)\"[^<>]*\/>/g,"$1") // 自定义表情
     var img_model = [];
     var iframe_model = [];
     
