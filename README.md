@@ -22,7 +22,7 @@
 
 - [ ] 后台提醒
 
-- [ ] 缓存部分帖子内容
+- [x] 缓存部分帖子内容
 
 
 ## 依赖技术
@@ -57,3 +57,7 @@
 * harbour-foilpics
 
 * wrapcache
+
+* harbour-piepmatz
+
+* Twemoji

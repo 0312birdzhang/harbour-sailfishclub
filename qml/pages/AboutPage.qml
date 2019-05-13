@@ -58,6 +58,7 @@ Page{
                         "<a href=\"https://github.com/communi/communi-sailfish\" >communi-sailfish</a><br/>" +
                         "<a href=\"https://github.com/monich/harbour-foilpics\" >harbour-foilpics</a><br/>" +
                         "<a href=\"https://github.com/hustcc/wrapcache\" >wrapcache</a><br/>" +
+                        "<a href=\"https://github.com/Wunderfitz/harbour-piepmatz\" >harbour-piepmatz</a><br/>" +
                         + qsTr("and other projects");
 
 
