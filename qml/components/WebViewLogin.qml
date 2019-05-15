@@ -11,17 +11,14 @@ Item {
     signal loginSucceed()
     signal loginFailed(string fail)
 
-    // The effective value will be restricted by ApplicationWindow.allowedOrientations
-    allowedOrientations: Orientation.All
-
     SilicaWebView {
           id: webview
           anchors.fill: parent
 
-          experimental.overview: true
+//          experimental.overview: true
         //   experimental.userStyleSheets: [ (Theme.colorScheme == Theme.LightOnDark) ? Qt.resolvedUrl("./htmlViewer_Dark.css") : Qt.resolvedUrl("./htmlViewer_Light.css") ]
           // express.sid
-          experimental.transparentBackground: true
+//          experimental.transparentBackground: true
           onLoadingChanged: {
               console.log(loadRequest.url.toString())
               if (loadRequest.status === WebView.LoadSucceededStatus){

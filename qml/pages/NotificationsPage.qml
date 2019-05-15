@@ -33,7 +33,8 @@ Page{
                        "user_group_icon":posts[i].teaser.user.selectedGroup?posts[i].teaser.user.selectedGroup.icon:"",
                        "user_group_name":posts[i].teaser.user.selectedGroup?posts[i].teaser.user.selectedGroup.userTitle:"",
                        "user_text":posts[i].teaser.user["icon:text"],
-                       "user_color":posts[i].teaser.user["icon:bgColor"]
+                       "user_color":posts[i].teaser.user["icon:bgColor"],
+                       "userReplies": posts[i].replies
                       });
 
                 }

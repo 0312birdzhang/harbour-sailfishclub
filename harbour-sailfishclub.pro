@@ -147,7 +147,8 @@ DISTFILES += \
     qml/pages/UnOfficalCNBlog.qml \
     qml/pages/UnOfficalBlogContent.qml \
     qml/pages/PreviewPage.qml \
-    qml/components/ShareMethodList.qml
+    qml/components/ShareMethodList.qml \
+    qml/components/TopicReplies.qml
 
 #dbus.files = dbus/harbour.sailfishclub.service
 #dbus.path = $$INSTALL_ROOT/usr/share/dbus-1/services

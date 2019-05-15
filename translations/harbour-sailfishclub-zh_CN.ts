@@ -468,6 +468,13 @@
     </message>
 </context>
 <context>
+    <name>TopicReplies</name>
+    <message>
+        <source>replaies</source>
+        <translation>回复数</translation>
+    </message>
+</context>
+<context>
     <name>TopicToolBar</name>
     <message>
         <source>Open browser</source>

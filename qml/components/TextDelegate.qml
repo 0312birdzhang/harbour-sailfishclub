@@ -3,7 +3,6 @@ import Sailfish.Silica 1.0
 import "../js/twemoji.js" as Emoji
 
  Label{
-//     text: content
      text: Emoji.emojify(content, Theme.fontSizeExtraSmall)
      textFormat: Text.StyledText
      font.pixelSize: Theme.fontSizeExtraSmall

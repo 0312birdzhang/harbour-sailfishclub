@@ -41,7 +41,8 @@ Page{
         }
         delegate: ListItem {
             contentHeight: topicHeader.height + contentLabel.height
-                        + signatureLabel.height + Theme.paddingMedium * 4
+                        + signatureLabel.height + topicRepliesId.height
+                        + Theme.paddingMedium * 4
                         + (contextMenu.active?contextMenu.height:0)
 
             width: topicView.width
@@ -77,10 +78,20 @@ Page{
                     }
                 }
             }
+
+            TopicReplies{
+                id: topicRepliesId
+                replies: userReplies
+                width: parent.width;
+                height: Theme.itemSizeExtraSmall/2
+                anchors.top: contentLabel.bottom
+                anchors.leftMargin: Theme.paddingMedium
+            }
+
             Label{
                 id: signatureLabel
                 anchors{
-                    top: contentLabel.bottom
+                    top: topicRepliesId.bottom
                     right: parent.right
                     rightMargin: Theme.paddingMedium
                 }
@@ -262,7 +273,8 @@ Page{
                                           "user_group_icon":posts[i].user.selectedGroup?posts[i].user.selectedGroup.icon:"",
                                           "user_group_name":posts[i].user.selectedGroup?posts[i].user.selectedGroup.userTitle:"",
                                           "user_text":posts[i].user["icon:text"],
-                                          "user_color":posts[i].user["icon:bgColor"]
+                                          "user_color":posts[i].user["icon:bgColor"],
+                                          "userReplies": posts[i].replies
 
                                       });
                     topicView.model = topicModel;
@@ -376,7 +388,8 @@ Page{
                                          "user_group_icon":userinfo.groupIcon,
                                          "user_group_name":ret.user.selectedGroup?ret.user.selectedGroup.userTitle:"",
                                          "user_text":userinfo.user_text,
-                                         "user_color":userinfo.user_color
+                                         "user_color":userinfo.user_color,
+                                         "userReplies": posts[i].replies
                                        });
                     pageStack.pop();
                 }
