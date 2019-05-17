@@ -28,10 +28,23 @@ Item {
         fillMode: Image.PreserveAspectFit;
         // sourceSize.width: bw;
         source: content;
-        asynchronous: true;
+        Behavior on opacity { NumberAnimation {} }
+        ProgressCircle {
+            width: parent.height 
+            height: parent.height
+            value: img.progress
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.verticalCenter: parent.verticalCenter
+            visible: img.status === ( Image.Loading || Image.Error ) ? true : false
+            opacity: img.status === ( Image.Loading || Image.Error ) ? 1 : 0
+        }
         Image {
             anchors.fill: parent
-            visible: img.status !== Image.Ready
+            width: parent.height
+            height: parent.height
+            sourceSize.width: parent.height
+            sourceSize.height: parent.height
+            visible: img.status === Image.Loading ? true : false
             source: "image://theme/icon-m-refresh";
         }
     }
