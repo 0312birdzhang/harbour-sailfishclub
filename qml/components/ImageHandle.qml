@@ -1,14 +1,167 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import QtMultimedia 5.0
 
 Page {
     id: imagePage
+    property string type: ""
+    property string previewURL: ""
+    property string mediaURL: ""
 
-    property string localUrl: ""
-    allowedOrientations:Orientation.All
+    allowedOrientations: Orientation.All
+
+    Component.onCompleted: function(){
+        console.log("type > " + type)
+        console.log("previewURL > " + previewURL)
+        console.log("mediaURL > " + mediaURL)
+        if (type != 'animated_gif' && type != 'video') {
+            imagePreview.source = mediaURL
+            imageFlickable.visible = true;
+        } else {
+            video.source = mediaURL
+            video.fillMode = VideoOutput.PreserveAspectFit
+            video.play()
+            videoFlickable.visible = true;
+        }
+    }
+    Flickable {
+        id: videoFlickable
+        visible: false
+        anchors.fill: parent
+        contentWidth: imageContainer.width; contentHeight: imageContainer.height
+        clip: true
+        Image {
+            id: videoPreview
+            fillMode: Image.PreserveAspectFit
+            anchors.fill: parent
+            source: previewURL
+        }
+        Video {
+            id: video
+            anchors.fill: parent
+            onErrorStringChanged: function(){
+                videoError.visible = true;
+            }
+            onStatusChanged: {
+                console.log(status)
+                switch (status){
+                case MediaPlayer.Loading:
+                    console.log("loading")
+                    return;
+                case MediaPlayer.EndOfMedia:
+                    console.log("EndOfMedia")
+                    return;
+
+                }
+            }
+
+            onPlaybackStateChanged: {
+                console.log(playbackState)
+                switch (playbackState){
+                case MediaPlayer.PlayingState:
+                    playerIcon.icon.source = "image://theme/icon-m-play"
+                    return;
+                case MediaPlayer.PausedState:
+                    playerIcon.icon.source = "image://theme/icon-m-pause"
+                    return;
+                case MediaPlayer.StoppedState:
+                    playerIcon.icon.source = "image://theme/icon-m-stop"
+                    return;
+                }
+            }
+
+
+            onPositionChanged: function(){
+                //console.log(duration)
+                //console.log(bufferProgress)
+                //console.log(position)
+                if (status !== MediaPlayer.Loading){
+                    playerProgress.indeterminate = false
+                    playerProgress.maximumValue = duration
+                    playerProgress.minimumValue = 0
+                    playerProgress.value = position
+                }
+
+            }
+            onStopped: function(){
+                play()
+            }
+            IconButton {
+                id: playerIcon
+                anchors.left: parent.left
+                anchors.bottom: parent.bottom
+                anchors.leftMargin: Theme.paddingLarge
+                anchors.bottomMargin: Theme.paddingMedium
+                icon.source: "image://theme/icon-m-play"
+                onClicked: function() {
+                    if (video.playbackState === MediaPlayer.PlayingState)
+                        video.pause()
+                    else
+                        video.play()
+                }
+            }
+
+            ProgressBar {
+                indeterminate: true
+                id: playerProgress
+                anchors.left: playerIcon.right
+                anchors.right: videoDlBtn.left
+
+                anchors.verticalCenter: playerIcon.verticalCenter
+                anchors.leftMargin: 0
+                anchors.bottomMargin: Theme.paddingMedium
+            }
+            IconButton {
+                id: videoDlBtn
+                visible: true
+                anchors.right: parent.right
+                anchors.bottom: parent.bottom
+                anchors.rightMargin: Theme.paddingLarge
+                anchors.bottomMargin: Theme.paddingMedium
+                //width: Theme.iconSizeMedium+Theme.paddingMedium*2
+                icon.source: "image://theme/icon-m-cloud-download"
+                onClicked: {
+                    var filename = mediaURL.split("/");
+                    py.downloadFile(mediaURL, filename[filename.length-1]);
+                }
+            }
+            Rectangle {
+                visible: videoError.text != ""
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.bottom: parent.bottom
+                color: Theme.highlightDimmerColor
+                height: videoError.height + 2*Theme.paddingMedium
+                width: parent.width
+                Label {
+                    anchors.centerIn: parent
+                    id: videoError
+                    width: parent.width - 2*Theme.paddingMedium
+                    wrapMode: Text.WordWrap
+                    height: contentHeight
+                    visible: false;
+                    font.pixelSize: Theme.fontSizeSmall;
+                    text: video.errorString
+                    color: Theme.highlightColor
+                }
+            }
+
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: function() {
+                    if (video.playbackState === MediaPlayer.PlayingState)
+                        video.pause()
+                    else
+                        video.play()
+                }
+            }
+        }
+    }
 
     Flickable {
         id: imageFlickable
+        visible: false
         anchors.fill: parent
         contentWidth: imageContainer.width; contentHeight: imageContainer.height
         clip: true
@@ -32,10 +185,10 @@ Page {
 
                 anchors.centerIn: parent
                 fillMode: Image.PreserveAspectFit
+                cache: true
                 asynchronous: true
-                source: localUrl
                 sourceSize.height: 1000;
-                smooth: !imageFlickable.moving
+                smooth: false
 
                 onStatusChanged: {
                     if (status == Image.Ready) {
@@ -69,7 +222,7 @@ Page {
 
         PinchArea {
             id: pinchArea
-
+            opacity: 0.3
             property real minScale: 1.0
             property real maxScale: 3.0
 
@@ -100,6 +253,7 @@ Page {
         }
     }
 
+
     Loader {
         anchors.centerIn: parent
         sourceComponent: {
@@ -120,20 +274,10 @@ Page {
                 height: childrenRect.height
                 width: imagePage.width
 
-                BusyIndicator {
+                ProgressCircle {
                     id: imageLoadingIndicator
                     anchors.horizontalCenter: parent.horizontalCenter
-                    running: true
-                }
-
-                Text {
-                    anchors {
-                        horizontalCenter: parent.horizontalCenter
-                        top: imageLoadingIndicator.bottom; topMargin: Theme.paddingLarge
-                    }
-                    font.pixelSize: Theme.fontSizeSmall;
-                    color: Theme.highlightColor;
-                    text: qsTr("Loading image...%1").arg(Math.round(imagePreview.progress*100) + "%")
+                    progressValue: imagePreview.progress
                 }
             }
         }
@@ -148,12 +292,8 @@ Page {
         }
     }
 
-    VerticalScrollDecorator { flickable: imageFlickable }
-
-
     IconButton {
        enabled: imagePreview.status == Image.Ready
-       visible: false
        anchors{
            right: imagePage.right;
            rightMargin: Theme.paddingLarge;
@@ -161,12 +301,17 @@ Page {
            bottomMargin: Theme.paddingLarge;
        }
        width: Theme.iconSizeMedium+Theme.paddingMedium*2
-       icon.source: "image://theme/icon-m-share"
+       icon.source: "image://theme/icon-m-cloud-download"
        onClicked: {
-           pageStack.push(Qt.resolvedUrl("ShareToPage.qml"),{
-               "link": "",
-               "linkTitle": ""
-           })
+           console.log(imagePreview.source);
+           var filename = mediaURL.split("/");
+           py.downloadFile(mediaURL, filename[filename.length-1]);
+
        }
     }
+
+    VerticalScrollDecorator { flickable: imageFlickable }
+
+
+
 }

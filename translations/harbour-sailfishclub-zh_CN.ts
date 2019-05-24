@@ -172,10 +172,6 @@
 <context>
     <name>ImageHandle</name>
     <message>
-        <source>Loading image...%1</source>
-        <translation>加载图片...%1</translation>
-    </message>
-    <message>
         <source>Error loading image</source>
         <translation>加载图片失败</translation>
     </message>
@@ -557,6 +553,14 @@
     <message>
         <source>Starting open link...</source>
         <translation>即将打开链接...</translation>
+    </message>
+    <message>
+        <source>Picture downloaded</source>
+        <translation>图片已下载</translation>
+    </message>
+    <message>
+        <source>Download picture failed</source>
+        <translation>图片下载失败</translation>
     </message>
 </context>
 </TS>

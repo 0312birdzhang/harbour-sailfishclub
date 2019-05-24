@@ -14,7 +14,10 @@ Item {
     MouseArea {
         anchors.fill: img;
         onClicked: {
-            pageStack.push(Qt.resolvedUrl("ImageHandle.qml"),{"localUrl": img.source});
+            pageStack.push(Qt.resolvedUrl("ImageHandle.qml"),{
+                               "type": "img",
+                               "mediaURL": img.source
+                           });
         }
     }
 
@@ -37,15 +40,6 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
             visible: img.status === ( Image.Loading || Image.Error ) ? true : false
             opacity: img.status === ( Image.Loading || Image.Error ) ? 1 : 0
-        }
-        Image {
-            anchors.fill: parent
-            width: parent.height
-            height: parent.height
-            sourceSize.width: parent.height
-            sourceSize.height: parent.height
-            visible: img.status === Image.Loading ? true : false
-            source: "image://theme/icon-m-refresh";
         }
     }
 

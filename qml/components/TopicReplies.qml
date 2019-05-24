@@ -29,6 +29,8 @@ Item {
     Label{
         visible: replies.count > 0
         text:  "<br>" + replies.count.toString() + "</br> " + qsTr("replaies")
+        width: parent.width
+        maximumLineCount: 3
         textFormat: Text.StyledText
         font.pixelSize: Theme.fontSizeTiny
         color: Theme.secondaryColor

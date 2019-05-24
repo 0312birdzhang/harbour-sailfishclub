@@ -9,11 +9,12 @@ from sfctoken import (
 )
 from sfctoken import secret_key
 import logging
-import sys
+import sys,os
 import binascii
-from cache import *
+import shutil
+#from cache import *
 import wrapcache
-
+from basedir import *
 
 logger = logging.getLogger("sfcpython")
 formatter = logging.Formatter('%(asctime)s %(levelname)-8s: %(message)s')
@@ -22,6 +23,11 @@ console_handler.formatter = formatter
 logger.addHandler(console_handler)
 logger.setLevel(logging.DEBUG)
 UnOfficalBlogURL = "https://notexists.top/api/post"
+savePath = os.path.join(HOME, "Pictures","SailfishClub")
+
+
+if not os.path.exists(savePath):
+    os.mkdir(savePath)
 
 my_access_token = "".join((
     access_token, access_token0,
@@ -231,3 +237,13 @@ def getSecretKey():
 
 def resizeImg():
     pass
+
+def downloadFile(url, filename):
+    readlPath = "%s/%s" % (savePath, url.split('/')[-1])
+    try:
+        r = requests.get(url, stream=True)
+        with open(readlPath, 'wb') as f:
+            shutil.copyfileobj(r.raw, f)
+    except Exception as e:
+        return False
+    return True
