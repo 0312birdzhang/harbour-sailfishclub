@@ -46,6 +46,7 @@ Page {
     property bool next_active:false;
     property string prev_page;
     property bool prev_active:false;
+    property bool need_refresh: false
 
     Column{
         id:column
@@ -229,7 +230,7 @@ Page {
 
     function load(via_pulley){
         console.log("current router:"+current_router);
-        if(current_page == 1 && !via_pulley){
+        if(current_page == 1 && !via_pulley ){
             py.get_query_from_cache(appwindow.slug_first_page, current_router);
             return;
         }
@@ -312,7 +313,7 @@ Page {
     }
 
     Component.onCompleted: {
-        load();
+        load(need_refresh);
     }
 }
 
