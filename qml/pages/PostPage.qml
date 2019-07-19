@@ -27,8 +27,12 @@ Dialog  {
 
         //  console.log("comments:"+comments);
         if(cid && title.text && comments){
+            console.log(title.text)
+            console.log(comments)
+            console.log(userinfo.uid)
+            console.log(cid);
+
             py.newTopic(title.text, comments, userinfo.uid, cid);
-            // console.log(JSON.stringify(ret));
 
         }else{
             appwindow.postdraft = comments;
@@ -149,7 +153,7 @@ Dialog  {
             }else{
                 notification.showPopup(
                         qsTr("Error"),
-                        ret.toString(),
+                        result.toString(),
                         "image://theme/icon-lock-warning"
                         );
             }
