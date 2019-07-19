@@ -84,7 +84,8 @@ Page{
                             onClicked: {
                                 pageStack.push(Qt.resolvedUrl("./FirstPage.qml"),{
                                                    "cid":cid,
-                                                   "cname":cname + FONT.Icon[icon.replace(/-/g,"_")]
+                                                   "cname":cname + FONT.Icon[icon.replace(/-/g,"_")],
+                                                   "need_refresh": true
                                                });
                             }
                         }

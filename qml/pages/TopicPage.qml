@@ -389,7 +389,7 @@ Page{
                                          "user_group_name":ret.user.selectedGroup?ret.user.selectedGroup.userTitle:"",
                                          "user_text":userinfo.user_text,
                                          "user_color":userinfo.user_color,
-                                         "userReplies": posts[i].replies
+                                         "userReplies": ret.replies || {}
                                        });
                     pageStack.pop();
                 }
