@@ -36,14 +36,14 @@ Page{
             Label{
                 id:version
                 anchors.horizontalCenter: parent.horizontalCenter
-                text:qsTr("Version")+" 0.3.5"
+                text:qsTr("Version")+" 0.3.6"
 
             }
             Item{width: 1;height: Theme.paddingMedium}
 
             LabelText{
                 label: qsTr("ArtWork")
-                text: "Cover跟图标均由设计师<b>蔡司</b>制作"
+                text: "Cover跟图标均由设计师<b>蔡司</b>制作，图标后期改为现在颜色"
             }
 
             Item { width: 1; height: Theme.paddingMedium }

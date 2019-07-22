@@ -1,8 +1,7 @@
 from __future__ import print_function
 import requests
 from pynodebb import Client
-from sfctoken import *
-from sfctoken import secret_key
+from sfctoken import access_token,secret_key
 import logging
 import sys,os
 import binascii
@@ -91,7 +90,7 @@ def createUser(user,password,email):
         return userInfo
 
 def post(title, content, uid, cid):
-    status_code, response = client.topics.create(uid, cid, title, content)
+    status_code, response = client.topics.create(int(uid), int(cid), title, content)
     if not status_code or status_code != 200:
         return False
     return response
