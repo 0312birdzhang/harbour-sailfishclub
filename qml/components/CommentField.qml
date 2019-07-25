@@ -260,10 +260,9 @@ Column {
         id:selectImageComponent
         ImagePreviewGrid{
             onSelectImage: {
-                remorse.execute(qsTr("Start upload image..."),function(){
-                    py.uploadImage(url,desc);
+                if(pageStack.currentPage.objectName && pageStack.currentPage.objectName == "imagePreviewGrid"){
                     pageStack.pop();
-                },3000);
+                }
             }
         }
     }
@@ -279,9 +278,13 @@ Column {
                         );
             }else{
                 var editor = body._editor;
-                var mdurl = "\n![%0](%1)".arg(desc).arg(result)
+                var mdurl = "\n![%0](%1)\n".arg(desc).arg(result)
                 editor.insert(editor.cursorPosition,mdurl);
             }
+        }
+
+        onImageSelected:{
+            py.uploadImage(url, desc);
         }
     }
 }

@@ -6,6 +6,8 @@ import harbour.sailfishclub 1.0
 import Nemo.Thumbnailer 1.0
 
 Page {
+
+    objectName: "imagePreviewGrid"
     signal selectImage(string url,string desc)
     allowedOrientations:Orientation.All
     
@@ -51,8 +53,10 @@ Page {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-//                    console.log("path:"+url+",title:"+galleryModel.get(index).title)
-                    selectImage(url,galleryModel.get(index).title);
+                    remorse.execute(qsTr("Start upload image..."),function(){
+                        selectImage(url,galleryModel.get(index).title);
+                        signalCenter.imageSelected(url,galleryModel.get(index).title);
+                    },2500);
                 }
             }
         }

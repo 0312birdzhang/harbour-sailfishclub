@@ -31,6 +31,8 @@ QtObject{
 
     signal getUnOfficalList(var result);
     signal getUnOfficalContent(var result);
+
+    signal imageSelected(var url, var desc);
 }
 
 
