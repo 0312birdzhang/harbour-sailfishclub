@@ -95,10 +95,6 @@
         <translation>图片上传失败</translation>
     </message>
     <message>
-        <source>Start upload image...</source>
-        <translation>开始上传图片...</translation>
-    </message>
-    <message>
         <source>send</source>
         <translation>发送</translation>
     </message>
@@ -200,6 +196,10 @@
     <message>
         <source>Select an image</source>
         <translation>选择图片上传</translation>
+    </message>
+    <message>
+        <source>Start upload image...</source>
+        <translation type="unfinished">开始上传图片...</translation>
     </message>
 </context>
 <context>
