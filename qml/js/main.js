@@ -101,7 +101,7 @@ function splitContent(topic_content, parent) {
 
 function parseCode(model, topic_content){
 //    console.log("content:",topic_content)
-    var codeReg = /<code>.*?[\d\D]*?<\/code>/g;
+    var codeReg = /<pre><code>.*?[\d\D]*?<\/code><\/pre>/g;
     var _replace_code_ = "__REPLACE_CODE__";
     if(topic_content.indexOf("<code>") > -1 ){
         var codes_model = [];
@@ -111,7 +111,7 @@ function parseCode(model, topic_content){
             codecontent = codecontent.replace("<pre>","").replace("<code>","").replace("<\/pre>","").replace("<\/code>","");
             codes_model.push(codecontent);
         }
-        var code_contents = topic_content.replace(/<code>.*?[\d\D]*?<\/code>/g,_replace_code_).split(_replace_code_);
+        var code_contents = topic_content.replace(/<pre><code>.*?[\d\D]*?<\/code><\/pre>/g,_replace_code_).split(_replace_code_);
 //        console.log("code_contents length",arr_codes?arr_codes.length:0)
         for(var k = 0; k < code_contents.length; k++){
             model.append({
