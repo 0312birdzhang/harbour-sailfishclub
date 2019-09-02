@@ -9,7 +9,7 @@ Page{
     allowedOrientations: Orientation.Portrait
     property string username: "guest";
     property variant userData: null;
-    property bool isMe: username === userinfo.username;
+    property bool isMe: typeof username == "string" ? username === userinfo.username : username === userinfo.uid;
 
     function getUid(){
         return userData ? userData.uid : uid;
@@ -192,6 +192,14 @@ Page{
     }
 
     Component.onCompleted: {
-        py.getUserInfo(username);
+        var is_username = true;
+        if(username == "guest"){
+            return;
+        }else if(parseInt(uid)){
+            is_username = false;
+        }else{
+            
+        }
+        py.getUserInfo(username, is_username);
     }
 }

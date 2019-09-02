@@ -601,9 +601,9 @@ ApplicationWindow
         }
 
         // 获取用户信息
-        function getUserInfo(username){
+        function getUserInfo(username, is_username){
             loading = true;
-            call('main.getuserinfo',[username],function(result){
+            call('main.getuserinfo',[username, is_username],function(result){
                 loading = false;
                 signalCenter.getUserInfo(result);
                 
@@ -935,7 +935,7 @@ ApplicationWindow
         console.log("link:"+link);
         var linklist=link.split(".");
         var linktype=linklist[linklist.length -1];
-        if(linktype =="png" ||linktype =="jpg"||linktype =="jpeg"||linktype =="gif"||linktype =="ico"||linktype =="svg"){
+        if(linktype =="png" ||linktype =="jpg"||linktype =="jpeg"||linktype =="gif"||linktype =="ico"||linktype =="svg"||linktype == "webp"){
             pageStack.push(Qt.resolvedUrl("./components/ImagePage.qml"),{"localUrl":link});
         }else if (/https:\/\/sailfishos\.club\/uid\/[0-9]{1,}/.exec(link)) {
             var uidlink = /https:\/\/sailfishos\.club\/uid\/[0-9]{1,}/.exec(link)
