@@ -45,11 +45,11 @@ function splitContent(topic_content, parent) {
         }
     }
 
-    for (var i = 0; arr_iframe && i < arr_iframe.length; i++) {
-        var src = arr_iframe[i].match(srcReg);
-        if(src){
-            if(src[1]){
-                iframe_model.push(src[1]);
+    for (var ii = 0; arr_iframe && ii < arr_iframe.length; ii++) {
+        var srci = arr_iframe[ii].match(srcReg);
+        if(srci){
+            if(srci[1]){
+                iframe_model.push(srci[1]);
             }
         }
     }
@@ -59,7 +59,7 @@ function splitContent(topic_content, parent) {
     topic_content = topic_content.replace(/<img.*?src=\"([^<>"]*)\".*?>/g,_replace_img_);
 
     var contents = topic_content.split(_replace_img_);
-    for(var i = 0 ; i < contents.length; i++ ){
+    for(var iii = 0 ; iii < contents.length; iii++ ){
         // text 中处理iframe
         var text_content = contents[i];
         var text_contents = text_content.replace(/<iframe.*?src=\"([^<>"]*)\".*?iframe>/g,_replace_iframe_).split(_replace_iframe_);
@@ -79,7 +79,7 @@ function splitContent(topic_content, parent) {
 
         }
 
-        if ( i < contents.length - 1){
+        if ( iii < contents.length - 1){
             var imgsrc = img_model[i];
             if(imgsrc.lastIndexOf("gif") > 0){
                 model.append({
