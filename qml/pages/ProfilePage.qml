@@ -10,16 +10,10 @@ Page{
     property string username: "guest";
     property variant userData: null;
     property bool isMe: typeof username == "string" ? username === userinfo.username : username === userinfo.uid;
-
-    function getUid(){
-        return userData ? userData.uid : uid;
-    }
-
     Connections{
         target: signalCenter
         onGetUserInfo:{
             if(result && result != "" && result != "Forbidden"){
-//                console.log(JSON.stringify(result));
                 var tmpData = {};
                 tmpData.uid = result.uid;
                 tmpData.username = result.username;
@@ -46,6 +40,8 @@ Page{
 //                tmpData.gtoupIcon = result.selectedGroup ? result.selectedGroup.icon: "";
                 userData = tmpData;
 
+            }else{
+                console.log("Error:", result);
             }
         }
     }
@@ -195,7 +191,7 @@ Page{
         var is_username = true;
         if(username == "guest"){
             return;
-        }else if(parseInt(uid)){
+        }else if(parseInt(username)){
             is_username = false;
         }else{
             

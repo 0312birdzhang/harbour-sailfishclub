@@ -17,7 +17,9 @@ class HttpClient(object):
     def __init__(self):
         self.endpoint = settings['api_endpoint']
         self.admin_uid = settings['admin_uid']
-        self.headers = {'Authorization': 'Bearer %s' % settings['master_token']}
+        self.headers = {'Authorization': 'Bearer %s' % settings['master_token'],
+            "User-Agent": "SailfishOS Python APi Client v1.1"
+        }
         self.cookies = dict()
 
     def _request(self, method, path, **kwargs):
@@ -39,7 +41,7 @@ class HttpClient(object):
             return 404, 'Not Found'
 
         if '_token' in kwargs:
-            self.headers = {'Authorization': 'Bearer %s' % kwargs['_token']}
+            self.headers['Authorization'] = 'Bearer %s' % kwargs['_token']
             kwargs.pop("_token", None)
 
         if '_cookies' in kwargs:

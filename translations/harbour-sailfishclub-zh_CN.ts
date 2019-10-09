@@ -333,19 +333,19 @@
     <name>ProfilePage</name>
     <message>
         <source>Reputation</source>
-        <translation>声誉值</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>FollowingCount</source>
-        <translation>关注数</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Fans</source>
-        <translation>粉丝数</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Posts</source>
-        <translation>回复数</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

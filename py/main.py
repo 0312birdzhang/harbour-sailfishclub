@@ -71,8 +71,8 @@ def createToken(uid, password):
         return False
     return playload.get("token")
 
-@wrapcache.wrapcache(timeout = 12000)
-def getuserinfo(user,is_username = True):
+@wrapcache.wrapcache(timeout = 240)
+def getuserinfo(user, is_username = True):
     status_code, userinfo = client.users.get(user, is_username)
     if not status_code or status_code != 200:
         return False

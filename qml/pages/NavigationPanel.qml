@@ -33,7 +33,7 @@ Panel {
     onUserAvatarClicked: {
         //to loginpage or userinfo page
         if(userinfo.logined){
-            toUserInfoPage(userinfo.username);
+            toUserInfoPage(userinfo.uid);
         }else{
             toLoginPage();
         }
