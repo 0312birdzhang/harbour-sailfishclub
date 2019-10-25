@@ -199,7 +199,7 @@
     </message>
     <message>
         <source>Start upload image...</source>
-        <translation type="unfinished">开始上传图片...</translation>
+        <translation>开始上传图片...</translation>
     </message>
 </context>
 <context>
@@ -333,19 +333,19 @@
     <name>ProfilePage</name>
     <message>
         <source>Reputation</source>
-        <translation type="unfinished"></translation>
+        <translation>声誉值</translation>
     </message>
     <message>
         <source>FollowingCount</source>
-        <translation type="unfinished"></translation>
+        <translation>关注数</translation>
     </message>
     <message>
         <source>Fans</source>
-        <translation type="unfinished"></translation>
+        <translation>粉丝数</translation>
     </message>
     <message>
         <source>Posts</source>
-        <translation type="unfinished"></translation>
+        <translation>回复数</translation>
     </message>
 </context>
 <context>

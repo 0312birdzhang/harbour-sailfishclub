@@ -108,7 +108,9 @@ def replayTo(tid, uid, toPid, content):
     return response
 
 def getrecent(slug):
+    logger.debug("get recent")
     status_code, topics = client.topics.get_recent(slug=slug)
+    logger.debug("got topics")
     if not status_code or status_code != 200:
         return False
     return topics
