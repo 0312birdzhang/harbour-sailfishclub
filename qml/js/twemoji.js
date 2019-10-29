@@ -574,7 +574,8 @@ function emojify(rawText, emojiSize) {
     // replace custom
     var custom_emojis = ["huaji","erha","tanshou","doge","yunbei","weiqu","yinxian","penle","mobai"];
     for(var i=0;i<custom_emojis.length;i++){
-        curatedText = curatedText.replace(':' + custom_emojis[i] + ':',
+        var re = new RegExp(':'+custom_emojis[i]+':',"g");
+        curatedText = curatedText.replace(re,
                                           '<img '.concat(
                                                     'src="',
                                                     '../js/emoji/'+custom_emojis[i]+'.png',
