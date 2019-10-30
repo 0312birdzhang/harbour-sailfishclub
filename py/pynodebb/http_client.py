@@ -9,6 +9,8 @@ from __future__ import unicode_literals
 import requests
 from urllib.parse import urlparse
 from urllib.parse import urljoin
+import urllib3
+urllib3.disable_warnings()
 
 from pynodebb.settings import settings
 
