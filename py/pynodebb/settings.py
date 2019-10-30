@@ -26,4 +26,13 @@ settings = {
 
     # The master token used to authenticate write API requests.
     'master_token': None,
+
+    # Cloudflare ip
+    'ips': [
+            '104.31.87.173',
+            '104.31.86.173',
+            ],
+    
+    # domain
+    'domain': 'sailfishos.club'
 }

@@ -25,7 +25,12 @@ if not os.path.exists(savePath):
 
 client = Client('https://sailfishos.club', access_token)
 client.configure(**{
-    'page_size': 20
+    'page_size': 20,
+    'ips': [
+            '104.31.87.173',
+            '104.31.86.173',
+            ],
+    'domain': 'sailfishos.club'
 })
 
 

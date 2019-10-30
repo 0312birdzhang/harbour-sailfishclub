@@ -21,12 +21,10 @@ class HostHeaderSSLAdapter(requests.adapters.HTTPAdapter):
     def resolve(self, hostname):
         # a dummy DNS resolver
         import random
-        ips = [
-            '104.31.87.173',
-            '104.31.86.173',
-        ]
+        ips = settings['ips']
+
         resolutions = {
-            'sailfishos.club': random.choice(ips),
+            settings['domain']: random.choice(ips),
         }
         return resolutions.get(hostname)
 
