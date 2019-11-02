@@ -199,7 +199,7 @@
     </message>
     <message>
         <source>Start upload image...</source>
-        <translation type="unfinished">开始上传图片...</translation>
+        <translation>开始上传图片...</translation>
     </message>
 </context>
 <context>

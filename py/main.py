@@ -25,7 +25,12 @@ if not os.path.exists(savePath):
 
 client = Client('https://sailfishos.club', access_token)
 client.configure(**{
-    'page_size': 20
+    'page_size': 20,
+    'ips': [
+            '104.31.87.173',
+            '104.31.86.173',
+            ],
+    'domain': 'sailfishos.club'
 })
 
 
@@ -71,8 +76,8 @@ def createToken(uid, password):
         return False
     return playload.get("token")
 
-@wrapcache.wrapcache(timeout = 12000)
-def getuserinfo(user,is_username = True):
+@wrapcache.wrapcache(timeout = 240)
+def getuserinfo(user, is_username = True):
     status_code, userinfo = client.users.get(user, is_username)
     if not status_code or status_code != 200:
         return False
@@ -108,7 +113,9 @@ def replayTo(tid, uid, toPid, content):
     return response
 
 def getrecent(slug):
+    logger.debug("get recent")
     status_code, topics = client.topics.get_recent(slug=slug)
+    logger.debug("got topics")
     if not status_code or status_code != 200:
         return False
     return topics
@@ -183,7 +190,7 @@ def uploadImgSm(path):
         path = path.replace("file://","")
     url = 'https://sm.ms/api/upload'
     try:
-        files = {'smfile' : open(path.encode("utf-8"), 'rb')}
+        files = {'smfile' : open(path, 'rb')}
         r = requests.post(url, files = files, timeout=5.0)
         data1 = eval(r.text.encode('utf-8'))
         smurl = data1['data']['url']
@@ -192,14 +199,13 @@ def uploadImgSm(path):
     except Exception as e:
         return uploadVimCN(path)
 
-def uploadVimCN(file):
+def uploadVimCN(path):
     url = 'http://img.vim-cn.com/'
     try:
-        files = {'file' : open(file.encode("utf-8"), 'rb')}
+        files = {'file' : open(path, 'rb')}
         r = requests.post(url, files = files, timeout=5.0)
         return r.text
     except Exception as e:
-        
         logger.error(str(e))
         return None
 

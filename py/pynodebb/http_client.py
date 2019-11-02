@@ -9,15 +9,59 @@ from __future__ import unicode_literals
 import requests
 from urllib.parse import urlparse
 from urllib.parse import urljoin
+import urllib3
+urllib3.disable_warnings()
 
 from pynodebb.settings import settings
 
+class HostHeaderSSLAdapter(requests.adapters.HTTPAdapter):
+    """
+    From https://stackoverflow.com/a/57477670
+    """
+    def resolve(self, hostname):
+        # a dummy DNS resolver
+        import random
+        ips = settings['ips']
+
+        resolutions = {
+            settings['domain']: random.choice(ips),
+        }
+        return resolutions.get(hostname)
+
+    def send(self, request, **kwargs):
+        from urllib.parse import urlparse
+
+        connection_pool_kwargs = self.poolmanager.connection_pool_kw
+
+        result = urlparse(request.url)
+        resolved_ip = self.resolve(result.hostname)
+
+        if result.scheme == 'https' and resolved_ip:
+            request.url = request.url.replace(
+                'https://' + result.hostname,
+                'https://' + resolved_ip,
+            )
+            connection_pool_kwargs['server_hostname'] = result.hostname  # SNI
+            connection_pool_kwargs['assert_hostname'] = result.hostname
+
+            # overwrite the host header
+            request.headers['Host'] = result.hostname
+        else:
+            # theses headers from a previous request may have been left
+            connection_pool_kwargs.pop('server_hostname', None)
+            connection_pool_kwargs.pop('assert_hostname', None)
+
+        return super(HostHeaderSSLAdapter, self).send(request, **kwargs)
 
 class HttpClient(object):
     def __init__(self):
         self.endpoint = settings['api_endpoint']
         self.admin_uid = settings['admin_uid']
-        self.headers = {'Authorization': 'Bearer %s' % settings['master_token']}
+        self.headers = {'Authorization': 'Bearer %s' % settings['master_token'],
+            "User-Agent": "SailfishOS Python APi Client v1.1",
+            "Connection": "close",
+            "Host": "sailfishos.club"
+        }
         self.cookies = dict()
 
     def _request(self, method, path, **kwargs):
@@ -39,7 +83,7 @@ class HttpClient(object):
             return 404, 'Not Found'
 
         if '_token' in kwargs:
-            self.headers = {'Authorization': 'Bearer %s' % kwargs['_token']}
+            self.headers['Authorization'] = 'Bearer %s' % kwargs['_token']
             kwargs.pop("_token", None)
 
         if '_cookies' in kwargs:
@@ -49,11 +93,14 @@ class HttpClient(object):
             kwargs.pop("_cookies", None)
 
         # Query the NodeBB instance, extracting the status code and fail reason.
-        response = requests.request(
+        session = requests.Session()
+        session.mount('https://', HostHeaderSSLAdapter())
+        response = session.request(
             method, urljoin(self.endpoint, path),
-            headers=self.headers, data=kwargs, 
+            headers=self.headers, data=kwargs,
             cookies=self.cookies,
-            timeout = 20
+            timeout = 10,
+            verify=False
         )
         code, reason = response.status_code, response.reason
 

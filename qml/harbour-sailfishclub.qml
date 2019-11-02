@@ -473,7 +473,7 @@ ApplicationWindow
                 signalCenter.getRecent(result);
                 // 缓存首页
                 if(slug == slug_first_page ){
-                    py.set_query_to_cache(router_recent, result, 7200.00)
+                    py.set_query_to_cache(router_recent, result, 600.00)
                 }
             });
         }
@@ -486,7 +486,7 @@ ApplicationWindow
                 signalCenter.getRecent(result);
                 // 缓存首页
                 if(slug == slug_first_page ){
-                    py.set_query_to_cache(router_popular, result, 86400.00)
+                    py.set_query_to_cache(router_popular, result, 3600.00)
                 }
             });
         }

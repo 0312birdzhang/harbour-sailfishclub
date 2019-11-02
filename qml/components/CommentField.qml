@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import "../js/fontawesome.js" as FONT
+import Sailfish.Pickers 1.0
 
 Column {
     property alias isActive: body.activeFocus
@@ -256,13 +257,26 @@ Column {
         }
     }
 
+    // Component{
+    //     id:selectImageComponent
+    //     ImagePreviewGrid{
+    //         onSelectImage: {
+    //             if(pageStack.currentPage.objectName && pageStack.currentPage.objectName == "imagePreviewGrid"){
+    //                 pageStack.pop();
+    //             }
+    //         }
+    //     }
+    // }
+
     Component{
         id:selectImageComponent
-        ImagePreviewGrid{
-            onSelectImage: {
-                if(pageStack.currentPage.objectName && pageStack.currentPage.objectName == "imagePreviewGrid"){
-                    pageStack.pop();
-                }
+            ImagePickerPage {
+                onSelectedContentPropertiesChanged: {
+//                    remorse.execute(qsTr("Start upload image..."),function(){
+                        var filepath = selectedContentProperties.filePath;
+                        var filetitle = selectedContentProperties.fileName;
+                        signalCenter.imageSelected(filepath,filetitle);
+//                    },2500);
             }
         }
     }
