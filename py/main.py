@@ -190,7 +190,7 @@ def uploadImgSm(path):
         path = path.replace("file://","")
     url = 'https://sm.ms/api/upload'
     try:
-        files = {'smfile' : open(path.encode("utf-8"), 'rb')}
+        files = {'smfile' : open(path, 'rb')}
         r = requests.post(url, files = files, timeout=5.0)
         data1 = eval(r.text.encode('utf-8'))
         smurl = data1['data']['url']
@@ -199,14 +199,13 @@ def uploadImgSm(path):
     except Exception as e:
         return uploadVimCN(path)
 
-def uploadVimCN(file):
+def uploadVimCN(path):
     url = 'http://img.vim-cn.com/'
     try:
-        files = {'file' : open(file.encode("utf-8"), 'rb')}
+        files = {'file' : open(path, 'rb')}
         r = requests.post(url, files = files, timeout=5.0)
         return r.text
     except Exception as e:
-        
         logger.error(str(e))
         return None
 
