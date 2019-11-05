@@ -188,21 +188,35 @@ def getUnOfficalBlogContent(slug):
 def uploadImgSm(path):
     if path.startswith("file:"):
         path = path.replace("file://","")
+    logger.info(path)
     url = 'https://sm.ms/api/upload'
     try:
-        files = {'smfile' : open(path, 'rb')}
-        r = requests.post(url, files = files, timeout=5.0)
-        data1 = eval(r.text.encode('utf-8'))
-        smurl = data1['data']['url']
+        files = {
+            'smfile': open(path, 'rb'),
+            'format': 'json',
+            'ssl': True
+        }
+        logger.info("start upload")
+        r = requests.post(url, files = files, timeout=10.0)
+        logger.info("upload success")
+        data1 = r.json()
+        if not data1['success']:
+            logger.error(data1['message'])
+            return None
+        smurl = data1.get("data").get("url")
         logger.info(smurl)
         return smurl
     except Exception as e:
-        return uploadVimCN(path)
+        logger.error(str(e))
+        return None
+
 
 def uploadVimCN(path):
+    """Seems Dead
+    """
     url = 'http://img.vim-cn.com/'
     try:
-        files = {'file' : open(path, 'rb')}
+        files = {'file' : open(path.encode("utf-8"), 'rb')}
         r = requests.post(url, files = files, timeout=5.0)
         return r.text
     except Exception as e:

@@ -257,26 +257,14 @@ Column {
         }
     }
 
-    // Component{
-    //     id:selectImageComponent
-    //     ImagePreviewGrid{
-    //         onSelectImage: {
-    //             if(pageStack.currentPage.objectName && pageStack.currentPage.objectName == "imagePreviewGrid"){
-    //                 pageStack.pop();
-    //             }
-    //         }
-    //     }
-    // }
-
     Component{
         id:selectImageComponent
-            ImagePickerPage {
-                onSelectedContentPropertiesChanged: {
-//                    remorse.execute(qsTr("Start upload image..."),function(){
-                        var filepath = selectedContentProperties.filePath;
-                        var filetitle = selectedContentProperties.fileName;
-                        signalCenter.imageSelected(filepath,filetitle);
-//                    },2500);
+        ImagePickerPage {
+            onSelectedContentPropertiesChanged: {
+                var filepath = selectedContentProperties.filePath;
+                var filetitle = selectedContentProperties.fileName;
+                console.log("type filepath: ",typeof(filepath))
+                signalCenter.imageSelected(filepath,filetitle);
             }
         }
     }

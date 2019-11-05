@@ -81,6 +81,7 @@ function splitContent(topic_content, parent) {
 
         if ( iii < contents.length - 1){
             var imgsrc = img_model[i];
+            if(!imgsrc)
             if(imgsrc.lastIndexOf("gif") > 0){
                 model.append({
                                  "type": "AnimatedImage",
