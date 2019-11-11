@@ -1,3 +1,6 @@
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
+
 from __future__ import print_function
 import requests
 from pynodebb import Client
@@ -197,11 +200,15 @@ def uploadImgSm(path):
             'ssl': True
         }
         logger.info("start upload")
-        r = requests.post(url, files = files, timeout=10.0)
-        logger.info("upload success")
+        r = requests.post(url, files = files, timeout=15.0)
+        logger.info("post success")
         data1 = r.json()
         if not data1['success']:
-            logger.error(data1['message'])
+            err_message = data1['message']
+            if "this image exists" in err_message:
+                return err_message.split()[-1]
+            else:
+                logger.error(err_message)
             return None
         smurl = data1.get("data").get("url")
         logger.info(smurl)
@@ -216,7 +223,7 @@ def uploadVimCN(path):
     """
     url = 'http://img.vim-cn.com/'
     try:
-        files = {'file' : open(path.encode("utf-8"), 'rb')}
+        files = {'file' : open(path, 'rb')}
         r = requests.post(url, files = files, timeout=5.0)
         return r.text
     except Exception as e:
