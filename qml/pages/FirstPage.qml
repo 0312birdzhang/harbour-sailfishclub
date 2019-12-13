@@ -100,7 +100,7 @@ Page {
                 width: listView.width
                 Label{
                     id:titleid
-                    text:JS.decodeHTMLEntities(title)
+                    text: JS.decodeHTMLEntities(titleRaw)
                     font.pixelSize: Theme.fontSizeSmall
                     truncationMode: TruncationMode.Fade
                     wrapMode: Text.WordWrap
@@ -274,6 +274,7 @@ Page {
                     if(topics[i].deleted)continue;
                     listModel.append({
                                          "title":topics[i].title,
+                                         "titleRaw":topics[i].titleRaw,
                                          "user":topics[i].user.username,
                                          "viewcount":topics[i].viewcount,
                                          "postcount":topics[i].postcount,

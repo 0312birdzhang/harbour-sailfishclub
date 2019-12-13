@@ -135,6 +135,7 @@ Dialog  {
                 var topicData = result.topicData;
                 listModel.insert(0,{
                                      "title":topicData.title,
+                                     "titleRaw":topicData.titleRaw,
                                      "user":topicData.user.username,
                                      "viewcount":topicData.viewcount,
                                      "postcount":topicData.postcount,
