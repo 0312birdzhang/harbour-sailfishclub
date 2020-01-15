@@ -36,7 +36,7 @@ import "../js/fontawesome.js" as FONT
 Page {
     id: page
     property alias contentItem:column
-    allowedOrientations: Orientation.Portrait
+    allowedOrientations: Orientation.All
     objectName: "firstPage"
     property string cid;
     property string cname;
@@ -100,7 +100,9 @@ Page {
                 width: listView.width
                 Label{
                     id:titleid
-                    text: JS.decodeHTMLEntities(titleRaw)
+                    text: (isQuestion? FONT.Icon.fa_question_circle:"" ) +
+                          (isSolved? FONT.Icon.fa_check_circle:"" )  +
+                           JS.decodeHTMLEntities(titleRaw)
                     font.pixelSize: Theme.fontSizeSmall
                     truncationMode: TruncationMode.Fade
                     wrapMode: Text.WordWrap
@@ -138,7 +140,7 @@ Page {
                 }
                 Label{
                     id:timeid
-                    text:FONT.Icon[category_icon.replace(/-/g,"_")]  + category + " "+ JS.humanedate(timestamp)
+                    text: FONT.Icon[category_icon.replace(/-/g,"_")]  + category + " "+ JS.humanedate(timestamp)
                     //opacity: 0.7
                     font.pixelSize: Theme.fontSizeTiny
                     //font.italic: true
@@ -285,8 +287,9 @@ Page {
                                          "slug":topics[i].slug,
                                          "mainPid":topics[i].mainPid,
                                          "category":topics[i].category.name,
-                                         "category_icon":topics[i].category.icon
-
+                                         "category_icon":topics[i].category.icon,
+                                         "isQuestion": topics[i].isQuestion == "1",
+                                         "isSolved": topics[i].isSolved == "1"
                                      });
                 }
                 listView.model = listModel;

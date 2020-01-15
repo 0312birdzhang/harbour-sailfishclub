@@ -146,7 +146,8 @@ Dialog  {
                                      "slug":topicData.slug,
                                      "mainPid":topicData.mainPid,
                                      "category":topicData.category.name,
-                                     "category_icon":topicData.category.icon
+                                     "category_icon":topicData.category.icon,
+                                     "isAnswer": false
                                  });
                 commentfield.children[3].text = "";
                 pageStack.pop();
@@ -195,10 +196,10 @@ Dialog  {
 
     Component.onDestruction: {
         appwindow.loading = false;
-        console.log(commentfield.children.length)
+//        console.log(commentfield.children.length)
         appwindow.postdraft = commentfield.children[3].text;
         appwindow.post_title_draft = title.text;
         appwindow.post_category = categoryCombo.currentIndex;
-        console.log(categoryCombo.currentIndex)
+//        console.log(categoryCombo.currentIndex)
     }
 }

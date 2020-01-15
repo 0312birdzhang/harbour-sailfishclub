@@ -71,7 +71,7 @@ ApplicationWindow
     readonly property string router_search: "search"
 
     cover: Qt.resolvedUrl("cover/CoverPage.qml")
-    allowedOrientations: Orientation.Portrait
+    allowedOrientations: Orientation.All
 
 
     onNetworkStatusChanged: {
