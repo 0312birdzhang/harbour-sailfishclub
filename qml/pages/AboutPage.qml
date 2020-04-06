@@ -36,7 +36,7 @@ Page{
             Label{
                 id:version
                 anchors.horizontalCenter: parent.horizontalCenter
-                text:qsTr("Version")+" 0.3.8"
+                text:qsTr("Version")+" 0.3.9"
             }
             Item{width: 1;height: Theme.paddingMedium}
 
@@ -57,7 +57,7 @@ Page{
                         "<a href=\"https://github.com/communi/communi-sailfish\" >communi-sailfish</a><br/>" +
                         "<a href=\"https://github.com/monich/harbour-foilpics\" >harbour-foilpics</a><br/>" +
                         "<a href=\"https://github.com/hustcc/wrapcache\" >wrapcache</a><br/>" +
-                        "<a href=\"https://github.com/Wunderfitz/harbour-piepmatz\" >harbour-piepmatz</a><br/>" +
+                        "<a href=\"https://github.com/Wunderfitz/harbour-piepmatz\" >harbour-piepmatz</a><br/>"
                         + qsTr("and other projects");
 
 

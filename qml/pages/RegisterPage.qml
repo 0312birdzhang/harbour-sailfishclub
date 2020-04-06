@@ -9,7 +9,7 @@ Dialog {
     property bool _registerSucceed: false
     property bool _canAccept: false
     property bool _showRegisterView: true
-    allowedOrientations: Orientation.Portrait
+    allowedOrientations: Orientation.All
     onAccepted: toPopularPage();
     //只有当登陆成功的时候才能accept
     canAccept: _canAccept

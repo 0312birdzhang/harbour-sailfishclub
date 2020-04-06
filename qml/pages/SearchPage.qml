@@ -216,6 +216,7 @@ Page {
                 for(var i = 0;i<posts.length;i++){
                     searchModel.append({
                                        "title":posts[i].topic.title,
+                                       "titleRaw":posts[i].topic.titleRaw,
                                        "user":posts[i].user.username,
                                        "tid":posts[i].tid,
                                        "content": posts[i].content,

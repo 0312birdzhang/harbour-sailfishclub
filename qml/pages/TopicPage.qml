@@ -40,6 +40,7 @@ Page{
             description: category? (FONT.Icon[category_icon.replace(/-/g,"_")]  + category) : "";
         }
         delegate: ListItem {
+            enabled: !isAnswer
             contentHeight: topicHeader.height + contentLabel.height
                         + signatureLabel.height + topicRepliesId.height
                         + Theme.paddingMedium * 4
@@ -53,13 +54,15 @@ Page{
                 user: username
                 user_id: uid
                 groupTitle:"" == user_group_name?"":("["+user_group_name+"]")
-                index: (floor + 1 )+"#"
+                index: isAnswer?FONT.Icon.fa_check_circle:(floor + 1 )+"#"
                 text: user_text
                 color: user_color
                 time: JS.humanedate(timestamp)
                 width: parent.width
                 height: isLandscape?parent.width/12:parent.width/8
             }
+
+
 
             Column{
                 id: contentLabel
@@ -78,6 +81,17 @@ Page{
                     }
                 }
             }
+
+            Rectangle {
+                id: subject
+                anchors.centerIn: parent
+                width: parent.width
+                height: parent.height
+                color: "#1affffff"
+                radius: 5;
+                visible: isAnswer
+            }
+            
 
             TopicReplies{
                 id: topicRepliesId
@@ -274,7 +288,8 @@ Page{
                                           "user_group_name":posts[i].user.selectedGroup?posts[i].user.selectedGroup.userTitle:"",
                                           "user_text":posts[i].user["icon:text"],
                                           "user_color":posts[i].user["icon:bgColor"],
-                                          "userReplies": posts[i].replies
+                                          "userReplies": posts[i].replies,
+                                          "isAnswer": posts[i].index == -1
 
                                       });
                     topicView.model = topicModel;
@@ -389,7 +404,8 @@ Page{
                                          "user_group_name":ret.user.selectedGroup?ret.user.selectedGroup.userTitle:"",
                                          "user_text":userinfo.user_text,
                                          "user_color":userinfo.user_color,
-                                         "userReplies": ret.replies || {}
+                                         "userReplies": ret.replies || {},
+                                         "isAnswer": false
                                        });
                     pageStack.pop();
                 }

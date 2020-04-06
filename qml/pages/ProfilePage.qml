@@ -6,7 +6,7 @@ import "../js/fontawesome.js" as FontAwesome
 Page{
     id: profilePage
     objectName: "profilePage"
-    allowedOrientations: Orientation.Portrait
+    allowedOrientations: Orientation.All
     property string username: "guest";
     property variant userData: null;
     property bool isMe: typeof username == "string" ? username === userinfo.username : username === userinfo.uid;

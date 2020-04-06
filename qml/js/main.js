@@ -18,6 +18,7 @@ function splitContent(topic_content, parent) {
     topic_content = topic_content.replace(/<a[^<>]*href=\"([^<>"]*)\"\s+rel=\"nofollow\"><img\s+src=\"([^<>"]*)\".*?a>/g,"<img src=\"$2\" />"); //去掉图片上的超链接
     topic_content = topic_content.replace(/<img[^<>]*class=\"[^<>]*emoji-emoji-one[^<>]*\"[^<>]*alt=\"([^<>"]*)\"[^<>]*\/>/g,"$1"); // emoji 直接用图片alt中的
     topic_content = topic_content.replace(/<img[^<>]*class=\"[^<>]*emoji-customizations[^<>]*\"[^<>]*alt=\"([^<>"]*)\"[^<>]*\/>/g,"$1") // 自定义表情
+    // console.log(topic_content)
     var img_model = [];
     var iframe_model = [];
     
@@ -61,7 +62,8 @@ function splitContent(topic_content, parent) {
     var contents = topic_content.split(_replace_img_);
     for(var iii = 0 ; iii < contents.length; iii++ ){
         // text 中处理iframe
-        var text_content = contents[i];
+        var text_content = contents[iii];
+//        console.log(text_content)
         var text_contents = text_content.replace(/<iframe.*?src=\"([^<>"]*)\".*?iframe>/g,_replace_iframe_).split(_replace_iframe_);
         for(var j = 0; j < text_contents.length; j++){
             var text_contents_tmp = text_contents[j];
@@ -80,7 +82,7 @@ function splitContent(topic_content, parent) {
         }
 
         if ( iii < contents.length - 1){
-            var imgsrc = img_model[i];
+            var imgsrc = img_model[iii];
             if(imgsrc && imgsrc.lastIndexOf("gif") > 0){
                 model.append({
                                  "type": "AnimatedImage",
