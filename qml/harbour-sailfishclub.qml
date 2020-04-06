@@ -655,7 +655,7 @@ ApplicationWindow
         }
 
         function set_query_to_cache(router,result,expire){
-            if (result && result != "Forbidden"){
+            if (result && result != "Forbidden" && networkStatus){
                 if(!router)router=router_recent;
                 if(!expire)expire=3600.00;
                 call('app.api.set_query_list_data',[router,result,expire],function(result){

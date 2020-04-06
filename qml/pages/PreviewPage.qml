@@ -46,13 +46,11 @@ Page {
     Connections{
         target: signalCenter
         onPreviewMd:{
-//            console.log("result:",result);
             parsedText = result;
         }
     }
 
     Component.onCompleted: {
         py.previewMd(mdtext);
-//        console.log("mdtext:",mdtext)
     }
 }

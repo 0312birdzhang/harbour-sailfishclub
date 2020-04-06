@@ -216,7 +216,7 @@ def uploadVimCN(path):
     """
     url = 'http://img.vim-cn.com/'
     try:
-        files = {'file' : open(path.encode("utf-8"), 'rb')}
+        files = {'file' : open(path, 'rb')}
         r = requests.post(url, files = files, timeout=5.0)
         return r.text
     except Exception as e:
@@ -229,7 +229,7 @@ def uploadNiuPic(path):
         "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36"
     }
     try:
-        files = {'image_field' : open(path.encode("utf-8"),'rb')}
+        files = {'image_field' : open(path,'rb')}
         r = requests.post(url, files = files, headers = headers, timeout=5.0)
         #{"status":"success","code":200,"data":"i.niupic.com\/images\/2020\/04\/06\/7hBn.jpg","msg":"success!"}
         if r.status_code == 200:
