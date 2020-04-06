@@ -569,12 +569,7 @@ var twemoji = (function (
 
 
 function emojify(rawText, emojiSize) {
-    var curatedText = "";
-    if (accountModel.getUseEmoji()) {
-        curatedText = twemoji.parse(rawText, { callback: function(icon, options, variant) { return '../js/emoji/' + icon + '.svg'; }, size: emojiSize });
-    } else {
-        curatedText = rawText;
-    }
+    var curatedText = twemoji.parse(rawText, { callback: function(icon, options, variant) { return '../js/emoji/' + icon + '.svg'; }, size: emojiSize });
     // QML has a weird bug. If an ampersand is followed by an HTML tag or a character, the tag is ignored and returned as string or the following string is omitted
     // Therefore replacing the ampersand with &amp; in these cases...
     var custom_emojis = ["huaji","erha","tanshou","doge","yunbei","weiqu","yinxian","penle","mobai"];

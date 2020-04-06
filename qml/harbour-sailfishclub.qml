@@ -576,7 +576,7 @@ ApplicationWindow
             });
         }
 
-        //上传图片到sm.ms
+        //上传图片到niupic.com
         function uploadImage(path,desc){
             loading = true;
             call('main.uploadNiuPic',[path],function(ret){

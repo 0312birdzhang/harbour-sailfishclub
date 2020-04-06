@@ -12,6 +12,7 @@ import shutil
 #from cache import *
 import wrapcache
 from basedir import *
+import codecs
 
 logger = logging.getLogger("sfcpython")
 formatter = logging.Formatter('%(asctime)s %(levelname)-8s: %(message)s')
@@ -238,12 +239,16 @@ def uploadNiuPic(path):
         "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36"
     }
     try:
-        files = {'image_field' : open(path,'rb',encoding='utf-8')}
-        r = requests.post(url, files = files, headers = headers, timeout=5.0)
-        if r.status_code == 200:
-            return "https://%s" %(r.json().get("data"))
+        with codecs.open(path, 'rb') as f:
+            files = {'image_field': f.read()}
+            r = requests.post(url, files = files, headers = headers, timeout=5.0)
+            if r.status_code == 200:
+                return "https://%s" %(r.json().get("data"))
+            else:
+                logger.error(r.text)
     except Exception as e:
-        return None
+        logger.error(str(e))
+    return None
 
 
 def previewMd(text):

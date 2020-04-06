@@ -72,6 +72,7 @@ Page {
                 id:pullDownMenu
 //                busy: !PageStatus.Active
 //                enabled: PageStatus.Active
+                enabled: !appwindow.loading
                 MenuItem{
                     text:userinfo.logined?qsTr("New Topic"):qsTr("Login to create new topic")
                     onClicked: {
@@ -89,6 +90,7 @@ Page {
 
                 MenuItem{
                     text:qsTr("Refresh")
+                    enabled: !appwindow.loading
                     onClicked: {
                         load(true);
                     }

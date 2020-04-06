@@ -36,7 +36,7 @@ Page{
             Label{
                 id:version
                 anchors.horizontalCenter: parent.horizontalCenter
-                text:qsTr("Version")+" 0.3.9"
+                text:qsTr("Version")+" 0.3.10"
             }
             Item{width: 1;height: Theme.paddingMedium}
 
@@ -53,7 +53,7 @@ Page{
                         "<a href=\"https://github.com/davidvuong/pynodebb\" >pynodebb</a><br/>" +
                         "<a href=\"https://github.com/mentaljam/harbour-storeman\" >harbour-storeman</a><br/>" +
                         "<a href=\"https://github.com/custodian/orn-warehouse\" >orn-warehouse</a><br/>" +
-                        "<a href=\"https://sm.ms/\" >sm.ms</a><br/>" +
+                        "<a href=\"https://niupic.com/\">niupic.com</a><br/>" +
                         "<a href=\"https://github.com/communi/communi-sailfish\" >communi-sailfish</a><br/>" +
                         "<a href=\"https://github.com/monich/harbour-foilpics\" >harbour-foilpics</a><br/>" +
                         "<a href=\"https://github.com/hustcc/wrapcache\" >wrapcache</a><br/>" +

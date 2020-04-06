@@ -263,7 +263,7 @@ Column {
             onSelectedContentPropertiesChanged: {
                 var filepath = selectedContentProperties.filePath;
                 var filetitle = selectedContentProperties.fileName;
-                console.log("type filepath: ",typeof(filepath))
+                console.log("filepath: ",filepath)
                 signalCenter.imageSelected(filepath,filetitle);
             }
         }

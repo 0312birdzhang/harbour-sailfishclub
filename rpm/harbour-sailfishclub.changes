@@ -5,6 +5,11 @@
 # Add newest entries to the top of the list.
 # Separate entries from eachother with a blank line.
 
+* Mon Apr  6 2020 BirdZhang <0312birdzhang@gmail.com> 0.3.10
+- 修复上传图片问题，更换图床
+- 更新emoji
+- 其他一些修复
+
 * Fri May 24 2019 BirdZhang <0312birdzhang@gmail.com> 0.3.5
 - 添加图片下载功能
 
