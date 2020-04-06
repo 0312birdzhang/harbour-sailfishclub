@@ -231,18 +231,18 @@ def uploadVimCN(path):
         return None
 
 def uploadNiuPic(path):
+    if path.startswith("file:"):
+        path = path.replace("file://","")
     url = 'https://www.niupic.com/index/upload/process'
     headers = {
         "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36"
     }
     try:
-        files = {'image_field' : open(path,'rb')}
+        files = {'image_field' : open(path,'rb',encoding='utf-8')}
         r = requests.post(url, files = files, headers = headers, timeout=5.0)
-        #{"status":"success","code":200,"data":"i.niupic.com\/images\/2020\/04\/06\/7hBn.jpg","msg":"success!"}
         if r.status_code == 200:
             return "https://%s" %(r.json().get("data"))
     except Exception as e:
-        print(str(e))
         return None
 
 
