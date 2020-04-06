@@ -579,7 +579,7 @@ ApplicationWindow
         //上传图片到sm.ms
         function uploadImage(path,desc){
             loading = true;
-            call('main.uploadImgSm',[path],function(ret){
+            call('main.uploadNiuPic',[path],function(ret){
                 loading = false;
                 //替换反斜线
                 if(ret)ret = ret.replace(/\\/g,"");

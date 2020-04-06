@@ -133,7 +133,7 @@ def listcategory():
         return False
     return categories
 
-@wrapcache.wrapcache(timeout = 120)
+@wrapcache.wrapcache(timeout = 240)
 def getTopic(tid, slug, token = access_token ):
     status_code, topic = client.topics.get(tid, slug=slug, **{"_token" : token})
     if not status_code or status_code != 200:
@@ -222,6 +222,22 @@ def uploadVimCN(path):
     except Exception as e:
         logger.error(str(e))
         return None
+
+def uploadNiuPic(path):
+    url = 'https://www.niupic.com/index/upload/process'
+    headers = {
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36"
+    }
+    try:
+        files = {'image_field' : open(path.encode("utf-8"),'rb')}
+        r = requests.post(url, files = files, headers = headers, timeout=5.0)
+        #{"status":"success","code":200,"data":"i.niupic.com\/images\/2020\/04\/06\/7hBn.jpg","msg":"success!"}
+        if r.status_code == 200:
+            return "https://%s" %(r.json().get("data"))
+    except Exception as e:
+        print(str(e))
+        return None
+
 
 def previewMd(text):
     import mistune
