@@ -275,10 +275,6 @@
         <source>Search</source>
         <translation>搜索</translation>
     </message>
-    <message>
-        <source>UnOfficalCNBlog</source>
-        <translation>非官方中文博客</translation>
-    </message>
 </context>
 <context>
     <name>NotificationsPage</name>

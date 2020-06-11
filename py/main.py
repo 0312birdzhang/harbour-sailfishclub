@@ -33,6 +33,7 @@ client.configure(**{
     'ips': [
             '104.31.87.173',
             '104.31.86.173',
+            '172.67.181.63'
             ],
     'domain': 'sailfishos.club'
 })
