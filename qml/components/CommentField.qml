@@ -204,7 +204,7 @@ Column {
             id: body
             width: parent.width - Theme.horizontalPageMargin
             label: qsTr("Your comment")
-            placeholderText: label
+            placeholderText: qsTr("Markdown is supported. Think what you want to ask befor ask, show your phone and os version is better")
             font.pixelSize: Theme.fontSizeSmall
             text: replayUser? (replayUser + " "):""
             Component.onCompleted: {

@@ -102,6 +102,10 @@
         <source>preview</source>
         <translation>预览</translation>
     </message>
+    <message>
+        <source>Markdown is supported. Think what you want to ask befor ask, show your phone and os version is better</source>
+        <translation>支持MarkDown格式，在提问前请先整理好想说的，最好带上你的手机型号和系统版本号</translation>
+    </message>
 </context>
 <context>
     <name>CoverPage</name>
