@@ -103,7 +103,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Markdown is supported. Think what you want to ask befor ask, show your phone and os version is better</source>
+        <source>Markdown is supported. Think what you want to ask before ask, show your phone and os version is better</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
