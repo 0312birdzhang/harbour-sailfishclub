@@ -22,7 +22,7 @@ logger.addHandler(console_handler)
 logger.setLevel(logging.DEBUG)
 UnOfficalBlogURL = "https://notexists.top/api/post"
 savePath = os.path.join(HOME, "Pictures","SailfishClub")
-
+max_token_size = 4
 
 if not os.path.exists(savePath):
     os.mkdir(savePath)
@@ -38,6 +38,11 @@ client.configure(**{
     'domain': 'sailfishos.club'
 })
 
+def errMsg(code = 400, msg):
+    return {
+        "code": code,
+        "message": msg
+    }
 
 def login(user, password):
     userinfo = getuserinfo(user)
@@ -79,7 +84,21 @@ def createToken(uid, password):
     status_code, playload = client.users.grant_token(uid, password)
     if not status_code or status_code != 200:
         return False
-    return playload.get("token")
+    token = playload.get("token")
+    # clean other old tokens
+    # need remove when write-api support remove old tokens
+    try:
+        status_code, tokens = client.users.get_tokens(uid)
+        if not status_code or status_code != 200:
+            return token
+        tokenList = tokens.get("tokens")
+        if len(tokenList) > max_token_size:
+            for oldtoken in tokenList[max_token_size:]:
+                if oldtoken = token:
+                    continue
+                client.users.remove_token(uid, oldtoken)
+    finally:
+        return token
 
 @wrapcache.wrapcache(timeout = 240)
 def getuserinfo(user, is_username = True):
