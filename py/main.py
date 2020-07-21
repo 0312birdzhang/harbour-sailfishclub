@@ -94,7 +94,7 @@ def createToken(uid, password):
         tokenList = tokens.get("tokens")
         if len(tokenList) > max_token_size:
             for oldtoken in tokenList[max_token_size:]:
-                if oldtoken = token:
+                if oldtoken == token:
                     continue
                 client.users.remove_token(uid, oldtoken)
     finally:
