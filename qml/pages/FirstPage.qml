@@ -191,7 +191,7 @@ Page {
                 MouseArea{
                     anchors.fill: parent
                     onClicked: {
-                        load();
+                        load(false);
                     }
                 }
             }
@@ -214,7 +214,7 @@ Page {
                             visible: prev_active
                             onClicked: {
                                 current_page--;
-                                load();
+                                load(false);
                             }
                         }
                         Button{
@@ -222,7 +222,7 @@ Page {
                             visible: next_active
                             onClicked: {
                                 current_page++;
-                                load();
+                                load(false);
                             }
                         }
                     }
@@ -233,9 +233,9 @@ Page {
     }
 
     function load(via_pulley){
-        console.log("current router:"+current_router);
+        console.log("current router:" + current_router,", cuttent page:"+current_page);
         if(!via_pulley ){
-            py.get_query_from_cache(current_router, appwindow.slug_first_page);
+            py.get_query_from_cache(current_router, "page=" + current_page, current_page);
         }else{
             switch(current_router){
             case router_recent:

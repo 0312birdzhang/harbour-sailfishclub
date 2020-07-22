@@ -296,8 +296,8 @@ Page{
                 topicView.model = topicModel;
                 topicView.scrollToTop();
             }else{
-                console.log("load failed!!!");
-                loading = false;
+                console.log("load failed!!!", result);
+                appwindow.loading = false;
                 notification.show(qsTr("Load failed,try again later"),
                                   "image://theme/icon-lock-warning"
                                   )
@@ -307,8 +307,9 @@ Page{
 
     function load(){
         // py.getTopic(tid,slug?slug+"?page="+current_page:undefined);
+        console.log("slug:", slug?slug+"?page="+current_page:undefined,", tid:"+tid)
         py.get_query_from_cache(appwindow.router_topic, 
-            slug?slug+"?page="+current_page:"", 
+            slug?slug+"?page="+current_page:undefined,
             tid)
     }
 

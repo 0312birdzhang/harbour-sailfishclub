@@ -471,7 +471,7 @@ ApplicationWindow
             call('main.getrecent',[slug],function(result){
                 loading = false;
                 signalCenter.getRecent(result);
-                py.set_query_to_cache(router_recent, slug, result, 1200.00)
+                py.set_query_to_cache(router_recent, slug, result, 3600.00)
             });
         }
 
@@ -515,19 +515,20 @@ ApplicationWindow
 
         // 获取贴子内容
         function getTopic(tid,slug){
+            console.log("tid,"+tid,",slug:"+slug)
             loading = true;
             if(userinfo.logined){
                 var token = settings.get_token();
                 call('main.getTopic',[tid,slug,token],function(result){
                     loading = false;
                     signalCenter.getTopic(result);
-                    py.set_query_to_cache(router_topic, tid+slug, result, 1200.00)
+                    py.set_query_to_cache(router_topic, tid+(slug?slug:""), result, 1200.00)
                 });
             }else{
                 call('main.getTopic',[tid,slug],function(result){
                     loading = false;
                     signalCenter.getTopic(result);
-                    py.set_query_to_cache(router_topic, tid+slug, result, 1200.00)
+                    py.set_query_to_cache(router_topic, tid+(slug?slug:""), result, 1200.00)
                 });
             }
             
@@ -615,7 +616,7 @@ ApplicationWindow
         }
 
         function get_query_from_cache(router,slug, extfield){
-            console.log("get_query_from_cache, router:", router)
+            console.log("get_query_from_cache, router:", router, ", slug:"+slug)
             call('app.api.get_query_list_data', [router+(extfield?extfield:"")+slug], function(result){
                 if(result){
                     console.log("get_query_from_cache, got")
@@ -639,7 +640,7 @@ ApplicationWindow
             if (result && result != "Forbidden" && networkStatus){
                 if(!router)router=router_recent;
                 if(!expire)expire=3600.00;
-                console.log("set_query_from_cache, router:", router, "key:", router+slug)
+                console.log("set_query_from_cache, router:", router, ", key:", router+slug)
                 call('app.api.set_query_list_data',[router+slug, result, expire],function(result){
                     if(!result){
                         console.log("set_query_from_cache failed")
