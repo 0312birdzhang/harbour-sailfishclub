@@ -471,7 +471,7 @@ ApplicationWindow
             call('main.getrecent',[slug],function(result){
                 loading = false;
                 signalCenter.getRecent(result);
-                py.set_query_to_cache(router_recent, slug, result, 600.00)
+                py.set_query_to_cache(router_recent, slug, result, 1200.00)
             });
         }
 
@@ -521,13 +521,13 @@ ApplicationWindow
                 call('main.getTopic',[tid,slug,token],function(result){
                     loading = false;
                     signalCenter.getTopic(result);
-                    py.set_query_to_cache(router_topic, tid+slug, result, 600.00)
+                    py.set_query_to_cache(router_topic, tid+slug, result, 1200.00)
                 });
             }else{
                 call('main.getTopic',[tid,slug],function(result){
                     loading = false;
                     signalCenter.getTopic(result);
-                    py.set_query_to_cache(router_topic, tid+slug, result, 600.00)
+                    py.set_query_to_cache(router_topic, tid+slug, result, 1200.00)
                 });
             }
             
@@ -612,24 +612,6 @@ ApplicationWindow
                     unreadSize = result.topicCount;
                 }
             });
-        }
-
-
-        function getUnOfficalList(page){
-            loading = true;
-            call('main.getUnOfficalBlog',[page], function(result){
-                loading = false;
-                signalCenter.getUnOfficalList(result);
-            })
-        }
-
-
-        function getUnOfficalContent(slug){
-            loading = true;
-            call('main.getUnOfficalBlogContent',[slug], function(result){
-                loading = false;
-                signalCenter.getUnOfficalContent(result);
-            })
         }
 
         function get_query_from_cache(router,slug, extfield){
