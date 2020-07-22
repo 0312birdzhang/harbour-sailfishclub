@@ -140,14 +140,6 @@
         <file>py/diskcache/memo.py</file>
         <file>py/diskcache/persistent.py</file>
         <file>py/diskcache/stampede.py</file>
-        <file>py/wrapcache/adapter/__init__.py</file>
-        <file>py/wrapcache/adapter/BaseAdapter.py</file>
-        <file>py/wrapcache/adapter/CacheException.py</file>
-        <file>py/wrapcache/adapter/MemcachedAdapter.py</file>
-        <file>py/wrapcache/adapter/MemoryAdapter.py</file>
-        <file>py/wrapcache/adapter/RedisAdapter.py</file>
-        <file>py/wrapcache/database/__init__.py</file>
-        <file>py/wrapcache/__init__.py</file>
         <file>py/app.py</file>
     </qresource>
 </RCC>

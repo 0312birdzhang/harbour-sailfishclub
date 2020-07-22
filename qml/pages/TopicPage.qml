@@ -273,7 +273,7 @@ Page{
                     if(posts[i].deleted){
                         continue;
                     }
-//                    console.log("avatar:"+posts[i].user.picture)
+                    console.log("avatar:"+posts[i].user.picture)
                     topicModel.append({
                                           "timestamp":posts[i].timestampISO,
                                           "content":posts[i].content,
@@ -306,7 +306,8 @@ Page{
     }
 
     function load(){
-        py.getTopic(tid,slug?slug+"?page="+current_page:undefined);
+        // py.getTopic(tid,slug?slug+"?page="+current_page:undefined);
+        py.get_query_from_cache(slug?slug+"?page="+current_page:undefined, appwindow.router_topic, tid)
     }
 
     

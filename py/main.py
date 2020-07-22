@@ -10,7 +10,6 @@ import sys,os
 import binascii
 import shutil
 #from cache import *
-import wrapcache
 from basedir import *
 import codecs
 
@@ -38,10 +37,10 @@ client.configure(**{
     'domain': 'sailfishos.club'
 })
 
-def errMsg(code = 400, msg):
+def errMsg(message, code = 400):
     return {
         "code": code,
-        "message": msg
+        "message": message
     }
 
 def login(user, password):
@@ -100,7 +99,6 @@ def createToken(uid, password):
     finally:
         return token
 
-@wrapcache.wrapcache(timeout = 240)
 def getuserinfo(user, is_username = True):
     status_code, userinfo = client.users.get(user, is_username)
     if not status_code or status_code != 200:
@@ -150,62 +148,29 @@ def getpopular(slug):
         return False
     return topics
 
-@wrapcache.wrapcache(timeout = 1200)
 def listcategory():
     status_code, categories = client.categories.list()
     if not status_code or status_code != 200:
         return False
     return categories
 
-@wrapcache.wrapcache(timeout = 240)
 def getTopic(tid, slug, token = access_token ):
     status_code, topic = client.topics.get(tid, slug=slug, **{"_token" : token})
     if not status_code or status_code != 200:
         return False
     return topic
 
-@wrapcache.wrapcache(timeout = 240)
 def getNotifications(token):
     status_code, notices = client.topics.get_notification(**{"_token" : token})
     if not status_code or status_code != 200:
         return False
     return notices
 
-@wrapcache.wrapcache(timeout = 240)
 def getUnread(token):
     status_code, notices = client.topics.get_unread(**{"_token" : token})
     if not status_code or status_code != 200:
         return False
     return notices
-
-
-
-
-@wrapcache.wrapcache(timeout = 600)
-def getUnOfficalBlog(page):
-    if not page:
-        page = 0
-    params = {
-        "limit": 20,
-        "offset": page * 20
-    }
-    try:
-        r = requests.get(UnOfficalBlogURL, params = params, timeout = 5.0)
-        return r.json()
-    except Exception as e:
-        logger.debug(str(e))
-    return False
-
-@wrapcache.wrapcache(timeout = 600)
-def getUnOfficalBlogContent(slug):
-    url = "{}/{}".format(UnOfficalBlogURL, slug)
-    try:
-        r = requests.get(url, timeout = 5.0)
-        return r.json()
-    except Exception as e:
-        logger.debug(str(e))
-    return False
-
 
 
 
@@ -276,7 +241,6 @@ def previewMd(text):
     return mistune.markdown(text)
 
 
-@wrapcache.wrapcache(timeout = 1200)
 def search(term, slug, token):
     status_code, posts = client.topics.search(term, slug, **{"_token" : token})
     # logger.debug(status_code)

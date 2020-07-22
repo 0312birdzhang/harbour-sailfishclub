@@ -69,6 +69,7 @@ ApplicationWindow
     readonly property string router_popular: "popular"
     readonly property string router_categories: "categories"
     readonly property string router_search: "search"
+    readonly property string router_topic: "topic"
 
     cover: Qt.resolvedUrl("cover/CoverPage.qml")
     allowedOrientations: Orientation.All
@@ -471,10 +472,7 @@ ApplicationWindow
             call('main.getrecent',[slug],function(result){
                 loading = false;
                 signalCenter.getRecent(result);
-                // 缓存首页
-                if(slug == slug_first_page ){
-                    py.set_query_to_cache(router_recent, result, 600.00)
-                }
+                py.set_query_to_cache(router_recent, slug, result, 600.00)
             });
         }
 
@@ -484,10 +482,7 @@ ApplicationWindow
             call('main.getpopular',[slug],function(result){
                 loading = false;
                 signalCenter.getRecent(result);
-                // 缓存首页
-                if(slug == slug_first_page ){
-                    py.set_query_to_cache(router_popular, result, 3600.00)
-                }
+                py.set_query_to_cache(router_popular, slug, result, 3600.00)
             });
         }
 
@@ -499,10 +494,7 @@ ApplicationWindow
             call('main.search',[term, slug, settings.get_token()],function(result){
                 loading = false;
                 signalCenter.getSearch(result);
-                // 缓存首页
-                if(slug == slug_first_page ){
-                    py.set_query_to_cache(router_search, result, 86400.00)
-                }
+                py.set_query_to_cache(router_search, slug+term, result, 86400.00)
             });
         }
 
@@ -514,7 +506,7 @@ ApplicationWindow
             call('main.listcategory',[],function(result){
                 loading = false;
                 signalCenter.getCategories(result);
-                py.set_query_to_cache(router_categories,result, 86400.00)
+                py.set_query_to_cache(router_categories,"", result, 86400.00)
             });
         }
 
@@ -530,11 +522,13 @@ ApplicationWindow
                 call('main.getTopic',[tid,slug,token],function(result){
                     loading = false;
                     signalCenter.getTopic(result);
+                    py.set_query_to_cache(router_topic, str(tid)+slug, result, 600.00)
                 });
             }else{
                 call('main.getTopic',[tid,slug],function(result){
                     loading = false;
                     signalCenter.getTopic(result);
+                    py.set_query_to_cache(router_topic, str(tid)+slug, result, 600.00)
                 });
             }
             
@@ -639,26 +633,28 @@ ApplicationWindow
             })
         }
 
-        function get_query_from_cache(slug,router){
+        function get_query_from_cache(slug,router,extid){
             call('app.api.get_query_list_data',[router],function(result){
                 if(result){
                     if(router === router_recent)signalCenter.getRecent(result);
                     if(router === router_popular)signalCenter.getRecent(result);
                     if(router === router_categories)signalCenter.getCategories(result);
+                    if(router === router_topic)signalCenter.getTopic(result);
                     
                 }else{
                     if(router === router_recent)py.getRecent(slug);
                     if(router === router_popular)py.getPopular(slug);
                     if(router === router_categories)py.getCategories();
+                    if(router === router_topic)py.getTopic(slug?slug+"?page="+current_page:undefined,extid);
                 }
             });
         }
 
-        function set_query_to_cache(router,result,expire){
+        function set_query_to_cache(router, slug, result, expire){
             if (result && result != "Forbidden" && networkStatus){
                 if(!router)router=router_recent;
                 if(!expire)expire=3600.00;
-                call('app.api.set_query_list_data',[router,result,expire],function(result){
+                call('app.api.set_query_list_data',[router+slug, result, expire],function(result){
                 });
             }
         }
