@@ -309,6 +309,10 @@ ApplicationWindow
 
     Python{
         id:py
+
+        signal log(string msg)
+        signal error(string msg)
+
         Component.onCompleted: {
             addImportPath('qrc:/py')
             py.importModule('main', function () {
@@ -316,7 +320,16 @@ ApplicationWindow
             });
             py.importModule('app', function(){
             });
+            setHandler('log', function(msg){
+                console.log(msg)
+            })
+
+            setHandler('error', function(msg){
+                notification.show(msg)
+            })
         }
+
+        onError: console.log('Error: ' + traceback)
 
         function initLogin(){
             var username = settings.get_username();
@@ -471,7 +484,7 @@ ApplicationWindow
             call('main.getrecent',[slug],function(result){
                 loading = false;
                 signalCenter.getRecent(result);
-                py.set_query_to_cache(router_recent, slug, result, 600.00)
+                py.set_query_to_cache(router_recent, slug, result, 3600.00)
             });
         }
 
@@ -493,7 +506,7 @@ ApplicationWindow
             call('main.search',[term, slug, settings.get_token()],function(result){
                 loading = false;
                 signalCenter.getSearch(result);
-                py.set_query_to_cache(router_search, slug+term, result, 86400.00)
+                py.set_query_to_cache(router_search, term+slug, result, 86400.00)
             });
         }
 
@@ -515,19 +528,20 @@ ApplicationWindow
 
         // 获取贴子内容
         function getTopic(tid,slug){
+            console.log("tid,"+tid,",slug:"+slug)
             loading = true;
             if(userinfo.logined){
                 var token = settings.get_token();
                 call('main.getTopic',[tid,slug,token],function(result){
                     loading = false;
                     signalCenter.getTopic(result);
-                    py.set_query_to_cache(router_topic, str(tid)+slug, result, 600.00)
+                    py.set_query_to_cache(router_topic, tid+(slug?slug:""), result, 1200.00)
                 });
             }else{
                 call('main.getTopic',[tid,slug],function(result){
                     loading = false;
                     signalCenter.getTopic(result);
-                    py.set_query_to_cache(router_topic, str(tid)+slug, result, 600.00)
+                    py.set_query_to_cache(router_topic, tid+(slug?slug:""), result, 1200.00)
                 });
             }
             
@@ -614,37 +628,24 @@ ApplicationWindow
             });
         }
 
-
-        function getUnOfficalList(page){
-            loading = true;
-            call('main.getUnOfficalBlog',[page], function(result){
-                loading = false;
-                signalCenter.getUnOfficalList(result);
-            })
-        }
-
-
-        function getUnOfficalContent(slug){
-            loading = true;
-            call('main.getUnOfficalBlogContent',[slug], function(result){
-                loading = false;
-                signalCenter.getUnOfficalContent(result);
-            })
-        }
-
-        function get_query_from_cache(slug,router,extid){
-            call('app.api.get_query_list_data',[router],function(result){
+        function get_query_from_cache(router,slug, extfield){
+            console.log("get_query_from_cache, router:", router, ", slug:"+slug, ",extfield:"+extfield)
+            var cache_key = router+(extfield?extfield:"")+ (slug?slug:"");
+            call('app.api.get_query_list_data', [cache_key], function(result){
                 if(result){
+                    console.log("get_query_from_cache, got")
                     if(router === router_recent)signalCenter.getRecent(result);
                     if(router === router_popular)signalCenter.getRecent(result);
                     if(router === router_categories)signalCenter.getCategories(result);
                     if(router === router_topic)signalCenter.getTopic(result);
-                    
+                    if(router === router_search)signalCenter.getSearch(result);
                 }else{
+                    console.log("get_query_from_cache, not got")
                     if(router === router_recent)py.getRecent(slug);
                     if(router === router_popular)py.getPopular(slug);
                     if(router === router_categories)py.getCategories();
-                    if(router === router_topic)py.getTopic(slug?slug+"?page="+current_page:undefined,extid);
+                    if(router === router_topic)py.getTopic(extfield, slug);
+                    if(router === router_search)py.search(extfield, slug);
                 }
             });
         }
@@ -653,7 +654,11 @@ ApplicationWindow
             if (result && result != "Forbidden" && networkStatus){
                 if(!router)router=router_recent;
                 if(!expire)expire=3600.00;
-                call('app.api.set_query_list_data',[router+slug, result, expire],function(result){
+                console.log("set_query_from_cache, router:", router, ", key:", router+slug)
+                call('app.api.set_query_list_data',[router+ (slug?slug:""), result, expire],function(result){
+                    if(!result){
+                        console.log("set_query_from_cache failed")
+                    }
                 });
             }
         }

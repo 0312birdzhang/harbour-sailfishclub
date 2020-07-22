@@ -29,6 +29,7 @@ import pprint
 import pyotherside
 from datetime import datetime, timezone, timedelta
 from diskcache import Cache
+import hashlib
 
 DOMAIN_NAME = 'sailfishos.club'
 BASE_URL = 'https://%s' % (DOMAIN_NAME, )
@@ -51,16 +52,24 @@ class Api:
         except:
             Utils.log(traceback.format_exc())
             self.cache = None
-    def set_query_list_data(self, router='recent', topic={}, expire=3600.00):
+
+    def getMd5(self, name):
+        h = hashlib.md5()
+        h.update(name.encode(encoding='utf-8', errors='strict'))
+        return h.hexdigest()[8:-8]
+
+    def set_query_list_data(self, router='recent', result={}, expire=3600.00):
         """
         Set recent,popular,etc json string to cache
         """
         try:
             if type(self.cache) is Cache:
-                self.cache.set(router, json.dumps(topic), expire = expire)
+                Utils.log(self.getMd5(router))
+                self.cache.set(self.getMd5(router), json.dumps(result), expire = expire)
             return True
         except:
             Utils.log(traceback.format_exc())
+            return False
             # utils.error('Could not save to cache. Please try again.')
 
     def get_query_list_data(self, router='recent'):
@@ -68,8 +77,11 @@ class Api:
         Get recent,popular,etc json string in cache
         """
         if type(self.cache) is Cache:
+            Utils.log(self.getMd5(router))
             try:
-                return json.loads(self.cache.get(router))
+                cacheData = self.cache.get(self.getMd5(router))
+                if cacheData:
+                    return json.loads(cacheData)
             except:
                 Utils.log(traceback.format_exc())
         return None

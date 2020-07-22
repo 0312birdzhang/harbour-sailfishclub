@@ -125,10 +125,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Load Failed,Click to retry</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>New Topic</source>
         <translation type="unfinished"></translation>
     </message>
@@ -141,15 +137,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Load failed,try again later</source>
+        <source>author:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Prev Page</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Next Page</source>
+        <source>latest reply</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -161,11 +153,19 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>author:</source>
+        <source>Load Failed,Click to retry</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>latest reply</source>
+        <source>Prev Page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Next Page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load failed,try again later</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

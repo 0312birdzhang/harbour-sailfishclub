@@ -118,55 +118,55 @@
     <name>FirstPage</name>
     <message>
         <source>Recent Page</source>
-        <translation>最新</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Popular</source>
-        <translation>热门</translation>
-    </message>
-    <message>
-        <source>Load Failed,Click to retry</source>
-        <translation>加载失败，点击重试</translation>
+        <translation type="unfinished">热门</translation>
     </message>
     <message>
         <source>New Topic</source>
-        <translation>发新贴</translation>
+        <translation type="unfinished">新贴</translation>
     </message>
     <message>
         <source>Login to create new topic</source>
-        <translation>登录后发贴</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Refresh</source>
-        <translation>刷新</translation>
-    </message>
-    <message>
-        <source>Load failed,try again later</source>
-        <translation>加载失败，请稍后重试</translation>
-    </message>
-    <message>
-        <source>Prev Page</source>
-        <translation>上一页</translation>
-    </message>
-    <message>
-        <source>Next Page</source>
-        <translation>下一页</translation>
-    </message>
-    <message>
-        <source>comments: </source>
-        <translation>评论：</translation>
-    </message>
-    <message>
-        <source>views: </source>
-        <translation>查看：</translation>
+        <translation type="unfinished">刷新</translation>
     </message>
     <message>
         <source>author:</source>
-        <translation>作者:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>latest reply</source>
-        <translation>最后回复</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>comments: </source>
+        <translation type="unfinished">评论：</translation>
+    </message>
+    <message>
+        <source>views: </source>
+        <translation type="unfinished">查看：</translation>
+    </message>
+    <message>
+        <source>Load Failed,Click to retry</source>
+        <translation type="unfinished">加载失败，点击重试</translation>
+    </message>
+    <message>
+        <source>Prev Page</source>
+        <translation type="unfinished">上一页</translation>
+    </message>
+    <message>
+        <source>Next Page</source>
+        <translation type="unfinished">下一页</translation>
+    </message>
+    <message>
+        <source>Load failed,try again later</source>
+        <translation type="unfinished">加载失败，请稍后重试</translation>
     </message>
 </context>
 <context>
