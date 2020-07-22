@@ -12,6 +12,7 @@ import shutil
 #from cache import *
 from basedir import *
 import codecs
+import threading
 
 logger = logging.getLogger("sfcpython")
 formatter = logging.Formatter('%(asctime)s %(levelname)-8s: %(message)s')
@@ -84,20 +85,24 @@ def createToken(uid, password):
     if not status_code or status_code != 200:
         return False
     token = playload.get("token")
-    # clean other old tokens
-    # need remove when write-api support remove old tokens
     try:
-        status_code, tokens = client.users.get_tokens(uid)
-        if not status_code or status_code != 200:
-            return token
-        tokenList = tokens.get("tokens")
-        if len(tokenList) > max_token_size:
-            for oldtoken in tokenList[max_token_size:]:
-                if oldtoken == token:
-                    continue
-                client.users.remove_token(uid, oldtoken)
-    finally:
-        return token
+        threading.Thread(target=remove_oldtokens, args=(uid, token)).start()
+    except:
+        pass
+    return token
+
+
+def remove_oldtokens(uid, newtoken):
+    status_code, tokens = client.users.get_tokens(uid)
+    if not status_code or status_code != 200:
+        return
+    tokenList = tokens.get("tokens")
+    if len(tokenList) > max_token_size:
+        for oldtoken in tokenList[max_token_size:]:
+            if oldtoken == newtoken:
+                continue
+            client.users.remove_token(uid, oldtoken)
+
 
 def getuserinfo(user, is_username = True):
     status_code, userinfo = client.users.get(user, is_username)

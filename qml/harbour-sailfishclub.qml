@@ -367,7 +367,6 @@ ApplicationWindow
                 if(result && result !== "Forbidden" && result !== "False"){
                     userinfo.uid = uid.toString();
                     userinfo.username = result.username;
-//                    userinfo.fullname = result.fullname;
                     userinfo.email = result.email|| "";
                     userinfo.website = result.website;
                     userinfo.avatar = result.picture|| "";
