@@ -282,7 +282,7 @@ Page{
                                           "pid":posts[i].pid,
                                           "username":posts[i].user.username,
                                           "userslug":posts[i].user.userslug,
-                                          "picture":posts[i].user.picture,
+                                          "picture":posts[i].user.picture||"",
                                           "floor":posts[i].index,
                                           "user_group_icon":posts[i].user.selectedGroup?posts[i].user.selectedGroup.icon:"",
                                           "user_group_name":posts[i].user.selectedGroup?posts[i].user.selectedGroup.userTitle:"",
@@ -291,9 +291,9 @@ Page{
                                           "userReplies": posts[i].replies,
                                           "isAnswer": posts[i].index == -1
 
-                                      });
-                    topicView.model = topicModel;
+                    });
                 }
+                topicView.model = topicModel;
                 topicView.scrollToTop();
             }else{
                 console.log("load failed!!!");
@@ -307,7 +307,9 @@ Page{
 
     function load(){
         // py.getTopic(tid,slug?slug+"?page="+current_page:undefined);
-        py.get_query_from_cache(slug?slug+"?page="+current_page:undefined, appwindow.router_topic, tid)
+        py.get_query_from_cache(appwindow.router_topic, 
+            slug?slug+"?page="+current_page:"", 
+            tid)
     }
 
     

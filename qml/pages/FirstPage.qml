@@ -234,22 +234,22 @@ Page {
 
     function load(via_pulley){
         console.log("current router:"+current_router);
-        if(current_page == 1 && !via_pulley ){
-            py.get_query_from_cache(appwindow.slug_first_page, current_router);
-            return;
-        }
-        switch(current_router){
-        case router_recent:
-            py.getRecent("page=" + current_page );
-            break;
-        case router_popular:
-            py.getPopular("page=" + current_page);
-            break;
-        case router_categories:
-            py.getRecent("page=" + current_page + (cid?("&cid=" + cid ):""));
-            break;
-        default:
-            py.getRecent("page=" + current_page );
+        if(!via_pulley ){
+            py.get_query_from_cache(current_router, appwindow.slug_first_page);
+        }else{
+            switch(current_router){
+            case router_recent:
+                py.getRecent("page=" + current_page );
+                break;
+            case router_popular:
+                py.getPopular("page=" + current_page);
+                break;
+            case router_categories:
+                py.getRecent("page=" + current_page + (cid?("&cid=" + cid ):""));
+                break;
+            default:
+                py.getRecent("page=" + current_page );
+            }
         }
     }
 

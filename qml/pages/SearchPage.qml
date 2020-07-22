@@ -25,7 +25,8 @@ Page {
     function _search(text) {
         if(!text) return;
         searchModel.clear();
-        py.search(text, "page=" + current_page);
+        // py.search(text, "page=" + current_page);
+        py.get_query_from_cache( appwindow.router_search,"page=" + current_page, text)
         viewPlaceholder.text = ""
         viewPlaceholder.hintText = ""
     }
