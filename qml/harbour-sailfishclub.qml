@@ -629,14 +629,9 @@ ApplicationWindow
         }
 
         function get_query_from_cache(router,slug, extfield){
-<<<<<<< HEAD
-            console.log("get_query_from_cache, router:", router, ", slug:"+slug)
-            call('app.api.get_query_list_data', [router+(extfield?extfield:"")+slug], function(result){
-=======
             console.log("get_query_from_cache, router:", router, ", slug:"+slug, ",extfield:"+extfield)
             var cache_key = router+(extfield?extfield:"")+ (slug?slug:"");
             call('app.api.get_query_list_data', [cache_key], function(result){
->>>>>>> e579cfccbb196b63759e28715048bd9d2c0d46b0
                 if(result){
                     console.log("get_query_from_cache, got")
                     if(router === router_recent)signalCenter.getRecent(result);
