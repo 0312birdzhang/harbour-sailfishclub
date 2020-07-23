@@ -18,7 +18,7 @@ Item{
         //            opacity: view.contentY/height > 1 ? 0 : 1-view.contentY/height;
         //            visible: opacity>0.0;
         width: parent.width;
-        height: isLandscape?Screen.height/5.5:Screen.height/4
+        height: banner.model > 0 ? (isLandscape?Screen.height/5.5:Screen.height/4):0
         preferredHighlightBegin: 0.5;
         preferredHighlightEnd: 0.5;
         path: Path {

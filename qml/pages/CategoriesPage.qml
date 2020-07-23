@@ -119,8 +119,7 @@ Page{
             if(result && result != "Forbidden"){
                 var banners = result.topics;
                 var categories = result.categories;
-//                console.log(JSON.stringify(categories))
-                for(var i = 0;i<banners.length;i++){
+                for(var i = 0; banners && i< banners.length;i++){
                     bannerModel.append({
                                        "title":banners[i].title,
                                        "user":banners[i].user.username,
@@ -170,7 +169,7 @@ Page{
     }
 
     Component.onCompleted: {
-        py.get_query_from_cache("",router_categories)
+        py.get_query_from_cache(appwindow.router_categories,"")
     }
     Component.onDestruction: {
         appwindow.loading = false;
