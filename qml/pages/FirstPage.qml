@@ -235,7 +235,11 @@ Page {
     function load(via_pulley){
         console.log("current router:" + current_router,", cuttent page:"+current_page);
         if(!via_pulley ){
+<<<<<<< HEAD
             py.get_query_from_cache(current_router, "page=" + current_page, current_page);
+=======
+            py.get_query_from_cache(current_router, "page=" + current_page + (cid?("&cid=" + cid ):""));
+>>>>>>> e579cfccbb196b63759e28715048bd9d2c0d46b0
         }else{
             switch(current_router){
             case router_recent:

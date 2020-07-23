@@ -305,12 +305,24 @@ Page{
         }
     }
 
+<<<<<<< HEAD
     function load(){
         // py.getTopic(tid,slug?slug+"?page="+current_page:undefined);
         console.log("slug:", slug?slug+"?page="+current_page:undefined,", tid:"+tid)
         py.get_query_from_cache(appwindow.router_topic, 
             slug?slug+"?page="+current_page:undefined,
             tid)
+=======
+    function load(force_refresh){
+        console.log("slug:", slug?slug+"?page="+current_page:undefined,", tid:"+tid)
+        if(force_refresh){
+            py.getTopic(tid,slug?slug+"?page="+current_page:undefined);
+        }else{
+            py.get_query_from_cache(appwindow.router_topic, 
+            slug?slug+"?page="+current_page:undefined,
+            tid)
+        }
+>>>>>>> e579cfccbb196b63759e28715048bd9d2c0d46b0
     }
 
     

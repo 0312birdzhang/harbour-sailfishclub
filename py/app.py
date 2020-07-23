@@ -64,6 +64,7 @@ class Api:
         """
         try:
             if type(self.cache) is Cache:
+                Utils.log(self.getMd5(router))
                 self.cache.set(self.getMd5(router), json.dumps(result), expire = expire)
             return True
         except:
@@ -76,8 +77,11 @@ class Api:
         Get recent,popular,etc json string in cache
         """
         if type(self.cache) is Cache:
+            Utils.log(self.getMd5(router))
             try:
-                return json.loads(self.cache.get(self.getMd5(router)))
+                cacheData = self.cache.get(self.getMd5(router))
+                if cacheData:
+                    return json.loads(cacheData)
             except:
                 Utils.log(traceback.format_exc())
         return None

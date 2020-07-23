@@ -122,7 +122,7 @@ Item{
                 width: (topicPage.width-Theme.iconSizeMedium-Theme.paddingMedium*2)/2
                 text:qsTr("Refresh");
                 onClicked: {
-                    load();
+                    load(true);
                     toolbar.hideExbar();
                 }
             }

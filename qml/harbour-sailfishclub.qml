@@ -309,6 +309,10 @@ ApplicationWindow
 
     Python{
         id:py
+
+        signal log(string msg)
+        signal error(string msg)
+
         Component.onCompleted: {
             addImportPath('qrc:/py')
             py.importModule('main', function () {
@@ -316,7 +320,16 @@ ApplicationWindow
             });
             py.importModule('app', function(){
             });
+            setHandler('log', function(msg){
+                console.log(msg)
+            })
+
+            setHandler('error', function(msg){
+                notification.show(msg)
+            })
         }
+
+        onError: console.log('Error: ' + traceback)
 
         function initLogin(){
             var username = settings.get_username();
@@ -616,8 +629,14 @@ ApplicationWindow
         }
 
         function get_query_from_cache(router,slug, extfield){
+<<<<<<< HEAD
             console.log("get_query_from_cache, router:", router, ", slug:"+slug)
             call('app.api.get_query_list_data', [router+(extfield?extfield:"")+slug], function(result){
+=======
+            console.log("get_query_from_cache, router:", router, ", slug:"+slug, ",extfield:"+extfield)
+            var cache_key = router+(extfield?extfield:"")+ (slug?slug:"");
+            call('app.api.get_query_list_data', [cache_key], function(result){
+>>>>>>> e579cfccbb196b63759e28715048bd9d2c0d46b0
                 if(result){
                     console.log("get_query_from_cache, got")
                     if(router === router_recent)signalCenter.getRecent(result);
@@ -641,7 +660,11 @@ ApplicationWindow
                 if(!router)router=router_recent;
                 if(!expire)expire=3600.00;
                 console.log("set_query_from_cache, router:", router, ", key:", router+slug)
+<<<<<<< HEAD
                 call('app.api.set_query_list_data',[router+slug, result, expire],function(result){
+=======
+                call('app.api.set_query_list_data',[router+ (slug?slug:""), result, expire],function(result){
+>>>>>>> e579cfccbb196b63759e28715048bd9d2c0d46b0
                     if(!result){
                         console.log("set_query_from_cache failed")
                     }
