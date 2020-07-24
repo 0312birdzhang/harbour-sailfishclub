@@ -543,6 +543,14 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Picture downloaded</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Download picture failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Welcome to</source>
         <translation type="unfinished"></translation>
     </message>
@@ -552,14 +560,6 @@
     </message>
     <message>
         <source>Starting open link...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Picture downloaded</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Download picture failed</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
