@@ -3,6 +3,7 @@
 
 from __future__ import print_function
 import requests
+import http.cookiejar as cookielib
 from pynodebb import Client
 from sfctoken import access_token,secret_key
 import logging
@@ -23,11 +24,12 @@ logger.setLevel(logging.DEBUG)
 UnOfficalBlogURL = "https://notexists.top/api/post"
 savePath = os.path.join(HOME, "Pictures","SailfishClub")
 max_token_size = 4
+siteUrl = 'https://sailfishos.club'
 
 if not os.path.exists(savePath):
     os.mkdir(savePath)
 
-client = Client('https://sailfishos.club', access_token)
+client = Client(siteUrl, access_token)
 client.configure(**{
     'page_size': 20,
     'ips': [
@@ -45,6 +47,8 @@ def errMsg(message, code = 400):
     }
 
 def login(user, password):
+    if not validatePwd(user, password):
+        return False
     userinfo = getuserinfo(user)
     if not userinfo:
         logger.error("no such user: %s", user)
@@ -79,6 +83,20 @@ def validate(uid, token, username):
         return False
     else:
         return getuserinfo(username)
+
+def validatePwd(user, password):
+    sess = requests.Session()
+    postData = {
+        "username": user,
+        "password": password,
+        "remember": "on",
+        "noscript": False
+    }
+    resp = sess.post('%s/login' % (siteUrl,), data=postData)
+    ret_code = resp.status_code
+    if ret_code != 200:
+        return False
+    return True
 
 def createToken(uid, password):
     status_code, playload = client.users.grant_token(uid, password)
