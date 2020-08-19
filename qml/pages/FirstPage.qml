@@ -59,6 +59,13 @@ Page {
             id:listModel
         }
 
+        Item{
+            id: headerItem
+            width: parent.width;
+        }
+
+
+
         SilicaListView {
             id: listView
             width: parent.width
@@ -179,7 +186,6 @@ Page {
                 onClicked: {
                     pageStack.push(Qt.resolvedUrl("TopicPage.qml"),{
                                         "tid":tid
-//                                    "tid": 105
                                    });
                 }
             }
@@ -230,6 +236,11 @@ Page {
 
             }
         }
+
+        Item{
+            id: footerItem
+            width: parent.width;
+        }
     }
 
     function load(via_pulley){
@@ -259,6 +270,16 @@ Page {
             if (result && result != "Forbidden"){
                 var topics = result.topics;
                 var pagination = result.pagination;
+
+                var headers = result.widgets.header;
+                var footers = result.widgets.footer;
+
+                if(headers){
+
+                }
+                if(footers){
+                    
+                }
                 if(pagination){
                     current_page = pagination.currentPage;
                     pageCount = pagination.pageCount;
