@@ -191,7 +191,7 @@ Dialog  {
     }
 
     Component.onCompleted: {
-        py.get_query_from_cache("",router_categories)
+        py.get_query_from_cache(router_categories, "")
     }
 
     Component.onDestruction: {

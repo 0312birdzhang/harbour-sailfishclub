@@ -518,7 +518,7 @@ ApplicationWindow
             call('main.listcategory',[],function(result){
                 loading = false;
                 signalCenter.getCategories(result);
-                py.set_query_to_cache(router_categories,"", result, 86400.00)
+                py.set_query_to_cache(router_categories,"", result, 864000.00)
             });
         }
 
