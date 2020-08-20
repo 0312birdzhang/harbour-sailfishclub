@@ -80,10 +80,6 @@ ApplicationWindow
             //% "Network connection failure"
             notification.showPopup(qsTr("Network not connected"), qsTr("Try again later please"), "icon-s-high-importance");
             loading = false;
-        }else{
-            if(!userinfo.logined){
-                py.initLogin();
-            }
         }
     }
 
@@ -344,7 +340,9 @@ ApplicationWindow
                 userinfo.avatar = avatar;
                 userinfo.logined = true;
                 signalCenter.loginSuccessed();
-                validateTokenTimer.start();
+                if(!validateTokenTimer.running){
+                    validateTokenTimer.start();
+                }
             }else{
                 if(uid && token){
                     console.log("logined via token")
@@ -398,13 +396,19 @@ ApplicationWindow
 
                     userinfo.logined = true;
                     signalCenter.loginSuccessed();
-                    saveData(uid, token,userinfo.username,"", "true", userinfo.avatar);
+                    saveData(uid, token, userinfo.username,"", "true", userinfo.avatar);
 
+                }else{
+                    console.log("relogin")
+                    var password = settings.get_password();
+                    var derpass = Api.decrypt(password, py.getSecretKey());
+                    py.login(username, derpass)
                 }
             })
         }
         function login(username, password){
             if(!username||!password || username === "undefined" || password === "undefined"){
+                console.log("username or password is invalid");
                 return;
             }
             call('main.login',[username,password],function(result){
