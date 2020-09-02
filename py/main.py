@@ -196,45 +196,16 @@ def getUnread(token):
     return notices
 
 
-
-def uploadImgSm(path):
-    if path.startswith("file:"):
-        path = path.replace("file://","")
-    logger.info(path)
-    url = 'https://sm.ms/api/upload'
-    try:
-        files = {
-            'smfile': open(path, 'rb'),
-            'format': 'json',
-            'ssl': True
-        }
-        logger.info("start upload")
-        r = requests.post(url, files = files, timeout=15.0)
-        logger.info("post success")
-        data1 = r.json()
-        if not data1['success']:
-            err_message = data1['message']
-            if "this image exists" in err_message:
-                return err_message.split()[-1]
-            else:
-                logger.error(err_message)
-            return None
-        smurl = data1.get("data").get("url")
-        logger.info(smurl)
-        return smurl
-    except Exception as e:
-        logger.error(str(e))
-        return None
-
-
-def uploadVimCN(path):
+def uploadImgQiyu(path):
     """Seems Dead
     """
-    url = 'http://img.vim-cn.com/'
+    domain = "https://img.qiyuos.cn"
+    url = '%s/upload' % (domain, )
     try:
         files = {'file' : open(path, 'rb')}
         r = requests.post(url, files = files, timeout=5.0)
-        return r.text
+        # {"code":200,"msg":"","data":"logo.png"}
+        return "%s%s" % (domain, r.json().get("msg"))
     except Exception as e:
         logger.error(str(e))
         return None
@@ -256,6 +227,7 @@ def uploadNiuPic(path):
                 logger.error(r.text)
     except Exception as e:
         logger.error(str(e))
+        return uploadImgQiyu(path)
     return None
 
 
