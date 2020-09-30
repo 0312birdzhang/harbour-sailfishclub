@@ -118,55 +118,55 @@
     <name>FirstPage</name>
     <message>
         <source>Recent Page</source>
-        <translation type="unfinished"></translation>
+        <translation>最新</translation>
     </message>
     <message>
         <source>Popular</source>
-        <translation type="unfinished">热门</translation>
+        <translation>热门</translation>
     </message>
     <message>
         <source>New Topic</source>
-        <translation type="unfinished">新贴</translation>
+        <translation>新贴</translation>
     </message>
     <message>
         <source>Login to create new topic</source>
-        <translation type="unfinished"></translation>
+        <translation>登录后发布新贴</translation>
     </message>
     <message>
         <source>Refresh</source>
-        <translation type="unfinished">刷新</translation>
+        <translation>刷新</translation>
     </message>
     <message>
         <source>author:</source>
-        <translation type="unfinished"></translation>
+        <translation>作者</translation>
     </message>
     <message>
         <source>latest reply</source>
-        <translation type="unfinished"></translation>
+        <translation>最后回复</translation>
     </message>
     <message>
         <source>comments: </source>
-        <translation type="unfinished">评论：</translation>
+        <translation>评论：</translation>
     </message>
     <message>
         <source>views: </source>
-        <translation type="unfinished">查看：</translation>
+        <translation>查看：</translation>
     </message>
     <message>
         <source>Load Failed,Click to retry</source>
-        <translation type="unfinished">加载失败，点击重试</translation>
+        <translation>加载失败，点击重试</translation>
     </message>
     <message>
         <source>Prev Page</source>
-        <translation type="unfinished">上一页</translation>
+        <translation>上一页</translation>
     </message>
     <message>
         <source>Next Page</source>
-        <translation type="unfinished">下一页</translation>
+        <translation>下一页</translation>
     </message>
     <message>
         <source>Load failed,try again later</source>
-        <translation type="unfinished">加载失败，请稍后重试</translation>
+        <translation>加载失败，请稍后重试</translation>
     </message>
 </context>
 <context>
@@ -520,47 +520,47 @@
     <name>harbour-sailfishclub</name>
     <message>
         <source>Network not connected</source>
-        <translation type="unfinished"></translation>
+        <translation>网络未连接</translation>
     </message>
     <message>
         <source>Try again later please</source>
-        <translation type="unfinished"></translation>
+        <translation>请稍后重试</translation>
     </message>
     <message>
         <source>new replay</source>
-        <translation type="unfinished"></translation>
+        <translation>新回复</translation>
     </message>
     <message>
         <source>preview replay</source>
-        <translation type="unfinished"></translation>
+        <translation>预览回复</translation>
     </message>
     <message>
         <source>Request timeout</source>
-        <translation type="unfinished"></translation>
+        <translation>请求超时</translation>
     </message>
     <message>
         <source>Login failed,try again later</source>
-        <translation type="unfinished"></translation>
+        <translation>登录失败，请稍后重试</translation>
     </message>
     <message>
         <source>Picture downloaded</source>
-        <translation type="unfinished"></translation>
+        <translation>图片已下载</translation>
     </message>
     <message>
         <source>Download picture failed</source>
-        <translation type="unfinished"></translation>
+        <translation>下载图片失败</translation>
     </message>
     <message>
         <source>Welcome to</source>
-        <translation type="unfinished"></translation>
+        <translation>Welcome to</translation>
     </message>
     <message>
         <source>SailfishClub</source>
-        <translation type="unfinished"></translation>
+        <translation>SailfishClub</translation>
     </message>
     <message>
         <source>Starting open link...</source>
-        <translation type="unfinished"></translation>
+        <translation>即将打开连接。。。</translation>
     </message>
 </context>
 </TS>

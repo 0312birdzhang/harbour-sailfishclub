@@ -116,7 +116,7 @@ Page{
                 wrapMode: Text.WordWrap
                 font.pixelSize: Theme.fontSizeExtraSmall * 0.8
                 font.italic: true
-                text: signature
+                text: signature||""
                 visible: signature
                 onLinkActivated: {
                     appwindow.openLink(link)

@@ -148,6 +148,7 @@ def post(title, content, uid, cid):
 def replay(tid,uid,content):
     status_code, response = client.posts.create(uid,tid,content)
     if not status_code or status_code != 200:
+        logger.debug(str(response))
         return False
     return response
 

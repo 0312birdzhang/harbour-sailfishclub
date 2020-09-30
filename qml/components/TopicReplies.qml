@@ -27,15 +27,15 @@ Item {
     }
 
     Label{
-        visible: replies.count > 0
-        text:  "<br>" + replies.count.toString() + "</br> " + qsTr("replaies")
+        visible: replies && replies.count > 0
+        text:  replies && replies.count ? ("<br>" + replies.count.toString()  + "</br> " + qsTr("replaies") ):""
         width: parent.width
         maximumLineCount: 3
         textFormat: Text.StyledText
         font.pixelSize: Theme.fontSizeTiny
         color: Theme.secondaryColor
-        x: replies.count * ( parent.height - Theme.itemSizeExtraSmall/4 )
-           + Theme.paddingMedium*3
+        x: replies && replies.count ? (replies.count * ( parent.height - Theme.itemSizeExtraSmall/4 )
+           + Theme.paddingMedium*3 ): 0
         anchors{
             verticalCenter: parent.verticalCenter
         }

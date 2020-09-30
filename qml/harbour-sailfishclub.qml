@@ -77,7 +77,6 @@ ApplicationWindow
 
     onNetworkStatusChanged: {
         if(networkStatus == false) {
-            //% "Network connection failure"
             notification.showPopup(qsTr("Network not connected"), qsTr("Try again later please"), "icon-s-high-importance");
             loading = false;
         }
