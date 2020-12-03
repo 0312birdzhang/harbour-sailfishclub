@@ -93,14 +93,20 @@ class HttpClient(object):
             kwargs.pop("_cookies", None)
 
         # Query the NodeBB instance, extracting the status code and fail reason.
-        session = requests.Session()
-        session.mount('https://', HostHeaderSSLAdapter())
-        response = session.request(
+#        session = requests.Session()
+#        session.mount('https://', HostHeaderSSLAdapter(max_retries=3))
+#        response = session.request(
+#            method, urljoin(self.endpoint, path),
+#            headers=self.headers, data=kwargs,
+#            cookies=self.cookies,
+#            timeout = 5,
+#            verify=False
+#        )
+        response = requests.request(
             method, urljoin(self.endpoint, path),
             headers=self.headers, data=kwargs,
             cookies=self.cookies,
-            timeout = 10,
-            verify=False
+            timeout = 20
         )
         code, reason = response.status_code, response.reason
 
