@@ -3,6 +3,8 @@ Qt.include("ApiCore.js")
 //Qt.include("ApiCategory.js")
 //Qt.include("Storge.js")
 var signalcenter;
+var siteUrl;
+
 function setsignalcenter(mycenter){
     signalcenter=mycenter;
 }
@@ -38,5 +40,31 @@ function sendWebRequest(url, callback, method, postdata) {
     }
 }
 
+function getRecent(slug){
+    var url = siteUrl + '/api/recent?' +slug
+    sendWebRequest(url,loadRecnetList,"GET","");
+}
 
+function loadRecnetList(oritxt){
+    console.log("loadRecnetList", oritxt);
+    signalcenter.getRecent(JSON.parse(oritxt));
+}
 
+function getTopic(tid, slug, token){
+    var url = siteUrl + '/api/topic/' + (slug?slug:tid);
+    sendWebRequest(url,loadTopicDetail,"GET","");
+}
+
+function loadTopicDetail(oritxt){
+    console.log("loadTopicDetail", oritxt);
+    signalcenter.getTopic(JSON.parse(oritxt));
+}
+
+function getPopular(slug){
+    var url = siteUrl + '/api/popular?' +slug
+    sendWebRequest(url,loadPopularList,"GET","");
+}
+function loadPopularList(oritxt){
+    // Yes, reuse getRecent signal
+    signalcenter.getRecent(JSON.parse(oritxt));
+}

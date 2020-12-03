@@ -483,22 +483,25 @@ ApplicationWindow
 
         // 获取最新帖子
         function getRecent(slug){
-            loading = true;
-            call('main.getrecent',[slug],function(result){
-                loading = false;
-                signalCenter.getRecent(result);
-                py.set_query_to_cache(router_recent, slug, result, 3600.00)
-            });
+            // loading = true;
+            // call('main.getrecent',[slug],function(result){
+            //     loading = false;
+            //     signalCenter.getRecent(result);
+            //     py.set_query_to_cache(router_recent, slug, result, 3600.00)
+            // });
+            Main.getRecent(slug);
+
         }
 
         //获取热门贴子
         function getPopular(slug){
             loading = true;
-            call('main.getpopular',[slug],function(result){
-                loading = false;
-                signalCenter.getRecent(result);
-                py.set_query_to_cache(router_popular, slug, result, 3600.00)
-            });
+            // call('main.getpopular',[slug],function(result){
+            //     loading = false;
+            //     signalCenter.getRecent(result);
+            //     py.set_query_to_cache(router_popular, slug, result, 3600.00)
+            // });
+            Main.getPopular(slug);
         }
 
         // 搜索贴子
@@ -535,17 +538,19 @@ ApplicationWindow
             loading = true;
             if(userinfo.logined){
                 var token = settings.get_token();
-                call('main.getTopic',[tid,slug,token],function(result){
-                    loading = false;
-                    signalCenter.getTopic(result);
-                    py.set_query_to_cache(router_topic, tid+(slug?slug:""), result, 1200.00)
-                });
+                Main.getTopic(tid,slug);
+                // call('main.getTopic',[tid,slug,token],function(result){
+                //     loading = false;
+                //     signalCenter.getTopic(result);
+                //     py.set_query_to_cache(router_topic, tid+(slug?slug:""), result, 1200.00)
+                // });
             }else{
-                call('main.getTopic',[tid,slug],function(result){
-                    loading = false;
-                    signalCenter.getTopic(result);
-                    py.set_query_to_cache(router_topic, tid+(slug?slug:""), result, 1200.00)
-                });
+                Main.getTopic(tid,slug);
+                // call('main.getTopic',[tid,slug],function(result){
+                //     loading = false;
+                //     signalCenter.getTopic(result);
+                //     py.set_query_to_cache(router_topic, tid+(slug?slug:""), result, 1200.00)
+                // });
             }
             
         }
@@ -1015,6 +1020,7 @@ ApplicationWindow
 
     Component.onCompleted: {
         Main.signalcenter = signalCenter;
+        Main.siteUrl = siteUrl;
         JS.app = appwindow;
 
     }
