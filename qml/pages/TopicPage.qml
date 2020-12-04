@@ -96,6 +96,7 @@ Page{
             TopicReplies{
                 id: topicRepliesId
                 replies: userReplies
+                visible: userReplies || userReplies.hasMore
                 width: parent.width;
                 height: Theme.itemSizeExtraSmall/2
                 anchors.top: contentLabel.bottom

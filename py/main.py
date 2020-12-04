@@ -198,8 +198,6 @@ def getUnread(token):
 
 
 def uploadImgQiyu(path):
-    """Seems Dead
-    """
     domain = "https://img.qiyuos.cn"
     url = '%s/upload' % (domain, )
     try:

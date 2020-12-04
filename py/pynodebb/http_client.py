@@ -58,9 +58,7 @@ class HttpClient(object):
         self.endpoint = settings['api_endpoint']
         self.admin_uid = settings['admin_uid']
         self.headers = {'Authorization': 'Bearer %s' % settings['master_token'],
-            "User-Agent": "SailfishOS Python APi Client v1.1",
-            "Connection": "close",
-            "Host": "sailfishos.club"
+            "User-Agent": "SailfishOS Python APi Client v1.1"
         }
         self.cookies = dict()
 

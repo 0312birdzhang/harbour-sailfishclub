@@ -495,7 +495,7 @@ ApplicationWindow
 
         //获取热门贴子
         function getPopular(slug){
-            loading = true;
+            // loading = true;
             // call('main.getpopular',[slug],function(result){
             //     loading = false;
             //     signalCenter.getRecent(result);
@@ -509,23 +509,25 @@ ApplicationWindow
             // console.log("slug:"+slug)
             loading = true;
             term = encodeURI(term);
-            call('main.search',[term, slug, settings.get_token()],function(result){
-                loading = false;
-                signalCenter.getSearch(result);
-                py.set_query_to_cache(router_search, term+slug, result, 86400.00)
-            });
+            // call('main.search',[term, slug, settings.get_token()],function(result){
+            //     loading = false;
+            //     signalCenter.getSearch(result);
+            //     py.set_query_to_cache(router_search, term+slug, result, 86400.00)
+            // });
+            Main.search(term, slug, settings.get_token());
         }
 
 
 
         // 获取分类
         function getCategories(){
-            loading = true;
-            call('main.listcategory',[],function(result){
-                loading = false;
-                signalCenter.getCategories(result);
-                py.set_query_to_cache(router_categories,"", result, 864000.00)
-            });
+            // loading = true;
+            // call('main.listcategory',[],function(result){
+            //     loading = false;
+            //     signalCenter.getCategories(result);
+            //     py.set_query_to_cache(router_categories,"", result, 864000.00)
+            // });
+            Main.listcategory();
         }
 
         function getSecretKey(){
@@ -538,7 +540,7 @@ ApplicationWindow
             loading = true;
             if(userinfo.logined){
                 var token = settings.get_token();
-                Main.getTopic(tid,slug);
+                Main.getTopic(tid,slug,token);
                 // call('main.getTopic',[tid,slug,token],function(result){
                 //     loading = false;
                 //     signalCenter.getTopic(result);
@@ -628,12 +630,13 @@ ApplicationWindow
         // 获取贴子回复通知
         function getUnread(){
             if(!networkStatus)return;
-            call('main.getUnread', [settings.get_token()], function(result){
-                signalCenter.getUnread(result);
-                if(result && result != "Forbidden"){
-                    unreadSize = result.topicCount;
-                }
-            });
+            // call('main.getUnread', [settings.get_token()], function(result){
+            //     signalCenter.getUnread(result);
+            //     if(result && result != "Forbidden"){
+            //         unreadSize = result.topicCount;
+            //     }
+            // });
+            Main.getUnread(settings.get_token());
         }
 
         function get_query_from_cache(router,slug, extfield){

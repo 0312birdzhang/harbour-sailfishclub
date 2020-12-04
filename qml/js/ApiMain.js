@@ -8,7 +8,7 @@ var siteUrl;
 function setsignalcenter(mycenter){
     signalcenter=mycenter;
 }
-function sendWebRequest(url, callback, method, postdata) {
+function sendWebRequest(url, callback, method, postdata, token) {
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
         switch(xmlhttp.readyState) {
@@ -30,10 +30,16 @@ function sendWebRequest(url, callback, method, postdata) {
     }
     if(method==="GET") {
         xmlhttp.open("GET",url);
+        if(token){
+            xmlhttp.setRequestHeader("Authorization", "Bearer "+ token);
+        }
         xmlhttp.send();
     }
     if(method==="POST") {
         xmlhttp.open("POST",url);
+        if(token){
+            xmlhttp.setRequestHeader("Authorization", "Bearer "+ token);
+        }
         xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         xmlhttp.setRequestHeader("Content-Length", postdata.length);
         xmlhttp.send(postdata);
@@ -52,7 +58,7 @@ function loadRecnetList(oritxt){
 
 function getTopic(tid, slug, token){
     var url = siteUrl + '/api/topic/' + (slug?slug:tid);
-    sendWebRequest(url,loadTopicDetail,"GET","");
+    sendWebRequest(url,loadTopicDetail,"GET","",token);
 }
 
 function loadTopicDetail(oritxt){
@@ -68,3 +74,39 @@ function loadPopularList(oritxt){
     // Yes, reuse getRecent signal
     signalcenter.getRecent(JSON.parse(oritxt));
 }
+
+function listcategory(){
+    var url = siteUrl + '/api/categories';
+    sendWebRequest(url,loadCategories,"GET","");
+}
+function loadCategories(oritxt){
+    signalcenter.getCategories(JSON.parse(oritxt));
+}
+
+function search(term, slug, token){
+    var url = siteUrl + '/api/search?term=' + term + '&in=titlesposts&'+slug;
+    sendWebRequest(url,loadSearch,"GET","", token);
+}
+function loadSearch(oritxt){
+    signalcenter.getSearch(JSON.parse(oritxt));
+}
+
+function getNotifications(token){
+    var url = siteUrl + '/api/notifications';
+    sendWebRequest(url,loadNotifications,"GET","", token);
+}
+function loadNotifications(oritxt){
+    signalcenter.getUnread(JSON.parse(oritxt));
+}
+function getUnread(token){
+    var url = siteUrl + '/api/unread'
+    sendWebRequest(url,loadNotifications,"GET","", token);
+}
+
+// post
+
+function replayTopic(tid,uid,content){
+    var url = siteUrl + '/api/v1/topics/'+tid;
+}
+
+// signalCenter.replayTopic(result);

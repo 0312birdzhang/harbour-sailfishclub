@@ -17,9 +17,9 @@ Item {
                 width: parent.height;
                 height: width;
                 avatar: appwindow.getPicture(replies.users[index].picture)
-                username: replies.users[index].username
-                text: replies.users[index]["icon:text"]
-                color: replies.users[index]["icon:bgColor"]
+                username: replies.users[index].username||""
+                text: replies.users[index]["icon:text"]||""
+                color: replies.users[index]["icon:bgColor"]||""
             }
         }
 
