@@ -283,7 +283,7 @@ ApplicationWindow
             }
         }
         onLoginSuccessed: {
-            getNotifytimer.start()
+            // getNotifytimer.start()
         }
         onLoginFailed: {
             if(loginRetry>0){
@@ -304,7 +304,7 @@ ApplicationWindow
 
     Python{
         id:py
-
+        property string token;
         signal log(string msg)
         signal error(string msg)
 
@@ -312,6 +312,7 @@ ApplicationWindow
             addImportPath('qrc:/py')
             py.importModule('main', function () {
                 initLogin();
+                getToken();
             });
             py.importModule('app', function(){
             });
@@ -325,6 +326,12 @@ ApplicationWindow
         }
 
         onError: console.log('Error: ' + traceback)
+
+        function getToken(){
+            call("main.getToken", [], function(result){
+                py.token = result;
+            });
+        }
 
         function initLogin(){
             var username = settings.get_username();
@@ -359,7 +366,7 @@ ApplicationWindow
         function validateToken(){
             var currnetUnix = parseInt(new Date().getTime()/1000)
             var savedUnix = settings.get_savetime();
-            if(currnetUnix > parseInt(savedUnix)){
+            if(!savedUnix || currnetUnix > parseInt(savedUnix)){
                 // 需要重新登录
                 toLoginPage();
                 // var uid = settings.get_uid();
@@ -481,8 +488,13 @@ ApplicationWindow
             settings.set_logined(logined);
             settings.set_avatar(avatar);
             // Mon, 21-Dec-2020 08:34:25 GMT
-            var expiresDate = expires.split(", ")[1]
-            settings.set_savetime(parseInt(new Date(expiresDate).getTime()/1000).toString());
+            var exdate = expires.split(", ")[1];
+            console.log(exdate);
+            // console.log(new Date(exdate).getTime()/1000);
+            // console.log(parseInt(new Date(exdate).getTime()/1000).toString());
+            // TODO new Date(exdate) not working as excepted
+            // 当前时间+2周
+            settings.set_savetime(parseInt(new Date().getTime()/1000 + 2*7*86400).toString());
         }
 
         // 获取最新帖子
@@ -518,7 +530,7 @@ ApplicationWindow
             //     signalCenter.getSearch(result);
             //     py.set_query_to_cache(router_search, term+slug, result, 86400.00)
             // });
-            Main.search(term, slug, settings.get_token());
+            Main.search(term, slug, py.token);
         }
 
 
@@ -543,8 +555,7 @@ ApplicationWindow
             console.log("tid,"+tid,",slug:"+slug)
             loading = true;
             if(userinfo.logined){
-                var token = settings.get_token();
-                Main.getTopic(tid,slug,token);
+                Main.getTopic(tid,slug,py.token);
                 // call('main.getTopic',[tid,slug,token],function(result){
                 //     loading = false;
                 //     signalCenter.getTopic(result);
@@ -568,8 +579,7 @@ ApplicationWindow
             //     loading = false;
             //     signalCenter.replayTopic(result);
             // });
-            var token = settings.get_token();
-            Main.replayTopic(tid,uid,content,token);
+            Main.replayTopic(tid, uid, content, py.token);
         }
 
         // 回复贴子中的楼层
@@ -579,8 +589,7 @@ ApplicationWindow
             //     loading = false;
             //     signalCenter.replayFloor(result);
             // });
-            var token = settings.get_token();
-            Main.replayTo(tid, uid, toPid, content, token);
+            Main.replayTo(tid, uid, toPid, content, py.token);
         }
 
         // 发新贴
@@ -590,8 +599,7 @@ ApplicationWindow
             //     loading = false;
             //     signalCenter.newTopic(result);
             // });
-            var token = settings.get_token();
-            Main.createTopic(uid, cid, title, content, token);
+            Main.createTopic(uid, cid, title, content, py.token);
         }
 
         //预览发贴内容
@@ -616,15 +624,15 @@ ApplicationWindow
 
         // 新用户注册
         function register(user,password,email){
-             call('main.createUser',[user,password,email],function(result){
-                 if(result && result != "Forbidden" && result != "False"){
-                     signalCenter.registerSucceed();
-                     py.login(user,password);
-                 }else{
-                     signalCenter.registerFailed(result);
+            //  call('main.createUser',[user,password,email],function(result){
+            //      if(result && result != "Forbidden" && result != "False"){
+            //          signalCenter.registerSucceed();
+            //          py.login(user,password);
+            //      }else{
+            //          signalCenter.registerFailed(result);
 
-                 }
-             });
+            //      }
+            //  });
         }
 
         // 获取用户信息
@@ -647,7 +655,7 @@ ApplicationWindow
             //         unreadSize = result.topicCount;
             //     }
             // });
-            Main.getUnread(settings.get_token());
+            // Main.getUnread(settings.get_token());
         }
 
         function get_query_from_cache(router,slug, extfield){
@@ -655,14 +663,14 @@ ApplicationWindow
             var cache_key = router+(extfield?extfield:"")+ (slug?slug:"");
             call('app.api.get_query_list_data', [cache_key], function(result){
                 if(result){
-                    console.log("get_query_from_cache, got")
+                    console.log("get_query_from_cache, get")
                     if(router === router_recent)signalCenter.getRecent(result);
                     if(router === router_popular)signalCenter.getRecent(result);
                     if(router === router_categories)signalCenter.getCategories(result);
                     if(router === router_topic)signalCenter.getTopic(result);
                     if(router === router_search)signalCenter.getSearch(result);
                 }else{
-                    console.log("get_query_from_cache, not got")
+                    console.log("get_query_from_cache, not get")
                     if(router === router_recent)py.getRecent(slug);
                     if(router === router_popular)py.getPopular(slug);
                     if(router === router_categories)py.getCategories();

@@ -409,7 +409,7 @@ Page{
                                          "picture":userinfo.avatar,
                                          "floor":ret.index,
                                          "user_group_icon":userinfo.groupIcon,
-                                         "user_group_name":ret.user.selectedGroup?ret.user.selectedGroup.userTitle:"",
+                                         "user_group_name":ret.user.selectedGroup||"",
                                          "user_text":userinfo.user_text,
                                          "user_color":userinfo.user_color,
                                          "userReplies": ret.replies || {},

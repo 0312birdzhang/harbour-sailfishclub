@@ -6,7 +6,7 @@ var signalcenter;
 var siteUrl;
 
 
-
+var userAgent = "Mozilla/5.0 (Mobile Linux; U; like Android 4.4.3; Sailfish OS/2.0) AppleWebkit/535.19 (KHTML, like Gecko) Version/4.0 Mobile Safari/535.19";
 
 function setsignalcenter(mycenter){
     signalcenter=mycenter;
@@ -16,7 +16,11 @@ function sendWebRequest(url, callback, method, postdata, token) {
     xmlhttp.onreadystatechange = function() {
         switch(xmlhttp.readyState) {
         case xmlhttp.OPENED:signalcenter.loadStarted();break;
-        case xmlhttp.HEADERS_RECEIVED:if (xmlhttp.status != 200)signalcenter.loadFailed(qsTr("connect error,code:")+xmlhttp.status+"  "+xmlhttp.statusText);break;
+        case xmlhttp.HEADERS_RECEIVED:if (xmlhttp.status != 200){
+            signalcenter.loadFailed(qsTr("connect error,code:")+ xmlhttp.status+"  "+xmlhttp.statusText);
+
+            break;
+        }
         case xmlhttp.DONE:if (xmlhttp.status == 200) {
                 try {
                     callback(xmlhttp.responseText);
@@ -34,20 +38,41 @@ function sendWebRequest(url, callback, method, postdata, token) {
     if(method==="GET") {
         xmlhttp.open("GET",url);
         if(token){
-            xmlhttp.setRequestHeader("Authorization", "Bearer "+ token);
+            // xmlhttp.withCredentials = true;
+            // xmlhttp.setRequestHeader("Authorization", "Bearer "+ token);
+            // xmlhttp.setRequestHeader("Cookie", "express.sid=" + token);
         }
+        xmlhttp.setRequestHeader('Accept','application/json');
+        xmlhttp.setRequestHeader("User-Agent", userAgent);
         xmlhttp.send();
     }
     if(method==="POST") {
         xmlhttp.open("POST",url);
         if(token){
+            xmlhttp.withCredentials = true;
             xmlhttp.setRequestHeader("Authorization", "Bearer "+ token);
+            // xmlhttp.setRequestHeader("Cookie", "express.sid=" + token);
         }
+        xmlhttp.setRequestHeader("User-Agent", userAgent);
+        
         xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         xmlhttp.setRequestHeader("Content-Length", postdata.length);
         xmlhttp.send(postdata);
     }
 }
+
+
+function parseParams(postdata){
+    var paramArray = [];
+    for (var i in postdata){
+        paramArray.push(i+"="+encodeURIComponent(postdata[i]));
+    }
+    paramArray = paramArray.sort();
+    var result = paramArray.join("&");
+    console.log(result);
+    return result;
+}
+
 
 function getRecent(slug){
     var url = siteUrl + '/api/recent?' +slug
@@ -55,7 +80,7 @@ function getRecent(slug){
 }
 
 function loadRecnetList(oritxt){
-    signalcenter.getRecent(JSON.parse(oritxt));
+    if(oritxt)signalcenter.getRecent(JSON.parse(oritxt));
 }
 
 function getTopic(tid, slug, token){
@@ -64,7 +89,7 @@ function getTopic(tid, slug, token){
 }
 
 function loadTopicDetail(oritxt){
-    signalcenter.getTopic(JSON.parse(oritxt));
+    if(oritxt)signalcenter.getTopic(JSON.parse(oritxt));
 }
 
 function getPopular(slug){
@@ -73,7 +98,7 @@ function getPopular(slug){
 }
 function loadPopularList(oritxt){
     // Yes, reuse getRecent signal
-    signalcenter.getRecent(JSON.parse(oritxt));
+    if(oritxt)signalcenter.getRecent(JSON.parse(oritxt));
 }
 
 function listcategory(){
@@ -81,7 +106,7 @@ function listcategory(){
     sendWebRequest(url,loadCategories,"GET","");
 }
 function loadCategories(oritxt){
-    signalcenter.getCategories(JSON.parse(oritxt));
+    if(oritxt)signalcenter.getCategories(JSON.parse(oritxt));
 }
 
 function search(term, slug, token){
@@ -89,7 +114,7 @@ function search(term, slug, token){
     sendWebRequest(url,loadSearch,"GET","", token);
 }
 function loadSearch(oritxt){
-    signalcenter.getSearch(JSON.parse(oritxt));
+    if(oritxt)signalcenter.getSearch(JSON.parse(oritxt));
 }
 
 function getNotifications(token){
@@ -97,7 +122,7 @@ function getNotifications(token){
     sendWebRequest(url,loadNotifications,"GET","", token);
 }
 function loadNotifications(oritxt){
-    signalcenter.getUnread(JSON.parse(oritxt));
+    if(oritxt)signalcenter.getUnread(JSON.parse(oritxt));
 }
 function getUnread(token){
     var url = siteUrl + '/api/unread'
@@ -106,43 +131,43 @@ function getUnread(token){
 
 // topic
 function createTopic(uid, cid, title, content, token){
-    var url = siteUrl + '/api/v1/topics/';
+    var url = siteUrl + '/api/v2/topics/';
     var postdata = {
         '_uid': uid, 
         'cid': cid, 
         'title': title, 
-        'content': content,
+        'content': content
     }
-    sendWebRequest(url,sendCreateTopic,"POST", postdata, token);
+    sendWebRequest(url,sendCreateTopic,"POST", parseParams(postdata), token);
 }
 function sendCreateTopic(oritxt){
-    signalcenter.newTopic(JSON.parse(oritxt));
+    if(oritxt)signalcenter.newTopic(JSON.parse(oritxt));
 }
 
 
 function replayTopic(tid, uid, content, token){
-    var url = siteUrl + '/api/v1/topics/'+tid;
+    var url = siteUrl + '/api/v2/topics/'+tid;
     var postdata = {
         "content": content,
         "_uid": uid
     }
-    sendWebRequest(url,sendReplayTopic,"POST", postdata, token);
+    sendWebRequest(url,sendReplayTopic,"POST", parseParams(postdata), token);
 }
 function sendReplayTopic(oritxt){
-    signalcenter.replayTopic(JSON.parse(oritxt));
+    if(oritxt)signalcenter.replayTopic(JSON.parse(oritxt));
 }
 
 function replayTo(tid, uid, toPid, content, token){
-    var url = siteUrl + '/api/v1/topics/' + tid;
+    var url = siteUrl + '/api/v2/topics/' + tid;
     var postdata = {
         "content": content,
         "_uid": uid,
         "toPid": toPid
     }
-    sendWebRequest(url,sendReplayFloor,"POST", postdata, token);
+    sendWebRequest(url,sendReplayFloor,"POST", parseParams(postdata), token);
 }
 function sendReplayFloor(oritxt){
-    signalcenter.replayFloor(JSON.parse(oritxt));
+    if(oritxt)signalcenter.replayFloor(JSON.parse(oritxt));
 }
 
 
@@ -162,25 +187,6 @@ function getuserinfo(username, is_username){
     sendWebRequest(url,loadUserInfo,"GET", "","");
 }
 function loadUserInfo(oritxt){
-    signalcenter.getUserInfo(JSON.parse(oritxt));
+    if(oritxt)signalcenter.getUserInfo(JSON.parse(oritxt));
 }
 
-function validatePwd(user, password){
-    var url = siteUrl + '/login'
-    var postdata = {
-        "username": user,
-        "password": password,
-        "remember": "on",
-        "noscript": false
-    }
-    sendWebRequest(url,getValidate,"POST", postdata,"");
-}
-function getValidate(oritxt){
-
-}
-
-
-
-function login(user, password){
-
-}

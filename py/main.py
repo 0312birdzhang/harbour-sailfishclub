@@ -34,143 +34,13 @@ def errMsg(message, code = 400):
         "message": message
     }
 
-def login(user, password):
-    if not validatePwd(user, password):
-        return False
-    userinfo = getuserinfo(user)
-    if not userinfo:
-        logger.error("no such user: %s", user)
-        return False
-    uid = userinfo.get("uid")
-    if not uid:
-        logger.error("get uid failed: %s", user)
-        return False
-    token = createToken(uid, password)
-    if not token:
-        logger.error("create token failed")
-        return False
-    logger.debug(token)
-    userinfo["token"] = token
-    return userinfo
-    
+
 def logout(uid, token):
     return True
 
 
 def validate(uid, token, username):
     return True
-
-def validatePwd(user, password):
-    sess = requests.Session()
-    postData = {
-        "username": user,
-        "password": password,
-        "remember": "on",
-        "noscript": False
-    }
-    resp = sess.post('%s/login' % (siteUrl,), data=postData)
-    ret_code = resp.status_code
-    if ret_code != 200:
-        return False
-    return True
-
-def createToken(uid, password):
-    status_code, playload = client.users.grant_token(uid, password)
-    if not status_code or status_code != 200:
-        return False
-    token = playload.get("token")
-    try:
-        threading.Thread(target=remove_oldtokens, args=(uid, token)).start()
-    except:
-        pass
-    return token
-
-
-def remove_oldtokens(uid, newtoken):
-    status_code, tokens = client.users.get_tokens(uid)
-    if not status_code or status_code != 200:
-        return
-    tokenList = tokens.get("tokens")
-    if len(tokenList) > max_token_size:
-        for oldtoken in tokenList[max_token_size:]:
-            if oldtoken == newtoken:
-                continue
-            client.users.remove_token(uid, oldtoken)
-
-
-def getuserinfo(user, is_username = True):
-    status_code, userinfo = client.users.get(user, is_username)
-    if not status_code or status_code != 200:
-        return False
-    return userinfo
-
-def createUser(user,password,email):
-    logger.debug("start register");
-    status_code, userInfo = client.users.create(user,**{
-        "password":password,
-        "email":email
-    })
-    if not status_code or status_code != 200:
-        return False
-    else:
-        return userInfo
-
-def post(title, content, uid, cid):
-    status_code, response = client.topics.create(int(uid), int(cid), title, content)
-    if not status_code or status_code != 200:
-        return False
-    return response
-
-def replay(tid,uid,content):
-    status_code, response = client.posts.create(uid,tid,content)
-    if not status_code or status_code != 200:
-        logger.debug(str(response))
-        return False
-    return response
-
-def replayTo(tid, uid, toPid, content):
-    status_code, response = client.topics.post(tid, uid, toPid, content)
-    if not status_code or status_code != 200:
-        return False
-    return response
-
-def getrecent(slug):
-    logger.debug("get recent")
-    status_code, topics = client.topics.get_recent(slug=slug)
-    logger.debug("got topics")
-    if not status_code or status_code != 200:
-        return False
-    return topics
-
-def getpopular(slug):
-    status_code, topics = client.topics.get_popular(slug=slug)
-    if not status_code or status_code != 200:
-        return False
-    return topics
-
-def listcategory():
-    status_code, categories = client.categories.list()
-    if not status_code or status_code != 200:
-        return False
-    return categories
-
-def getTopic(tid, slug, token = access_token ):
-    status_code, topic = client.topics.get(tid, slug=slug, **{"_token" : token})
-    if not status_code or status_code != 200:
-        return False
-    return topic
-
-def getNotifications(token):
-    status_code, notices = client.topics.get_notification(**{"_token" : token})
-    if not status_code or status_code != 200:
-        return False
-    return notices
-
-def getUnread(token):
-    status_code, notices = client.topics.get_unread(**{"_token" : token})
-    if not status_code or status_code != 200:
-        return False
-    return notices
 
 
 def uploadImgQiyu(path):
@@ -211,17 +81,11 @@ def previewMd(text):
     return mistune.markdown(text)
 
 
-def search(term, slug, token):
-    status_code, posts = client.topics.search(term, slug, **{"_token" : token})
-    # logger.debug(status_code)
-    # logger.debug(str(posts))
-    if not status_code or status_code != 200:
-        return False
-    return posts
-
-
 def getSecretKey():
     return secret_key
+
+def getToken():
+    return access_token
 
 def resizeImg():
     pass
