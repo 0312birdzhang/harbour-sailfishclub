@@ -5,6 +5,9 @@ Qt.include("ApiCore.js")
 var signalcenter;
 var siteUrl;
 
+
+
+
 function setsignalcenter(mycenter){
     signalcenter=mycenter;
 }
@@ -52,7 +55,6 @@ function getRecent(slug){
 }
 
 function loadRecnetList(oritxt){
-    console.log("loadRecnetList", oritxt);
     signalcenter.getRecent(JSON.parse(oritxt));
 }
 
@@ -62,7 +64,6 @@ function getTopic(tid, slug, token){
 }
 
 function loadTopicDetail(oritxt){
-    console.log("loadTopicDetail", oritxt);
     signalcenter.getTopic(JSON.parse(oritxt));
 }
 
@@ -103,10 +104,83 @@ function getUnread(token){
     sendWebRequest(url,loadNotifications,"GET","", token);
 }
 
-// post
-
-function replayTopic(tid,uid,content){
-    var url = siteUrl + '/api/v1/topics/'+tid;
+// topic
+function createTopic(uid, cid, title, content, token){
+    var url = siteUrl + '/api/v1/topics/';
+    var postdata = {
+        '_uid': uid, 
+        'cid': cid, 
+        'title': title, 
+        'content': content,
+    }
+    sendWebRequest(url,sendCreateTopic,"POST", postdata, token);
+}
+function sendCreateTopic(oritxt){
+    signalcenter.newTopic(JSON.parse(oritxt));
 }
 
-// signalCenter.replayTopic(result);
+
+function replayTopic(tid, uid, content, token){
+    var url = siteUrl + '/api/v1/topics/'+tid;
+    var postdata = {
+        "content": content,
+        "_uid": uid
+    }
+    sendWebRequest(url,sendReplayTopic,"POST", postdata, token);
+}
+function sendReplayTopic(oritxt){
+    signalcenter.replayTopic(JSON.parse(oritxt));
+}
+
+function replayTo(tid, uid, toPid, content, token){
+    var url = siteUrl + '/api/v1/topics/' + tid;
+    var postdata = {
+        "content": content,
+        "_uid": uid,
+        "toPid": toPid
+    }
+    sendWebRequest(url,sendReplayFloor,"POST", postdata, token);
+}
+function sendReplayFloor(oritxt){
+    signalcenter.replayFloor(JSON.parse(oritxt));
+}
+
+
+function getuserinfo(username, is_username){
+    // var url = siteUrl + ('/api/user/email/%s' if "@" in str(id_) else '/api/user/%s' if is_username else '/api/user/uid/%s');
+    var uri = "";
+    if(is_username){
+        if(username.indexOf("@")>0){
+            uri = '/api/user/email/' + username
+        }else{
+            uri = '/api/user/' + username
+        }
+    }else{
+        uri = '/api/user/uid/' + username;
+    }
+    var url = siteUrl + uri;
+    sendWebRequest(url,loadUserInfo,"GET", "","");
+}
+function loadUserInfo(oritxt){
+    signalcenter.getUserInfo(JSON.parse(oritxt));
+}
+
+function validatePwd(user, password){
+    var url = siteUrl + '/login'
+    var postdata = {
+        "username": user,
+        "password": password,
+        "remember": "on",
+        "noscript": false
+    }
+    sendWebRequest(url,getValidate,"POST", postdata,"");
+}
+function getValidate(oritxt){
+
+}
+
+
+
+function login(user, password){
+
+}

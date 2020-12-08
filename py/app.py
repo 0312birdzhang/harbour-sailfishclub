@@ -26,10 +26,12 @@ import traceback
 import urllib.parse
 import json
 import pprint
+import sqlite3
 import pyotherside
 from datetime import datetime, timezone, timedelta
 from diskcache import Cache
 import hashlib
+from http.cookies import SimpleCookie
 
 DOMAIN_NAME = 'sailfishos.club'
 BASE_URL = 'https://%s' % (DOMAIN_NAME, )
@@ -52,6 +54,49 @@ class Api:
         except:
             Utils.log(traceback.format_exc())
             self.cache = None
+
+    def get_other_param(self, username):
+        """
+        Get BDUSS and uid
+        """
+        sid, expires = self.get_session_id_from_cookie()
+        Utils.log(expires)
+        Utils.log(sid)
+        if sid and expires:
+            return {
+                "sid": sid,
+                "expires": expires
+            }
+        else:
+            return None
+
+    def get_session_id_from_cookie(self):
+        """
+        Try get session Id from WebKit cookies DB
+        """
+        conn = sqlite3.connect(COOKIE_PATH)
+        cursor = conn.cursor()
+        params = ('sailfishos.clubexpress.sid',)
+        cursor.execute('SELECT * FROM cookies WHERE cookieId = ?', params)
+        row = cursor.fetchone()
+        expires = ""
+        sid = ""
+        Utils.log("start get get_session_id_from_cookie")
+        if row is not None:
+            cookie = SimpleCookie()
+            cookievalue = row[1].decode('utf-8')
+            cookie.load(cookievalue)
+            for cookie_name, morsel in cookie.items():
+                Utils.log(cookie_name)
+                if cookie_name == 'express.sid':
+                    sid = morsel.value
+            for ex in cookievalue.split(";"):
+                if "expires" in ex:
+                    expires = ex.split("=")[-1].lstrip()
+            return sid, expires
+        else:
+            Utils.log("not found cookies")
+            return None, None
 
     def getMd5(self, name):
         h = hashlib.md5()

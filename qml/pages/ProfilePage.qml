@@ -8,6 +8,7 @@ Page{
     objectName: "profilePage"
     allowedOrientations: Orientation.All
     property string username: "guest";
+    property string useravatar;
     property variant userData: null;
     property bool isMe: typeof username == "string" ? username === userinfo.username : username === userinfo.uid;
     Connections{
@@ -88,7 +89,7 @@ Page{
                     }
                     height: isLandscape?parent.width/9:parent.width/6;
                     width: height;
-                    avatar: userData?("" !== userData.avatar?(siteUrl+userData.avatar):""):"image://theme/harbour-sailfishclub"
+                    avatar: useravatar
                     color:  userData?userData.user_color:""
                     text:   userData?userData.user_text:""
                     username: userData? userData.username:""

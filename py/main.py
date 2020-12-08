@@ -4,7 +4,6 @@
 from __future__ import print_function
 import requests
 import http.cookiejar as cookielib
-from pynodebb import Client
 from sfctoken import access_token,secret_key
 import logging
 import sys,os
@@ -28,17 +27,6 @@ siteUrl = 'https://sailfishos.club'
 
 if not os.path.exists(savePath):
     os.mkdir(savePath)
-
-client = Client(siteUrl, access_token)
-client.configure(**{
-    'page_size': 20,
-    'ips': [
-            '104.31.87.173',
-            '104.31.86.173',
-            '172.67.181.63'
-            ],
-    'domain': 'sailfishos.club'
-})
 
 def errMsg(message, code = 400):
     return {
@@ -66,23 +54,11 @@ def login(user, password):
     return userinfo
     
 def logout(uid, token):
-    status_code, response = client.users.remove_token(uid, token)
-    if not status_code or status_code != 200:
-        return False
     return True
 
 
 def validate(uid, token, username):
-    """
-    validate user token
-    """
-    status_code, tokens = client.users.get_tokens(uid)
-    if not status_code or status_code != 200:
-        return False
-    if token not in tokens.get("tokens"):
-        return False
-    else:
-        return getuserinfo(username)
+    return True
 
 def validatePwd(user, password):
     sess = requests.Session()

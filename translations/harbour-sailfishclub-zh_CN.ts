@@ -520,47 +520,47 @@
     <name>harbour-sailfishclub</name>
     <message>
         <source>Network not connected</source>
-        <translation>网络未连接</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Try again later please</source>
-        <translation>请稍后重试</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>new replay</source>
-        <translation>新回复</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>preview replay</source>
-        <translation>预览回复</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Request timeout</source>
-        <translation>请求超时</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Login failed,try again later</source>
-        <translation>登录失败，请稍后重试</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Picture downloaded</source>
-        <translation>图片已下载</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Download picture failed</source>
-        <translation>下载图片失败</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Welcome to</source>
-        <translation>Welcome to</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>SailfishClub</source>
-        <translation>SailfishClub</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Starting open link...</source>
-        <translation>即将打开连接。。。</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

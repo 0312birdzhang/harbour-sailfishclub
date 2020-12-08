@@ -239,7 +239,7 @@ ApplicationWindow
 
     Timer{
         id: validateTokenTimer
-        interval: 30;
+        interval: 3000;
         running: false;
         repeat: false
         onTriggered: {
@@ -355,16 +355,18 @@ ApplicationWindow
             
         }
 
-        // 超过15天校验token
+        
         function validateToken(){
             var currnetUnix = parseInt(new Date().getTime()/1000)
             var savedUnix = settings.get_savetime();
-            if(currnetUnix - parseInt(savedUnix) > 86400*15){
-                var uid = settings.get_uid();
-                var token = settings.get_token();
-                var username = settings.get_username();
-                console.log("need validate token")
-                py.validate(uid, token, username);
+            if(currnetUnix > parseInt(savedUnix)){
+                // 需要重新登录
+                toLoginPage();
+                // var uid = settings.get_uid();
+                // var token = settings.get_token();
+                // var username = settings.get_username();
+                // console.log("need validate token")
+                // py.validate(uid, token, username);
             }
         }
 
@@ -461,7 +463,7 @@ ApplicationWindow
             getNotifytimer.stop();
         }
 
-        function saveData(uid, token, username, password, logined, avatar){
+        function saveData(uid, token, username, password, logined, avatar, expires){
             if(!userinfo.logined){
                 console.log("not logined")
                 return;
@@ -478,7 +480,9 @@ ApplicationWindow
             settings.set_token(token);
             settings.set_logined(logined);
             settings.set_avatar(avatar);
-            settings.set_savetime(parseInt(new Date().getTime()/1000).toString());
+            // Mon, 21-Dec-2020 08:34:25 GMT
+            var expiresDate = expires.split(", ")[1]
+            settings.set_savetime(parseInt(new Date(expiresDate).getTime()/1000).toString());
         }
 
         // 获取最新帖子
@@ -559,29 +563,35 @@ ApplicationWindow
 
         // 回复贴子
         function replayTopic(tid,uid,content){
-            loading = true;
-            call('main.replay',[tid,uid,content],function(result){
-                loading = false;
-                signalCenter.replayTopic(result);
-            });
+            // loading = true;
+            // call('main.replay',[tid,uid,content],function(result){
+            //     loading = false;
+            //     signalCenter.replayTopic(result);
+            // });
+            var token = settings.get_token();
+            Main.replayTopic(tid,uid,content,token);
         }
 
         // 回复贴子中的楼层
         function replayFloor(tid, uid, toPid, content){
-            loading = true;
-            call('main.replayTo',[tid, uid, toPid, content],function(result){
-                loading = false;
-                signalCenter.replayFloor(result);
-            });
+            // loading = true;
+            // call('main.replayTo',[tid, uid, toPid, content],function(result){
+            //     loading = false;
+            //     signalCenter.replayFloor(result);
+            // });
+            var token = settings.get_token();
+            Main.replayTo(tid, uid, toPid, content, token);
         }
 
         // 发新贴
         function newTopic(title, content, uid, cid){
-            loading = true;
-            call('main.post',[title, content, uid, cid],function(result){
-                loading = false;
-                signalCenter.newTopic(result);
-            });
+            // loading = true;
+            // call('main.post',[title, content, uid, cid],function(result){
+            //     loading = false;
+            //     signalCenter.newTopic(result);
+            // });
+            var token = settings.get_token();
+            Main.createTopic(uid, cid, title, content, token);
         }
 
         //预览发贴内容
@@ -619,12 +629,13 @@ ApplicationWindow
 
         // 获取用户信息
         function getUserInfo(username, is_username){
-            loading = true;
-            call('main.getuserinfo',[username, is_username],function(result){
-                loading = false;
-                signalCenter.getUserInfo(result);
+            // loading = true;
+            // call('main.getuserinfo',[username, is_username],function(result){
+            //     loading = false;
+            //     signalCenter.getUserInfo(result);
                 
-            });
+            // });
+            Main.getuserinfo(username, is_username);
         }
 
         // 获取贴子回复通知
@@ -665,7 +676,7 @@ ApplicationWindow
             if (result && result != "Forbidden" && networkStatus){
                 if(!router)router=router_recent;
                 if(!expire)expire=3600.00;
-                console.log("set_query_from_cache, router:", router, ", key:", router+slug)
+                // console.log("set_query_from_cache, router:", router, ", key:", router+slug)
                 call('app.api.set_query_list_data',[router+ (slug?slug:""), result, expire],function(result){
                     if(!result){
                         console.log("set_query_from_cache failed")
@@ -888,9 +899,10 @@ ApplicationWindow
     }
 
 
-    function toUserInfoPage(username){
+    function toUserInfoPage(username, avatar){
         pageStack.push(Qt.resolvedUrl("pages/ProfilePage.qml"),{
-                "username":username
+                "username": username,
+                "useravatar": avatar
             });
     }
 

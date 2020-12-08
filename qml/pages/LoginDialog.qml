@@ -43,8 +43,8 @@ Dialog {
         }
     }
 
-    LoginComponent {
-    // WebViewLogin {
+    // LoginComponent {
+    WebViewLogin {
         id:loginView
         anchors.fill: parent
         opacity: _showLoginView ? 1 : 0
