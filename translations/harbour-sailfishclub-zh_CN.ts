@@ -436,31 +436,31 @@
     <name>TopicPage</name>
     <message>
         <source>Replay</source>
-        <translation>回复</translation>
-    </message>
-    <message>
-        <source>Prev Page</source>
-        <translation>上一页</translation>
-    </message>
-    <message>
-        <source>Next Page</source>
-        <translation>下一页</translation>
-    </message>
-    <message>
-        <source>Empty,Click to retry</source>
-        <translation>点击重试</translation>
-    </message>
-    <message>
-        <source>ReplayError</source>
-        <translation>回复出错</translation>
-    </message>
-    <message>
-        <source>Load failed,try again later</source>
-        <translation>加载失败，请稍后重试</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Login to replay</source>
-        <translation>登录后回复</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Prev Page</source>
+        <translation type="unfinished">上一页</translation>
+    </message>
+    <message>
+        <source>Next Page</source>
+        <translation type="unfinished">下一页</translation>
+    </message>
+    <message>
+        <source>Empty,Click to retry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load failed,try again later</source>
+        <translation type="unfinished">加载失败，请稍后重试</translation>
+    </message>
+    <message>
+        <source>ReplayError</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -536,10 +536,6 @@
     </message>
     <message>
         <source>Request timeout</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Login failed,try again later</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

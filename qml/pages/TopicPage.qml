@@ -118,7 +118,7 @@ Page{
                 font.pixelSize: Theme.fontSizeExtraSmall * 0.8
                 font.italic: true
                 text: signature||""
-                visible: signature
+                visible: signature||false
                 onLinkActivated: {
                     appwindow.openLink(link)
                 }
@@ -252,6 +252,7 @@ Page{
         target: signalCenter
         onGetTopic:{
             var topicData = result;
+            console.log(result)
             if (topicData && topicData != "Forbidden"){
                 var posts = topicData.posts;
                 var pagination = topicData.pagination;
@@ -308,13 +309,13 @@ Page{
 
     function load(force_refresh){
         console.log("slug:", slug?slug+"?page="+current_page:undefined,", tid:"+tid)
-        if(force_refresh){
+//        if(force_refresh){
             py.getTopic(tid,slug?slug+"?page="+current_page:undefined);
-        }else{
-            py.get_query_from_cache(appwindow.router_topic, 
-            slug?slug+"?page="+current_page:undefined,
-            tid)
-        }
+//        }else{
+//            py.get_query_from_cache(appwindow.router_topic,
+//            slug?slug+"?pa/*ge="+current_page:undefined,
+//            tid)
+//        }
     }
 
     
@@ -375,9 +376,9 @@ Page{
                             var subcomments = commentField.children[3].text;
                             //replay
                             if(pid){
-                                py.replayFloor(dialog.tid,userinfo.uid,pid,subcomments);
+                                py.replayFloor(dialog.tid, pid, subcomments);
                             }else{
-                                py.replayTopic(dialog.tid,userinfo.uid,subcomments);
+                                py.replayTopic(dialog.tid, subcomments);
                             }
 
                         }
@@ -391,16 +392,20 @@ Page{
                 target: signalCenter
                 onReplayFloor:{
                     replayCallback(result);
+//                    topicPage.load(true);
                 }
                 onReplayTopic:{
                     replayCallback(result);
+//                    topicPage.load(true);
                 }
             }
 
-            function replayCallback(ret){
-                if(!ret || ret == "false"){
+            function replayCallback(result){
+                if(!result || result.code !== "ok"){
                     notification.showPopup(qsTr("ReplayError"),JSON.stringify(ret),"image://theme/icon-lock-warning");
                 }else{
+                    console.log(result)
+                    var ret = result.payload;
                     replaysTmpModel.append({
                                          "timestamp":ret.timestampISO,
                                          "content":ret.content,
@@ -409,7 +414,8 @@ Page{
                                          "picture":userinfo.avatar,
                                          "floor":ret.index,
                                          "user_group_icon":userinfo.groupIcon,
-                                         "user_group_name":ret.user.selectedGroup||"",
+                                         "user_group_name": (ret.user && ret.user.selectedGroup)?
+                                                                ret.user.selectedGroup:"",
                                          "user_text":userinfo.user_text,
                                          "user_color":userinfo.user_color,
                                          "userReplies": ret.replies || {},

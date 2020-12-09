@@ -435,7 +435,11 @@
 <context>
     <name>TopicPage</name>
     <message>
-        <source>Empty,Click to retry</source>
+        <source>Replay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Login to replay</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -447,11 +451,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Replay</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ReplayError</source>
+        <source>Empty,Click to retry</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -459,7 +459,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Login to replay</source>
+        <source>ReplayError</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -536,10 +536,6 @@
     </message>
     <message>
         <source>Request timeout</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Login failed,try again later</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

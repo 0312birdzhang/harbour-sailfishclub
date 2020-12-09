@@ -11,6 +11,7 @@ import binascii
 import shutil
 #from cache import *
 from basedir import *
+from config import DOMAIN_NAME, PORT
 import codecs
 import threading
 
@@ -23,7 +24,8 @@ logger.setLevel(logging.DEBUG)
 UnOfficalBlogURL = "https://notexists.top/api/post"
 savePath = os.path.join(HOME, "Pictures","SailfishClub")
 max_token_size = 4
-siteUrl = 'https://sailfishos.club'
+# siteUrl = 'https://sailfishos.club'
+siteUrl = "http://%s:%s" % (DOMAIN_NAME, PORT)
 
 if not os.path.exists(savePath):
     os.mkdir(savePath)

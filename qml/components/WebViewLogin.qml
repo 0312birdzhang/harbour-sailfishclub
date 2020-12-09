@@ -43,7 +43,8 @@ Item {
               console.log("WebView.LoadSucceededStatus", WebView.LoadSucceededStatus)
               if (loadRequest.status === WebView.LoadSucceededStatus &&
                    (loadRequest.url.toString().indexOf("/recent") > 0 ||
-                    loadRequest.url.toString().indexOf("/user/") > 0
+                    loadRequest.url.toString().indexOf("/user/") > 0 ||
+                    loadRequest.url.toString().indexOf("loggedin") > 0
                     )){
                   console.log("===========");
                   experimental.evaluateJavaScript(webloginComponent.getUserInfoScript, function(rs){
@@ -53,13 +54,15 @@ Item {
                               if (ret){
                                   console.log("get ret")
                                   var expires = ret.expires;
+                                  var cookie = rs.csrf+"; express.sid="+ret.sid;
                                   userinfo.logined = true;
                                   userinfo.uid = rs.uid;
                                   userinfo.username = rs.username;
-                                  userinfo.avatar = rs.avatar;
-                                  signalCenter.loginSuccessed();
-                                  py.saveData(userinfo.uid, ret.sid, userinfo.username, "", 
+                                  userinfo.avatar = rs.avatar||"";
+                                  console.log("csrf:", rs.csrf);
+                                  py.saveData(userinfo.uid, cookie, userinfo.username, "",
                                   userinfo.logined, userinfo.avatar, expires);
+                                  signalCenter.loginSuccessed();
                                   webloginComponent.loginSucceed();
                               }
                           })
@@ -75,7 +78,8 @@ Item {
 var userName = document.getElementById('user-header-name').innerText
 var uid = document.getElementsByClassName('avatar user-icon avatar-lg avatar-rounded')[0].getAttribute('data-uid')
 var avatar = document.getElementsByClassName('avatar user-icon avatar-lg avatar-rounded')[0].getAttribute('src')
-return {username: userName, uid: uid, avatar: avatar}
+var csrf = document.cookie
+return {username: userName, uid: uid, avatar: avatar, csrf: csrf}
 })()"
 }
 

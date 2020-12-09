@@ -54,7 +54,8 @@ ApplicationWindow
     property bool loading: false
     property int page_size: 20
     property string current_router: "recent"
-    property string siteUrl: "https://sailfishos.club"
+    // property string siteUrl: "https://sailfishos.club"
+    property string siteUrl: "http://192.168.2.204:4567"
     property alias  userinfo: userinfo
     property bool _showReplayNotification: true
     property bool networkStatus
@@ -291,10 +292,23 @@ ApplicationWindow
                 loginRetry--;
             }
         }
+        onLoadUserToken: {
+            var token = result.token;
+            var uid = result.uid;
+            var username = result.username;
+            var avatar = result.avatar;
+            userinfo.logined = true;
+            userinfo.uid = uid;
+            userinfo.username = username;
+            userinfo.avatar = avatar;
+            signalCenter.loginSuccessed();
+            var expires = parseInt(new Date().getTime()/1000) + 30*86400;
+            py.saveData(uid, token, username, "", "true", avatar, expires);
+        }
     }
 
     UserInfo{
-        id:userinfo
+        id: userinfo
     }
 
     TransferMethodsModel {
@@ -328,9 +342,10 @@ ApplicationWindow
         onError: console.log('Error: ' + traceback)
 
         function getToken(){
-            call("main.getToken", [], function(result){
-                py.token = result;
-            });
+//           call("main.getToken", [], function(result){
+//               py.token = result;
+//           });
+           py.token = settings.get_token();
         }
 
         function initLogin(){
@@ -352,14 +367,13 @@ ApplicationWindow
             }else{
                 if(uid && token){
                     console.log("logined via token")
-                    py.validate(uid, token, username)
+//                    py.validate(uid, token, username)
                 }else if(username && password){
                     var derpass = Api.decrypt(password, py.getSecretKey());
                     if(derpass)py.login(username,derpass);
                     console.log("logined via password")
                 }
             }
-            
         }
 
         
@@ -369,11 +383,6 @@ ApplicationWindow
             if(!savedUnix || currnetUnix > parseInt(savedUnix)){
                 // 需要重新登录
                 toLoginPage();
-                // var uid = settings.get_uid();
-                // var token = settings.get_token();
-                // var username = settings.get_username();
-                // console.log("need validate token")
-                // py.validate(uid, token, username);
             }
         }
 
@@ -419,40 +428,7 @@ ApplicationWindow
                 console.log("username or password is invalid");
                 return;
             }
-            call('main.login',[username,password],function(result){
-                if(result && result != "Forbidden" && result != "False"){
-                    userinfo.uid = result.uid.toString();
-                    userinfo.username = result.username;
-//                    userinfo.fullname = result.fullname;
-                    userinfo.email = result.email|| "";
-                    userinfo.website = result.website;
-                    userinfo.avatar = result.picture|| "";
-                    userinfo.groupTitle = result.groupTitle|| "";
-                    userinfo.groupIcon = result.groupIcon|| "";
-                    userinfo.signature = result.signature|| "";
-                    userinfo.topiccount = result.topiccount.toString();
-                    userinfo.postcount = result.postcount.toString();
-                    userinfo.aboutme = result.aboutme|| "";
-                    userinfo.user_text = result["icon:text"];
-                    userinfo.user_color = result["icon:bgColor"];
-                    userinfo.user_cover = result["cover:url"];
-                    // console.log(appwindow.siteUrl + result["cover:url"]);
-                    userinfo.reputation = result.reputation;
-                    userinfo.followerCount = result.followerCount?result.followerCount:0;
-                    userinfo.followingCount = result.followingCount?result.followingCount:0;
-                    userinfo.logined = true;
-                    signalCenter.loginSuccessed();
-                    saveData(result.uid, result.token, userinfo.username, password, "true", userinfo.avatar);
-                }else if(result == "Forbidden"){
-                    notification.show(qsTr("Login failed,try again later"),
-                                      "image://theme/icon-s-high-importance"
-                                      );
-                    loading = false;
-                }else{
-                    signalCenter.loginFailed(result);
-                    loading = false;
-                }
-            })
+            Main.login(username, password);
         }
 
         function logout(){
@@ -488,12 +464,13 @@ ApplicationWindow
             settings.set_logined(logined);
             settings.set_avatar(avatar);
             // Mon, 21-Dec-2020 08:34:25 GMT
-            var exdate = expires.split(", ")[1];
-            console.log(exdate);
+//            var exdate = expires.split(", ")[1];
+//            console.log(exdate);
             // console.log(new Date(exdate).getTime()/1000);
             // console.log(parseInt(new Date(exdate).getTime()/1000).toString());
             // TODO new Date(exdate) not working as excepted
             // 当前时间+2周
+
             settings.set_savetime(parseInt(new Date().getTime()/1000 + 2*7*86400).toString());
         }
 
@@ -505,7 +482,7 @@ ApplicationWindow
             //     signalCenter.getRecent(result);
             //     py.set_query_to_cache(router_recent, slug, result, 3600.00)
             // });
-            Main.getRecent(slug);
+            Main.getRecent(slug, py.token, userinfo.uid);
 
         }
 
@@ -552,17 +529,16 @@ ApplicationWindow
 
         // 获取贴子内容
         function getTopic(tid,slug){
-            console.log("tid,"+tid,",slug:"+slug)
-            loading = true;
+            console.log("tid:"+tid,",slug:"+slug)
             if(userinfo.logined){
-                Main.getTopic(tid,slug,py.token);
+                Main.getTopic(tid,slug,py.token, userinfo.uid);
                 // call('main.getTopic',[tid,slug,token],function(result){
                 //     loading = false;
                 //     signalCenter.getTopic(result);
                 //     py.set_query_to_cache(router_topic, tid+(slug?slug:""), result, 1200.00)
                 // });
             }else{
-                Main.getTopic(tid,slug);
+                Main.getTopic(tid,slug,null,null);
                 // call('main.getTopic',[tid,slug],function(result){
                 //     loading = false;
                 //     signalCenter.getTopic(result);
@@ -573,33 +549,33 @@ ApplicationWindow
         }
 
         // 回复贴子
-        function replayTopic(tid,uid,content){
+        function replayTopic(tid, content){
             // loading = true;
             // call('main.replay',[tid,uid,content],function(result){
             //     loading = false;
             //     signalCenter.replayTopic(result);
             // });
-            Main.replayTopic(tid, uid, content, py.token);
+            Main.replayTopic(tid, userinfo.uid, content, py.token);
         }
 
         // 回复贴子中的楼层
-        function replayFloor(tid, uid, toPid, content){
+        function replayFloor(tid, toPid, content){
             // loading = true;
             // call('main.replayTo',[tid, uid, toPid, content],function(result){
             //     loading = false;
             //     signalCenter.replayFloor(result);
             // });
-            Main.replayTo(tid, uid, toPid, content, py.token);
+            Main.replayTo(tid, userinfo.uid, toPid, content, py.token);
         }
 
         // 发新贴
-        function newTopic(title, content, uid, cid){
+        function newTopic(title, content, cid){
             // loading = true;
             // call('main.post',[title, content, uid, cid],function(result){
             //     loading = false;
             //     signalCenter.newTopic(result);
             // });
-            Main.createTopic(uid, cid, title, content, py.token);
+            Main.createTopic(userinfo.uid, cid, title, content, py.token);
         }
 
         //预览发贴内容

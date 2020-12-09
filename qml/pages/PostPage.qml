@@ -31,7 +31,7 @@ Dialog  {
 //            console.log(comments)
 //            console.log(userinfo.uid)
 //            console.log(cid);
-            py.newTopic(title.text, comments, userinfo.uid, cid);
+            py.newTopic(title.text, comments, cid);
 
         }else{
             appwindow.postdraft = comments;

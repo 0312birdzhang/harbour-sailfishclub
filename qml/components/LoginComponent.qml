@@ -68,15 +68,15 @@ Item {
 
 
                     PasswordField {
-                        id:password
+                        id: password
                         width:loginComponent.width - Theme.paddingLarge*4
                         height:implicitHeight
                         font.pixelSize: Theme.fontSizeMedium
                         placeholderText: qsTr("Enter Password")
-                        text: {
-                            var password = settings.get_password();
-                            return Api.decrypt(password, py.getSecretKey());
-                        }
+                        // text: {
+                        //     var password = settings.get_password();
+                        //     return Api.decrypt(password, py.getSecretKey());
+                        // }
                         label: qsTr("Password")
                         EnterKey.iconSource: "image://theme/icon-m-enter-next"
                         EnterKey.onClicked: {

@@ -16,5 +16,6 @@
         <file>py/diskcache/persistent.py</file>
         <file>py/diskcache/stampede.py</file>
         <file>py/app.py</file>
+        <file>py/config.py</file>
     </qresource>
 </RCC>

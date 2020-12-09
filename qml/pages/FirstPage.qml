@@ -246,7 +246,8 @@ Page {
     function load(via_pulley){
         console.log("current router:" + current_router,", cuttent page:"+current_page);
         if(!via_pulley ){
-            py.get_query_from_cache(current_router, "page=" + current_page + (cid?("&cid=" + cid ):""));
+//            py.get_query_from_cache(current_router, "page=" + current_page + (cid?("&cid=" + cid ):""));
+            py.getRecent("page=" + current_page + (cid?("&cid=" + cid ):""))
         }else{
             switch(current_router){
             case router_recent:
@@ -271,15 +272,15 @@ Page {
                 var topics = result.topics;
                 var pagination = result.pagination;
 
-                var headers = result.widgets.header;
-                var footers = result.widgets.footer;
+//                var headers = result.widgets.header;
+//                var footers = result.widgets.footer;
 
-                if(headers){
+//                if(headers){
 
-                }
-                if(footers){
+//                }
+//                if(footers){
                     
-                }
+//                }
                 if(pagination){
                     current_page = pagination.currentPage;
                     pageCount = pagination.pageCount;
@@ -295,6 +296,7 @@ Page {
                 }
 
                 listModel.clear();
+                console.log(topics)
                 for(var i = 0;i<topics.length;i++){
                     if(topics[i].deleted)continue;
                     listModel.append({

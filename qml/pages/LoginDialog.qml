@@ -19,15 +19,6 @@ Dialog {
 
     //只有当登陆成功的时候才能accept
     canAccept: _canAccept
-    BusyIndicator {
-        id: busyIndicator
-        parent: dialog
-        anchors.centerIn: parent
-        size: BusyIndicatorSize.Large
-        running: !_showLoginView
-        opacity: busyIndicator.running ? 1 : 0
-    }
-
     onTokenChanged: {
         _showLoginView = false;
         //api.checkToken(_token); //signal onTokenExpired
@@ -43,8 +34,8 @@ Dialog {
         }
     }
 
-    // LoginComponent {
-    WebViewLogin {
+    LoginComponent {
+    // WebViewLogin {
         id:loginView
         anchors.fill: parent
         opacity: _showLoginView ? 1 : 0

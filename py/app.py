@@ -28,14 +28,12 @@ import json
 import pprint
 import sqlite3
 import pyotherside
-from datetime import datetime, timezone, timedelta
+from datetime import datetime
 from diskcache import Cache
 import hashlib
 from http.cookies import SimpleCookie
+from config import DOMAIN_NAME
 
-DOMAIN_NAME = 'sailfishos.club'
-BASE_URL = 'https://%s' % (DOMAIN_NAME, )
-TIMEZONE = timezone(timedelta(hours=2), 'Europe/Helsinki')
 HARBOUR_APP_NAME = 'harbour-sailfishclub'
 HOME = os.path.expanduser('~')
 XDG_DATA_HOME = os.environ.get('XDG_DATA_HOME', os.path.join(HOME, '.local', 'share'))
@@ -76,7 +74,8 @@ class Api:
         """
         conn = sqlite3.connect(COOKIE_PATH)
         cursor = conn.cursor()
-        params = ('sailfishos.clubexpress.sid',)
+        params = ('%sexpress.sid' % (DOMAIN_NAME,) ,)
+        Utils.log("%sexpress.sid" % (DOMAIN_NAME,))
         cursor.execute('SELECT * FROM cookies WHERE cookieId = ?', params)
         row = cursor.fetchone()
         expires = ""

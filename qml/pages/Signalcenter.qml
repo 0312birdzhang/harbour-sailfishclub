@@ -33,6 +33,8 @@ QtObject{
     signal getUnOfficalContent(var result);
 
     signal imageSelected(var url, var desc);
+
+    signal loadUserToken(var result);
 }
 
 
