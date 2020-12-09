@@ -411,7 +411,7 @@ Page{
                                          "content":ret.content,
                                          "uid":userinfo.uid.toString(),
                                          "username":userinfo.username,
-                                         "picture":userinfo.avatar,
+                                         "picture":userinfo.avatar||"",
                                          "floor":ret.index,
                                          "user_group_icon":userinfo.groupIcon,
                                          "user_group_name": (ret.user && ret.user.selectedGroup)?

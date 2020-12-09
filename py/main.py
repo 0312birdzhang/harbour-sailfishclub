@@ -4,7 +4,7 @@
 from __future__ import print_function
 import requests
 import http.cookiejar as cookielib
-from sfctoken import access_token,secret_key
+from sfctoken import secret_key
 import logging
 import sys,os
 import binascii
@@ -86,8 +86,6 @@ def previewMd(text):
 def getSecretKey():
     return secret_key
 
-def getToken():
-    return access_token
 
 def resizeImg():
     pass

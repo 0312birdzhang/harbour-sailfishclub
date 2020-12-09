@@ -342,9 +342,6 @@ ApplicationWindow
         onError: console.log('Error: ' + traceback)
 
         function getToken(){
-//           call("main.getToken", [], function(result){
-//               py.token = result;
-//           });
            py.token = settings.get_token();
         }
 
