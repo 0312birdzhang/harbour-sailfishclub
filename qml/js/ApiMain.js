@@ -99,18 +99,17 @@ function setTwofactor(code){
 function getRecent(slug, token, uid){
     var url = siteUrl + '/api/recent?' + slug //( slug?(slug + (uid?("&_uid="+uid):"")): (tid + (uid?("?_uid="+uid):"") ) );
     console.log(url)
-    sendWebRequest(url,loadRecnetList, "GET","", setAuthorization(token));
+    sendWebRequest(url,loadRecnetList, "GET","", "");
 }
 
 function loadRecnetList(oritxt){
-//    console.log("loadRecentList",oritxt)
     if(oritxt)signalcenter.getRecent(JSON.parse(oritxt));
 }
 
 function getTopic(tid, slug, token, uid){
     var url = siteUrl + '/api/topic/' + (slug?slug:tid);
     console.log(url)
-    sendWebRequest(url,loadTopicDetail,"GET","",setAuthorization(token));
+    sendWebRequest(url,loadTopicDetail,"GET","","");
 }
 
 function loadTopicDetail(oritxt){
@@ -177,8 +176,7 @@ function replayTopic(tid, uid, content, token){
     var postdata = {
         "tid": tid,
         "content": content,
-        "_uid": uid,
-        "uid": uid
+        "_uid": uid
     }
 
     sendWebRequest(url,sendReplayTopic,"POST", parseParams(postdata), setAuthorization(token));
@@ -262,7 +260,7 @@ function loadUserToken(oritxt, userinfostr){
         if(result.code !== "ok"){
             if(result.code === "2fa-enabled"){
                 // x-two-factor-authentication header
-                signalcenter.login2fa();
+                signalcenter.loginTwofactor();
                 return;
             }else{
                 signalcenter.loginFailed(JSON.parse(oritxt).message);

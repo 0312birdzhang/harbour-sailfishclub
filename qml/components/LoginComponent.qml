@@ -59,6 +59,7 @@ Item {
                         height:implicitHeight
                         inputMethodHints:Qt.ImhNoAutoUppercase | Qt.ImhUrlCharactersOnly
                         font.pixelSize: Theme.fontSizeMedium
+                        visible: !twofactorenabled
                         placeholderText: qsTr("Enter UserName/Email")
                         label: qsTr("UserName")
                         text: settings.get_username();
@@ -73,6 +74,7 @@ Item {
                         width:loginComponent.width - Theme.paddingLarge*4
                         height:implicitHeight
                         font.pixelSize: Theme.fontSizeMedium
+                        visible: !twofactorenabled
                         placeholderText: qsTr("Enter Password")
                         // text: {
                         //     var password = settings.get_password();
@@ -128,7 +130,7 @@ Item {
                 }
             }
             Label{
-                id:regester
+                id: regester
                 text:qsTr("Don't have accounts?")
                 anchors{
                     right: parent.right
@@ -140,7 +142,10 @@ Item {
                 }
                 MouseArea{
                     anchors.fill: parent
-                    onClicked: pageStack.push(Qt.resolvedUrl("../pages/RegisterPage.qml"))
+                    // onClicked: pageStack.push(Qt.resolvedUrl("../pages/RegisterPage.qml"))
+                    onClicked: {
+                        Qt.openUrlExternally(appwindow.siteUrl+"/register");
+                    }
                 }
             }
         }

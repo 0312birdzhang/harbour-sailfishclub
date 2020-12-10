@@ -240,6 +240,14 @@
         <source>Please try again later.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Enter 2FA code</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>2FA</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NavigationPanel</name>

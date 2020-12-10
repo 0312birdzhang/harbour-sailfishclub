@@ -443,6 +443,5 @@ Page{
     }
     Component.onDestruction: {
         appwindow.topicdraft = "";
-        appwindow.loading = false;
     }
 }
