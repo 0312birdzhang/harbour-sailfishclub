@@ -184,7 +184,7 @@ Page {
             enabled: text
             verticalOffset: {
                 var h = Qt.inputMethod.keyboardRectangle.height
-                return h ? (parent.height - h) * 0.5 : 0
+                return h ? (parent.height - h) * 0.2 : 0
             }
 
             Behavior on verticalOffset {
@@ -231,7 +231,6 @@ Page {
                 searchView.model = searchModel;
                 // console.log("searchModel count:"+searchModel.count)
             }else{
-                appwindow.loading = false;
                 console.log("load failed!!!");
                 // notification.show(qsTr("Load failed,try again later"),
                 //                   "image://theme/icon-lock-warning"

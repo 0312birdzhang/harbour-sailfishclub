@@ -2,15 +2,6 @@
 Qt.include("ApiCore.js")
 var py;
 var app;
-// login function
-function login(uid, token, username, password){
-    if(uid && token){
-        py.validate(uid, token)
-    }else{
-        py.login(username, password)
-    }
-}
-
 
 function splitContent(topic_content, parent) {
     var model = Qt.createQmlObject('import QtQuick 2.0; ListModel {}', parent);

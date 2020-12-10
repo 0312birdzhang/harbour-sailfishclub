@@ -11,17 +11,16 @@ var userAgent = "Mozilla/5.0 (Mobile Linux; U; like Android 4.4.3; Sailfish OS/2
 function setsignalcenter(mycenter){
     signalcenter=mycenter;
 }
-function sendWebRequest(url, callback, method, postdata, token, otherparams) {
+function sendWebRequest(url, callback, method, postdata, headers, otherparams) {
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
         switch(xmlhttp.readyState) {
         case xmlhttp.OPENED:signalcenter.loadStarted();break;
-        case xmlhttp.HEADERS_RECEIVED:if (xmlhttp.status !== 200){
+        case xmlhttp.HEADERS_RECEIVED:if (xmlhttp.status !== 200 && xmlhttp.status !== 400 ){
             signalcenter.loadFailed(qsTr("connect error,code:")+ xmlhttp.status+"  "+xmlhttp.statusText);
-
             break;
         }
-        case xmlhttp.DONE:if (xmlhttp.status === 200) {
+        case xmlhttp.DONE:if (xmlhttp.status === 200 || xmlhttp.status === 400) {
                 try {
                     if(otherparams){
                         callback(xmlhttp.responseText, otherparams);
@@ -41,10 +40,11 @@ function sendWebRequest(url, callback, method, postdata, token, otherparams) {
     }
     if(method==="GET") {
         xmlhttp.open("GET",url);
-        if(token){
+        if(headers){
             // xmlhttp.withCredentials = true;
-            xmlhttp.setRequestHeader("Authorization", "Bearer "+ token);
-            //  xmlhttp.setRequestHeader("Cookie", token);
+            for(var i in headers){
+                xmlhttp.setRequestHeader(i, headers[i]);
+            }
         }
         xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         xmlhttp.setRequestHeader("User-Agent", userAgent);
@@ -52,8 +52,10 @@ function sendWebRequest(url, callback, method, postdata, token, otherparams) {
     }
     if(method==="POST") {
         xmlhttp.open("POST",url);
-        if(token){
-           xmlhttp.setRequestHeader("Authorization", "Bearer "+ token);
+        if(headers){
+            for(var i in headers){
+                xmlhttp.setRequestHeader(i, headers[i]);
+            }
         }
         xmlhttp.setRequestHeader("User-Agent", userAgent);
         
@@ -74,11 +76,30 @@ function parseParams(postdata){
     return result;
 }
 
+function setAuthorization(token){
+    if(token){
+        return {
+            "Authorization": "Bearer "+ token
+        }
+    }else{
+        return {}
+    }
+}
+
+function setTwofactor(code){
+    if(code){
+        return {
+            "x-two-factor-authentication": code
+        }
+    }else{
+        return {}
+    }
+}
 
 function getRecent(slug, token, uid){
     var url = siteUrl + '/api/recent?' + slug //( slug?(slug + (uid?("&_uid="+uid):"")): (tid + (uid?("?_uid="+uid):"") ) );
     console.log(url)
-    sendWebRequest(url,loadRecnetList, "GET","", token);
+    sendWebRequest(url,loadRecnetList, "GET","", setAuthorization(token));
 }
 
 function loadRecnetList(oritxt){
@@ -89,7 +110,7 @@ function loadRecnetList(oritxt){
 function getTopic(tid, slug, token, uid){
     var url = siteUrl + '/api/topic/' + (slug?slug:tid);
     console.log(url)
-    sendWebRequest(url,loadTopicDetail,"GET","",token);
+    sendWebRequest(url,loadTopicDetail,"GET","",setAuthorization(token));
 }
 
 function loadTopicDetail(oritxt){
@@ -115,7 +136,7 @@ function loadCategories(oritxt){
 
 function search(term, slug, token){
     var url = siteUrl + '/api/search?term=' + term + '&in=titlesposts&'+slug;
-    sendWebRequest(url,loadSearch,"GET","", token);
+    sendWebRequest(url,loadSearch,"GET","", setAuthorization(token));
 }
 function loadSearch(oritxt){
     if(oritxt)signalcenter.getSearch(JSON.parse(oritxt));
@@ -123,14 +144,14 @@ function loadSearch(oritxt){
 
 function getNotifications(token){
     var url = siteUrl + '/api/notifications';
-    sendWebRequest(url,loadNotifications,"GET","", token);
+    sendWebRequest(url,loadNotifications,"GET","", setAuthorization(token));
 }
 function loadNotifications(oritxt){
     if(oritxt)signalcenter.getUnread(JSON.parse(oritxt));
 }
 function getUnread(token){
     var url = siteUrl + '/api/unread'
-    sendWebRequest(url,loadNotifications,"GET","", token);
+    sendWebRequest(url,loadNotifications,"GET","", setAuthorization(token));
 }
 
 // topic
@@ -142,7 +163,7 @@ function createTopic(uid, cid, title, content, token){
         'title': title, 
         'content': content
     }
-    sendWebRequest(url,sendCreateTopic,"POST", parseParams(postdata), token);
+    sendWebRequest(url,sendCreateTopic,"POST", parseParams(postdata), setAuthorization(token));
 }
 function sendCreateTopic(oritxt){
     if(oritxt)signalcenter.newTopic(JSON.parse(oritxt));
@@ -160,7 +181,7 @@ function replayTopic(tid, uid, content, token){
         "uid": uid
     }
 
-    sendWebRequest(url,sendReplayTopic,"POST", parseParams(postdata), token);
+    sendWebRequest(url,sendReplayTopic,"POST", parseParams(postdata), setAuthorization(token));
 }
 function sendReplayTopic(oritxt){
     console.log(oritxt)
@@ -174,7 +195,7 @@ function replayTo(tid, uid, toPid, content, token){
         "_uid": uid,
         "toPid": toPid
     }
-    sendWebRequest(url,sendReplayFloor,"POST", parseParams(postdata), token);
+    sendWebRequest(url,sendReplayFloor,"POST", parseParams(postdata), setAuthorization(token));
 }
 function sendReplayFloor(oritxt){
     console.log(oritxt)
@@ -201,21 +222,25 @@ function loadUserInfo(oritxt){
     if(oritxt)signalcenter.getUserInfo(JSON.parse(oritxt));
 }
 
-function login(username, password){
+function login(username, password, twofacode){
     // get user uid
     // create token
-    var url = siteUrl + "/api/user/username/"+username;
+    var url = siteUrl + "/api/user/"+username;
     if(username.indexOf("@") > -1){
         url = siteUrl + "/api/user/email/"+username;
     }
-    console.log(url)
-    sendWebRequest(url, loadLogin,"GET", "","", password);
+    var otherparams ={
+        "password": password,
+        "twofacode": twofacode
+    }
+    sendWebRequest(url, loadLogin,"GET", "","", otherparams);
 }
-function loadLogin(oritxt, password){
-    console.log(oritxt)
+function loadLogin(oritxt, otherparams){
     if(oritxt){
+        var password = otherparams.password;
+        var twofacode = otherparams.twofacode;
         var uid = JSON.parse(oritxt).uid;
-        getUserToken(uid, password, oritxt);
+        getUserToken(uid, password, twofacode, oritxt);
     }else{
         console.log(password)
         //signalcenter.loginFailed();
@@ -223,23 +248,26 @@ function loadLogin(oritxt, password){
 }
 
 
-function getUserToken(uid, password, oritxt){
-    console.log("uid", uid)
+function getUserToken(uid, password, twofacode, oritxt){
     var url = siteUrl + "/api/v2/users/"+uid+"/tokens";
     var postdata = {
         "password": password
     }
     console.log("start get user token")
-    sendWebRequest(url, loadUserToken, "POST", parseParams(postdata),"", oritxt);
+    sendWebRequest(url, loadUserToken, "POST", parseParams(postdata), setTwofactor(twofacode), oritxt);
 }
 function loadUserToken(oritxt, userinfostr){
-    console.log(oritxt)
-    console.log(userinfostr)
     if(oritxt){
         var result = JSON.parse(oritxt);
         if(result.code !== "ok"){
-            signalcenter.loginFailed(JSON.parse(oritxt).message);
-            return;
+            if(result.code === "2fa-enabled"){
+                // x-two-factor-authentication header
+                signalcenter.login2fa();
+                return;
+            }else{
+                signalcenter.loginFailed(JSON.parse(oritxt).message);
+                return;
+            }
         }
         var token = result.payload.token;
         var userinfo = JSON.parse(userinfostr);

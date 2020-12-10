@@ -8,20 +8,21 @@ Item {
     width: parent.width
     height: parent.height
 
-
+    property bool twofactorenabled: false
     signal loginSucceed()
     signal loginFailed(string fail)
+
+
+    function goto2FAPage(username, password) {
+        pageStack.push(Qt.resolvedUrl("2FAPage.qml"),{
+                "username": username,
+                "password": password
+            });
+    }
 
     SilicaFlickable {
         anchors.fill: parent
         contentHeight: column.height + Theme.paddingLarge * 2
-        BusyIndicator {
-            id:busyIndicator
-            parent: loginComponent
-            anchors.centerIn: parent
-            size: BusyIndicatorSize.Large
-        }
-
         Column {
             id:column
             anchors{
@@ -37,11 +38,11 @@ Item {
             }
 
             Rectangle {
-                id:rectangle
+                id: rectangle
                 width: input.width + Theme.paddingMedium*2
                 height: input.height + Theme.paddingMedium*2
                 border.color:Theme.highlightColor
-                color:"#00000000"
+                color: "#00000000"
                 radius: 30
                 Column {
                     id:input
@@ -80,12 +81,35 @@ Item {
                         label: qsTr("Password")
                         EnterKey.iconSource: "image://theme/icon-m-enter-next"
                         EnterKey.onClicked: {
+                            if(twofactorenabled){
+                                twofactor.focus = true;
+                            }else{
+                                timer.start();
+                                submitButton.enabled = false;
+                                submitButton.focus = true
+                                errorLabel.visible = false;
+                                py.login(userName.text, password.text);
+                            }
+                        }
+                    }
+
+                    TextField {
+                        id: twofactor
+                        width: loginComponent.width - Theme.paddingLarge*4
+                        height: implicitHeight
+                        visible: twofactorenabled
+                        inputMethodHints: Qt.ImhDigitsOnly
+                        font.pixelSize: Theme.fontSizeMedium
+                        placeholderText: qsTr("Enter 2FA code")
+                        label: qsTr("2FA")
+                        EnterKey.enabled: text || inputMethodComposing
+                        EnterKey.iconSource: "image://theme/icon-m-enter-next"
+                        EnterKey.onClicked: {
                             timer.start();
                             submitButton.enabled = false;
                             submitButton.focus = true
                             errorLabel.visible = false;
-                            busyIndicator.running = true;
-                            py.login(userName.text,password.text);
+                            py.login(userName.text,password.text, twofactor.text);
                         }
                     }
                 }
@@ -95,13 +119,12 @@ Item {
                 id:submitButton
                 anchors.horizontalCenter: parent.horizontalCenter
                 text: qsTr("Login")
-                enabled: userName.text && password.text
+                enabled: userName.text && password.text && (twofactorenabled?twofactor.text:true)
                 onClicked: {
                     timer.start();
                     submitButton.enabled = false;
                     errorLabel.visible = false;
-                    busyIndicator.running = true;
-                    py.login(userName.text,password.text);
+                    py.login(userName.text, password.text, twofactorenabled?twofactor.text:"");
                 }
             }
             Label{
@@ -141,13 +164,17 @@ Item {
             target: signalCenter
             onLoginSuccessed: {
                 errorLabel.visible = false;
-                busyIndicator.running = false;
                 loginComponent.loginSucceed();
             }
             onLoginFailed: {
-                busyIndicator.running = false;
                 errorLabel.visible = true;
-                errorLabel.text = qsTr("Login fail")+" [ "+fail+" ]. " + qsTr("Please try again later.");
+                errorLabel.text = qsTr("Login fail")+" [ "+fail+" ]. "
+                        + "\n"
+                        + qsTr("Please try again later.");
+            }
+            onLoginTwofactor: {
+                // 2fa enabled
+                twofactorenabled = true;
             }
         }
 

@@ -420,12 +420,12 @@ ApplicationWindow
                 }
             })
         }
-        function login(username, password){
+        function login(username, password, twofacode){
             if(!username||!password || username === "undefined" || password === "undefined"){
                 console.log("username or password is invalid");
                 return;
             }
-            Main.login(username, password);
+            Main.login(username, password, twofacode);
         }
 
         function logout(){
@@ -899,6 +899,7 @@ ApplicationWindow
         // pop to first page
         pageStack.pop(firstPage);
     }
+
 
     function formathtml(html) {
         //html = html.replace(/[\n]/gi,""); //替换掉html中的换行

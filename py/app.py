@@ -75,7 +75,6 @@ class Api:
         conn = sqlite3.connect(COOKIE_PATH)
         cursor = conn.cursor()
         params = ('%sexpress.sid' % (DOMAIN_NAME,) ,)
-        Utils.log("%sexpress.sid" % (DOMAIN_NAME,))
         cursor.execute('SELECT * FROM cookies WHERE cookieId = ?', params)
         row = cursor.fetchone()
         expires = ""
