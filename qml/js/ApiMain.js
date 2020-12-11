@@ -63,6 +63,19 @@ function sendWebRequest(url, callback, method, postdata, headers, otherparams) {
         xmlhttp.setRequestHeader("Content-Length", postdata.length);
         xmlhttp.send(postdata);
     }
+    if(method==="DELETE"){
+        xmlhttp.open("DELETE",url);
+        if(headers){
+            for(var i in headers){
+                xmlhttp.setRequestHeader(i, headers[i]);
+            }
+        }
+        xmlhttp.setRequestHeader("User-Agent", userAgent);
+        
+        xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xmlhttp.setRequestHeader("Content-Length", postdata.length);
+        xmlhttp.send(postdata);
+    }
 }
 
 
