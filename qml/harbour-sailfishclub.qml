@@ -305,6 +305,10 @@ ApplicationWindow
             var expires = parseInt(new Date().getTime()/1000) + 30*86400;
             py.saveData(uid, token, username, "", "true", avatar, expires);
         }
+
+        onValidateFailed: {
+            toLoginPage();
+        }
     }
 
     UserInfo{
@@ -364,7 +368,7 @@ ApplicationWindow
             }else{
                 if(uid && token){
                     console.log("logined via token")
-//                    py.validate(uid, token, username)
+                    py.validateToken();
                 }else if(username && password){
                     var derpass = Api.decrypt(password, py.getSecretKey());
                     if(derpass)py.login(username,derpass);
@@ -381,45 +385,12 @@ ApplicationWindow
                 // 需要重新登录
                 toLoginPage();
             }
+            var uid = settings.get_uid();
+            var token = settings.get_token();
+            Main.validate(uid, token);
         }
 
-        function validate(uid, token, username){
-            if(!uid||!token || uid === 0 || token === "undefined"){
-                return;
-            }
-            call('main.validate',[uid, token, username],function(result){
-                // console.log(JSON.stringify(result))
-                if(result && result !== "Forbidden" && result !== "False"){
-                    userinfo.uid = uid.toString();
-                    userinfo.username = result.username;
-                    userinfo.email = result.email|| "";
-                    userinfo.website = result.website;
-                    userinfo.avatar = result.picture|| "";
-                    userinfo.groupTitle = result.groupTitle|| "";
-                    userinfo.groupIcon = result.groupIcon|| "";
-                    userinfo.signature = result.signature|| "";
-                    userinfo.topiccount = result.topiccount.toString();
-                    userinfo.postcount = result.postcount.toString();
-                    userinfo.aboutme = result.aboutme|| "";
-                    userinfo.user_text = result["icon:text"];
-                    userinfo.user_color = result["icon:bgColor"];
-                    userinfo.user_cover = result["cover:url"];
-                    userinfo.reputation = result.reputation;
-                    userinfo.followerCount = result.followerCount|| 0;
-                    userinfo.followingCount = result.followingCount|| 0;
-
-                    userinfo.logined = true;
-                    signalCenter.loginSuccessed();
-                    saveData(uid, token, userinfo.username,"", "true", userinfo.avatar);
-
-                }else{
-                    console.log("relogin")
-                    var password = settings.get_password();
-                    var derpass = Api.decrypt(password, py.getSecretKey());
-                    py.login(username, derpass)
-                }
-            })
-        }
+        
         function login(username, password, twofacode){
             if(!username||!password || username === "undefined" || password === "undefined"){
                 console.log("username or password is invalid");
@@ -431,15 +402,14 @@ ApplicationWindow
         function logout(){
             var uid = settings.get_uid();
             var token = settings.get_token();
-            call('main.logout',[uid, token],function(result){
-                settings.set_username("");
-                settings.set_password("");
-                settings.set_uid(0);
-                settings.set_token("");
-                settings.set_logined("false");
-                settings.set_avatar("");
-                settings.set_savetime("");
-            });
+            Main.delUserToken(uid, token);
+            settings.set_username("");
+            settings.set_password("");
+            settings.set_uid(0);
+            settings.set_token("");
+            settings.set_logined("false");
+            settings.set_avatar("");
+            settings.set_savetime("");
             getNotifytimer.stop();
         }
 
@@ -473,24 +443,13 @@ ApplicationWindow
 
         // 获取最新帖子
         function getRecent(slug){
-            // loading = true;
-            // call('main.getrecent',[slug],function(result){
-            //     loading = false;
-            //     signalCenter.getRecent(result);
-            //     py.set_query_to_cache(router_recent, slug, result, 3600.00)
-            // });
+
             Main.getRecent(slug, py.token, userinfo.uid);
 
         }
 
         //获取热门贴子
         function getPopular(slug){
-            // loading = true;
-            // call('main.getpopular',[slug],function(result){
-            //     loading = false;
-            //     signalCenter.getRecent(result);
-            //     py.set_query_to_cache(router_popular, slug, result, 3600.00)
-            // });
             Main.getPopular(slug);
         }
 
@@ -499,11 +458,6 @@ ApplicationWindow
             // console.log("slug:"+slug)
             loading = true;
             term = encodeURI(term);
-            // call('main.search',[term, slug, settings.get_token()],function(result){
-            //     loading = false;
-            //     signalCenter.getSearch(result);
-            //     py.set_query_to_cache(router_search, term+slug, result, 86400.00)
-            // });
             Main.search(term, slug, py.token);
         }
 
@@ -511,12 +465,6 @@ ApplicationWindow
 
         // 获取分类
         function getCategories(){
-            // loading = true;
-            // call('main.listcategory',[],function(result){
-            //     loading = false;
-            //     signalCenter.getCategories(result);
-            //     py.set_query_to_cache(router_categories,"", result, 864000.00)
-            // });
             Main.listcategory();
         }
 
@@ -529,49 +477,25 @@ ApplicationWindow
             console.log("tid:"+tid,",slug:"+slug)
             if(userinfo.logined){
                 Main.getTopic(tid,slug,py.token, userinfo.uid);
-                // call('main.getTopic',[tid,slug,token],function(result){
-                //     loading = false;
-                //     signalCenter.getTopic(result);
-                //     py.set_query_to_cache(router_topic, tid+(slug?slug:""), result, 1200.00)
-                // });
             }else{
                 Main.getTopic(tid,slug,null,null);
-                // call('main.getTopic',[tid,slug],function(result){
-                //     loading = false;
-                //     signalCenter.getTopic(result);
-                //     py.set_query_to_cache(router_topic, tid+(slug?slug:""), result, 1200.00)
-                // });
+                
             }
             
         }
 
         // 回复贴子
         function replayTopic(tid, content){
-            // loading = true;
-            // call('main.replay',[tid,uid,content],function(result){
-            //     loading = false;
-            //     signalCenter.replayTopic(result);
-            // });
             Main.replayTopic(tid, userinfo.uid, content, py.token);
         }
 
         // 回复贴子中的楼层
         function replayFloor(tid, toPid, content){
-            // loading = true;
-            // call('main.replayTo',[tid, uid, toPid, content],function(result){
-            //     loading = false;
-            //     signalCenter.replayFloor(result);
-            // });
             Main.replayTo(tid, userinfo.uid, toPid, content, py.token);
         }
 
         // 发新贴
         function newTopic(title, content, cid){
-            // loading = true;
-            // call('main.post',[title, content, uid, cid],function(result){
-            //     loading = false;
-            //     signalCenter.newTopic(result);
-            // });
             Main.createTopic(userinfo.uid, cid, title, content, py.token);
         }
 
@@ -610,25 +534,13 @@ ApplicationWindow
 
         // 获取用户信息
         function getUserInfo(username, is_username){
-            // loading = true;
-            // call('main.getuserinfo',[username, is_username],function(result){
-            //     loading = false;
-            //     signalCenter.getUserInfo(result);
-                
-            // });
             Main.getuserinfo(username, is_username);
         }
 
         // 获取贴子回复通知
         function getUnread(){
             if(!networkStatus)return;
-            // call('main.getUnread', [settings.get_token()], function(result){
-            //     signalCenter.getUnread(result);
-            //     if(result && result != "Forbidden"){
-            //         unreadSize = result.topicCount;
-            //     }
-            // });
-            // Main.getUnread(settings.get_token());
+            Main.getUnread(settings.get_token());
         }
 
         function get_query_from_cache(router,slug, extfield){
@@ -871,6 +783,12 @@ ApplicationWindow
     }
 
     function toLoginPage(){
+        // force logout, and keep username
+        settings.set_uid(0);
+        settings.set_token("");
+        settings.set_logined("false");
+        settings.set_avatar("");
+
         pageStack.push(Qt.resolvedUrl("pages/LoginDialog.qml"));
     }
 

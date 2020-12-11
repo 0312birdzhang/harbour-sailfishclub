@@ -62,11 +62,11 @@
     <name>ApiMain</name>
     <message>
         <source>connect error,code:</source>
-        <translation type="unfinished"></translation>
+        <translation>连接错误，代码：</translation>
     </message>
     <message>
         <source>loading erro...</source>
-        <translation type="unfinished"></translation>
+        <translation>加载出错...</translation>
     </message>
 </context>
 <context>

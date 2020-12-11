@@ -132,7 +132,7 @@ Dialog  {
 
         onNewTopic:{
             if(result && (result !== "false" || result !== "Forbidden") ){
-                var topicData = result.topicData;
+                var topicData = result.payload.topicData;
                 listModel.insert(0,{
                                      "title":topicData.title,
                                      "titleRaw":topicData.titleRaw,
@@ -168,7 +168,7 @@ Dialog  {
                 categories[i].description = "    " + categories[i].description;
             }
 
-            console.log("name:", categories[i].name)
+//            console.log("name:", categories[i].name)
             // Hardcode, because no api
             if(categories[i].name === "公告"||categories[i].name === "新闻"){
                 continue;

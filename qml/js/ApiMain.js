@@ -96,6 +96,9 @@ function setTwofactor(code){
     }
 }
 
+
+// https://github.com/NodeBB/nodebb-plugin-write-api/blob/master/routes/v2/readme.md
+
 function getRecent(slug, token, uid){
     var url = siteUrl + '/api/recent?' + slug //( slug?(slug + (uid?("&_uid="+uid):"")): (tid + (uid?("?_uid="+uid):"") ) );
     console.log(url)
@@ -165,6 +168,7 @@ function createTopic(uid, cid, title, content, token){
     sendWebRequest(url,sendCreateTopic,"POST", parseParams(postdata), setAuthorization(token));
 }
 function sendCreateTopic(oritxt){
+    console.log(oritxt)
     if(oritxt)signalcenter.newTopic(JSON.parse(oritxt));
 }
 
@@ -182,7 +186,7 @@ function replayTopic(tid, uid, content, token){
     sendWebRequest(url,sendReplayTopic,"POST", parseParams(postdata), setAuthorization(token));
 }
 function sendReplayTopic(oritxt){
-    console.log(oritxt)
+//    console.log(oritxt)
     if(oritxt)signalcenter.replayTopic(JSON.parse(oritxt));
 }
 
@@ -278,5 +282,40 @@ function loadUserToken(oritxt, userinfostr){
         signalcenter.loadUserToken(ret);
     }else{
         //signalcenter.loginFailed();
+    }
+}
+
+function delUserToken(uid, token){
+    var url = siteUrl + "/api/v2/users/"+ uid + "/tokens/"+ token;
+    sendWebRequest(url, loadDelToken, "DELETE", "", setAuthorization(token));
+}
+function loadDelToken(oritxt){
+    console.log(oritxt);
+}
+
+/**
+    GET /:uid/tokens
+    Retrieves a list of active tokens for that user
+    Accepts: No parameters
+ */
+function validate(uid, token){
+    var url = siteUrl + "/api/v2/users/" + uid + "/tokens";
+    sendWebRequest(url, loadValidate, "GET", "", setAuthorization(token), token);
+}
+function loadValidate(oritxt, token){
+    if(oritxt){
+        var result = JSON.parse(oritxt);
+        if(result.code == "ok"){
+            var tokenArray = result.payload.tokens;
+            for(var i in tokenArray){
+                if(tokenArray[i] == token){
+                    signalcenter.validateSuccess();
+                    return;
+                }
+            }
+            signalcenter.validateFailed();
+        }else{
+            signalcenter.validateFailed();
+        }
     }
 }

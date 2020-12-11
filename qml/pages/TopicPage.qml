@@ -409,15 +409,17 @@ Page{
                     replaysTmpModel.append({
                                          "timestamp":ret.timestampISO,
                                          "content":ret.content,
-                                         "uid":userinfo.uid.toString(),
-                                         "username":userinfo.username,
-                                         "picture":userinfo.avatar||"",
+                                         "uid":ret.user.uid.toString(),
+                                         "username":ret.user.username,
+                                         "userslug":ret.user.userslug,
+                                         "signature":ret.user.signature,
+                                         "picture":ret.user.avatar||"",
                                          "floor":ret.index,
-                                         "user_group_icon":userinfo.groupIcon,
+                                         "user_group_icon": userinfo.groupIcon,
                                          "user_group_name": (ret.user && ret.user.selectedGroup)?
                                                                 ret.user.selectedGroup:"",
-                                         "user_text":userinfo.user_text,
-                                         "user_color":userinfo.user_color,
+                                         "user_text":ret.user["icon:text"],
+                                         "user_color":ret.user["icon:bgColor"],
                                          "userReplies": ret.replies || {},
                                          "isAnswer": false
                                        });

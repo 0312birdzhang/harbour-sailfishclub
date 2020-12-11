@@ -36,6 +36,9 @@ QtObject{
 
     signal loadUserToken(var result);
     signal loginTwofactor();
+
+    signal validateFailed();
+    signal validateSuccess();
 }
 
 
