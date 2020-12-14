@@ -54,8 +54,8 @@ ApplicationWindow
     property bool loading: false
     property int page_size: 20
     property string current_router: "recent"
-    // property string siteUrl: "https://sailfishos.club"
-    property string siteUrl: "http://192.168.2.204:4567"
+     property string siteUrl: "https://sailfishos.club"
+//    property string siteUrl: "http://192.168.2.204:4567"
     property alias  userinfo: userinfo
     property bool _showReplayNotification: true
     property bool networkStatus

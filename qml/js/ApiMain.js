@@ -13,6 +13,7 @@ function setsignalcenter(mycenter){
 }
 function sendWebRequest(url, callback, method, postdata, headers, otherparams) {
     var xmlhttp = new XMLHttpRequest();
+
     xmlhttp.onreadystatechange = function() {
         switch(xmlhttp.readyState) {
         case xmlhttp.OPENED:signalcenter.loadStarted();break;
@@ -40,6 +41,7 @@ function sendWebRequest(url, callback, method, postdata, headers, otherparams) {
     }
     if(method==="GET") {
         xmlhttp.open("GET",url);
+        xmlhttp.timeout = 15000;
         if(headers){
             // xmlhttp.withCredentials = true;
             for(var i in headers){
@@ -52,26 +54,26 @@ function sendWebRequest(url, callback, method, postdata, headers, otherparams) {
     }
     if(method==="POST") {
         xmlhttp.open("POST",url);
+        xmlhttp.timeout = 15000;
         if(headers){
             for(var i in headers){
                 xmlhttp.setRequestHeader(i, headers[i]);
             }
         }
         xmlhttp.setRequestHeader("User-Agent", userAgent);
-        
         xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         xmlhttp.setRequestHeader("Content-Length", postdata.length);
         xmlhttp.send(postdata);
     }
     if(method==="DELETE"){
         xmlhttp.open("DELETE",url);
+        xmlhttp.timeout = 5000;
         if(headers){
             for(var i in headers){
                 xmlhttp.setRequestHeader(i, headers[i]);
             }
         }
         xmlhttp.setRequestHeader("User-Agent", userAgent);
-        
         xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         xmlhttp.setRequestHeader("Content-Length", postdata.length);
         xmlhttp.send(postdata);

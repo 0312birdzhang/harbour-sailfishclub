@@ -242,11 +242,11 @@
     </message>
     <message>
         <source>Enter 2FA code</source>
-        <translation type="unfinished"></translation>
+        <translation>输入二步认证代码</translation>
     </message>
     <message>
         <source>2FA</source>
-        <translation type="unfinished"></translation>
+        <translation>二步认证</translation>
     </message>
 </context>
 <context>
@@ -444,31 +444,31 @@
     <name>TopicPage</name>
     <message>
         <source>Replay</source>
-        <translation type="unfinished"></translation>
+        <translation>回复</translation>
     </message>
     <message>
         <source>Login to replay</source>
-        <translation type="unfinished"></translation>
+        <translation>登录后回复</translation>
     </message>
     <message>
         <source>Prev Page</source>
-        <translation type="unfinished">上一页</translation>
+        <translation>上一页</translation>
     </message>
     <message>
         <source>Next Page</source>
-        <translation type="unfinished">下一页</translation>
+        <translation>下一页</translation>
     </message>
     <message>
         <source>Empty,Click to retry</source>
-        <translation type="unfinished"></translation>
+        <translation>空结果，点击重试</translation>
     </message>
     <message>
         <source>Load failed,try again later</source>
-        <translation type="unfinished">加载失败，请稍后重试</translation>
+        <translation>加载失败，请稍后重试</translation>
     </message>
     <message>
         <source>ReplayError</source>
-        <translation type="unfinished"></translation>
+        <translation>回复失败</translation>
     </message>
 </context>
 <context>
@@ -528,43 +528,43 @@
     <name>harbour-sailfishclub</name>
     <message>
         <source>Network not connected</source>
-        <translation type="unfinished"></translation>
+        <translation>网络未连接</translation>
     </message>
     <message>
         <source>Try again later please</source>
-        <translation type="unfinished"></translation>
+        <translation>请稍后重试</translation>
     </message>
     <message>
         <source>new replay</source>
-        <translation type="unfinished"></translation>
+        <translation>新回复</translation>
     </message>
     <message>
         <source>preview replay</source>
-        <translation type="unfinished"></translation>
+        <translation>预览回复内容</translation>
     </message>
     <message>
         <source>Request timeout</source>
-        <translation type="unfinished"></translation>
+        <translation>请求超时</translation>
     </message>
     <message>
         <source>Picture downloaded</source>
-        <translation type="unfinished"></translation>
+        <translation>图片已下载</translation>
     </message>
     <message>
         <source>Download picture failed</source>
-        <translation type="unfinished"></translation>
+        <translation>图片下载失败</translation>
     </message>
     <message>
         <source>Welcome to</source>
-        <translation type="unfinished"></translation>
+        <translation>Welcome to</translation>
     </message>
     <message>
         <source>SailfishClub</source>
-        <translation type="unfinished"></translation>
+        <translation>SailfishClub</translation>
     </message>
     <message>
         <source>Starting open link...</source>
-        <translation type="unfinished"></translation>
+        <translation>即将打开链接...</translation>
     </message>
 </context>
 </TS>
