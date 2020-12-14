@@ -1,7 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>py/main.py</file>
-        <file>py/sfctoken.py</file>
         <file>py/mistune.py</file>
         <file>py/basedir.py</file>
         <file>py/myprovider.py</file>
