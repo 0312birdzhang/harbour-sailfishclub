@@ -23,4 +23,5 @@ QtObject{
     property string followerCount;
     property int reputation;
     property int followingCount;
+    property bool isBlocked;
 }

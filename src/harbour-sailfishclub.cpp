@@ -77,6 +77,9 @@ int main(int argc, char *argv[])
 //   return app->exec();
    view->showFullScreen();
 
+   app->setOrganizationName(QStringLiteral("club.sailfishos"));
+   app->setApplicationName(QStringLiteral("sailfishclub"));
+
    int ret = app->exec();
 
    delete view;

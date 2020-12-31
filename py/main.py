@@ -68,7 +68,7 @@ def uploadNiuPic(path):
             files = {'image_field': f.read()}
             r = requests.post(url, files = files, headers = headers, timeout=5.0)
             if r.status_code == 200:
-                return "https://%s" %(r.json().get("data"))
+                return  r.json().get("data")
             else:
                 logger.error(r.text)
     except Exception as e:
