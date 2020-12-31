@@ -215,12 +215,12 @@ function replayTo(tid, uid, toPid, content, token){
     sendWebRequest(url,sendReplayFloor,"POST", parseParams(postdata), setAuthorization(token));
 }
 function sendReplayFloor(oritxt){
-    console.log(oritxt)
+    // console.log(oritxt)
     if(oritxt)signalcenter.replayFloor(JSON.parse(oritxt));
 }
 
 
-function getuserinfo(username, is_username){
+function getuserinfo(username, is_username, token, uid){
     // var url = siteUrl + ('/api/user/email/%s' if "@" in str(id_) else '/api/user/%s' if is_username else '/api/user/uid/%s');
     var uri = "";
     if(is_username){
@@ -232,8 +232,8 @@ function getuserinfo(username, is_username){
     }else{
         uri = '/api/user/uid/' + username;
     }
-    var url = siteUrl + uri;
-    sendWebRequest(url,loadUserInfo,"GET", "","");
+    var url = siteUrl + uri; // + "?_uid=" + uid;
+    sendWebRequest(url,loadUserInfo,"GET", "", "");
 }
 function loadUserInfo(oritxt){
     if(oritxt)signalcenter.getUserInfo(JSON.parse(oritxt));

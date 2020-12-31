@@ -534,7 +534,7 @@ ApplicationWindow
 
         // 获取用户信息
         function getUserInfo(username, is_username){
-            Main.getuserinfo(username, is_username);
+            Main.getuserinfo(username, is_username, settings.get_token(), settings.get_uid());
         }
 
         // 获取贴子回复通知
@@ -799,6 +799,9 @@ ApplicationWindow
 
 
     function toUserInfoPage(username, avatar){
+        if(!userinfo.logined){
+            return;
+        }
         pageStack.push(Qt.resolvedUrl("pages/ProfilePage.qml"),{
                 "username": username,
                 "useravatar": avatar
