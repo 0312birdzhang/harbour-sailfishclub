@@ -36,7 +36,7 @@ Page{
             Label{
                 id:version
                 anchors.horizontalCenter: parent.horizontalCenter
-                text:qsTr("Version")+" 0.4.1"
+                text:qsTr("Version")+" 0.4.2"
             }
             Item{width: 1;height: Theme.paddingMedium}
 
