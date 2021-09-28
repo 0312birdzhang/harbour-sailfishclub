@@ -35,12 +35,13 @@ from http.cookies import SimpleCookie
 from config import DOMAIN_NAME
 
 HARBOUR_APP_NAME = 'harbour-sailfishclub'
+OrganizationName = 'club.sailfishos'
 HOME = os.path.expanduser('~')
 XDG_DATA_HOME = os.environ.get('XDG_DATA_HOME', os.path.join(HOME, '.local', 'share'))
 XDG_CONFIG_HOME = os.environ.get('XDG_CONFIG_HOME', os.path.join(HOME, '.config'))
 XDG_CACHE_HOME = os.path.join('XDG_CACHE_HOME', os.path.join(HOME, '.cache'))
-COOKIE_PATH = os.path.join(XDG_DATA_HOME, HARBOUR_APP_NAME, HARBOUR_APP_NAME, '.QtWebKit', 'cookies.db')
-CACHE_PATH = os.path.join(XDG_CACHE_HOME, HARBOUR_APP_NAME, HARBOUR_APP_NAME)
+COOKIE_PATH = os.path.join(XDG_DATA_HOME, OrganizationName, HARBOUR_APP_NAME, '.QtWebKit', 'cookies.db')
+CACHE_PATH = os.path.join(XDG_CACHE_HOME, OrganizationName, HARBOUR_APP_NAME)
 
 class Api:
     def __init__(self):
