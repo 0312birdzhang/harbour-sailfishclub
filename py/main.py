@@ -20,7 +20,6 @@ console_handler = logging.StreamHandler(sys.stdout)
 console_handler.formatter = formatter
 logger.addHandler(console_handler)
 logger.setLevel(logging.DEBUG)
-UnOfficalBlogURL = "https://notexists.top/api/post"
 savePath = os.path.join(HOME, "Pictures","SailfishClub")
 max_token_size = 4
 # siteUrl = 'https://sailfishos.club'
@@ -45,13 +44,14 @@ def validate(uid, token, username):
 
 
 def uploadImgQiyu(path):
-    domain = "https://img.qiyuos.cn"
-    url = '%s/upload' % (domain, )
+    domain = "http://159.75.45.226"
+    url = '%s:8082/upload' % (domain, )
+    visturl = '%s:8083' % (domain, )
     try:
         files = {'file' : open(path, 'rb')}
         r = requests.post(url, files = files, timeout=5.0)
         # {"code":200,"msg":"","data":"logo.png"}
-        return "%s%s" % (domain, r.json().get("msg"))
+        return "%s%s" % (visturl, r.json().get("msg"))
     except Exception as e:
         logger.error(str(e))
         return None
