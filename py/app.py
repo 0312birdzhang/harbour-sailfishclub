@@ -34,8 +34,10 @@ import hashlib
 from http.cookies import SimpleCookie
 from config import DOMAIN_NAME
 
-HARBOUR_APP_NAME = 'harbour-sailfishclub'
+HARBOUR_APP_NAME = 'sailfishclub'
 OrganizationName = 'club.sailfishos'
+# /home/defaultuser/.local/share/club.sailfishos/sailfishclub
+# /home/defaultuser/.cache/club.sailfishos/sailfishclub
 HOME = os.path.expanduser('~')
 XDG_DATA_HOME = os.environ.get('XDG_DATA_HOME', os.path.join(HOME, '.local', 'share'))
 XDG_CONFIG_HOME = os.environ.get('XDG_CONFIG_HOME', os.path.join(HOME, '.config'))

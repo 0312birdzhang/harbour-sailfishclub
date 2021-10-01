@@ -1,11 +1,10 @@
 [X-Sailjail]
 OrganizationName=club.sailfishos
-ApplicationName=harbour-sailfishclub
+ApplicationName=sailfishclub
 Permissions=Pictures;Thumbnails;Audio;Internet;MediaIndexing;Sharing;WebView;Video;sailfish-browser;Notifications;
 
 [Desktop Entry]
 Type=Application
-X-Nemo-Application-Type=silica-qt5
 Icon=harbour-sailfishclub
 Exec=harbour-sailfishclub
 Name=SailfishClub
