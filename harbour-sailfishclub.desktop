@@ -9,4 +9,4 @@ Name[zh]=旗鱼俱乐部
 [X-Sailjail]
 OrganizationName=club.sailfishos
 ApplicationName=sailfishclub
-Permissions=Pictures;Thumbnails;Audio;Internet;MediaIndexing;Sharing;WebView;Video;sailfish-browser;Notifications;
+Permissions=Pictures;Audio;Internet;MediaIndexing;WebView;
