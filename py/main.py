@@ -59,21 +59,25 @@ def uploadImgQiyu(path):
 def uploadNiuPic(path):
     if path.startswith("file:"):
         path = path.replace("file://","")
-    url = 'https://www.niupic.com/index/upload/process'
+    url = 'https://catbox.moe/user/api.php'
     headers = {
         "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36"
     }
     try:
         with codecs.open(path, 'rb') as f:
-            files = {'image_field': f.read()}
-            r = requests.post(url, files = files, headers = headers, timeout=5.0)
+            files = { 
+                'fileToUpload': f.read()
+            }
+            datas = {
+                'reqtype': 'fileupload'
+            }
+            r = requests.post(url, data = datas, files= files, headers = headers, timeout=10.0)
             if r.status_code == 200:
-                return  r.json().get("data")
+                return  r.text
             else:
                 logger.error(r.text)
     except Exception as e:
         logger.error(str(e))
-        return uploadImgQiyu(path)
     return None
 
 
@@ -98,3 +102,6 @@ def downloadFile(url, filename):
     except Exception as e:
         return False
     return True
+
+if __name__ == "__main__":
+    print(uploadNiuPic("C:\\Users\\99188\\Pictures\\volte-sfos.jpg"))

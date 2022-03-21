@@ -511,7 +511,7 @@ ApplicationWindow
         //上传图片到niupic.com
         function uploadImage(path,desc){
             loading = true;
-            call('main.uploadImgQiyu',[path],function(ret){
+            call('main.uploadNiuPic',[path],function(ret){
                 loading = false;
                 //替换反斜线
                 if(ret)ret = ret.replace(/\\/g,"");

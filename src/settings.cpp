@@ -3,7 +3,7 @@
 
 
 SettingsObject::SettingsObject() {
-    settings = new QSettings("club.sailfishos","sailfishclub");
+    settings = new QSettings("harbour-sailfishclub","sailfishclub");
 }
 
 
