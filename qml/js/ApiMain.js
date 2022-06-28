@@ -173,7 +173,7 @@ function getUnread(token){
 
 // topic
 function createTopic(uid, cid, title, content, token){
-    var url = siteUrl + '/api/v2/topics/';
+    var url = siteUrl + '/api/v3/topics/';
     var postdata = {
         '_uid': uid, 
         'cid': cid, 
@@ -190,7 +190,7 @@ function sendCreateTopic(oritxt){
 
 function replayTopic(tid, uid, content, token){
     console.log("cookie", token)
-    var url = siteUrl + '/api/v2/topics/'+tid;
+    var url = siteUrl + '/api/v3/topics/'+tid;
     console.log(url)
     var postdata = {
         "tid": tid,
@@ -206,7 +206,7 @@ function sendReplayTopic(oritxt){
 }
 
 function replayTo(tid, uid, toPid, content, token){
-    var url = siteUrl + '/api/v2/topics/' + tid;
+    var url = siteUrl + '/api/v3/topics/' + tid;
     var postdata = {
         "content": content,
         "_uid": uid,
@@ -266,7 +266,7 @@ function loadLogin(oritxt, otherparams){
 
 
 function getUserToken(uid, password, twofacode, oritxt){
-    var url = siteUrl + "/api/v2/users/"+uid+"/tokens";
+    var url = siteUrl + "/api/v3/users/"+uid+"/tokens";
     var postdata = {
         "password": password
     }
@@ -301,7 +301,7 @@ function loadUserToken(oritxt, userinfostr){
 }
 
 function delUserToken(uid, token){
-    var url = siteUrl + "/api/v2/users/"+ uid + "/tokens/"+ token;
+    var url = siteUrl + "/api/v3/users/"+ uid + "/tokens/"+ token;
     sendWebRequest(url, loadDelToken, "DELETE", "", setAuthorization(token));
 }
 function loadDelToken(oritxt){
@@ -314,7 +314,7 @@ function loadDelToken(oritxt){
     Accepts: No parameters
  */
 function validate(uid, token){
-    var url = siteUrl + "/api/v2/users/" + uid + "/tokens";
+    var url = siteUrl + "/api/v3/users/" + uid + "/tokens";
     sendWebRequest(url, loadValidate, "GET", "", setAuthorization(token), token);
 }
 function loadValidate(oritxt, token){
