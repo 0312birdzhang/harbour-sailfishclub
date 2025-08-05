@@ -502,29 +502,6 @@
     </message>
 </context>
 <context>
-    <name>UnOfficalCNBlog</name>
-    <message>
-        <source>Blog posts</source>
-        <translation>文章</translation>
-    </message>
-    <message>
-        <source>Load Failed,Click to retry</source>
-        <translation>加载失败，点击重试</translation>
-    </message>
-    <message>
-        <source>Prev Page</source>
-        <translation>上一页</translation>
-    </message>
-    <message>
-        <source>Next Page</source>
-        <translation>下一页</translation>
-    </message>
-    <message>
-        <source>Load failed,try again later</source>
-        <translation>加载失败，请稍后重试</translation>
-    </message>
-</context>
-<context>
     <name>harbour-sailfishclub</name>
     <message>
         <source>Network not connected</source>

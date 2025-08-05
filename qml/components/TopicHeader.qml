@@ -26,6 +26,7 @@ Item{
         MouseArea{
             anchors.fill: parent
                 onClicked: {
+                    console.log("Avatar clicked")
                     appwindow.toUserInfoPage(user_id, avatar.avatar);
             }
         }

@@ -10,7 +10,9 @@ Page{
     property string username: "guest";
     property string useravatar;
     property variant userData: null;
-    property bool isMe: typeof username == "string" ? username === userinfo.username : username === userinfo.uid;
+    property bool isMe: userinfo.logined?
+                            typeof username == "string" ?username === userinfo.username : username === userinfo.uid
+                            :false;
     Connections{
         target: signalCenter
         onGetUserInfo:{

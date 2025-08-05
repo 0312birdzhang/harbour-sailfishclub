@@ -11,6 +11,7 @@ Item {
         spacing: -Theme.itemSizeExtraSmall/4
         height: parent.height
         width: parent.width
+        anchors.leftMargin: Theme.paddingSmall
         Repeater{
             model: replies.count
             Avatar{

@@ -800,6 +800,7 @@ ApplicationWindow
 
     function toUserInfoPage(username, avatar){
         if(!userinfo.logined){
+            notification.show(qsTr("you need login to view user information"))
             return;
         }
         pageStack.push(Qt.resolvedUrl("pages/ProfilePage.qml"),{
@@ -882,7 +883,9 @@ ApplicationWindow
             console.log("pid:"+pid); //TODO
             //ddd
 //            pageStack.currentPage.children[0];
-
+        }else if(link.startsWith("/user/")){
+            var username = "";
+            toUserInfoPage(uid);
         }else{
             remorse.execute(qsTr("Starting open link..."),function(){
                 Qt.openUrlExternally(link);

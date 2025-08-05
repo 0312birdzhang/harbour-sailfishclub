@@ -3,6 +3,8 @@ import Sailfish.Silica 1.0
 
 TextArea{
     id: codeBlock
+    property int originHeight: 0
+
     text: content
     width: parent.width
     focusOnClick: true
@@ -17,9 +19,14 @@ TextArea{
         leftMargin: Theme.paddingMedium
         rightMargin: Theme.paddingMedium
     }
+    onClicked: {
+        codeBlock.height = codeBlock.originHeight ===0? Theme.dp(30):codeBlock.originHeight
+    }
 
     Component.onCompleted: {
         codeBlock.readOnly = true;
+        codeBlock.originHeight = codeBlock.height
+        codeBlock.height = Theme.dp(30)
     }
 
 }

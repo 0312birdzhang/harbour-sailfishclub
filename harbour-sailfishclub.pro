@@ -143,9 +143,6 @@ DISTFILES += \
     qml/components/AnimatedImageDelegate.qml \
     qml/components/WebviewDelegate.qml \
     qml/pages/SearchPage.qml \
-    qml/components/UnOfficalBlogListComponent.qml \
-    qml/pages/UnOfficalCNBlog.qml \
-    qml/pages/UnOfficalBlogContent.qml \
     qml/pages/PreviewPage.qml \
     qml/components/ShareMethodList.qml \
     qml/components/TopicReplies.qml
