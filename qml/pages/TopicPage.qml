@@ -77,7 +77,13 @@ Page{
                             left: parent.left; right: parent.right;
                             margins: Theme.paddingSmall;
                         }
-                        source: Qt.resolvedUrl("../components/" +type + "Delegate.qml");
+                        source: {
+                            if(content.indexOf("nodebb-plugin-emoji") > -1){
+                                return Qt.resolvedUrl("../components/TextDelegate.qml");
+                            }
+
+                            return Qt.resolvedUrl("../components/" +type + "Delegate.qml");
+                        }
                     }
                 }
             }

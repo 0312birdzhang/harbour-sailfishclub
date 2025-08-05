@@ -1,5 +1,6 @@
 .pragma library
 Qt.include("ApiCore.js")
+Qt.include("twemoji.js")
 var py;
 var app;
 
@@ -12,7 +13,7 @@ function splitContent(topic_content, parent) {
     // console.log(topic_content)
     var img_model = [];
     var iframe_model = [];
-    
+
     var _replace_img_ = "__REPLACE_IMG__";
     var _replace_iframe_ = "__REPLACE_IFRAME__";
 
@@ -23,7 +24,7 @@ function splitContent(topic_content, parent) {
     var srcReg = /src=[\'\"]?([^\'\"]*)[\'\"]?/i;
     var arr_img = topic_content.match(imgReg);
     var arr_iframe = topic_content.match(iframeReg);
-    
+
     if(!arr_img && !arr_iframe){
         parseCode(model,topic_content);
         return model;
@@ -80,10 +81,19 @@ function splitContent(topic_content, parent) {
                                  "content": imgsrc
                              })
             }else{
-                model.append({
-                                 "type": "Image",
-                                 "content": imgsrc
-                             })
+                var match = imgsrc.match(/\/([a-f0-9]+)\.png/i);
+                if(imgsrc.indexOf("nodebb-plugin-emoji") > -1 && match && match[1]){
+                    var emojiCode = match[1];  // "1f914"
+                    model.append({
+                             "type": "Text",
+                             "content": twemoji.convert.fromCodePoint(emojiCode)
+                         })
+                }else{
+                    model.append({
+                             "type": "Image",
+                             "content": imgsrc
+                         })
+                    }
             }
 
         }

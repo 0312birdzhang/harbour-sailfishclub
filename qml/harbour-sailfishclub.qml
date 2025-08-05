@@ -860,6 +860,7 @@ ApplicationWindow
 
     function openLink(link) {
         console.log("link:"+link);
+        console.log(typeof link, link)
         var linklist=link.split(".");
         var linktype=linklist[linklist.length -1];
         if(linktype =="png" ||linktype =="jpg"||linktype =="jpeg"||linktype =="gif"||linktype =="ico"||linktype =="svg"||linktype == "webp"){
@@ -883,9 +884,9 @@ ApplicationWindow
             console.log("pid:"+pid); //TODO
             //ddd
 //            pageStack.currentPage.children[0];
-        }else if(link.startsWith("/user/")){
-            var username = "";
-            toUserInfoPage(uid);
+        }else if(String(link).indexOf("/user/") > -1){
+            var username = String(link).substring("/user/".length,String(link).length)
+            toUserInfoPage(username);
         }else{
             remorse.execute(qsTr("Starting open link..."),function(){
                 Qt.openUrlExternally(link);

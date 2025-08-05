@@ -132,6 +132,7 @@ SOURCES += \
     $${HARBOUR_LIB_SRC}/HarbourTransferMethodsModel.cpp
 
 DISTFILES += \
+    qml/components/BlockquoteDelegate.qml \
     qml/pages/PostPage.qml \
     qml/components/HtmlTagButton.qml \
     qml/components/ImagePreviewGrid.qml \

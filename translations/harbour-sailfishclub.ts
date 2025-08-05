@@ -543,5 +543,9 @@
         <source>Starting open link...</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>you need login to view user information</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

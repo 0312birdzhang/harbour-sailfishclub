@@ -543,5 +543,9 @@
         <source>Starting open link...</source>
         <translation>即将打开链接...</translation>
     </message>
+    <message>
+        <source>you need login to view user information</source>
+        <translation>需要登录后查看用户信息</translation>
+    </message>
 </context>
 </TS>
