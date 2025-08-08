@@ -136,6 +136,7 @@ Page{
                                        "category_bgColor":banners[i].category.bgColor
                                    });
                 }
+                categoriesModel.clear();
                 fillCategoryModel(categories);
                 bannerItem.model = bannerModel;
                 listView.model = categoriesModel;

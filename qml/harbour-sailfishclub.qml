@@ -53,6 +53,7 @@ ApplicationWindow
     property string appname: "旗鱼俱乐部"
     property bool loading: false
     property int page_size: 20
+    property string csrf
     property string current_router: "recent"
      property string siteUrl: "https://sailfishos.club"
 //    property string siteUrl: "http://192.168.2.204:4567"
@@ -309,6 +310,10 @@ ApplicationWindow
         onValidateFailed: {
             toLoginPage();
         }
+        onLoadCsrfToken: {
+            console.log("csrf:", csrf)
+            appwindow.csrf = csrf;
+        }
     }
 
     UserInfo{
@@ -333,6 +338,7 @@ ApplicationWindow
                 getToken();
             });
             py.importModule('app', function(){
+                py.call("app.api.init_cookie",[settings.get_token()], function(){})
             });
             setHandler('log', function(msg){
                 console.log(msg)
@@ -370,9 +376,9 @@ ApplicationWindow
                     console.log("logined via token")
                     py.validateToken();
                 }else if(username && password){
-                    var derpass = Api.decrypt(password, py.getSecretKey());
-                    if(derpass)py.login(username,derpass);
                     console.log("logined via password")
+                    var derpass = Api.decrypt(password, py.getSecretKey());
+                    if(derpass)py.login(username,derpass,"");
                 }
             }
         }
@@ -387,7 +393,7 @@ ApplicationWindow
             }
             var uid = settings.get_uid();
             var token = settings.get_token();
-            Main.validate(uid, token);
+//            Main.validate(uid, token);
         }
 
         
@@ -396,7 +402,21 @@ ApplicationWindow
                 console.log("username or password is invalid");
                 return;
             }
-            Main.login(username, password, twofacode);
+            //Main.login(username, password, twofacode);
+            py.call('app.api.login', [username, password], function(ret){
+                if (ret && ret.status.code == "ok"){
+                    userinfo.logined = true;
+                    var rs = ret.response;
+                    userinfo.uid = rs.uid;
+                    userinfo.username = rs.username;
+                    userinfo.avatar = (siteUrl + rs.picture)||"";
+                    var cookie = ret.cookies;
+                    var expires = parseInt(new Date().getTime()/1000) + 30*86400;
+                    py.saveData(userinfo.uid, cookie, userinfo.username, "",
+                    userinfo.logined, userinfo.avatar, expires);
+                    signalCenter.loginSuccessed();
+                }
+            })
         }
 
         function logout(){
@@ -413,6 +433,8 @@ ApplicationWindow
             getNotifytimer.stop();
         }
 
+        // py.saveData(userinfo.uid, cookie, userinfo.username, "",
+//        userinfo.logined, userinfo.avatar, expires);
         function saveData(uid, token, username, password, logined, avatar, expires){
             if(!userinfo.logined){
                 console.log("not logined")
@@ -486,17 +508,31 @@ ApplicationWindow
 
         // 回复贴子
         function replayTopic(tid, content){
-            Main.replayTopic(tid, userinfo.uid, content, py.token);
+            py.call('app.api.reply_to_topic', [tid, content, 0], function(ret){
+                if (ret && ret.status.code == "ok"){
+                    signalCenter.replayFloor(ret)
+                }
+            })
         }
 
         // 回复贴子中的楼层
         function replayFloor(tid, toPid, content){
-            Main.replayTo(tid, userinfo.uid, toPid, content, py.token);
+//            Main.replayTo(tid, userinfo.uid, toPid, content, py.token);
+            py.call('app.api.reply_to_topic', [tid, content, toPid], function(ret){
+                if (ret && ret.status.code == "ok"){
+                    signalCenter.replayFloor(ret)
+                }
+            })
         }
 
         // 发新贴
         function newTopic(title, content, cid){
-            Main.createTopic(userinfo.uid, cid, title, content, py.token);
+//            Main.createTopic(userinfo.uid, cid, title, content, py.token);
+            py.call('app.api.create_topic', [cid, title, content], function(ret){
+                if (ret && ret.status.code == "ok"){
+                    signalCenter.replayFloor(ret)
+                }
+            })
         }
 
         //预览发贴内容
@@ -540,7 +576,12 @@ ApplicationWindow
         // 获取贴子回复通知
         function getUnread(){
             if(!networkStatus)return;
-            Main.getUnread(settings.get_token());
+//            Main.getUnread(settings.get_token());
+            call('app.api.get_unread',[],function(ret){
+                if (ret && ret.status.code == "ok"){
+                    signalCenter.getUnread(ret)
+                }
+            })
         }
 
         function get_query_from_cache(router,slug, extfield){
@@ -803,6 +844,10 @@ ApplicationWindow
             notification.show(qsTr("you need login to view user information"))
             return;
         }
+        if(avatar && avatar.indexOf("http") == -1){
+            avatar = siteUrl + avatar;
+        }
+
         pageStack.push(Qt.resolvedUrl("pages/ProfilePage.qml"),{
                 "username": username,
                 "useravatar": avatar

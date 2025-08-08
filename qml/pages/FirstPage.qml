@@ -296,7 +296,6 @@ Page {
                 }
 
                 listModel.clear();
-                console.log(topics)
                 for(var i = 0;i<topics.length;i++){
                     if(topics[i].deleted)continue;
                     listModel.append({

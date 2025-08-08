@@ -1,54 +1,39 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import QtWebKit 3.0
-//import QtWebKit.experimental 1.0
+import Sailfish.WebView 1.0
+import Sailfish.WebEngine 1.0
 
 Item {
     id: webloginComponent
     width: parent.width
     height: parent.height
-
     signal loginSucceed()
     signal loginFailed(string fail)
 
-    SilicaWebView {
+    WebView {
           id: webview
-          anchors.fill: parent
-          url: appwindow.siteUrl + "/login"
-          overridePageStackNavigation: true
           property string userAgent: "Mozilla/5.0 (Mobile Linux; U; like Android 4.4.3; Sailfish OS/2.0) AppleWebkit/535.19 (KHTML, like Gecko) Version/4.0 Mobile Safari/535.19"
           property bool _isScrolledToEnd: (webview.contentY + webview.height + 2) >= webview.contentHeight
           property bool _isScrolledToBeginning: webview.contentY <= 2
           property bool _isFinishedPanning: webview.atXBeginning && webview.atXEnd && !webview.moving
-          experimental.temporaryCookies: false
-          experimental.deviceWidth: webview.width
-          experimental.deviceHeight: webview.height
-          experimental.userAgent: userAgent
-          experimental.preferences.navigatorQtObjectEnabled: true
-          experimental.customLayoutWidth: {
-              // VK's Terms Of Service page doesn't render the same
-              // way as Facebook/Google/Twitter/OneDrive etc, because
-              // it doesn't respect the deviceWidth setting.
-              var urlStr = "" + url
-              if (urlStr.indexOf("vk.com/terms") > 0) {
-                  return root.width * Theme._webviewCustomLayoutWidthScalingFactor
-              }
-  
-              // For other services, zoom in a bit to make things more readable
-              return root.width * 0.6
-          }          
+          anchors.fill: parent
+          httpUserAgent: userAgent
+          privateMode: false
+          url: appwindow.siteUrl + "/login"
           onLoadingChanged: {
-              console.log(loadRequest.url.toString())
-              console.log("loadRequest.status", loadRequest.status)
-              console.log("WebView.LoadSucceededStatus", WebView.LoadSucceededStatus)
-              if (loadRequest.status === WebView.LoadSucceededStatus &&
-                   (loadRequest.url.toString().indexOf("/recent") > 0 ||
-                    loadRequest.url.toString().indexOf("/user/") > 0 ||
-                    loadRequest.url.toString().indexOf("loggedin") > 0
+              if (loaded){
+                  console.log("loaded")
+                  WebEngineSettings.setPreference("security.csp.enable",
+                                                  false,
+                                                  WebEngineSettings.BoolPref)
+              }
+              if (webview.loaded &&
+                   (webview.url.toString().indexOf("/recent") > 0 ||
+                    webview.url.toString().indexOf("/user/") > 0 ||
+                    webview.url.toString().indexOf("loggedin") > 0 ||
+                    webview.url.toString().indexOf(appwindow.siteUrl) > -1
                     )){
-                  console.log("===========");
-                  experimental.evaluateJavaScript(webloginComponent.getUserInfoScript, function(rs){
-                      console.log(rs.username);
+                  runJavaScript(webloginComponent.getUserInfoScript, function(rs){
                       if (rs && rs.username){
                           py.call('app.api.get_other_param', [rs.username], function(ret){
                               if (ret){
@@ -72,12 +57,15 @@ Item {
                   })
               }
           }
+
+          Component.onCompleted: {
+          }
       }
 
     property string getUserInfoScript: "(function(){
 var userName = document.getElementById('user-header-name').innerText
-var uid = document.getElementsByClassName('avatar user-icon avatar-lg avatar-rounded')[0].getAttribute('data-uid')
-var avatar = document.getElementsByClassName('avatar user-icon avatar-lg avatar-rounded')[0].getAttribute('src')
+var uid = document.getElementsByClassName('avatar user-icon avatar-rounded')[0].getAttribute('data-uid')
+var avatar = document.getElementsByClassName('avatar user-icon avatar-rounded')[0].getAttribute('src')
 var csrf = document.cookie
 return {username: userName, uid: uid, avatar: avatar, csrf: csrf}
 })()"

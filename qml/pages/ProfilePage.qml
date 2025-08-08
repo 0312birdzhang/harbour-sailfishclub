@@ -106,7 +106,7 @@ Page{
                             horizontalCenter: parent.horizontalCenter;
                         }
                         font.pixelSize: Theme.fontSizeMedium;
-                        color: Theme.secondaryColor
+                        color: Theme.lightPrimaryColor
                         text: userData ? userData.username : "";
                     }
 
@@ -116,7 +116,7 @@ Page{
                         maximumLineCount: 1;
                         textFormat: Text.RichText;
                         font.pixelSize: Theme.fontSizeExtraSmall
-                        color: Theme.secondaryColor
+                        color: Theme.lightPrimaryColor
                         text: userData ? userData.aboutme?userData.aboutme:"":"";
                     }
                 }

@@ -28,6 +28,7 @@ import json
 import pprint
 import sqlite3
 import pyotherside
+import requests
 from datetime import datetime
 from diskcache import Cache
 import hashlib
@@ -46,6 +47,10 @@ CACHE_PATH = os.path.join(XDG_CACHE_HOME, OrganizationName, HARBOUR_APP_NAME)
 class Api:
     def __init__(self):
         self.userId = 0
+        self.csrf = ""
+        self.base_url = f"https://{DOMAIN_NAME}"
+        self.session = requests.Session()
+
         try:
             if not os.path.exists(CACHE_PATH):
                 os.makedirs(CACHE_PATH)
@@ -53,6 +58,94 @@ class Api:
         except:
             Utils.log(traceback.format_exc())
             self.cache = None
+
+    def init_cookie(self, saved_cookie):
+        if saved_cookie:
+            self.session.cookies.update({
+                "express.sid": saved_cookie
+            })
+
+    def get_csrf_token(self):
+        headers = {
+            "user-agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1"
+        }
+        res = self.session.get(f'{self.base_url}/api/config', headers = headers)
+        res.raise_for_status()
+        return res.json()['csrf_token']
+
+    def login(self, username, password):
+        csrf_token = self.get_csrf_token()
+        print("csrf:",csrf_token)
+        self.csrf = csrf_token
+        payload = {
+            'username': username,
+            'password': password,
+        }
+        headers = {
+            'X-CSRF-Token': csrf_token,
+        }
+
+        res = self.session.post(f'{self.base_url}/api/v3/utilities/login', data=payload, headers=headers)
+        if res.json()["status"]["code"] !='ok':
+            raise Exception('Login failed. Please check your credentials.')
+        cookies = res.cookies
+        cookies_dict = requests.utils.dict_from_cookiejar(cookies)
+        jsondata = res.json()
+        jsondata["cookies"] = cookies_dict.get("express.sid")
+        return jsondata
+
+    def get_recent_topics(self, limit=10):
+        url = f'{self.base_url}/api/recent'
+        res = self.session.get(url)
+        res.raise_for_status()
+        return res.json()['topics'][:limit]
+
+    def get_topic(self, tid):
+        url = f'{self.base_url}/api/topic/{tid}'
+        res = self.session.get(url)
+        res.raise_for_status()
+        return res.json()
+
+    def create_topic(self, cid, title, content):
+        """
+        需要启用插件 nodebb-plugin-write-api
+        并启用 Cookie 或 Token 认证
+        """
+        url = f'{self.base_url}/api/v3/topics'
+        payload = {
+            'cid': cid,
+            'title': title,
+            'content': content,
+        }
+        headers = {
+            'X-CSRF-Token': self.csrf,
+        }
+        res = self.session.post(url, json=payload, headers=headers)
+        res.raise_for_status()
+        return res.json()
+
+    def reply_to_topic(self, tid, content, pid):
+        url = f'{self.base_url}/api/v3/topics/{tid}'
+        payload = {
+            'content': content,
+            'toPid': pid
+        }
+        headers = {
+            'X-CSRF-Token': self.csrf,
+        }
+        res = self.session.post(url, json=payload, headers = headers)
+        res.raise_for_status()
+        return res.json()
+
+    def get_unread():
+        url = f'{self.base_url}/api/notifications'
+        headers = {
+            'X-CSRF-Token': self.csrf,
+        }
+        res = self.session.get(url, headers = headers)
+        res.raise_for_status()
+        return res.json()
+
 
     def get_other_param(self, username):
         """
@@ -94,7 +187,7 @@ class Api:
                     expires = ex.split("=")[-1].lstrip()
             return sid, expires
         else:
-            Utils.log("not found cookies")
+            Utils.error("not found cookies")
             return None, None
 
     def getMd5(self, name):

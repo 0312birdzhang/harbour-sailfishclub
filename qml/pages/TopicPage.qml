@@ -407,11 +407,10 @@ Page{
             }
 
             function replayCallback(result){
-                if(!result || result.code !== "ok"){
-                    notification.showPopup(qsTr("ReplayError"),JSON.stringify(ret),"image://theme/icon-lock-warning");
+                if(!result || result.status.code !== "ok"){
+                    notification.showPopup(qsTr("ReplayError"),JSON.stringify(result),"image://theme/icon-lock-warning");
                 }else{
-                    console.log(result)
-                    var ret = result.payload;
+                    var ret = result.response;
                     replaysTmpModel.append({
                                          "timestamp":ret.timestampISO,
                                          "content":ret.content,
@@ -419,7 +418,7 @@ Page{
                                          "username":ret.user.username,
                                          "userslug":ret.user.userslug,
                                          "signature":ret.user.signature,
-                                         "picture":ret.user.avatar||"",
+                                         "picture": ret.user.picture||"",
                                          "floor":ret.index,
                                          "user_group_icon": userinfo.groupIcon,
                                          "user_group_name": (ret.user && ret.user.selectedGroup)?

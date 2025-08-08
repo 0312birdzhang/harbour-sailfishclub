@@ -35,6 +35,7 @@ QtObject{
     signal imageSelected(var url, var desc);
 
     signal loadUserToken(var result);
+    signal loadCsrfToken(string csrf);
     signal loginTwofactor();
 
     signal validateFailed();

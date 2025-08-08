@@ -16,11 +16,11 @@ Page{
         target: signalCenter
         onGetUnread:{
             if (result && result != "Forbidden"){
-                var posts = result.topics;
+                var posts = result.notifications;
                 unreadModel.clear();
                 for(var i = 0; i < posts.length; i++){
                     unreadModel.append({
-                       "timestamp":posts[i].timestampISO,
+                       "timestamp":posts[i].datetimeISO,
                        "content":posts[i].teaser.content,
                        "signature":posts[i].teaser.signature?posts[i].teaser.signature:"",
                        "tid": posts[i].tid,
