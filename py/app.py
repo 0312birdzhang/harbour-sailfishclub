@@ -48,8 +48,12 @@ class Api:
     def __init__(self):
         self.userId = 0
         self.csrf = ""
-        self.base_url = f"https://{DOMAIN_NAME}"
+        self.base_url = f"http://{DOMAIN_NAME}"
         self.session = requests.Session()
+        self.proxies = {
+            "http": "45.32.119.117:80",
+            "https": "45.32.119.117:80"
+        }
 
         try:
             if not os.path.exists(CACHE_PATH):
@@ -69,7 +73,7 @@ class Api:
         headers = {
             "user-agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1"
         }
-        res = self.session.get(f'{self.base_url}/api/config', headers = headers)
+        res = self.session.get(f'{self.base_url}/api/config', headers = headers, proxies = self.proxies, timeout=10)
         res.raise_for_status()
         return res.json()['csrf_token']
 
@@ -85,7 +89,7 @@ class Api:
             'X-CSRF-Token': csrf_token,
         }
 
-        res = self.session.post(f'{self.base_url}/api/v3/utilities/login', data=payload, headers=headers)
+        res = self.session.post(f'{self.base_url}/api/v3/utilities/login', data=payload, headers=headers, proxies = self.proxies, timeout=10)
         if res.json()["status"]["code"] !='ok':
             raise Exception('Login failed. Please check your credentials.')
         cookies = res.cookies
@@ -94,15 +98,21 @@ class Api:
         jsondata["cookies"] = cookies_dict.get("express.sid")
         return jsondata
 
-    def get_recent_topics(self, limit=10):
-        url = f'{self.base_url}/api/recent'
-        res = self.session.get(url)
+    def get_recent_topics(self, slug):
+        url = f'{self.base_url}/api/recent?{slug}'
+        res = self.session.get(url, proxies = self.proxies, timeout=10)
         res.raise_for_status()
-        return res.json()['topics'][:limit]
+        return res.json()
 
-    def get_topic(self, tid):
-        url = f'{self.base_url}/api/topic/{tid}'
-        res = self.session.get(url)
+    def get_popular(self, slug):
+        url = f'{self.base_url}/api/popular?{slug}'
+        res = self.session.get(url, proxies = self.proxies, timeout=10)
+        res.raise_for_status()
+        return res.json()
+
+    def get_topic(self, tid, slug):
+        url = f'{self.base_url}/api/topic/{slug if slug else tid}'
+        res = self.session.get(url, proxies = self.proxies, timeout=10)
         res.raise_for_status()
         return res.json()
 

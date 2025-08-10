@@ -55,7 +55,7 @@ ApplicationWindow
     property int page_size: 20
     property string csrf
     property string current_router: "recent"
-     property string siteUrl: "https://sailfishos.club"
+     property string siteUrl: "http://sailfishos.club"
 //    property string siteUrl: "http://192.168.2.204:4567"
     property alias  userinfo: userinfo
     property bool _showReplayNotification: true
@@ -465,8 +465,14 @@ ApplicationWindow
 
         // 获取最新帖子
         function getRecent(slug){
-
-            Main.getRecent(slug, py.token, userinfo.uid);
+//            Main.getRecent(slug, py.token, userinfo.uid);
+            py.call('app.api.get_recent_topics', [slug], function(ret){
+                if (ret){
+                    signalCenter.getRecent(ret)
+                }else{
+                    signalCenter.loadFailed(JSON.stringify(ret))
+                }
+            })
 
         }
 
@@ -496,13 +502,20 @@ ApplicationWindow
 
         // 获取贴子内容
         function getTopic(tid,slug){
-            console.log("tid:"+tid,",slug:"+slug)
-            if(userinfo.logined){
-                Main.getTopic(tid,slug,py.token, userinfo.uid);
-            }else{
-                Main.getTopic(tid,slug,null,null);
+            py.call('app.api.get_topic', [tid, slug], function(ret){
+                if (ret){
+                    signalCenter.getTopic(ret)
+                }else{
+                    signalCenter.loadFailed(JSON.stringify(ret))
+                }
+            })
+//            console.log("tid:"+tid,",slug:"+slug)
+//            if(userinfo.logined){
+//                Main.getTopic(tid,slug,py.token, userinfo.uid);
+//            }else{
+//                Main.getTopic(tid,slug,null,null);
                 
-            }
+//            }
             
         }
 

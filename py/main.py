@@ -35,13 +35,6 @@ def errMsg(message, code = 400):
     }
 
 
-def logout(uid, token):
-    return True
-
-
-def validate(uid, token, username):
-    return True
-
 
 def uploadImgQiyu(path):
     domain = "http://159.75.45.226"

@@ -76,10 +76,6 @@ Item {
                         font.pixelSize: Theme.fontSizeMedium
                         visible: !twofactorenabled
                         placeholderText: qsTr("Enter Password")
-                        // text: {
-                        //     var password = settings.get_password();
-                        //     return Api.decrypt(password, py.getSecretKey());
-                        // }
                         label: qsTr("Password")
                         EnterKey.iconSource: "image://theme/icon-m-enter-next"
                         EnterKey.onClicked: {
