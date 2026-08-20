@@ -12,7 +12,7 @@
 # The name of your application
 TARGET = harbour-sailfishclub
 
-QT += dbus quick
+QT += dbus quick sql network
 
 CONFIG += sailfishapp link_pkgconfig
 
@@ -37,6 +37,7 @@ INCLUDEPATH += \
 SOURCES += src/harbour-sailfishclub.cpp \
             src/settings.cpp \
             src/cache.cpp \
+            src/api.cpp \
             src/FoilPicsGalleryPlugin.cpp
 
 DEFINES += Q_OS_SAILFISH
@@ -71,7 +72,6 @@ OTHER_FILES += qml/harbour-sailfishclub.qml \
     qml/pages/NotificationsPage.qml \
     qml/components/ActivityTopicBanner.qml \
     qml/js/ApiCore.js \
-    qml/js/ApiMain.js \
     qml/js/twemoji.js \
     qml/js/emoji/*.svg \
     qml/cacert.pem \
@@ -107,6 +107,7 @@ RESOURCES += \
 HEADERS += \
     src/settings.h \
     src/cache.h \
+    src/api.h \
     src/FoilPicsGalleryPlugin.h
 
 # harbour-lib

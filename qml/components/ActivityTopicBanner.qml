@@ -5,35 +5,32 @@ import "../js/ApiCore.js" as JS
 
 Item{
     property alias model:banner.model
-    width: parent.width
-    height: banner.height //+ (isLandscape?Screen.height/10:Screen.height/8)
-    anchors{
-        left:parent.left
-        right:parent.right
-    }
+    property bool landscape: false
+    property real portraitHeight: Screen.height/4
+    width: landscape ? Screen.height / 2 : parent.width
+    height: banner.count > 0 ? (landscape ? parent.height : banner.height) : 0
+    anchors.left: parent.left
     PathView {
         z:10
         id: banner;
-        //y:-newappItem.contentY;
-        //            opacity: view.contentY/height > 1 ? 0 : 1-view.contentY/height;
-        //            visible: opacity>0.0;
         width: parent.width;
-        height: banner.model > 0 ? (isLandscape?Screen.height/5.5:Screen.height/4):0
+        height: banner.count > 0 ? (landscape ? parent.height : portraitHeight):0
         preferredHighlightBegin: 0.5;
         preferredHighlightEnd: 0.5;
         path: Path {
-            startX: isLandscape?(-banner.width*banner.count/4 + banner.width/4):(-banner.width*banner.count/2 + banner.width/2)
-            startY: banner.height/2;
+            // landscape: vertical carousel (up/down), portrait: horizontal carousel
+            startX: landscape ? banner.width/2 : (-banner.width*banner.count/2 + banner.width/2)
+            startY: landscape ? (banner.height/2 + (banner.count-1)/2 * banner.height/2) : banner.height/2
             PathLine {
-                x: isLandscape?(banner.width*banner.count/4 + banner.width/4 ):(banner.width*banner.count/2 + banner.width/2)
-                y: banner.height/2;
+                x: landscape ? banner.width/2 : (banner.width*banner.count/2 + banner.width/2)
+                y: landscape ? (banner.height/2 - (banner.count-1)/2 * banner.height/2) : banner.height/2
             }
         }
 
         clip: true
         delegate: Item {
-            implicitWidth: isLandscape?banner.width/2:banner.width;
-            implicitHeight: banner.height;
+            implicitWidth: banner.width;
+            implicitHeight: landscape ? (banner.height/2 * 0.85) : banner.height;
             clip:true
 
             Rectangle{
@@ -43,21 +40,18 @@ Item{
                 color: category_bgColor
                 opacity: 0.8
             }
-            OpacityRampEffect {
-                id: effect
-                slope: 0.60
-                offset: 0.10
-                sourceItem: rectColor
-            }
             Label{
                 id:topicTitle
                 anchors{
                     left: parent.left
                     right: parent.right
-                    margins: Theme.paddingMedium
+                    top: parent.top
+                    topMargin: Theme.paddingLarge * 2
+                    leftMargin: Theme.paddingLarge
+                    rightMargin: Theme.paddingLarge
                 }
                 text: JS.decodeHTMLEntities(model.title)
-                font.pixelSize: Theme.fontSizeSmall;
+                font.pixelSize: Theme.fontSizeLarge;
                 maximumLineCount: 2
                 wrapMode: Text.WrapAnywhere;
                 font.letterSpacing: 2;
@@ -65,14 +59,15 @@ Item{
             }
             Label{
                 id: summaryLabel
+                visible: !landscape
                 anchors{
                     top: topicTitle.bottom
                     left: parent.left
                     right: parent.right
-                    margins: Theme.paddingMedium
+                    margins: Theme.paddingLarge
                 }
                 text: appwindow.formatFirstPagehtml(model.latestpost)
-                font.pixelSize: Theme.fontSizeTiny
+                font.pixelSize: Theme.fontSizeSmall
                 maximumLineCount: 3
                 linkColor: Theme.highlightColor
                 wrapMode: Text.WrapAnywhere
@@ -84,15 +79,15 @@ Item{
                 id:timeid
                 text:FONT.Icon[category_icon.replace(/-/g,"_")]  + category + " "+ JS.humanedate(timestamp)
                 //opacity: 0.7
-                font.pixelSize: Theme.fontSizeTiny
+                font.pixelSize: Theme.fontSizeSmall
                 //font.italic: true
                 color: Theme.secondaryColor
                 //horizontalAlignment: Text.AlignRight
                 anchors {
                     bottom: parent.bottom
                     left: parent.left
-                    bottomMargin: Theme.paddingLarge
-                    leftMargin: Theme.paddingMedium
+                    bottomMargin: Theme.paddingMedium
+                    leftMargin: Theme.paddingLarge
                 }
             }
 
@@ -100,15 +95,15 @@ Item{
                 id:viewinfo
                 text:qsTr("comments: ") +postcount+" / " + qsTr("views: ") +viewcount
                 //opacity: 0.7
-                font.pixelSize: Theme.fontSizeTiny
+                font.pixelSize: Theme.fontSizeSmall
                 //font.italic: true
                 color: Theme.secondaryColor
                 //horizontalAlignment: Text.AlignRight
                 anchors {
                     bottom :parent.bottom
                     right: parent.right
-                    bottomMargin: Theme.paddingLarge
-                    rightMargin: Theme.paddingMedium
+                    bottomMargin: Theme.paddingMedium
+                    rightMargin: Theme.paddingLarge
                 }
             }
             Rectangle {
@@ -138,28 +133,15 @@ Item{
             onTriggered: banner.incrementCurrentIndex();
         }
     }
-    Rectangle{
-        z:8
-        anchors.top:banner.bottom
-        //            opacity: view.contentY/banner.height > 1 ? 0 : 1-view.contentY/banner.height;
-        //            visible: opacity>0.0;
-        width: parent.width;
-        height: isLandscape?Screen.height/10:Screen.height/4/2
-        gradient: Gradient {
-            GradientStop { position: 0; color: "#08202c" }
-            GradientStop { position: 1.0; color: "#00000000" }
-        }
-    }
     Row{
         z:11
         anchors.left: parent.left;
         anchors.bottom: banner.bottom
-        //            opacity: view.contentY/banner.height > 1 ? 0 : 1-view.contentY/banner.height;
-        //            visible: opacity>0.0;
+        visible: banner.count > 0 && !landscape
         Repeater{
             model: banner.count
             Rectangle{
-                width:  isLandscape?Screen.width/banner.count*2:Screen.width/banner.count
+                width:  landscape?Screen.width/banner.count*2:Screen.width/banner.count
                 height: Theme.paddingSmall
                 color: banner.currentIndex==index?"#22ffffff":"#44000000"
                 MouseArea {

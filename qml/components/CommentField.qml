@@ -286,7 +286,7 @@ Column {
         }
 
         onImageSelected:{
-            py.uploadImage(url, desc);
+            api.uploadImage(url, desc);
         }
     }
 }

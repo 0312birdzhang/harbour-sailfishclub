@@ -1,6 +1,5 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import io.thp.pyotherside 1.3
 import "../js/ApiCore.js" as JS
 import "../js/fontawesome.js" as FONT
 
@@ -17,6 +16,7 @@ Page {
     allowedOrientations: Orientation.Portrait
 
     property string initialSearch
+    property string _currentSearch: ""
     function _reset() {
         viewPlaceholder.text = qsTr("Search results will be shown here")
         viewPlaceholder.hintText = qsTr("Type some keywords in the field above")
@@ -24,9 +24,10 @@ Page {
 
     function _search(text) {
         if(!text) return;
+        _currentSearch = text;
         searchModel.clear();
         // py.search(text, "page=" + current_page);
-        py.get_query_from_cache( appwindow.router_search,"page=" + current_page, text)
+        appwindow.get_query_from_cache( appwindow.router_search,"page=" + current_page, text)
         viewPlaceholder.text = ""
         viewPlaceholder.hintText = ""
     }
@@ -73,67 +74,63 @@ Page {
 
         delegate: BackgroundItem {
             id:showlist
-            height:titleid.height + latestPost.height+timeid.height+Theme.paddingMedium*4
+            property string _postContent: model.content
+            height: titleid.height + previewArea.height + timeid.height + Theme.paddingMedium * 4
             width: searchView.width
-            Label{
-                id:titleid
-                font.pixelSize: Theme.fontSizeSmall
-                truncationMode: TruncationMode.Fade
-                wrapMode: Text.WordWrap
-                font.bold:true;
-                color: initialSearch.length > 0 ? (highlighted ? Theme.secondaryHighlightColor : Theme.secondaryColor)
-                                                   : (highlighted ? Theme.highlightColor : Theme.primaryColor)
-                textFormat: Text.StyledText
-                text: Theme.highlightText(JS.decodeHTMLEntities(model.title), initialSearch, Theme.highlightColor)
-                anchors {
-                    top:parent.top;
+            Column{
+                id: resultColumn
+                anchors{
                     left: parent.left
                     right: parent.right
-                    topMargin: Theme.paddingMedium
-                    leftMargin: Theme.paddingMedium
-                    rightMargin: Theme.paddingMedium
+                    top: parent.top
+                    margins: Theme.paddingMedium
                 }
-            }
+                spacing: Theme.paddingSmall
 
-
-            Label{
-                id:latestPost
-                textFormat: Text.StyledText
-                font.pixelSize: Theme.fontSizeExtraSmall
-                wrapMode: Text.WordWrap
-                linkColor:Theme.primaryColor
-                color: initialSearch.length > 0 ? (highlighted ? Theme.secondaryHighlightColor : Theme.secondaryColor)
-                                                   : (highlighted ? Theme.highlightColor : Theme.primaryColor)
-                text: Theme.highlightText(content, initialSearch, Theme.highlightColor)
-                maximumLineCount: 2
-                anchors {
-                    top: titleid.bottom
-                    left: parent.left
-                    right: parent.right
-                    topMargin: Theme.paddingMedium
-                    leftMargin: Theme.paddingMedium
-                    rightMargin: Theme.paddingMedium
+                Label{
+                    id:titleid
+                    width: parent.width
+                    height: Theme.fontSizeSmall * 3
+                    font.pixelSize: Theme.fontSizeSmall
+                    truncationMode: TruncationMode.Fade
+                    wrapMode: Text.WordWrap
+                    maximumLineCount: 2
+                    font.bold:true;
+                    color: initialSearch.length > 0 ? (highlighted ? Theme.secondaryHighlightColor : Theme.secondaryColor)
+                                                       : (highlighted ? Theme.highlightColor : Theme.primaryColor)
+                    textFormat: Text.StyledText
+                    text: Theme.highlightText(JS.decodeHTMLEntities(model.title), initialSearch, Theme.highlightColor)
                 }
-            }
-            Label{
-                id:timeid
-                text:FONT.Icon[category_icon.replace(/-/g,"_")]  + category + " "+ JS.humanedate(timestamp)
-                //opacity: 0.7
-                font.pixelSize: Theme.fontSizeTiny
-                //font.italic: true
-                color: Theme.secondaryColor
-                //horizontalAlignment: Text.AlignRight
-                anchors {
-                    top:latestPost.bottom
-                    left: parent.left
-                    topMargin: Theme.paddingMedium
-                    leftMargin: Theme.paddingMedium
+
+                // rich text preview, fixed height, clipped so every item stays the same height
+                Item{
+                    id: previewArea
+                    width: parent.width
+                    height: Theme.itemSizeMedium * 2
+                    clip: true
+                    Column{
+                        width: parent.width
+                        Repeater{
+                            id: contentRepeater
+                            model: appwindow.splitContent(_postContent, previewArea, 3)
+                            Loader{
+                                width: parent.width
+                                source: Qt.resolvedUrl("../components/" + type + "Delegate.qml")
+                            }
+                        }
+                    }
+                }
+
+                Label{
+                    id:timeid
+                    text:FONT.Icon[category_icon.replace(/-/g,"_")]  + category + " "+ JS.humanedate(timestamp)
+                    font.pixelSize: Theme.fontSizeTiny
+                    color: Theme.secondaryColor
                 }
             }
             Separator {
                 visible:(index > 0?true:false)
                 width:parent.width;
-                //alignment:Qt.AlignHCenter
                 color: Theme.highlightColor
             }
             onClicked: {
@@ -161,7 +158,7 @@ Page {
                         visible: prev_active
                         onClicked: {
                             current_page--;
-                            _search(initialSearch);
+                            _search(_currentSearch);
                         }
                     }
                     Button{
@@ -169,7 +166,7 @@ Page {
                         visible: next_active
                         onClicked: {
                             current_page++;
-                            _search(initialSearch);
+                            _search(_currentSearch);
                         }
                     }
                 }
@@ -214,10 +211,10 @@ Page {
                     prev_active = false;
                 }
 
-                for(var i = 0;i<posts.length;i++){
+                for(var i = 0; posts && i<posts.length;i++){
                     searchModel.append({
                                        "title":posts[i].topic.title,
-                                       "titleRaw":posts[i].topic.titleRaw,
+                                       "titleRaw":posts[i].topic.title,
                                        "user":posts[i].user.username,
                                        "tid":posts[i].tid,
                                        "content": posts[i].content,

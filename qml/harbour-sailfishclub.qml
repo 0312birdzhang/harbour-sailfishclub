@@ -35,9 +35,7 @@ import "pages/objects"
 import "components"
 import "js/main.js" as JS
 import "js/ApiCore.js" as Api
-import "js/ApiMain.js" as Main
 import "js/fontawesome.js" as FontAwesome
-import io.thp.pyotherside 1.5
 import Nemo.Notifications 1.0
 import Nemo.DBus 2.0
 import Nemo.Configuration 1.0
@@ -55,7 +53,7 @@ ApplicationWindow
     property int page_size: 20
     property string csrf
     property string current_router: "recent"
-     property string siteUrl: "http://sailfishos.club"
+    property string siteUrl: "https://sailfishos.club"
 //    property string siteUrl: "http://192.168.2.204:4567"
     property alias  userinfo: userinfo
     property bool _showReplayNotification: true
@@ -222,7 +220,7 @@ ApplicationWindow
         onTriggered: {
             if(userinfo.logined){
                 console.log("start to get notification...")
-                py.getUnread();
+                api.getUnread();
             }
         }
     }
@@ -234,7 +232,7 @@ ApplicationWindow
         repeat: false
         onTriggered: {
             if(!userinfo.logined){
-                py.initLogin();
+                initLogin();
             }
         }
     }
@@ -246,7 +244,7 @@ ApplicationWindow
         repeat: false
         onTriggered: {
             if(userinfo.logined){
-                py.validateToken();
+                validateToken();
             }
         }
     }
@@ -276,10 +274,10 @@ ApplicationWindow
         id: signalCenter;
         onGetUnread:{
             if (result && result !== "Forbidden"){
-                var nos = result.topics;
-                if(nos.topicCount > 0 && _showReplayNotification){
+                var nos = result.notifications;
+                if(nos && nos.length > 0 && _showReplayNotification){
                     console.log("push notification")
-                    replaiesNotification.body = nos[0].teaser.content;
+                    replaiesNotification.body = nos[0].bodyShort || nos[0].bodyLong || "";
                     replaiesNotification.publish();
                 }
             }
@@ -304,7 +302,7 @@ ApplicationWindow
             userinfo.avatar = avatar;
             signalCenter.loginSuccessed();
             var expires = parseInt(new Date().getTime()/1000) + 30*86400;
-            py.saveData(uid, token, username, "", "true", avatar, expires);
+            saveData(uid, token, username, "", "true", avatar, expires);
         }
 
         onValidateFailed: {
@@ -325,323 +323,157 @@ ApplicationWindow
         filter: "text/x-url"
     }
 
-    Python{
-        id:py
-        property string token;
-        signal log(string msg)
-        signal error(string msg)
+    Connections {
+        target: api
+        onLoadStarted: signalCenter.loadStarted()
+        onLoadFinished: signalCenter.loadFinished()
+        onLoadFailed: signalCenter.loadFailed(error)
+        onLoginSuccess: handleLoginSuccess(result)
+        onLoginFailed: signalCenter.loginFailed(message)
+        onRecentReady: signalCenter.getRecent(result)
+        onCategoriesReady: signalCenter.getCategories(result)
+        onTopicReady: signalCenter.getTopic(result)
+        onReplayFloorReady: signalCenter.replayFloor(result)
+        onUnreadReady: signalCenter.getUnread(result)
+        onSearchReady: signalCenter.getSearch(result)
+        onUserInfoReady: signalCenter.getUserInfo(result)
+        onPreviewReady: signalCenter.previewMd(result)
+        onUploadImageReady: signalCenter.uploadImage(result, desc)
+        onDownloadReady: notification.show(success? qsTr("Picture downloaded") : qsTr("Download picture failed"))
+        onCsrfChanged: console.log("csrf:", csrf)
+    }
 
-        Component.onCompleted: {
-            addImportPath('qrc:/py')
-            py.importModule('main', function () {
-                initLogin();
-                getToken();
-            });
-            py.importModule('app', function(){
-                py.call("app.api.init_cookie",[settings.get_token()], function(){})
-            });
-            setHandler('log', function(msg){
-                console.log(msg)
-            })
-
-            setHandler('error', function(msg){
-                notification.show(msg)
-            })
-        }
-
-        onError: console.log('Error: ' + traceback)
-
-        function getToken(){
-           py.token = settings.get_token();
-        }
-
-        function initLogin(){
-            var username = settings.get_username();
-            var password = settings.get_password();
-            var uid = settings.get_uid();
-            var token = settings.get_token();
-            var logined = settings.get_logined();
-            var avatar = settings.get_avatar();
-            if(logined == "true" && token && uid && username){
-                userinfo.uid = uid.toString();
-                userinfo.username = username;
-                userinfo.avatar = avatar;
-                userinfo.logined = true;
-                signalCenter.loginSuccessed();
-                if(!validateTokenTimer.running){
-                    validateTokenTimer.start();
-                }
-            }else{
-                if(uid && token){
-                    console.log("logined via token")
-                    py.validateToken();
-                }else if(username && password){
-                    console.log("logined via password")
-                    var derpass = Api.decrypt(password, py.getSecretKey());
-                    if(derpass)py.login(username,derpass,"");
-                }
+    function initLogin(){
+        var username = settings.get_username();
+        var password = settings.get_password();
+        var uid = settings.get_uid();
+        var token = settings.get_token();
+        var logined = settings.get_logined();
+        var avatar = settings.get_avatar();
+        console.log("initLogin: logined=", logined, ", token=", (token?"<set>":""), ", uid=", uid, ", username=", username)
+        if(logined == "true" && token && uid && username){
+            userinfo.uid = uid.toString();
+            userinfo.username = username;
+            userinfo.avatar = avatar;
+            userinfo.logined = true;
+            signalCenter.loginSuccessed();
+            api.initCookie(token);
+            if(!validateTokenTimer.running){
+                validateTokenTimer.start();
+            }
+        }else{
+            if(uid && token){
+                console.log("logined via token")
+                api.initCookie(token);
+                validateToken();
+            }else if(username && password){
+                console.log("logined via password")
+                var derpass = Api.decrypt(password, api.getSecretKey());
+                if(derpass)api.login(username,derpass);
             }
         }
+    }
 
-        
-        function validateToken(){
-            var currnetUnix = parseInt(new Date().getTime()/1000)
-            var savedUnix = settings.get_savetime();
-            if(!savedUnix || currnetUnix > parseInt(savedUnix)){
-                // 需要重新登录
-                toLoginPage();
-            }
-            var uid = settings.get_uid();
-            var token = settings.get_token();
-//            Main.validate(uid, token);
+    function validateToken(){
+        var currnetUnix = parseInt(new Date().getTime()/1000)
+        var savedUnix = settings.get_savetime();
+        if(!savedUnix || currnetUnix > parseInt(savedUnix)){
+            toLoginPage();
         }
+    }
 
-        
-        function login(username, password, twofacode){
-            if(!username||!password || username === "undefined" || password === "undefined"){
-                console.log("username or password is invalid");
-                return;
-            }
-            //Main.login(username, password, twofacode);
-            py.call('app.api.login', [username, password], function(ret){
-                if (ret && ret.status.code == "ok"){
-                    userinfo.logined = true;
-                    var rs = ret.response;
-                    userinfo.uid = rs.uid;
-                    userinfo.username = rs.username;
-                    userinfo.avatar = (siteUrl + rs.picture)||"";
-                    var cookie = ret.cookies;
-                    var expires = parseInt(new Date().getTime()/1000) + 30*86400;
-                    py.saveData(userinfo.uid, cookie, userinfo.username, "",
-                    userinfo.logined, userinfo.avatar, expires);
-                    signalCenter.loginSuccessed();
-                }
-            })
+    function handleLoginSuccess(ret){
+        if (ret && ret.status && ret.status.code == "ok"){
+            userinfo.logined = true;
+            var rs = ret.response;
+            userinfo.uid = rs.uid;
+            userinfo.username = rs.username;
+            userinfo.avatar = (siteUrl + rs.picture)||"";
+            var cookie = ret.cookies;
+            console.log("login success, uid=", userinfo.uid, ", username=", userinfo.username, ", cookie=", (cookie?"<set>":"<EMPTY>"))
+            var expires = parseInt(new Date().getTime()/1000) + 30*86400;
+            saveData(userinfo.uid, cookie, userinfo.username, "",
+            userinfo.logined, userinfo.avatar, expires);
+            signalCenter.loginSuccessed();
         }
+    }
 
-        function logout(){
-            var uid = settings.get_uid();
-            var token = settings.get_token();
-            Main.delUserToken(uid, token);
-            settings.set_username("");
-            settings.set_password("");
-            settings.set_uid(0);
-            settings.set_token("");
-            settings.set_logined("false");
-            settings.set_avatar("");
-            settings.set_savetime("");
-            getNotifytimer.stop();
+    function login(username, password){
+        if(!username||!password || username === "undefined" || password === "undefined"){
+            console.log("username or password is invalid");
+            return;
         }
+        api.login(username, password);
+    }
 
-        // py.saveData(userinfo.uid, cookie, userinfo.username, "",
-//        userinfo.logined, userinfo.avatar, expires);
-        function saveData(uid, token, username, password, logined, avatar, expires){
-            if(!userinfo.logined){
-                console.log("not logined")
-                return;
-            }
-            settings.set_username(username);
-            if(password && password !== ""){
-                // var pass_encrypted = encryPass(password);
-                var pass_encrypted = Api.encrypt(password, py.getSecretKey());
-                if(pass_encrypted){
-                    settings.set_password(pass_encrypted);
-                }
-            }
-            settings.set_uid(parseInt(uid));
-            settings.set_token(token);
-            settings.set_logined(logined);
-            settings.set_avatar(avatar);
-            // Mon, 21-Dec-2020 08:34:25 GMT
-//            var exdate = expires.split(", ")[1];
-//            console.log(exdate);
-            // console.log(new Date(exdate).getTime()/1000);
-            // console.log(parseInt(new Date(exdate).getTime()/1000).toString());
-            // TODO new Date(exdate) not working as excepted
-            // 当前时间+2周
+    function logout(){
+        var uid = settings.get_uid();
+        var token = settings.get_token();
+        api.logout(uid, token);
+        settings.set_username("");
+        settings.set_password("");
+        settings.set_uid(0);
+        settings.set_token("");
+        settings.set_logined("false");
+        settings.set_avatar("");
+        settings.set_savetime("");
+        getNotifytimer.stop();
+    }
 
-            settings.set_savetime(parseInt(new Date().getTime()/1000 + 2*7*86400).toString());
+    function saveData(uid, token, username, password, logined, avatar, expires){
+        if(!userinfo.logined){
+            console.log("not logined")
+            return;
         }
-
-        // 获取最新帖子
-        function getRecent(slug){
-//            Main.getRecent(slug, py.token, userinfo.uid);
-            py.call('app.api.get_recent_topics', [slug], function(ret){
-                if (ret){
-                    signalCenter.getRecent(ret)
-                }else{
-                    signalCenter.loadFailed(JSON.stringify(ret))
-                }
-            })
-
-        }
-
-        //获取热门贴子
-        function getPopular(slug){
-            Main.getPopular(slug);
-        }
-
-        // 搜索贴子
-        function search(term, slug){
-            // console.log("slug:"+slug)
-            loading = true;
-            term = encodeURI(term);
-            Main.search(term, slug, py.token);
-        }
-
-
-
-        // 获取分类
-        function getCategories(){
-            Main.listcategory();
-        }
-
-        function getSecretKey(){
-            return call_sync('main.getSecretKey',[]);
-        }
-
-        // 获取贴子内容
-        function getTopic(tid,slug){
-            py.call('app.api.get_topic', [tid, slug], function(ret){
-                if (ret){
-                    signalCenter.getTopic(ret)
-                }else{
-                    signalCenter.loadFailed(JSON.stringify(ret))
-                }
-            })
-//            console.log("tid:"+tid,",slug:"+slug)
-//            if(userinfo.logined){
-//                Main.getTopic(tid,slug,py.token, userinfo.uid);
-//            }else{
-//                Main.getTopic(tid,slug,null,null);
-                
-//            }
-            
-        }
-
-        // 回复贴子
-        function replayTopic(tid, content){
-            py.call('app.api.reply_to_topic', [tid, content, 0], function(ret){
-                if (ret && ret.status.code == "ok"){
-                    signalCenter.replayFloor(ret)
-                }
-            })
-        }
-
-        // 回复贴子中的楼层
-        function replayFloor(tid, toPid, content){
-//            Main.replayTo(tid, userinfo.uid, toPid, content, py.token);
-            py.call('app.api.reply_to_topic', [tid, content, toPid], function(ret){
-                if (ret && ret.status.code == "ok"){
-                    signalCenter.replayFloor(ret)
-                }
-            })
-        }
-
-        // 发新贴
-        function newTopic(title, content, cid){
-//            Main.createTopic(userinfo.uid, cid, title, content, py.token);
-            py.call('app.api.create_topic', [cid, title, content], function(ret){
-                if (ret && ret.status.code == "ok"){
-                    signalCenter.replayFloor(ret)
-                }
-            })
-        }
-
-        //预览发贴内容
-        function previewMd(text){
-            loading = true;
-            call('main.previewMd',[text],function(result){
-                loading = false;
-                signalCenter.previewMd(result);
-            });
-        }
-
-        //上传图片到niupic.com
-        function uploadImage(path,desc){
-            loading = true;
-            call('main.uploadNiuPic',[path],function(ret){
-                loading = false;
-                //替换反斜线
-                if(ret)ret = ret.replace(/\\/g,"");
-                signalCenter.uploadImage(ret,desc);
-            });
-        }
-
-        // 新用户注册
-        function register(user,password,email){
-            //  call('main.createUser',[user,password,email],function(result){
-            //      if(result && result != "Forbidden" && result != "False"){
-            //          signalCenter.registerSucceed();
-            //          py.login(user,password);
-            //      }else{
-            //          signalCenter.registerFailed(result);
-
-            //      }
-            //  });
-        }
-
-        // 获取用户信息
-        function getUserInfo(username, is_username){
-            Main.getuserinfo(username, is_username, settings.get_token(), settings.get_uid());
-        }
-
-        // 获取贴子回复通知
-        function getUnread(){
-            if(!networkStatus)return;
-//            Main.getUnread(settings.get_token());
-            call('app.api.get_unread',[],function(ret){
-                if (ret && ret.status.code == "ok"){
-                    signalCenter.getUnread(ret)
-                }
-            })
-        }
-
-        function get_query_from_cache(router,slug, extfield){
-            console.log("get_query_from_cache, router:", router, ", slug:"+slug, ",extfield:"+extfield)
-            var cache_key = router+(extfield?extfield:"")+ (slug?slug:"");
-            call('app.api.get_query_list_data', [cache_key], function(result){
-                if(result){
-                    console.log("get_query_from_cache, get")
-                    if(router === router_recent)signalCenter.getRecent(result);
-                    if(router === router_popular)signalCenter.getRecent(result);
-                    if(router === router_categories)signalCenter.getCategories(result);
-                    if(router === router_topic)signalCenter.getTopic(result);
-                    if(router === router_search)signalCenter.getSearch(result);
-                }else{
-                    console.log("get_query_from_cache, not get")
-                    if(router === router_recent)py.getRecent(slug);
-                    if(router === router_popular)py.getPopular(slug);
-                    if(router === router_categories)py.getCategories();
-                    if(router === router_topic)py.getTopic(extfield, slug);
-                    if(router === router_search)py.search(extfield, slug);
-                }
-            });
-        }
-
-        function set_query_to_cache(router, slug, result, expire){
-            if (result && result != "Forbidden" && networkStatus){
-                if(!router)router=router_recent;
-                if(!expire)expire=3600.00;
-                // console.log("set_query_from_cache, router:", router, ", key:", router+slug)
-                call('app.api.set_query_list_data',[router+ (slug?slug:""), result, expire],function(result){
-                    if(!result){
-                        console.log("set_query_from_cache failed")
-                    }
-                });
+        settings.set_username(username);
+        if(password && password !== ""){
+            var pass_encrypted = Api.encrypt(password, api.getSecretKey());
+            if(pass_encrypted){
+                settings.set_password(pass_encrypted);
             }
         }
+        settings.set_uid(parseInt(uid));
+        settings.set_token(token);
+        settings.set_logined(logined);
+        settings.set_avatar(avatar);
+        settings.set_savetime(parseInt(new Date().getTime()/1000 + 2*7*86400).toString());
+    }
 
-        function downloadFile(url, filename){
-            loading = true;
-            call('main.downloadFile', [url, filename], function(result){
-                loading = false;
-                notification.show(
-                            result? qsTr("Picture downloaded"): qsTr("Download picture failed")
-                            )
-            })
+    // 新用户注册 (未实现)
+    function register(user, password, email){
+    }
+
+    function getSecretKey(){
+        return api.getSecretKey();
+    }
+
+    function get_query_from_cache(router,slug, extfield){
+        console.log("get_query_from_cache, router:", router, ", slug:"+slug, ",extfield:"+extfield)
+        var cache_key = router+(extfield?extfield:"")+ (slug?slug:"");
+        var result = api.getQueryListData(cache_key);
+        if(result){
+            console.log("get_query_from_cache, get")
+            if(router === router_recent)signalCenter.getRecent(result);
+            if(router === router_popular)signalCenter.getRecent(result);
+            if(router === router_categories)signalCenter.getCategories(result);
+            if(router === router_topic)signalCenter.getTopic(result);
+            if(router === router_search)signalCenter.getSearch(result);
+        }else{
+            console.log("get_query_from_cache, not get")
+            if(router === router_recent)api.getRecent(slug);
+            if(router === router_popular)api.getPopular(slug);
+            if(router === router_categories)api.getCategories();
+            if(router === router_topic)api.getTopic(extfield, slug);
+            if(router === router_search)api.search(extfield, slug);
         }
+    }
 
+    function set_query_to_cache(router, slug, result, expire){
+        if (result && result != "Forbidden" && networkStatus){
+            if(!router)router=router_recent;
+            if(!expire)expire=3600.00;
+            api.setQueryListData(router+ (slug?slug:""), result, expire);
+        }
     }
 
     PanelView {
@@ -825,14 +657,14 @@ ApplicationWindow
 //        if(currentPage.objectName && currentPage.objectName == 'firstPage'){
 //            return;
 //        }
-        popAttachedPages();
-        pageStack.replace(indexPageComponent)
+        // popAttachedPages();
+        pageStack.push(indexPageComponent)
 
     }
 
     function toPopularPage() {
-        popAttachedPages();
-        pageStack.replace(indexPageComponent)
+        // popAttachedPages();
+        pageStack.push(indexPageComponent)
 
     }
 
@@ -847,8 +679,8 @@ ApplicationWindow
     }
 
     function toCategoriesPage(){
-        popAttachedPages();
-        pageStack.replace(categoriesPageComponent)
+        // popAttachedPages();
+        pageStack.push(categoriesPageComponent)
     }
 
 
@@ -999,10 +831,9 @@ ApplicationWindow
     }
 
     Component.onCompleted: {
-        Main.signalcenter = signalCenter;
-        Main.siteUrl = siteUrl;
+        api.siteUrl = siteUrl;
         JS.app = appwindow;
-
+        initLogin();
     }
 
 }

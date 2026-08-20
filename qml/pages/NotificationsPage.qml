@@ -132,7 +132,7 @@ Page{
     }
 
     Component.onCompleted:{
-        py.getUnread();
+        api.getUnread();
     }
 
     Component.onDestruction: {

@@ -14,7 +14,7 @@ Name:       harbour-sailfishclub
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    SailfishClub client for Sailfish OS
-Version:    0.4.3
+Version:    0.4.4
 Release:    1
 Group:      Qt/Qt
 License:    GPLv3
@@ -22,11 +22,9 @@ URL:        https://sailfishos.club/
 Source0:    %{name}-%{version}.tar.bz2
 Source100:  harbour-sailfishclub.yaml
 Requires:   sailfishsilica-qt5 >= 0.10.9
-Requires:   pyotherside-qml-plugin-python3-qt5 >= 1.5.0
 Requires:   mapplauncherd-booster-silica-qt5
 #Requires:   nemo-qml-plugin-thumbnailer-qt5
 Requires:   qt5-qtsvg-plugin-imageformat-svg
-
 BuildRequires:  pkgconfig(sailfishapp) >= 1.0.2
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5Qml)
@@ -74,7 +72,7 @@ desktop-file-install --delete-original       \
 %files
 
 %defattr(-,root,root,-)
-%{_bindir}
+%{_bindir}/%{name}
 %{_datadir}/%{name}
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/*/apps/%{name}.png

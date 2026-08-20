@@ -31,7 +31,7 @@ Dialog  {
 //            console.log(comments)
 //            console.log(userinfo.uid)
 //            console.log(cid);
-            py.newTopic(title.text, comments, cid);
+            api.createTopic(cid, title.text, comments);
 
         }else{
             appwindow.postdraft = comments;
@@ -135,7 +135,7 @@ Dialog  {
                 var topicData = result.payload.topicData;
                 listModel.insert(0,{
                                      "title":topicData.title,
-                                     "titleRaw":topicData.titleRaw,
+                                     "titleRaw":topicData.title,
                                      "user":topicData.user.username,
                                      "viewcount":topicData.viewcount,
                                      "postcount":topicData.postcount,
@@ -162,36 +162,50 @@ Dialog  {
     }
 
     function fillModel(categories){
+        // v4.15 returns a flat list; group children under their parent by parentCid
+        var byParent = {};
+        var roots = [];
         for(var i=0;i<categories.length;i++){
-            if(categories[i].parentCid != "0"){
-                categories[i].name = "  - " + categories[i].name;
-                categories[i].description = "    " + categories[i].description;
-            }
-
-//            console.log("name:", categories[i].name)
-            // Hardcode, because no api
-            if(categories[i].name === "公告"||categories[i].name === "新闻"){
+            var c = categories[i];
+            // skip the "uncategorised" pseudo category (cid -1)
+            if(String(c.cid) === "-1" ||
+               String(c.name).indexOf("uncategorized") >= 0){
                 continue;
             }
-
-            categoriesModel.append({
-                "cid":  categories[i].cid,
-                "name": categories[i].name,
-                "description":categories[i].description,
-                "icon":categories[i].icon,
-                "slug":categories[i].slug,
-                "parentCid":categories[i].parentCid
-                });
-            if(categories[i].children && categories[i].children.length > 0){
-                fillModel(categories[i].children);
+            // Hardcode, because no api
+            if(c.name === "公告"||c.name === "新闻"){
+                continue;
             }
-
+            var pid = String(c.parentCid);
+            if(pid === "0"){
+                roots.push(c);
+            }else{
+                if(!byParent[pid]) byParent[pid] = [];
+                byParent[pid].push(c);
+            }
         }
+        for(var r=0; r<roots.length; r++){
+            appendPostCategory(roots[r], byParent, "");
+        }
+    }
 
+    function appendPostCategory(c, byParent, indent){
+        categoriesModel.append({
+            "cid":  c.cid,
+            "name": indent + c.name,
+            "description":indent + c.description,
+            "icon":c.icon,
+            "slug":c.slug,
+            "parentCid":c.parentCid
+            });
+        var kids = byParent[String(c.cid)];
+        for(var k=0; kids && k<kids.length; k++){
+            appendPostCategory(kids[k], byParent, indent + "  ");
+        }
     }
 
     Component.onCompleted: {
-        py.get_query_from_cache(router_categories, "")
+        appwindow.get_query_from_cache(router_categories, "")
     }
 
     Component.onDestruction: {

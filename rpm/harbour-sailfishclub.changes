@@ -5,6 +5,13 @@
 # Add newest entries to the top of the list.
 # Separate entries from eachother with a blank line.
 
+* Thu Aug 14 2026 BirdZhang <0312birdzhang@gmail.com> 0.4.4
+- 使用 C++ 重构 NodeBB API 层，移除 Python 依赖
+- 适配 NodeBB v4.5/v4.15 API（Write API、搜索/通知返回结构变化）
+- 修复登录持久化、分类权限过滤、子分类归属
+- 分类页横屏左右布局 + 竖排轮播
+- 侧边栏导航改用 push，支持返回
+
 * Mon Apr  6 2020 BirdZhang <0312birdzhang@gmail.com> 0.3.10
 - 修复上传图片问题，更换图床
 - 更新emoji

@@ -30,7 +30,6 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import io.thp.pyotherside 1.5
 import "../js/ApiCore.js" as JS
 import "../js/fontawesome.js" as FONT
 Page {
@@ -111,7 +110,7 @@ Page {
                     id:titleid
                     text: (isQuestion? FONT.Icon.fa_question_circle:"" ) +
                           (isSolved? FONT.Icon.fa_check_circle:"" )  +
-                           JS.decodeHTMLEntities(titleRaw)
+                           JS.decodeHTMLEntities(title)
                     font.pixelSize: Theme.fontSizeSmall
                     truncationMode: TruncationMode.Fade
                     wrapMode: Text.WordWrap
@@ -185,7 +184,8 @@ Page {
                 }
                 onClicked: {
                     pageStack.push(Qt.resolvedUrl("TopicPage.qml"),{
-                                        "tid":tid
+                                        "tid":tid,
+                                        "slug":slug
                                    });
                 }
             }
@@ -247,20 +247,20 @@ Page {
         console.log("current router:" + current_router,", cuttent page:"+current_page);
         if(!via_pulley ){
 //            py.get_query_from_cache(current_router, "page=" + current_page + (cid?("&cid=" + cid ):""));
-            py.getRecent("page=" + current_page + (cid?("&cid=" + cid ):""))
+            api.getRecent("page=" + current_page + (cid?("&cid=" + cid ):""))
         }else{
             switch(current_router){
             case router_recent:
-                py.getRecent("page=" + current_page );
+                api.getRecent("page=" + current_page );
                 break;
             case router_popular:
-                py.getPopular("page=" + current_page);
+                api.getPopular("page=" + current_page);
                 break;
             case router_categories:
-                py.getRecent("page=" + current_page + (cid?("&cid=" + cid ):""));
+                api.getRecent("page=" + current_page + (cid?("&cid=" + cid ):""));
                 break;
             default:
-                py.getRecent("page=" + current_page );
+                api.getRecent("page=" + current_page );
             }
         }
     }
@@ -300,7 +300,7 @@ Page {
                     if(topics[i].deleted)continue;
                     listModel.append({
                                          "title":topics[i].title,
-                                         "titleRaw":topics[i].titleRaw,
+                                         "titleRaw":topics[i].title,
                                          "user":topics[i].user.username,
                                          "viewcount":topics[i].viewcount,
                                          "postcount":topics[i].postcount,

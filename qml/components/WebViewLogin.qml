@@ -9,6 +9,29 @@ Item {
     height: parent.height
     signal loginSucceed()
     signal loginFailed(string fail)
+    property var pendingRs: null
+
+    Connections {
+        target: api
+        onOtherParamReady: {
+            var rs = webloginComponent.pendingRs;
+            if (!rs || !result || !result.sid) {
+                console.log("get other param failed")
+                return;
+            }
+            var expires = result.expires;
+            var cookie = rs.csrf+"; express.sid="+result.sid;
+            userinfo.logined = true;
+            userinfo.uid = rs.uid;
+            userinfo.username = rs.username;
+            userinfo.avatar = rs.avatar||"";
+            console.log("csrf:", rs.csrf);
+            appwindow.saveData(userinfo.uid, cookie, userinfo.username, "",
+            userinfo.logined, userinfo.avatar, expires);
+            signalCenter.loginSuccessed();
+            webloginComponent.loginSucceed();
+        }
+    }
 
     WebView {
           id: webview
@@ -35,22 +58,8 @@ Item {
                     )){
                   runJavaScript(webloginComponent.getUserInfoScript, function(rs){
                       if (rs && rs.username){
-                          py.call('app.api.get_other_param', [rs.username], function(ret){
-                              if (ret){
-                                  console.log("get ret")
-                                  var expires = ret.expires;
-                                  var cookie = rs.csrf+"; express.sid="+ret.sid;
-                                  userinfo.logined = true;
-                                  userinfo.uid = rs.uid;
-                                  userinfo.username = rs.username;
-                                  userinfo.avatar = rs.avatar||"";
-                                  console.log("csrf:", rs.csrf);
-                                  py.saveData(userinfo.uid, cookie, userinfo.username, "",
-                                  userinfo.logined, userinfo.avatar, expires);
-                                  signalCenter.loginSuccessed();
-                                  webloginComponent.loginSucceed();
-                              }
-                          })
+                          webloginComponent.pendingRs = rs;
+                          api.getOtherParam(rs.username);
                       }else{
                           console.log("rs empty")
                       }

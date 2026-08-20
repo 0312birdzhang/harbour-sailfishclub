@@ -112,7 +112,7 @@ Item {
                 errorLabel.visible = false;
                 registerButton.enabled = false;
                 busyIndicator.running = true;
-                py.register(nickname.text,password.text,email.text);
+                appwindow.register(nickname.text,password.text,email.text);
 
             }
         }

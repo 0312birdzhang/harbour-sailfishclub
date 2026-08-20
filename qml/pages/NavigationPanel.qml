@@ -278,7 +278,7 @@ Panel {
                         userinfo.username = "";
                         userinfo.avatar = "";
                         userinfo.user_text = "";
-                        py.logout();
+                        appwindow.logout();
                         appwindow.current_router = "recent"
                         toIndexPage();
                     },3000)

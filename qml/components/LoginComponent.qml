@@ -86,7 +86,7 @@ Item {
                                 submitButton.enabled = false;
                                 submitButton.focus = true
                                 errorLabel.visible = false;
-                                py.login(userName.text, password.text);
+                                appwindow.login(userName.text, password.text);
                             }
                         }
                     }
@@ -107,7 +107,7 @@ Item {
                             submitButton.enabled = false;
                             submitButton.focus = true
                             errorLabel.visible = false;
-                            py.login(userName.text,password.text, twofactor.text);
+                            appwindow.login(userName.text,password.text);
                         }
                     }
                 }
@@ -122,7 +122,7 @@ Item {
                     timer.start();
                     submitButton.enabled = false;
                     errorLabel.visible = false;
-                    py.login(userName.text, password.text, twofactorenabled?twofactor.text:"");
+                    appwindow.login(userName.text, password.text);
                 }
             }
             Label{

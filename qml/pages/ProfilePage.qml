@@ -199,6 +199,6 @@ Page{
         }else{
             
         }
-        py.getUserInfo(username, is_username);
+        api.getUserInfo(username, is_username);
     }
 }

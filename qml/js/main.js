@@ -4,8 +4,12 @@ Qt.include("twemoji.js")
 var py;
 var app;
 
-function splitContent(topic_content, parent) {
+function splitContent(topic_content, parent, maxBlocks) {
     var model = Qt.createQmlObject('import QtQuick 2.0; ListModel {}', parent);
+    var _append = function(obj){
+        if(maxBlocks && model.count >= maxBlocks) return;
+        model.append(obj);
+    };
     topic_content = app.formathtml(topic_content);
     topic_content = topic_content.replace(/<a[^<>]*href=\"([^<>"]*)\"\s+rel=\"nofollow\"><img\s+src=\"([^<>"]*)\".*?a>/g,"<img src=\"$2\" />"); //去掉图片上的超链接
     topic_content = topic_content.replace(/<img[^<>]*class=\"[^<>]*emoji-emoji-one[^<>]*\"[^<>]*alt=\"([^<>"]*)\"[^<>]*\/>/g,"$1"); // emoji 直接用图片alt中的
@@ -26,7 +30,7 @@ function splitContent(topic_content, parent) {
     var arr_iframe = topic_content.match(iframeReg);
 
     if(!arr_img && !arr_iframe){
-        parseCode(model,topic_content);
+        parseCode(model,topic_content, maxBlocks);
         return model;
     }
     for (var i = 0; arr_img && i < arr_img.length; i++) {
@@ -60,13 +64,13 @@ function splitContent(topic_content, parent) {
         for(var j = 0; j < text_contents.length; j++){
             var text_contents_tmp = text_contents[j];
             // 处理代码块
-            parseCode(model, text_contents_tmp);
+            parseCode(model, text_contents_tmp, maxBlocks);
 
             if(text_contents_tmp.indexOf("embed-responsive") > -1 || text_contents_tmp.indexOf("video-container") > -1){
-                model.append({
-                                 "type": "Webview",
-                                 "content": iframe_model[j]
-                             })
+                _append({
+                             "type": "Webview",
+                             "content": iframe_model[j]
+                         })
             }else{
 
             }
@@ -76,20 +80,20 @@ function splitContent(topic_content, parent) {
         if ( iii < contents.length - 1){
             var imgsrc = img_model[iii];
             if(imgsrc && imgsrc.lastIndexOf("gif") > 0){
-                model.append({
-                                 "type": "AnimatedImage",
-                                 "content": imgsrc
-                             })
+                _append({
+                             "type": "AnimatedImage",
+                             "content": imgsrc
+                         })
             }else{
                 var match = imgsrc.match(/\/([a-f0-9]+)\.png/i);
                 if(imgsrc.indexOf("nodebb-plugin-emoji") > -1 && match && match[1]){
                     var emojiCode = match[1];  // "1f914"
-                    model.append({
+                    _append({
                              "type": "Text",
                              "content": twemoji.convert.fromCodePoint(emojiCode)
                          })
                 }else{
-                    model.append({
+                    _append({
                              "type": "Image",
                              "content": imgsrc
                          })
@@ -102,10 +106,14 @@ function splitContent(topic_content, parent) {
 }
 
 
-function parseCode(model, topic_content){
+function parseCode(model, topic_content, maxBlocks){
 //    console.log("content:",topic_content)
     var codeReg = /<pre><code>.*?[\d\D]*?<\/code><\/pre>/g;
     var _replace_code_ = "__REPLACE_CODE__";
+    var _append = function(obj){
+        if(maxBlocks && model.count >= maxBlocks) return;
+        model.append(obj);
+    };
     if(topic_content.indexOf("<code>") > -1 ){
         var codes_model = [];
         var arr_codes = topic_content.match(codeReg);
@@ -117,20 +125,20 @@ function parseCode(model, topic_content){
         var code_contents = topic_content.replace(/<pre><code>.*?[\d\D]*?<\/code><\/pre>/g,_replace_code_).split(_replace_code_);
 //        console.log("code_contents length",arr_codes?arr_codes.length:0)
         for(var k = 0; k < code_contents.length; k++){
-            model.append({
+            _append({
                              "type": "Text",
                              "content": code_contents[k].replace("\\n","<br/>")
                          })
             if(k <= codes_model.length - 1){
                 var codeline = codes_model[k];
-                model.append({
+                _append({
                                  "type": "CodeBlock",
                                  "content": decodeHTMLEntities(codeline)
                              })
             }
         }
     }else{
-        model.append({
+        _append({
                          "type": "Text",
                          "content": topic_content.replace("\\n","<br/>")
                      })

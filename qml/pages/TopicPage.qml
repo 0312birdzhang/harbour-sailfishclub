@@ -1,6 +1,5 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import io.thp.pyotherside 1.5
 import "../components"
 import "../js/ApiCore.js" as JS
 import "../js/fontawesome.js" as FONT
@@ -22,7 +21,7 @@ Page{
     property bool prev_active:false;
 
 
-    allowedOrientations: Orientation.Portrait
+    allowedOrientations: Orientation.All
 
     ListModel{
         id: topicModel
@@ -316,7 +315,7 @@ Page{
     function load(force_refresh){
         console.log("slug:", slug?slug+"?page="+current_page:undefined,", tid:"+tid)
 //        if(force_refresh){
-            py.getTopic(tid,slug?slug+"?page="+current_page:undefined);
+            api.getTopic(tid,slug?slug+"?page="+current_page:undefined);
 //        }else{
 //            py.get_query_from_cache(appwindow.router_topic,
 //            slug?slug+"?pa/*ge="+current_page:undefined,
@@ -382,9 +381,9 @@ Page{
                             var subcomments = commentField.children[3].text;
                             //replay
                             if(pid){
-                                py.replayFloor(dialog.tid, pid, subcomments);
+                                api.replyToTopic(dialog.tid, subcomments, pid);
                             }else{
-                                py.replayTopic(dialog.tid, subcomments);
+                                api.replyToTopic(dialog.tid, subcomments, 0);
                             }
 
                         }

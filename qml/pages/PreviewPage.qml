@@ -52,6 +52,6 @@ Page {
 
     Component.onCompleted: {
 //        console.log(mdtext)
-        py.previewMd(mdtext);
+        api.previewMd(mdtext);
     }
 }

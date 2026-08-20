@@ -34,6 +34,7 @@
 #include <sailfishapp.h>
 #include "settings.h"
 #include "cache.h"
+#include "api.h"
 #include "FoilPicsGalleryPlugin.h"
 #include "FoilPicsThumbnailerPlugin.h"
 
@@ -58,6 +59,7 @@ int main(int argc, char *argv[])
 
    QGuiApplication *app = SailfishApp::application(argc, argv);
    Cache *imageCache = new Cache("sailfishclub",app);
+   Api *api = new Api(app);
 
    register_types(SAILFISHCLUB_QML_IMPORT, 1, 0);
    HarbourTransferMethodInfo2::registerTypes();
@@ -69,8 +71,10 @@ int main(int argc, char *argv[])
    FoilPicsGalleryPlugin::registerTypes(context->engine(),
        SAILFISHCLUB_GALLERY_QML_IMPORT, 1, 0);
 
-   view->setSource(SailfishApp::pathTo("qml/harbour-sailfishclub.qml"));
    context->setContextProperty("imageCache", imageCache);
+   context->setContextProperty("api", api);
+
+   view->setSource(SailfishApp::pathTo("qml/harbour-sailfishclub.qml"));
 //   view->show();
 
 //   QObject::connect(view->engine(), SIGNAL(quit()), QCoreApplication::instance(), SLOT(quit()));

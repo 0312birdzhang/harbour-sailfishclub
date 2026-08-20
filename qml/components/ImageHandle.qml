@@ -122,7 +122,7 @@ Page {
                 icon.source: "image://theme/icon-m-cloud-download"
                 onClicked: {
                     var filename = mediaURL.split("/");
-                    py.downloadFile(mediaURL, filename[filename.length-1]);
+                    api.downloadFile(mediaURL, filename[filename.length-1]);
                 }
             }
             Rectangle {
@@ -305,7 +305,7 @@ Page {
        onClicked: {
            console.log(imagePreview.source);
            var filename = mediaURL.split("/");
-           py.downloadFile(mediaURL, filename[filename.length-1]);
+           api.downloadFile(mediaURL, filename[filename.length-1]);
 
        }
     }
