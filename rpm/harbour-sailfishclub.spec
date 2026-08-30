@@ -19,7 +19,7 @@ Release:    1
 Group:      Qt/Qt
 License:    GPLv3
 URL:        https://sailfishos.club/
-Source0:    %{name}-%{version}.tar.bz2
+Source0:    %{name}-%{version}.tar.gz
 Requires:   sailfishsilica-qt5 >= 0.10.9
 Requires:   mapplauncherd-booster-silica-qt5
 #Requires:   nemo-qml-plugin-thumbnailer-qt5
