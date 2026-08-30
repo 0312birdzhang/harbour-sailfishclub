@@ -13,7 +13,7 @@ function splitContent(topic_content, parent, maxBlocks) {
     topic_content = app.formathtml(topic_content);
     topic_content = topic_content.replace(/<a[^<>]*href=\"([^<>"]*)\"\s+rel=\"nofollow\"><img\s+src=\"([^<>"]*)\".*?a>/g,"<img src=\"$2\" />"); //去掉图片上的超链接
     topic_content = topic_content.replace(/<img[^<>]*class=\"[^<>]*emoji-emoji-one[^<>]*\"[^<>]*alt=\"([^<>"]*)\"[^<>]*\/>/g,"$1"); // emoji 直接用图片alt中的
-    topic_content = topic_content.replace(/<img[^<>]*class=\"[^<>]*emoji-customizations[^<>]*\"[^<>]*alt=\"([^<>"]*)\"[^<>]*\/>/g,"$1") // 自定义表情
+    topic_content = topic_content.replace(/<img[^<>]*class=\"[^<>]*emoji-customizations[^<>]*\"[^<>]*title=\"([^<>"]*)\"[^<>]*\/>/g,"$1") // 自定义表情（用 title 里的表情代码，alt 是 undefined）
     // console.log(topic_content)
     var img_model = [];
     var iframe_model = [];

@@ -25,7 +25,11 @@ Page {
                 property real prevScale
 
                 function fitToScreen() {
-                    scale = Math.min(imageFlickable.width / width, imageFlickable.height / height, 1)
+                    // use the actual decoded size (sourceSize.width may be 0 since only height is set)
+                    var iw = imagePreview.implicitWidth
+                    var ih = imagePreview.implicitHeight
+                    if (iw <= 0 || ih <= 0) return
+                    scale = Math.min(imageFlickable.width / iw, imageFlickable.height / ih)
                     pinchArea.minScale = scale
                     prevScale = scale
                 }
