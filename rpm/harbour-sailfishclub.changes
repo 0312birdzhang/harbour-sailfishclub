@@ -5,6 +5,11 @@
 # Add newest entries to the top of the list.
 # Separate entries from eachother with a blank line.
 
+* Thu Aug 14 2026 BirdZhang <0312birdzhang@gmail.com> 0.4.5
+- 修复头像缓存（MaskImage 改用 CacheImage）
+- 修复自定义表情显示（改用 title）
+- 修复图片查看器适配屏幕
+
 * Thu Aug 14 2026 BirdZhang <0312birdzhang@gmail.com> 0.4.4
 - 使用 C++ 重构 NodeBB API 层，移除 Python 依赖
 - 适配 NodeBB v4.5/v4.15 API（Write API、搜索/通知返回结构变化）
