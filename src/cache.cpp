@@ -12,6 +12,7 @@
 #include <QDesktopServices>
 #include <QString>
 #include <QDebug>
+#include <utime.h>
 
 Cache::Cache(QString name, QObject *parent) :
     QObject(parent)
@@ -145,6 +146,8 @@ void Cache::queueObject(QVariant dataurl, QVariant callback)
             //qDebug() << "cache hit" << url;
             namelocal = it.value();
             m_cachemap_lock.unlock();
+            // refresh mtime on every access so the 14-day expiry is based on last ACCESS
+            utime(namelocal.toLocal8Bit().constData(), NULL);
             makeCallback(callback,true,namelocal);
         } else {
             //qDebug() << "cache miss" << url;
@@ -161,6 +164,9 @@ void Cache::queueObject(QVariant dataurl, QVariant callback)
 #endif
             QFileInfo file(namelocal);
             if (file.exists()) {
+                // refresh mtime on every hit, so the 14-day expiry is based on
+                // last ACCESS, not the download time (hot files are kept)
+                utime(namelocal.toLocal8Bit().constData(), NULL);
                 m_cachemap_lock.unlock();
                 m_cachemap_lock.lockForWrite();
                 m_cachemap.insert(url,namelocal);
