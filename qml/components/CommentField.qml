@@ -171,23 +171,40 @@ Column {
                attrs: '  '
            }
 
-           HtmlTagButton {
-               text: FONT.Icon.fa_picture_o
-               tag: ""
-               MouseArea{
-                   anchors.fill: parent
-                   onClicked: {
-                       console.log("open image select dialog")
-                       pageStack.push(selectImageComponent);
-                   }
-                   onPressedChanged: if (pressed) pressTimer.start()
-                   onCanceled: pressTimer.stop()
-                   Timer {
-                       id: pressTimer
-                       interval: Theme.minimumPressHighlightTime
-                   }
-               }
-           }
+HtmlTagButton {
+                text: FONT.Icon.fa_smile_o
+                tag: ""
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        pageStack.push(Qt.resolvedUrl("../pages/EmojiPage.qml"));
+                    }
+                    onPressedChanged: if (pressed) emojiPressTimer.start()
+                    onCanceled: emojiPressTimer.stop()
+                    Timer {
+                        id: emojiPressTimer
+                        interval: Theme.minimumPressHighlightTime
+                    }
+                }
+            }
+
+            HtmlTagButton {
+                text: FONT.Icon.fa_picture_o
+                tag: ""
+                MouseArea{
+                    anchors.fill: parent
+                    onClicked: {
+                        console.log("open image select dialog")
+                        pageStack.push(selectImageComponent);
+                    }
+                    onPressedChanged: if (pressed) pressTimer.start()
+                    onCanceled: pressTimer.stop()
+                    Timer {
+                        id: pressTimer
+                        interval: Theme.minimumPressHighlightTime
+                    }
+                }
+            }
 
            HtmlTagButton {
                text: FONT.Icon.fa_list_ol
@@ -287,6 +304,11 @@ Column {
 
         onImageSelected:{
             api.uploadImage(url, desc);
+        }
+
+        onEmojiSelected:{
+            var editor = body._editor;
+            editor.insert(editor.cursorPosition, emoji);
         }
     }
 }

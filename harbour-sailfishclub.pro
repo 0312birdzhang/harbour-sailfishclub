@@ -69,6 +69,7 @@ OTHER_FILES += qml/harbour-sailfishclub.qml \
     qml/components/TabButton.qml \
     qml/components/TopicToolBar.qml \
     qml/pages/CategoriesPage.qml \
+    qml/pages/EmojiPage.qml \
     qml/pages/NotificationsPage.qml \
     qml/components/ActivityTopicBanner.qml \
     qml/js/ApiCore.js \

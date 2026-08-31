@@ -33,6 +33,7 @@ QtObject{
     signal getUnOfficalContent(var result);
 
     signal imageSelected(var url, var desc);
+    signal emojiSelected(string emoji);
 
     signal loadUserToken(var result);
     signal loadCsrfToken(string csrf);
