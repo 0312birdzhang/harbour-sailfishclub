@@ -42,12 +42,9 @@ SilicaListView {
 
 
     pressDelay: 0 // important! (makes vertical flicking "stable")
-    interactive: !container.closed && !leftEdgeSwipe._dragging // non-interactive while closed or dragging
+    interactive: true // native horizontal swipe opens/closes the panel; page content sits above and stays interactive
 
     function hidePanel() {
-        if (leftEdgeSwipe._dragging) {
-            return
-        }
         if (container.moving) {
             delayedHide = true
         } else if (container.currentIndex !== 1) {
@@ -58,10 +55,6 @@ SilicaListView {
 
     property bool delayedHide: false
     onMovementEnded: {
-        if (leftEdgeSwipe._dragging) {
-            container.delayedHide = false
-            return
-        }
         if (container.delayedHide) {
             container.currentIndex = 1
         }
@@ -100,52 +93,6 @@ SilicaListView {
             enabled: !container.closed
             onClicked: {
                 container.hidePanel()
-            }
-        }
-    }
-
-    // left edge drag area to open panel when closed
-    MouseArea {
-        id: leftEdgeSwipe
-        width: Theme.paddingLarge * 6
-        height: parent.height
-        anchors.left: parent.left
-        preventStealing: true
-        enabled: container.closed || _dragging
-        property int _pressX: 0
-        property int _startContentX: 0
-        property bool _dragging: false
-        onPressed: {
-            container.highlightRangeMode = ListView.NoHighlightRange
-            container.snapMode = ListView.NoSnap
-            _pressX = mouse.x
-            _startContentX = container.contentX
-            _dragging = true
-        }
-        onPositionChanged: {
-            if (_dragging) {
-                var target = _startContentX - (mouse.x - _pressX)
-                container.contentX = Math.max(0, Math.min(container.panelWidth, target))
-            }
-        }
-        onReleased: {
-            if (_dragging) {
-                _dragging = false
-                var target = container.contentX < container.panelWidth * 2 / 3 ? 0 : 1
-                container.highlightRangeMode = ListView.StrictlyEnforceRange
-                container.snapMode = ListView.SnapOneItem
-                container.currentIndex = target
-                // lock position immediately to avoid the highlight-animation bounce
-                container.contentX = target === 0 ? 0 : container.panelWidth
-            }
-        }
-        onCanceled: {
-            if (_dragging) {
-                _dragging = false
-                container.highlightRangeMode = ListView.StrictlyEnforceRange
-                container.snapMode = ListView.SnapOneItem
-                container.currentIndex = 1
-                container.contentX = container.panelWidth
             }
         }
     }

@@ -16,24 +16,20 @@ Item {
         onClicked: {
             pageStack.push(Qt.resolvedUrl("ImageHandle.qml"),{
                                "type": "img",
-                               "mediaURL": img.source
+                               "mediaURL": content
                            });
         }
     }
 
-    Image {
+    CacheImage {
         id: img;
         anchors.horizontalCenter: root.horizontalCenter;
         width: Screen.width - Theme.paddingMedium;
-        // width: bw;
-        cache: true;
-        // height: parent.height;
         fillMode: Image.PreserveAspectFit;
-        // sourceSize.width: bw;
-        source: content;
+        sourceUncached: content;
         Behavior on opacity { NumberAnimation {} }
         ProgressCircle {
-            width: parent.height 
+            width: parent.height
             height: parent.height
             value: img.progress
             anchors.horizontalCenter: parent.horizontalCenter

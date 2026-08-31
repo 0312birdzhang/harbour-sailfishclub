@@ -20,7 +20,7 @@ Page{
 
     Column{
         id:column
-        z: -2
+        z: 10
         width: page.width
         height: page.height
 

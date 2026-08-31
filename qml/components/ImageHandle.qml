@@ -15,7 +15,7 @@ Page {
         console.log("previewURL > " + previewURL)
         console.log("mediaURL > " + mediaURL)
         if (type != 'animated_gif' && type != 'video') {
-            imagePreview.source = mediaURL
+            imagePreview.sourceUncached = mediaURL
             imageFlickable.visible = true;
         } else {
             video.source = mediaURL
@@ -172,20 +172,24 @@ Page {
             width: Math.max(imagePreview.width * imagePreview.scale, imageFlickable.width)
             height: Math.max(imagePreview.height * imagePreview.scale, imageFlickable.height)
 
-            Image {
+            CacheImage {
                 id: imagePreview
 
                 property real prevScale
 
                 function fitToScreen() {
-                    scale = Math.min(imageFlickable.width / width, imageFlickable.height / height, 1)
+                    // use actual decoded size (sourceSize.width may be 0 since only height is set)
+                    var iw = imagePreview.implicitWidth
+                    var ih = imagePreview.implicitHeight
+                    if (iw <= 0 || ih <= 0) return
+                    scale = Math.min(imageFlickable.width / iw, imageFlickable.height / ih)
                     pinchArea.minScale = scale
                     prevScale = scale
                 }
 
                 anchors.centerIn: parent
                 fillMode: Image.PreserveAspectFit
-                cache: true
+                cache: false
                 asynchronous: true
                 sourceSize.height: 1000;
                 smooth: false

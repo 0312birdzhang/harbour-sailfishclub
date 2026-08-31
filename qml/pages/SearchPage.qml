@@ -6,6 +6,7 @@ import "../js/fontawesome.js" as FONT
 Page {
     id: searchPage
     objectName: "searchPage"
+    property alias contentItem: searchView
     property int current_page:1;
     property int pageCount:1;
     property string next_page;
@@ -41,6 +42,7 @@ Page {
 
     SilicaListView{
         id: searchView
+        z: 10
         width: parent.width
         height: parent.height
         anchors.fill: parent

@@ -5,6 +5,10 @@
 # Add newest entries to the top of the list.
 # Separate entries from eachother with a blank line.
 
+* Thu Aug 14 2026 BirdZhang <0312birdzhang@gmail.com> 0.4.6
+- 侧滑栏改为手势识别（右滑展开，无固定触发区，内容全屏可点可滑）
+- 帖子图片改用磁盘缓存，点击查看不再重复加载
+
 * Thu Aug 14 2026 BirdZhang <0312birdzhang@gmail.com> 0.4.5
 - 修复头像缓存（MaskImage 改用 CacheImage）
 - 修复自定义表情显示（改用 title）
