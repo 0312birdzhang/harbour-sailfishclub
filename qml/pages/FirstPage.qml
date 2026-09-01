@@ -245,23 +245,18 @@ Page {
 
     function load(via_pulley){
         console.log("current router:" + current_router,", cuttent page:"+current_page);
-        if(!via_pulley ){
-//            py.get_query_from_cache(current_router, "page=" + current_page + (cid?("&cid=" + cid ):""));
-            api.getRecent("page=" + current_page + (cid?("&cid=" + cid ):""))
-        }else{
-            switch(current_router){
-            case router_recent:
-                api.getRecent("page=" + current_page );
-                break;
-            case router_popular:
-                api.getPopular("page=" + current_page);
-                break;
-            case router_categories:
-                api.getRecent("page=" + current_page + (cid?("&cid=" + cid ):""));
-                break;
-            default:
-                api.getRecent("page=" + current_page );
-            }
+        switch(current_router){
+        case router_recent:
+            api.getRecent("page=" + current_page + (cid?("&cid=" + cid ):""));
+            break;
+        case router_popular:
+            api.getPopular("page=" + current_page);
+            break;
+        case router_categories:
+            api.getRecent("page=" + current_page + (cid?("&cid=" + cid ):""));
+            break;
+        default:
+            api.getRecent("page=" + current_page );
         }
     }
 
