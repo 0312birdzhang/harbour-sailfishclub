@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import Sailfish.Share 1.0
 import "../components"
 import "../js/ApiCore.js" as JS
 import "../js/fontawesome.js" as FONT
@@ -12,6 +13,11 @@ Page{
     property string user;
     property string category_icon;
     property string category: "";
+
+    ShareAction {
+        id: shareAction
+        mimeType: "text/x-url"
+    }
 
     property int current_page:1;
     property int pageCount:1;
@@ -245,10 +251,9 @@ Page{
             Qt.openUrlExternally(siteUrl+"/topic/"+tid);
         }
         onOpenShare:{
-            pageStack.push(Qt.resolvedUrl("../components/ShareToPage.qml"),{
-                "link":siteUrl+"/topic/"+tid,
-                "linkTitle":topic_title
-            })
+            shareAction.mimeType = "text/x-url"
+            shareAction.resources = [ { type: "text/x-url", status: siteUrl+"/topic/"+tid, title: topic_title } ]
+            shareAction.trigger()
         }
 
     }

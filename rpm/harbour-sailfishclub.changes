@@ -5,6 +5,11 @@
 # Add newest entries to the top of the list.
 # Separate entries from eachother with a blank line.
 
+* Thu Aug 14 2026 BirdZhang <0312birdzhang@gmail.com> 0.4.7
+- 修复分享功能：改用 Sailfish.Share ShareAction（新 transfer-engine 移除 transferMethods）
+- 图片查看页新增分享图片文件按钮
+- 修复标准 emoji 正则、热门路由
+
 * Thu Aug 14 2026 BirdZhang <0312birdzhang@gmail.com> 0.4.6
 - 侧滑栏改为手势识别（右滑展开，无固定触发区，内容全屏可点可滑）
 - 帖子图片改用磁盘缓存，点击查看不再重复加载

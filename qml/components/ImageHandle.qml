@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import Sailfish.Share 1.0
 import QtMultimedia 5.0
 
 Page {
@@ -312,6 +313,37 @@ Page {
            api.downloadFile(mediaURL, filename[filename.length-1]);
 
        }
+    }
+
+    IconButton {
+       id: imageShareButton
+       enabled: imagePreview.status == Image.Ready
+       anchors{
+           right: imagePage.right;
+           rightMargin: Theme.paddingLarge + Theme.iconSizeMedium + Theme.paddingMedium * 2 + Theme.paddingSmall;
+           bottom: imagePage.bottom;
+           bottomMargin: Theme.paddingLarge;
+       }
+       width: Theme.iconSizeMedium+Theme.paddingMedium*2
+       icon.source: "image://theme/icon-m-share"
+       onClicked: {
+           var path = imagePreview.source.toString()
+           if (path.indexOf("file://") === 0) path = path.substring(7)
+           var lower = path.toLowerCase()
+           var mime = "image/*"
+           if (lower.indexOf(".png") > -1) mime = "image/png"
+           else if (lower.indexOf(".jpg") > -1 || lower.indexOf(".jpeg") > -1) mime = "image/jpeg"
+           else if (lower.indexOf(".gif") > -1) mime = "image/gif"
+           else if (lower.indexOf(".webp") > -1) mime = "image/webp"
+           else if (lower.indexOf(".svg") > -1) mime = "image/svg+xml"
+           imageShareAction.mimeType = mime
+           imageShareAction.resources = [ { type: mime, filePath: path, title: "image" } ]
+           imageShareAction.trigger()
+       }
+    }
+
+    ShareAction {
+        id: imageShareAction
     }
 
     VerticalScrollDecorator { flickable: imageFlickable }

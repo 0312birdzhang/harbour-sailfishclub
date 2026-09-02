@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import Sailfish.Share 1.0
 
 Page {
     id: imagePage
@@ -155,6 +156,7 @@ Page {
 
     VerticalScrollDecorator { flickable: imageFlickable }
     IconButton {
+       id: downloadButton
        enabled: imagePreview.status == Image.Ready
        anchors{
            right: imagePage.right;
@@ -166,7 +168,35 @@ Page {
        icon.source: "image://theme/icon-m-cloud-download"
        onClicked: {
            console.log(imagePreview.source);
-//           py.sav
        }
+    }
+    IconButton {
+       id: imagePageShareButton
+       enabled: imagePreview.status == Image.Ready
+       anchors{
+           right: downloadButton.left;
+           rightMargin: Theme.paddingSmall;
+           bottom: imagePage.bottom;
+           bottomMargin: Theme.paddingLarge;
+       }
+       width: Theme.iconSizeMedium+Theme.paddingMedium*2
+       icon.source: "image://theme/icon-m-share"
+       onClicked: {
+           var path = imagePreview.source.toString()
+           if (path.indexOf("file://") === 0) path = path.substring(7)
+           var lower = path.toLowerCase()
+           var mime = "image/*"
+           if (lower.indexOf(".png") > -1) mime = "image/png"
+           else if (lower.indexOf(".jpg") > -1 || lower.indexOf(".jpeg") > -1) mime = "image/jpeg"
+           else if (lower.indexOf(".gif") > -1) mime = "image/gif"
+           else if (lower.indexOf(".webp") > -1) mime = "image/webp"
+           else if (lower.indexOf(".svg") > -1) mime = "image/svg+xml"
+           imagePageShareAction.mimeType = mime
+           imagePageShareAction.resources = [ { type: mime, filePath: path, title: "image" } ]
+           imagePageShareAction.trigger()
+       }
+    }
+    ShareAction {
+        id: imagePageShareAction
     }
 }
