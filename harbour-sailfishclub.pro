@@ -23,22 +23,13 @@ QMAKE_CFLAGS += -Wno-unused-parameter
 
 LIBS += -ldl
 
-# Directories
-HARBOUR_LIB_REL = harbour-lib
-HARBOUR_LIB_DIR = $${_PRO_FILE_PWD_}/$${HARBOUR_LIB_REL}
-HARBOUR_LIB_INCLUDE = $${HARBOUR_LIB_DIR}/include
-HARBOUR_LIB_SRC = $${HARBOUR_LIB_DIR}/src
-
-
 INCLUDEPATH += \
-    src \
-    $${HARBOUR_LIB_INCLUDE}
+    src
 
 SOURCES += src/harbour-sailfishclub.cpp \
             src/settings.cpp \
             src/cache.cpp \
             src/api.cpp \
-            src/FoilPicsGalleryPlugin.cpp
 
 DEFINES += Q_OS_SAILFISH
 
@@ -108,37 +99,14 @@ RESOURCES += \
 HEADERS += \
     src/settings.h \
     src/cache.h \
-    src/api.h \
-    src/FoilPicsGalleryPlugin.h
+    src/api.h
 
-# harbour-lib
-HEADERS += \
-    $${HARBOUR_LIB_INCLUDE}/HarbourDebug.h \
-    $${HARBOUR_LIB_INCLUDE}/HarbourImageProvider.h \
-    $${HARBOUR_LIB_INCLUDE}/HarbourPluginLoader.h \
-    $${HARBOUR_LIB_INCLUDE}/HarbourSystemState.h \
-    $${HARBOUR_LIB_INCLUDE}/HarbourTask.h \
-    $${HARBOUR_LIB_INCLUDE}/HarbourTheme.h \
-    $${HARBOUR_LIB_INCLUDE}/HarbourTransferMethodInfo.h \
-    $${HARBOUR_LIB_INCLUDE}/HarbourTransferMethodsModel.h \
-    $${HARBOUR_LIB_SRC}/HarbourMce.h
-
-SOURCES += \
-    $${HARBOUR_LIB_SRC}/HarbourImageProvider.cpp \
-    $${HARBOUR_LIB_SRC}/HarbourMce.cpp \
-    $${HARBOUR_LIB_SRC}/HarbourPluginLoader.cpp \
-    $${HARBOUR_LIB_SRC}/HarbourSystemState.cpp \
-    $${HARBOUR_LIB_SRC}/HarbourTask.cpp \
-    $${HARBOUR_LIB_SRC}/HarbourTheme.cpp \
-    $${HARBOUR_LIB_SRC}/HarbourTransferMethodInfo.cpp \
-    $${HARBOUR_LIB_SRC}/HarbourTransferMethodsModel.cpp
+SOURCES +=
 
 DISTFILES += \
     qml/components/BlockquoteDelegate.qml \
     qml/pages/PostPage.qml \
     qml/components/HtmlTagButton.qml \
-    qml/components/ImagePreviewGrid.qml \
-    qml/components/ShareToPage.qml \
     rpm/harbour-sailfishclub.changes \
     qml/components/ImageHandle.qml \
     qml/components/TextDelegate.qml \
@@ -147,7 +115,6 @@ DISTFILES += \
     qml/components/WebviewDelegate.qml \
     qml/pages/SearchPage.qml \
     qml/pages/PreviewPage.qml \
-    qml/components/ShareMethodList.qml \
     qml/components/TopicReplies.qml
 
 #dbus.files = dbus/harbour.sailfishclub.service

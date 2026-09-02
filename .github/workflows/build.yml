@@ -24,7 +24,7 @@ jobs:
       uses: actions/checkout@v4
 
     - name: Prepare
-      run: mkdir output && git submodule update --init
+      run: mkdir output
 
     - name: Build armv7hl
       run: docker run --rm --privileged -v $PWD:/share coderus/sailfishos-platform-sdk-armv7hl:$RELEASE /bin/bash -c "

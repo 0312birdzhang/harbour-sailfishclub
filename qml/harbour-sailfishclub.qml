@@ -318,11 +318,6 @@ ApplicationWindow
         id: userinfo
     }
 
-    TransferMethodsModel {
-        id: appTransferMethodsModel
-        filter: "text/x-url"
-    }
-
     Connections {
         target: api
         onLoadStarted: signalCenter.loadStarted()
