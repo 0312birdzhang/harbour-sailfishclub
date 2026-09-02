@@ -5,21 +5,21 @@
 # Add newest entries to the top of the list.
 # Separate entries from eachother with a blank line.
 
-* Thu Aug 14 2026 BirdZhang <0312birdzhang@gmail.com> 0.4.7
+* Wed Sep  2 2026 BirdZhang <0312birdzhang@gmail.com> 0.4.7
 - 修复分享功能：改用 Sailfish.Share ShareAction（新 transfer-engine 移除 transferMethods）
 - 图片查看页新增分享图片文件按钮
 - 修复标准 emoji 正则、热门路由
 
-* Thu Aug 14 2026 BirdZhang <0312birdzhang@gmail.com> 0.4.6
+* Wed Sep  2 2026 BirdZhang <0312birdzhang@gmail.com> 0.4.6
 - 侧滑栏改为手势识别（右滑展开，无固定触发区，内容全屏可点可滑）
 - 帖子图片改用磁盘缓存，点击查看不再重复加载
 
-* Thu Aug 14 2026 BirdZhang <0312birdzhang@gmail.com> 0.4.5
+* Wed Sep  2 2026 BirdZhang <0312birdzhang@gmail.com> 0.4.5
 - 修复头像缓存（MaskImage 改用 CacheImage）
 - 修复自定义表情显示（改用 title）
 - 修复图片查看器适配屏幕
 
-* Thu Aug 14 2026 BirdZhang <0312birdzhang@gmail.com> 0.4.4
+* Wed Sep  2 2026 BirdZhang <0312birdzhang@gmail.com> 0.4.4
 - 使用 C++ 重构 NodeBB API 层，移除 Python 依赖
 - 适配 NodeBB v4.5/v4.15 API（Write API、搜索/通知返回结构变化）
 - 修复登录持久化、分类权限过滤、子分类归属
