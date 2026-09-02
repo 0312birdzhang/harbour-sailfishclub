@@ -17,11 +17,11 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
 
     steps:
     - name: Checkout
-      uses: actions/checkout@master
+      uses: actions/checkout@v4
 
     - name: Prepare
       run: mkdir output && git submodule update --init
@@ -50,7 +50,7 @@ jobs:
             mb2 -t SailfishOS-$RELEASE-aarch64 build ;
             sudo cp -r RPMS/*.rpm /share/output"
     - name: Upload build result
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: harbour-sailfishclub-rpms.zip
         path: output
